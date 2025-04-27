@@ -5,6 +5,13 @@ namespace DeepSpaceSaga.UI
         public Form1()
         {
             InitializeComponent();
+
+            Global.WorkerService.OnGetDataFromServer += WorkerService_OnGetDataFromServer;
+        }
+
+        private void WorkerService_OnGetDataFromServer(Common.Implementation.GameSessionDTO session)
+        {
+            
         }
     }
 }

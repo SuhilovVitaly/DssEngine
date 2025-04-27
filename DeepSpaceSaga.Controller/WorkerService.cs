@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Common.Implementation;
 using DeepSpaceSaga.Server;
 
 namespace DeepSpaceSaga.Controller
@@ -11,5 +12,7 @@ namespace DeepSpaceSaga.Controller
         {
             _gameServer = new LocalGameServer();
         }
+
+        public event Action<GameSessionDTO>? OnGetDataFromServer;
     }
 }

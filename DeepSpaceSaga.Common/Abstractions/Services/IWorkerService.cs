@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeepSpaceSaga.Common.Implementation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace DeepSpaceSaga.Common.Abstractions.Services
 {
     public interface IWorkerService
     {
+        event Action<GameSessionDTO>? OnGetDataFromServer;
     }
 }

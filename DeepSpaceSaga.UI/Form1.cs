@@ -11,7 +11,7 @@ namespace DeepSpaceSaga.UI
 
         private void WorkerService_OnGetDataFromServer(Common.Implementation.GameSessionDTO session)
         {
-            
+            var x = session.Turn;
         }
     }
 }

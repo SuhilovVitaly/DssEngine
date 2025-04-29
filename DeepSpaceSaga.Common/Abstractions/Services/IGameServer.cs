@@ -1,15 +1,10 @@
 ﻿using DeepSpaceSaga.Common.Implementation;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DeepSpaceSaga.Common.Implementation.GameLoop;
 
 namespace DeepSpaceSaga.Common.Abstractions.Services
 {
     public interface IGameServer
     {
-        public GameSessionDTO TurnCalculation();
+        public GameSessionDTO TurnCalculation(CalculationType type);
     }
 }

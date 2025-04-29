@@ -45,13 +45,21 @@ public static class CrossThreadExtensions
 
     public static void PerformSafely<T1, T2>(this Control target, Action<T1, T2> action, T1 p1, T2 p2)
     {
-        if (target.InvokeRequired)
+        try
         {
-            target.Invoke(action, p1, p2);
+            if (target.InvokeRequired)
+            {
+                target.Invoke(action, p1, p2);
+            }
+            else
+            {
+                action(p1, p2);
+            }
         }
-        else
+        catch (Exception e)
         {
-            action(p1, p2);
+            Debug.WriteLine($"Error {e.Message}");
         }
+        
     }
 }

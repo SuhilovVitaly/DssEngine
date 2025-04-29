@@ -4,7 +4,7 @@ namespace DeepSpaceSaga.Common.Abstractions.Services
 {
     public interface IWorkerService
     {
-        event Action<GameSessionDTO>? OnGetDataFromServer;
+        event Action<string, GameSessionDTO>? OnGetDataFromServer;
 
         void StartProcessing();
 

@@ -1,15 +1,18 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.Common.Implementation;
+using DeepSpaceSaga.Common.Implementation.GameLoop;
 using DeepSpaceSaga.Controller.GameLoopTools;
 using DeepSpaceSaga.Server;
-using System.ComponentModel.DataAnnotations;
+using log4net;
 using System.Diagnostics;
 
 namespace DeepSpaceSaga.Controller
 {
     public class WorkerService : IWorkerService, IDisposable
     {
-        public event Action<GameSessionDTO>? OnGetDataFromServer;
+        private static readonly ILog Logger = LogManager.GetLogger(typeof(WorkerService));
+
+        public event Action<string, GameSessionDTO>? OnGetDataFromServer;
 
         private Executor _gameLoopExecutor;
         private readonly IGameServer _gameServer;
@@ -28,35 +31,35 @@ namespace DeepSpaceSaga.Controller
         {
             if (_isRunning)
             {
-                Debug.WriteLine("StartProcessing called but already running");
+                Logger.Error("StartProcessing called but already running");
                 return;
             }
 
-            Debug.WriteLine("StartProcessing called");
+            Logger.Info("StartProcessing called");
             _cancellationTokenSource = new CancellationTokenSource();
 
             _gameLoopExecutor.Start(Calculation);
 
             _isRunning = true;
-            Debug.WriteLine("Game loop started in background");
+            Logger.Info("Game loop started in background");
         }
 
         public async Task StopProcessing()
         {
             if (!_isRunning)
             {
-                Debug.WriteLine("StopProcessing called but not running");
+                Logger.Info("StopProcessing called but not running");
                 return;
             }
 
-            Debug.WriteLine("StopProcessing called");
+            Logger.Info("StopProcessing called");
             if (_cancellationTokenSource != null)
             {
                 _cancellationTokenSource.Cancel();
                 if (_gameLoop != null)
                 {
                     await _gameLoop;
-                    Debug.WriteLine("Game loop stopped");
+                    Logger.Info("Game loop stopped");
                 }
                 _cancellationTokenSource.Dispose();
                 _cancellationTokenSource = null;
@@ -68,8 +71,8 @@ namespace DeepSpaceSaga.Controller
         private void Calculation(ExecutorState state, CalculationType type)
         {
             Console.WriteLine($"{state} {type} calculation");
-            var session = _gameServer.TurnCalculation();
-            OnGetDataFromServer?.Invoke(session);
+            var session = _gameServer.TurnCalculation(type);
+            OnGetDataFromServer?.Invoke(state.ToString(), session);
         }
 
         public void Dispose()

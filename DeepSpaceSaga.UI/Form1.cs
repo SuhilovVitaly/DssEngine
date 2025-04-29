@@ -23,14 +23,14 @@ namespace DeepSpaceSaga.UI
 
         }
 
-        private void WorkerService_OnGetDataFromServer(GameSessionDTO session)
+        private void WorkerService_OnGetDataFromServer(string state, GameSessionDTO session)
         {
-            CrossThreadExtensions.PerformSafely(this, RefreshSessionInfo, session);            
+            CrossThreadExtensions.PerformSafely(this, RefreshSessionInfo, state, session);            
         }
 
-        private void RefreshSessionInfo(GameSessionDTO session)
+        private void RefreshSessionInfo(string state, GameSessionDTO session)
         {
-            crlSessionInfo.Text = session.Turn.ToString();
+            crlSessionInfo.Text = state + " Turn: " + session.Turn;
         }
 
         private void crlStartProcessing_Click(object sender, EventArgs e)

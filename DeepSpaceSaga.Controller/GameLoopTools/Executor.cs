@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using DeepSpaceSaga.Common.Implementation.GameLoop;
+using System.Timers;
 using Timer = System.Timers.Timer;
 
 namespace DeepSpaceSaga.Controller.GameLoopTools;

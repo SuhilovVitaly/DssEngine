@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Controller.GameLoopTools;
+﻿namespace DeepSpaceSaga.Common.Implementation.GameLoop;
 
 public enum CalculationType
 {

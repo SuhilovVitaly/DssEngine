@@ -1,5 +1,6 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.Common.Implementation;
+using DeepSpaceSaga.Common.Implementation.GameLoop;
 
 namespace DeepSpaceSaga.Server
 {
@@ -7,7 +8,7 @@ namespace DeepSpaceSaga.Server
     {
         private int _turn = 0;
 
-        public GameSessionDTO TurnCalculation()
+        public GameSessionDTO TurnCalculation(CalculationType type)
         {
             _turn++;
 

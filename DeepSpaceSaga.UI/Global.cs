@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Controller;
-
-namespace DeepSpaceSaga.UI
+﻿namespace DeepSpaceSaga.UI
 {
     public static class Global
     {

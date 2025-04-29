@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+All usings should by in file GlobalUsings.cs in root every project

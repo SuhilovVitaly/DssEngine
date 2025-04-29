@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace DeepSpaceSaga.UI
+﻿namespace DeepSpaceSaga.UI
 {
     public static class StartupExtensions
     {

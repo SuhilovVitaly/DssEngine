@@ -1,7 +1,3 @@
-using log4net;
-using Microsoft.Extensions.Hosting;
-using DeepSpaceSaga.Controller;
-
 namespace DeepSpaceSaga.UI
 {
     internal static class Program

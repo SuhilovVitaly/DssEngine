@@ -1,9 +1,3 @@
-using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Implementation;
-using DeepSpaceSaga.UI.Tools;
-using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.CompilerServices;
-
 namespace DeepSpaceSaga.UI
 {
     public partial class Form1 : Form

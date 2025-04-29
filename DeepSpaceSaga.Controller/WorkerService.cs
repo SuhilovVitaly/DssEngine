@@ -1,103 +1,94 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Implementation;
-using DeepSpaceSaga.Common.Implementation.GameLoop;
-using DeepSpaceSaga.Controller.GameLoopTools;
-using DeepSpaceSaga.Server;
-using log4net;
-using System.Diagnostics;
+﻿namespace DeepSpaceSaga.Controller;
 
-namespace DeepSpaceSaga.Controller
+public class WorkerService : IWorkerService, IDisposable
 {
-    public class WorkerService : IWorkerService, IDisposable
+    private static readonly ILog Logger = LogManager.GetLogger(typeof(WorkerService));
+
+    public event Action<string, GameSessionDTO>? OnGetDataFromServer;
+
+    private Executor _gameLoopExecutor;
+    private readonly IGameServer _gameServer;
+    private bool _isDisposed;
+    private CancellationTokenSource? _cancellationTokenSource;
+    private Task? _gameLoop;
+    private bool _isRunning;
+
+    public WorkerService(Executor gameLoopExecutor)
     {
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(WorkerService));
+        _gameServer = new LocalGameServer();
+        _gameLoopExecutor = gameLoopExecutor;
+    }
 
-        public event Action<string, GameSessionDTO>? OnGetDataFromServer;
-
-        private Executor _gameLoopExecutor;
-        private readonly IGameServer _gameServer;
-        private bool _isDisposed;
-        private CancellationTokenSource? _cancellationTokenSource;
-        private Task? _gameLoop;
-        private bool _isRunning;
-
-        public WorkerService(Executor gameLoopExecutor)
+    public void StartProcessing()
+    {
+        if (_isRunning)
         {
-            _gameServer = new LocalGameServer();
-            _gameLoopExecutor = gameLoopExecutor;
+            Logger.Error("StartProcessing called but already running");
+            return;
         }
 
-        public void StartProcessing()
+        Logger.Info("StartProcessing called");
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        _gameLoopExecutor.Start(Calculation);
+
+        _isRunning = true;
+        Logger.Info("Game loop started in background");
+    }
+
+    public async Task StopProcessing()
+    {
+        if (!_isRunning)
         {
-            if (_isRunning)
+            Logger.Info("StopProcessing called but not running");
+            return;
+        }
+
+        Logger.Info("StopProcessing called");
+        if (_cancellationTokenSource != null)
+        {
+            _cancellationTokenSource.Cancel();
+            if (_gameLoop != null)
             {
-                Logger.Error("StartProcessing called but already running");
-                return;
+                await _gameLoop;
+                Logger.Info("Game loop stopped");
             }
-
-            Logger.Info("StartProcessing called");
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            _gameLoopExecutor.Start(Calculation);
-
-            _isRunning = true;
-            Logger.Info("Game loop started in background");
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = null;
+            _gameLoop = null;
+            _isRunning = false;
         }
+    }
 
-        public async Task StopProcessing()
+    private void Calculation(ExecutorState state, CalculationType type)
+    {
+        Console.WriteLine($"{state} {type} calculation");
+        var session = _gameServer.TurnCalculation(type);
+        OnGetDataFromServer?.Invoke(state.ToString(), session);
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_isDisposed)
         {
-            if (!_isRunning)
+            if (disposing)
             {
-                Logger.Info("StopProcessing called but not running");
-                return;
+                Debug.WriteLine("Disposing WorkerService");
+                StopProcessing().Wait();
+                _cancellationTokenSource?.Dispose();
             }
-
-            Logger.Info("StopProcessing called");
-            if (_cancellationTokenSource != null)
-            {
-                _cancellationTokenSource.Cancel();
-                if (_gameLoop != null)
-                {
-                    await _gameLoop;
-                    Logger.Info("Game loop stopped");
-                }
-                _cancellationTokenSource.Dispose();
-                _cancellationTokenSource = null;
-                _gameLoop = null;
-                _isRunning = false;
-            }
+            _isDisposed = true;
         }
+    }
 
-        private void Calculation(ExecutorState state, CalculationType type)
-        {
-            Console.WriteLine($"{state} {type} calculation");
-            var session = _gameServer.TurnCalculation(type);
-            OnGetDataFromServer?.Invoke(state.ToString(), session);
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!_isDisposed)
-            {
-                if (disposing)
-                {
-                    Debug.WriteLine("Disposing WorkerService");
-                    StopProcessing().Wait();
-                    _cancellationTokenSource?.Dispose();
-                }
-                _isDisposed = true;
-            }
-        }
-
-        ~WorkerService()
-        {
-            Dispose(false);
-        }
+    ~WorkerService()
+    {
+        Dispose(false);
     }
 }

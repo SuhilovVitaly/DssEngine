@@ -40,7 +40,6 @@ public static class CrossThreadExtensions
         {
             Debug.WriteLine($"Error {e.Message}");
         }
-        
     }
 
     public static void PerformSafely<T1, T2>(this Control target, Action<T1, T2> action, T1 p1, T2 p2)
@@ -60,6 +59,5 @@ public static class CrossThreadExtensions
         {
             Debug.WriteLine($"Error {e.Message}");
         }
-        
     }
 }

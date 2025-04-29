@@ -1,13 +1,10 @@
-﻿using DeepSpaceSaga.Common.Implementation;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
 
-namespace DeepSpaceSaga.Common.Abstractions.Services
+public interface IWorkerService
 {
-    public interface IWorkerService
-    {
-        event Action<string, GameSessionDTO>? OnGetDataFromServer;
+    event Action<string, GameSessionDTO>? OnGetDataFromServer;
 
-        void StartProcessing();
+    void StartProcessing();
 
-        Task StopProcessing();
-    }
+    Task StopProcessing();
 }

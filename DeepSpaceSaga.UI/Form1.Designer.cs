@@ -28,12 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            crlStartProcessing = new Button();
+            crlStopProcessing = new Button();
+            crlSessionInfo = new Label();
+            SuspendLayout();
+            // 
+            // crlStartProcessing
+            // 
+            crlStartProcessing.Location = new Point(171, 168);
+            crlStartProcessing.Name = "crlStartProcessing";
+            crlStartProcessing.Size = new Size(94, 29);
+            crlStartProcessing.TabIndex = 0;
+            crlStartProcessing.Text = "Start";
+            crlStartProcessing.UseVisualStyleBackColor = true;
+            crlStartProcessing.Click += crlStartProcessing_Click;
+            // 
+            // crlStopProcessing
+            // 
+            crlStopProcessing.Location = new Point(339, 168);
+            crlStopProcessing.Name = "crlStopProcessing";
+            crlStopProcessing.Size = new Size(94, 29);
+            crlStopProcessing.TabIndex = 0;
+            crlStopProcessing.Text = "Stop";
+            crlStopProcessing.UseVisualStyleBackColor = true;
+            crlStopProcessing.Click += crlStopProcessing_Click;
+            // 
+            // crlSessionInfo
+            // 
+            crlSessionInfo.AutoSize = true;
+            crlSessionInfo.Location = new Point(277, 96);
+            crlSessionInfo.Name = "crlSessionInfo";
+            crlSessionInfo.Size = new Size(50, 20);
+            crlSessionInfo.TabIndex = 1;
+            crlSessionInfo.Text = "label1";
+            // 
+            // Form1
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(crlSessionInfo);
+            Controls.Add(crlStopProcessing);
+            Controls.Add(crlStartProcessing);
+            DoubleBuffered = true;
+            Name = "Form1";
+            Text = "Form1";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Button crlStartProcessing;
+        private Button crlStopProcessing;
+        private Label crlSessionInfo;
     }
 }

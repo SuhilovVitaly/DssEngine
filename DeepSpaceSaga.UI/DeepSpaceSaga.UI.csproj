@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="3.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj" />
     <ProjectReference Include="..\DeepSpaceSaga.Controller\DeepSpaceSaga.Controller.csproj" />
   </ItemGroup>

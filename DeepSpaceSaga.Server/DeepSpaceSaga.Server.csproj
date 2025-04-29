@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeepSpaceSaga.Controller\DeepSpaceSaga.Controller.csproj" />
+    <ProjectReference Include="..\DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj" />
   </ItemGroup>
 
 </Project>

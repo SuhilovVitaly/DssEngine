@@ -6,5 +6,9 @@ public interface IWorkerService
 
     void StartProcessing();
 
+    void PauseProcessing();
+
+    void ResumeProcessing();
+
     Task StopProcessing();
 }

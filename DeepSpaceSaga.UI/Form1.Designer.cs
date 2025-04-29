@@ -31,6 +31,8 @@
             crlStartProcessing = new Button();
             crlStopProcessing = new Button();
             crlSessionInfo = new Label();
+            crlResumeProcessing = new Button();
+            crlPauseProcessing = new Button();
             SuspendLayout();
             // 
             // crlStartProcessing
@@ -45,7 +47,7 @@
             // 
             // crlStopProcessing
             // 
-            crlStopProcessing.Location = new Point(339, 168);
+            crlStopProcessing.Location = new Point(471, 168);
             crlStopProcessing.Name = "crlStopProcessing";
             crlStopProcessing.Size = new Size(94, 29);
             crlStopProcessing.TabIndex = 0;
@@ -62,11 +64,33 @@
             crlSessionInfo.TabIndex = 1;
             crlSessionInfo.Text = "label1";
             // 
+            // crlResumeProcessing
+            // 
+            crlResumeProcessing.Location = new Point(271, 168);
+            crlResumeProcessing.Name = "crlResumeProcessing";
+            crlResumeProcessing.Size = new Size(94, 29);
+            crlResumeProcessing.TabIndex = 2;
+            crlResumeProcessing.Text = "Resume";
+            crlResumeProcessing.UseVisualStyleBackColor = true;
+            crlResumeProcessing.Click += crlResumeProcessing_Click;
+            // 
+            // crlPauseProcessing
+            // 
+            crlPauseProcessing.Location = new Point(371, 168);
+            crlPauseProcessing.Name = "crlPauseProcessing";
+            crlPauseProcessing.Size = new Size(94, 29);
+            crlPauseProcessing.TabIndex = 3;
+            crlPauseProcessing.Text = "Pause";
+            crlPauseProcessing.UseVisualStyleBackColor = true;
+            crlPauseProcessing.Click += crlPauseProcessing_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(crlPauseProcessing);
+            Controls.Add(crlResumeProcessing);
             Controls.Add(crlSessionInfo);
             Controls.Add(crlStopProcessing);
             Controls.Add(crlStartProcessing);
@@ -82,5 +106,7 @@
         private Button crlStartProcessing;
         private Button crlStopProcessing;
         private Label crlSessionInfo;
+        private Button crlResumeProcessing;
+        private Button crlPauseProcessing;
     }
 }

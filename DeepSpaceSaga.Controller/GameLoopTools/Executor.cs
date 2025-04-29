@@ -111,6 +111,14 @@ public class Executor : IDisposable
         _timer.Enabled = false;
     }
 
+    public virtual void Resume()
+    {
+        if (_calculationEvent == null)
+            throw new InvalidOperationException("Cannot resume execution without prior Start call");
+            
+        _timer.Enabled = true;
+    }
+
     public void Dispose()
     {
         if (_isDisposed) return;

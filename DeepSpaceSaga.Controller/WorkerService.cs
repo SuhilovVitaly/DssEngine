@@ -36,6 +36,16 @@ public class WorkerService : IWorkerService, IDisposable
         Logger.Info("Game loop started in background");
     }
 
+    public void PauseProcessing()
+    {
+        _gameLoopExecutor.Stop();
+    }
+
+    public void ResumeProcessing()
+    {
+        _gameLoopExecutor.Resume();
+    }
+
     public async Task StopProcessing()
     {
         if (!_isRunning)

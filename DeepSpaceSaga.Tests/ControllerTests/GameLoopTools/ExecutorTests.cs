@@ -113,6 +113,57 @@ public class ExecutorTests : IDisposable
         action.Should().NotThrow();
     }
 
+    [Fact]
+    public async Task Resume_AfterStop_ContinuesExecutingCalculations()
+    {
+        // Arrange
+        void OnCalculation(ExecutorState state, CalculationType type) =>
+            _calculations.Enqueue((state, type));
+
+        // Act
+        _sut.Start(OnCalculation);
+        await Task.Delay(200); // Wait for ~2 ticks
+        _sut.Stop();
+        var countAfterStop = _calculations.Count;
+        _sut.Resume();
+        await Task.Delay(200); // Wait for ~2 more ticks
+
+        // Assert
+        _calculations.Count.Should().BeGreaterThan(countAfterStop);
+    }
+
+    [Fact]
+    public async Task Resume_WithoutPriorStart_ThrowsInvalidOperationException()
+    {
+        // Arrange & Act
+        var action = () => _sut.Resume();
+
+        // Assert
+        action.Should().Throw<InvalidOperationException>()
+            .WithMessage("Cannot resume execution without prior Start call*");
+    }
+
+    [Fact]
+    public async Task Resume_PreservesExecutorState()
+    {
+        // Arrange
+        var lastState = new ExecutorState();
+        void OnCalculation(ExecutorState state, CalculationType type) => lastState = state;
+
+        // Act
+        _sut.Start(OnCalculation);
+        await Task.Delay(350); // Wait for ~3 ticks
+        var turnCounterBeforeStop = lastState.TurnCounter;
+        var tickCounterBeforeStop = lastState.TickCounter;
+        _sut.Stop();
+        _sut.Resume();
+        await Task.Delay(100); // Wait for 1 more tick
+
+        // Assert
+        lastState.TurnCounter.Should().BeGreaterThanOrEqualTo(turnCounterBeforeStop);
+        lastState.TickCounter.Should().BeGreaterThan(tickCounterBeforeStop);
+    }
+
     public void Dispose()
     {
         _sut.Dispose();

@@ -41,7 +41,7 @@ public class Executor : IDisposable
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    public void Start(Action<ExecutorState, CalculationType> onTickCalculation)
+    public virtual void Start(Action<ExecutorState, CalculationType> onTickCalculation)
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;
@@ -105,7 +105,7 @@ public class Executor : IDisposable
     /// <summary>
     /// Stops the execution loop
     /// </summary>
-    public void Stop()
+    public virtual void Stop()
     {
         if (_isDisposed) return;
         _timer.Enabled = false;

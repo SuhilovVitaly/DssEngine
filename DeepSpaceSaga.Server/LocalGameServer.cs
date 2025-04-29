@@ -8,6 +8,11 @@ public class LocalGameServer : IGameServer
     {
         _turn++;
 
-        return new GameSessionDTO { Id = new Guid(), Turn = _turn };
+        return new GameSessionDTO 
+        { 
+            Id = Guid.NewGuid(), 
+            Turn = _turn,
+            SpaceMap = new List<int>()
+        };
     }
 }

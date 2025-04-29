@@ -91,8 +91,8 @@ public class Executor : IDisposable
     private void CycleUpdate()
     {
         _state.ResetTurnCounter();
-        TickCalculation(CalculationType.Cycle);
         _state.IncrementCycleCounter();
+        TickCalculation(CalculationType.Cycle);
     }
 
     private void TickCalculation(CalculationType type)
@@ -109,14 +109,19 @@ public class Executor : IDisposable
     {
         if (_isDisposed) return;
         _timer.Enabled = false;
+        _state.IsPaused = true;
     }
 
     public virtual void Resume()
     {
+        if (_isDisposed)
+            throw new ObjectDisposedException(nameof(Executor));
+            
         if (_calculationEvent == null)
             throw new InvalidOperationException("Cannot resume execution without prior Start call");
             
         _timer.Enabled = true;
+        _state.IsPaused = false;
     }
 
     public void Dispose()

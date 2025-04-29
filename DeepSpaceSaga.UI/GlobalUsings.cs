@@ -7,3 +7,4 @@ global using DeepSpaceSaga.Common.Abstractions.Services;
 global using DeepSpaceSaga.Common.Implementation;
 global using DeepSpaceSaga.Controller;
 global using DeepSpaceSaga.UI.Tools; 
+global using System.Diagnostics.CodeAnalysis;

@@ -117,25 +117,42 @@ public class ExecutorTests : IDisposable
     public async Task Resume_AfterStop_ContinuesExecutingCalculations()
     {
         // Arrange
+        var calculationCount = 0;
         void OnCalculation(ExecutorState state, CalculationType type) =>
-            _calculations.Enqueue((state, type));
+            Interlocked.Increment(ref calculationCount);
 
         // Act
         _sut.Start(OnCalculation);
-        await Task.Delay(200); // Wait for ~2 ticks
+        await Task.Delay(200); // Wait for some calculations
+        var countBeforeStop = calculationCount;
         _sut.Stop();
-        var countAfterStop = _calculations.Count;
+        await Task.Delay(100); // Ensure stopped
         _sut.Resume();
-        await Task.Delay(200); // Wait for ~2 more ticks
+        await Task.Delay(200); // Wait for more calculations
 
         // Assert
-        _calculations.Count.Should().BeGreaterThan(countAfterStop);
+        calculationCount.Should().BeGreaterThan(countBeforeStop);
     }
 
     [Fact]
-    public async Task Resume_WithoutPriorStart_ThrowsInvalidOperationException()
+    public void Resume_WhenDisposed_ThrowsObjectDisposedException()
     {
-        // Arrange & Act
+        // Arrange
+        _sut.Start((state, type) => { });
+        _sut.Stop();
+        _sut.Dispose();
+
+        // Act
+        var action = () => _sut.Resume();
+
+        // Assert
+        action.Should().Throw<ObjectDisposedException>();
+    }
+
+    [Fact]
+    public void Resume_WithoutPriorStart_ThrowsInvalidOperationException()
+    {
+        // Act
         var action = () => _sut.Resume();
 
         // Assert
@@ -147,21 +164,130 @@ public class ExecutorTests : IDisposable
     public async Task Resume_PreservesExecutorState()
     {
         // Arrange
-        var lastState = new ExecutorState();
+        ExecutorState? lastState = null;
         void OnCalculation(ExecutorState state, CalculationType type) => lastState = state;
 
         // Act
         _sut.Start(OnCalculation);
-        await Task.Delay(350); // Wait for ~3 ticks
-        var turnCounterBeforeStop = lastState.TurnCounter;
-        var tickCounterBeforeStop = lastState.TickCounter;
+        await Task.Delay(350); // Wait for some ticks
+        var turnCounterBeforeStop = lastState?.TurnCounter ?? 0;
+        var tickCounterBeforeStop = lastState?.TickCounter ?? 0;
         _sut.Stop();
         _sut.Resume();
-        await Task.Delay(100); // Wait for 1 more tick
+        await Task.Delay(100); // Wait for more ticks
 
         // Assert
-        lastState.TurnCounter.Should().BeGreaterThanOrEqualTo(turnCounterBeforeStop);
+        lastState.Should().NotBeNull();
+        lastState!.TurnCounter.Should().BeGreaterThanOrEqualTo(turnCounterBeforeStop);
         lastState.TickCounter.Should().BeGreaterThan(tickCounterBeforeStop);
+    }
+
+    [Fact]
+    public async Task Start_ExecutesTurnsAndCycles()
+    {
+        // Arrange
+        ExecutorState? lastState = null;
+        void OnCalculation(ExecutorState state, CalculationType type)
+        {
+            lastState = state;
+            _calculations.Enqueue((state, type));
+        }
+
+        // Act
+        _sut.Start(OnCalculation);
+        await Task.Delay(5000); // Ждем достаточное время для выполнения нескольких ходов
+        _sut.Stop();
+
+        // Assert
+        lastState.Should().NotBeNull();
+        lastState!.TurnCounter.Should().BeGreaterThan(1, "должно быть выполнено несколько ходов");
+        _calculations.Count(c => c.Type == CalculationType.Turn).Should().BeGreaterThan(1, "должно быть несколько событий типа Turn");
+    }
+
+    [Fact]
+    public async Task TickCalculation_SetsPausedStateCorrectly()
+    {
+        // Arrange
+        var statesDuringCalculation = new List<bool>();
+        void OnCalculation(ExecutorState state, CalculationType type)
+        {
+            statesDuringCalculation.Add(state.IsPaused);
+            Thread.Sleep(50); // Имитируем длительные вычисления
+        }
+
+        // Act
+        _sut.Start(OnCalculation);
+        await Task.Delay(200); // Ждем пару тиков
+        _sut.Stop();
+
+        // Assert
+        statesDuringCalculation.Should().NotBeEmpty();
+        statesDuringCalculation.All(isPaused => isPaused).Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task Executor_HandlesMultipleThreadsCorrectly()
+    {
+        // Arrange
+        var calculationCount = 0;
+        var errors = new ConcurrentBag<Exception>();
+        
+        void OnCalculation(ExecutorState state, CalculationType type)
+        {
+            try
+            {
+                // Имитируем сложные вычисления с доступом к общим ресурсам
+                var currentCount = calculationCount;
+                Thread.Sleep(10);
+                calculationCount = currentCount + 1;
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex);
+            }
+        }
+
+        // Act
+        _sut.Start(OnCalculation);
+        await Task.Delay(500); // Даем время на выполнение нескольких тиков
+        _sut.Stop();
+
+        // Assert
+        errors.Should().BeEmpty();
+        calculationCount.Should().BeGreaterThan(0);
+    }
+
+    [Fact]
+    public void Resume_AfterDispose_ThrowsObjectDisposedException()
+    {
+        // Arrange
+        _sut.Start((state, type) => { });
+        _sut.Stop();
+        _sut.Dispose();
+
+        // Act
+        var action = () => _sut.Resume();
+
+        // Assert
+        action.Should().Throw<ObjectDisposedException>();
+    }
+
+    [Fact]
+    public async Task Stop_SetsPausedStateCorrectly()
+    {
+        // Arrange
+        ExecutorState? lastState = null;
+        void OnCalculation(ExecutorState state, CalculationType type) => lastState = state;
+
+        // Act
+        _sut.Start(OnCalculation);
+        await Task.Delay(200); // Ждем пару тиков
+        _sut.Stop();
+        await Task.Delay(100); // Даем время на обработку остановки
+
+        // Assert
+        lastState.Should().NotBeNull();
+        lastState!.IsPaused.Should().BeTrue("состояние должно быть приостановлено после остановки");
     }
 
     public void Dispose()

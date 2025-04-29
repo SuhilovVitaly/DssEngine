@@ -21,6 +21,9 @@ public class WorkerService : IWorkerService, IDisposable
 
     public void StartProcessing()
     {
+        if (_isDisposed)
+            throw new ObjectDisposedException(nameof(WorkerService));
+            
         if (_isRunning)
         {
             Logger.Error("StartProcessing called but already running");
@@ -72,9 +75,16 @@ public class WorkerService : IWorkerService, IDisposable
 
     private void Calculation(ExecutorState state, CalculationType type)
     {
-        Console.WriteLine($"{state} {type} calculation");
-        var session = _gameServer.TurnCalculation(type);
-        OnGetDataFromServer?.Invoke(state.ToString(), session);
+        try
+        {
+            Console.WriteLine($"{state} {type} calculation");
+            var session = _gameServer.TurnCalculation(type);
+            OnGetDataFromServer?.Invoke(state.ToString(), session);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error($"Error during calculation: {ex.Message}", ex);
+        }
     }
 
     public void Dispose()

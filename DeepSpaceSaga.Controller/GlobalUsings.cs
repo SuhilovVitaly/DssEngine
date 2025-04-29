@@ -9,3 +9,4 @@ global using DeepSpaceSaga.Server;
 global using log4net;
 global using System.Diagnostics;
 global using Microsoft.Extensions.DependencyInjection; 
+global using System.Diagnostics.CodeAnalysis;

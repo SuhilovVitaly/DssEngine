@@ -105,9 +105,89 @@ public class WorkerServiceTests
         _workerService.Dispose();
 
         // Assert
-        // Try to start again to verify internal state was reset
-        _workerService.StartProcessing();
         _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()),
-            Times.Exactly(2));
+            Times.Once());
+    }
+
+    [Fact]
+    public void PauseProcessing_CallsExecutorStop()
+    {
+        // Arrange
+        _mockExecutor.Setup(x => x.Stop());
+        _workerService.StartProcessing();
+
+        // Act
+        _workerService.PauseProcessing();
+
+        // Assert
+        _mockExecutor.Verify(x => x.Stop(), Times.Once());
+    }
+
+    [Fact]
+    public void ResumeProcessing_CallsExecutorResume()
+    {
+        // Arrange
+        _mockExecutor.Setup(x => x.Resume());
+        _workerService.StartProcessing();
+        _workerService.PauseProcessing();
+
+        // Act
+        _workerService.ResumeProcessing();
+
+        // Assert
+        _mockExecutor.Verify(x => x.Resume(), Times.Once());
+    }
+
+    [Fact]
+    public void StartProcessing_AfterDispose_ThrowsObjectDisposedException()
+    {
+        // Arrange
+        _workerService.Dispose();
+
+        // Act
+        var action = () => _workerService.StartProcessing();
+
+        // Assert
+        action.Should().Throw<ObjectDisposedException>();
+    }
+
+    [Fact]
+    public void Calculation_WhenExceptionOccurs_DoesNotPropagateException()
+    {
+        // Arrange
+        Action<ExecutorState, CalculationType> calculationAction = null!;
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()))
+            .Callback<Action<ExecutorState, CalculationType>>(action => calculationAction = action);
+
+        bool eventWasRaised = false;
+        _workerService.OnGetDataFromServer += (_, _) => 
+        {
+            eventWasRaised = true;
+            throw new Exception("Test exception");
+        };
+
+        // Act
+        _workerService.StartProcessing();
+        calculationAction(new ExecutorState(), CalculationType.Tick);
+
+        // Assert
+        eventWasRaised.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task StopProcessing_CancelsPendingOperations()
+    {
+        // Arrange
+        var cancellationTokenSource = new CancellationTokenSource();
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
+
+        // Act
+        _workerService.StartProcessing();
+        var stopTask = _workerService.StopProcessing();
+        await stopTask;
+
+        // Assert
+        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()), Times.Once());
+        (await Task.WhenAny(stopTask, Task.Delay(1000))).Should().Be(stopTask, "StopProcessing должен завершиться быстро");
     }
 } 

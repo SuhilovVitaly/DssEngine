@@ -10,3 +10,6 @@ global using log4net;
 global using System.Diagnostics;
 global using Microsoft.Extensions.DependencyInjection; 
 global using System.Diagnostics.CodeAnalysis;
+global using System;
+global using System.IO;
+global using log4net.Config;

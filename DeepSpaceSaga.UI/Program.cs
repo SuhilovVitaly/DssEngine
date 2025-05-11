@@ -16,7 +16,12 @@ namespace DeepSpaceSaga.UI
             Application.SetCompatibleTextRenderingDefault(false);
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
-            log4net.Config.XmlConfigurator.Configure();
+            // Create Logs directory if it doesn't exist
+            Directory.CreateDirectory("Logs");
+            
+            // Configure log4net
+            var configFile = new FileInfo("log4net.config");
+            log4net.Config.XmlConfigurator.Configure(configFile);
 
             Logger.Info("Start 'Deep Space Saga' game desktop client.");
 

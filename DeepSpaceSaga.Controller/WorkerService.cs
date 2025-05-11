@@ -1,5 +1,8 @@
 ﻿namespace DeepSpaceSaga.Controller;
 
+using System.IO;
+using log4net.Config;
+
 public class WorkerService : IWorkerService, IDisposable
 {
     private static readonly ILog Logger = LogManager.GetLogger(typeof(WorkerService));
@@ -17,6 +20,22 @@ public class WorkerService : IWorkerService, IDisposable
     {
         _gameServer = new LocalGameServer();
         _gameLoopExecutor = gameLoopExecutor;
+        
+        // Create Logs directory if it doesn't exist
+        Directory.CreateDirectory("Logs");
+        
+        // Configure log4net using absolute path
+        var assemblyLocation = typeof(WorkerService).Assembly.Location;
+        var assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
+        var configFile = new FileInfo(Path.Combine(assemblyDirectory!, "log4net.config"));
+        
+        if (!configFile.Exists)
+        {
+            throw new FileNotFoundException($"log4net.config not found at {configFile.FullName}");
+        }
+
+        XmlConfigurator.Configure(configFile);
+        Logger.Info($"WorkerService initialized, log4net configured from {configFile.FullName}");
     }
 
     public void StartProcessing()
@@ -77,7 +96,7 @@ public class WorkerService : IWorkerService, IDisposable
     {
         try
         {
-            Console.WriteLine($"{state} {type} calculation");
+            Debug.WriteLine($"{state.ToString()} {type} calculation");
             var session = _gameServer.TurnCalculation(type);
             OnGetDataFromServer?.Invoke(state.ToString(), session);
         }

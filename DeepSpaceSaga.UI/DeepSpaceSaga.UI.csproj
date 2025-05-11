@@ -19,4 +19,13 @@
     <ProjectReference Include="..\DeepSpaceSaga.Controller\DeepSpaceSaga.Controller.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Logs\Information.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

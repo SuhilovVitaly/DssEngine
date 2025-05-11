@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Server;
+
 namespace DeepSpaceSaga.UI
 {
     internal static class Program
@@ -37,6 +39,7 @@ namespace DeepSpaceSaga.UI
                 .ConfigureServices((context, services) => {
                     services.AddClientControls();
                     services.AddControllerServices();
+                    services.AddServerServices();
                 });
         }
     }

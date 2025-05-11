@@ -1,14 +1,46 @@
 namespace DeepSpaceSaga.Tests.ControllerTests;
 
-public class WorkerServiceTests
+using DeepSpaceSaga.Common.Abstractions.Services;
+using log4net;
+using Moq;
+using System.IO;
+
+public class WorkerServiceTests : IDisposable
 {
     private readonly Mock<Executor> _mockExecutor;
+    private readonly Mock<IGameServer> _mockServer;
+    private readonly string _configPath;
     private readonly WorkerService _workerService;
 
     public WorkerServiceTests()
     {
-        _mockExecutor = new Mock<Executor>(32); // Pass tickInterval to constructor
-        _workerService = new WorkerService(_mockExecutor.Object);
+        _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
+        File.WriteAllText(_configPath, @"<?xml version=""1.0"" encoding=""utf-8"" ?>
+<configuration>
+  <log4net>
+    <root>
+      <level value=""ALL"" />
+      <appender-ref ref=""console"" />
+    </root>
+    <appender name=""console"" type=""log4net.Appender.ConsoleAppender"">
+      <layout type=""log4net.Layout.PatternLayout"">
+        <conversionPattern value=""%date %level %logger - %message%newline"" />
+      </layout>
+    </appender>
+  </log4net>
+</configuration>");
+
+        _mockExecutor = new Mock<Executor>(32);
+        _mockServer = new Mock<IGameServer>();
+        _workerService = new WorkerService(_mockExecutor.Object, _mockServer.Object);
+    }
+
+    public void Dispose()
+    {
+        if (File.Exists(_configPath))
+        {
+            File.Delete(_configPath);
+        }
     }
 
     [Fact]
@@ -79,6 +111,10 @@ public class WorkerServiceTests
             receivedSession = session;
         };
 
+        var testSession = new GameSessionDTO { Turn = 1 };
+        _mockServer.Setup(x => x.TurnCalculation(It.IsAny<CalculationType>()))
+            .Returns(testSession);
+
         Action<ExecutorState, CalculationType> calculationAction = null!;
         _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()))
             .Callback<Action<ExecutorState, CalculationType>>(action => calculationAction = action);
@@ -89,6 +125,8 @@ public class WorkerServiceTests
         calculationAction(state, CalculationType.Tick);
 
         // Assert
+        // Verify mock server was called
+        _mockServer.Verify(x => x.TurnCalculation(CalculationType.Tick), Times.Once());
         Assert.NotNull(receivedSession);
         Assert.Equal(state.ToString(), receivedState);
         Assert.Equal(1, receivedSession.Turn);

@@ -6,7 +6,11 @@ namespace DeepSpaceSaga.UI
     {
         public static IServiceProvider? ServiceProvider { get; private set; }
 
-        private static readonly ILog Logger = LogManager.GetLogger(typeof(Program));
+        // Define a unique repository name
+        private const string REPOSITORY_NAME = "UIApplicationRepository";
+
+        // Get logger instance from the specific repository
+        private static readonly ILog Logger = LogManager.GetLogger(REPOSITORY_NAME, typeof(Program));
 
         /// <summary>
         ///  The main entry point for the application.
@@ -21,9 +25,10 @@ namespace DeepSpaceSaga.UI
             // Create Logs directory if it doesn't exist
             Directory.CreateDirectory("Logs");
             
-            // Configure log4net
+            // Configure log4net for a specific repository
+            var repository = LogManager.CreateRepository(REPOSITORY_NAME);
             var configFile = new FileInfo("log4net.config");
-            log4net.Config.XmlConfigurator.Configure(configFile);
+            log4net.Config.XmlConfigurator.Configure(repository, configFile);
 
             Logger.Info("Start 'Deep Space Saga' game desktop client.");
 

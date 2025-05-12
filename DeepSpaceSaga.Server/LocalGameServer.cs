@@ -1,11 +1,8 @@
-﻿using log4net;
-
-namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
-    private const string REPOSITORY_NAME = "ServerAppRepository";
-    private static readonly ILog Logger = LogManager.GetLogger(REPOSITORY_NAME, typeof(LocalGameServer));
+    private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
     private int _turn = 0;
 
     public GameSessionDTO TurnCalculation(CalculationType type)

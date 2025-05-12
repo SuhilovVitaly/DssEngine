@@ -2,8 +2,7 @@
 
 public class WorkerService : IWorkerService, IDisposable
 {
-    private const string REPOSITORY_NAME = "ControllerAppRepository";
-    private static readonly ILog Logger = LogManager.GetLogger(REPOSITORY_NAME, typeof(WorkerService));
+    private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(WorkerService));
 
     public event Action<string, GameSessionDTO>? OnGetDataFromServer;
 

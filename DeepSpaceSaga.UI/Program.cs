@@ -1,51 +1,59 @@
-using DeepSpaceSaga.Server;
+namespace DeepSpaceSaga.UI;
 
-namespace DeepSpaceSaga.UI
+internal static class Program
 {
-    internal static class Program
+    public static IServiceProvider? ServiceProvider { get; private set; }
+
+    // Get logger instance from the specific repository
+    private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(Program));
+
+    /// <summary>
+    ///  The main entry point for the application.
+    /// </summary>
+    [STAThread]
+    static void Main()
     {
-        public static IServiceProvider? ServiceProvider { get; private set; }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        Application.SetHighDpiMode(HighDpiMode.SystemAware);
 
-        // Define a unique repository name
-        private const string REPOSITORY_NAME = "UIApplicationRepository";
+        // Create Logs directory if it doesn't exist
+        Directory.CreateDirectory("Logs");
 
-        // Get logger instance from the specific repository
-        private static readonly ILog Logger = LogManager.GetLogger(REPOSITORY_NAME, typeof(Program));
+        // Configure log4net for Console project
+        var consoleRepository = LogManager.CreateRepository(GeneralSettings.WinFormLoggerRepository);
+        var consoleConfigFile = new FileInfo("log4net.config"); // Assumes log4net.config is in Console's output
+        log4net.Config.XmlConfigurator.Configure(consoleRepository, consoleConfigFile);
 
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+        // Configure log4net for Controller project
+        var controllerRepository = LogManager.CreateRepository(GeneralSettings.ControllerLoggerRepository);
+        // Assuming DeepSpaceSaga.Controller/log4net.config is copied to output directory or accessible
+        var controllerConfigFile = new FileInfo("DeepSpaceSaga.Controller/log4net.config");
+        if (!controllerConfigFile.Exists) controllerConfigFile = new FileInfo("log4net.config.controller"); // Fallback or specific name
+        log4net.Config.XmlConfigurator.Configure(controllerRepository, controllerConfigFile);
 
-            // Create Logs directory if it doesn't exist
-            Directory.CreateDirectory("Logs");
-            
-            // Configure log4net for a specific repository
-            var repository = LogManager.CreateRepository(REPOSITORY_NAME);
-            var configFile = new FileInfo("log4net.config");
-            log4net.Config.XmlConfigurator.Configure(repository, configFile);
+        // Configure log4net for Server project
+        var serverRepository = LogManager.CreateRepository(GeneralSettings.ServerLoggerRepository);
+        // Assuming DeepSpaceSaga.Server/log4net.config is copied to output directory or accessible
+        var serverConfigFile = new FileInfo("DeepSpaceSaga.Server/log4net.config");
+        if (!serverConfigFile.Exists) serverConfigFile = new FileInfo("log4net.config.server"); // Fallback or specific name
+        log4net.Config.XmlConfigurator.Configure(serverRepository, serverConfigFile);
 
-            Logger.Info("Start 'Deep Space Saga' game desktop client.");
+        Logger.Info("Start 'Deep Space Saga' game desktop client.");
 
-            ServiceProvider = CreateHostBuilder().Build().Services;
+        ServiceProvider = CreateHostBuilder().Build().Services;
 
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
-        }
+        ApplicationConfiguration.Initialize();
+        Application.Run(new Form1());
+    }
 
-        static IHostBuilder CreateHostBuilder()
-        {
-            return Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) => {
-                    services.AddClientControls();
-                    services.AddControllerServices();
-                    services.AddServerServices();
-                });
-        }
+    static IHostBuilder CreateHostBuilder()
+    {
+        return Host.CreateDefaultBuilder()
+            .ConfigureServices((context, services) => {
+                services.AddClientControls();
+                services.AddControllerServices();
+                services.AddServerServices();
+            });
     }
 }

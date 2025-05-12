@@ -10,12 +10,12 @@ namespace DeepSpaceSaga.Console
     internal static class Program
     {
         public static IServiceProvider? ServiceProvider { get; private set; }
-        
+
         // Define repository names
         private const string CONSOLE_REPOSITORY_NAME = "ConsoleAppRepository";
         private const string CONTROLLER_REPOSITORY_NAME = "ControllerAppRepository";
         private const string SERVER_REPOSITORY_NAME = "ServerAppRepository";
-        
+
         // Get logger instance from the specific repository
         private static readonly ILog Logger = LogManager.GetLogger(CONSOLE_REPOSITORY_NAME, typeof(Program));
         

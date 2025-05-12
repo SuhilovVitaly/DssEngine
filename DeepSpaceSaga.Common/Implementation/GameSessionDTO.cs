@@ -1,6 +1,4 @@
-﻿
-
-namespace DeepSpaceSaga.Common.Implementation
+﻿namespace DeepSpaceSaga.Common.Implementation
 {
     public class GameSessionDTO
     {

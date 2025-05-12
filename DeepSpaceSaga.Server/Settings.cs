@@ -1,6 +1,9 @@
+using System.IO;
+using log4net.Config;
+
 namespace DeepSpaceSaga.Server;
 
 public static class Settings
 {
-    public static string LoggerRepository = "ServerAppRepository";
+    public const string LoggerRepository = "ServerAppRepository";
 }

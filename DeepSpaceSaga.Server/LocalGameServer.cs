@@ -1,28 +1,53 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+
+namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
-    private int _turn = 0;
+    private readonly SessionInfo _sessionInfo;
+    private readonly object _lockObject = new();
+
+    public LocalGameServer()
+    {
+        _sessionInfo = new SessionInfo
+        {
+            Turn = 0,
+            State = SessionState.NotStarted
+        };
+    }
 
     public GameSessionDTO TurnCalculation(CalculationType type)
     {
-        _turn++;
+        var sessionInfo = UpdateSessionInfo(_sessionInfo);
 
-        Logger?.Debug($"Calculation {type} {_turn}");
+        Logger?.Debug($"Calculation {type} {sessionInfo.Turn}");
 
-        CheckLogs();
+        return GameSessionMap(sessionInfo);
+    }
+
+    private SessionInfo UpdateSessionInfo(SessionInfo sessionInfo)
+    {
+        SessionInfo returnSessionInfo;
+        
+        lock (_lockObject)
+        {
+            sessionInfo.Turn++;
+            returnSessionInfo = sessionInfo.DeepClone()!;
+        }
+
+        return returnSessionInfo;
+    }
+
+    private GameSessionDTO GameSessionMap(SessionInfo sessionInfo)
+    {
+        Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
         
         return new GameSessionDTO 
         { 
             Id = Guid.NewGuid(), 
-            Turn = _turn,
-            SpaceMap = new List<int>()
+            Turn = sessionInfo!.Turn,
+            SpaceMap = []
         };
-    }
-
-    private void CheckLogs()
-    {
-        Logger?.Debug($"Check {_turn}");
     }
 }

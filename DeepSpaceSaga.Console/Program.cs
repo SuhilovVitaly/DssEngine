@@ -48,7 +48,7 @@ namespace DeepSpaceSaga.Console
 
            ServiceProvider = CreateHostBuilder().Build().Services;
            
-           var _worker = Program.ServiceProvider.GetService<IWorkerService>();
+           var _worker = ServiceProvider.GetService<IWorkerService>();
            _worker.StartProcessing();
            
            System.Console.WriteLine("Hello, World!");

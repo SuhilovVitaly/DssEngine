@@ -6,23 +6,71 @@ public class LocalGameServerTests
 
     public LocalGameServerTests()
     {
+        // Initialize the logger
+        TestLoggerRepository.Initialize();
         _sut = new LocalGameServer();
     }
 
     [Fact]
-    public void TurnCalculation_ShouldIncrementTurnCounter()
+    public void TurnCalculation_FirstCall_ReturnsTurn1()
     {
         // Arrange
-        var firstExpectedTurn = 1;
-        var secondExpectedTurn = 2;
+        var calculationType = CalculationType.Tick; // Using the real Tick value instead of Standard
 
         // Act
-        var firstResult = _sut.TurnCalculation(CalculationType.Tick);
-        var secondResult = _sut.TurnCalculation(CalculationType.Tick);
+        var result = _sut.TurnCalculation(calculationType);
 
         // Assert
-        Assert.Equal(firstExpectedTurn, firstResult.Turn);
-        Assert.Equal(secondExpectedTurn, secondResult.Turn);
+        Assert.NotNull(result);
+        Assert.Equal(1, result.Turn);
+        Assert.NotEqual(Guid.Empty, result.Id);
+        Assert.NotNull(result.SpaceMap); // Check if SpaceMap is initialized
+    }
+
+    [Fact]
+    public void TurnCalculation_MultipleCalls_IncrementsTurnCorrectly()
+    {
+        // Arrange
+        var calculationType = CalculationType.Turn; // Using the real Turn value instead of Standard
+        var numberOfTurns = 5;
+        GameSessionDTO? lastResult = null;
+
+        // Act
+        for (int i = 0; i < numberOfTurns; i++)
+        {
+            lastResult = _sut.TurnCalculation(calculationType);
+        }
+
+        // Assert
+        Assert.NotNull(lastResult);
+        Assert.Equal(numberOfTurns, lastResult.Turn);
+    }
+
+    [Fact]
+    public async Task TurnCalculation_ConcurrentCalls_IncrementsTurnSafely()
+    {
+        // Arrange
+        var calculationType = CalculationType.Cycle; // Using the real Cycle value instead of Standard
+        var numberOfConcurrentCalls = 100;
+        var tasks = new List<Task<GameSessionDTO>>();
+
+        // Act
+        for (int i = 0; i < numberOfConcurrentCalls; i++)
+        {
+            tasks.Add(Task.Run(() => _sut.TurnCalculation(calculationType)));
+        }
+
+        var results = await Task.WhenAll(tasks);
+
+        // Assert
+        // Check that all turn numbers from 1 to numberOfConcurrentCalls are present exactly once
+        var turnNumbers = results.Select(r => r.Turn).OrderBy(t => t).ToList();
+        Assert.Equal(numberOfConcurrentCalls, turnNumbers.Count); // Ensure we got all results
+        Assert.Equal(Enumerable.Range(1, numberOfConcurrentCalls), turnNumbers); // Check if turns are 1, 2, 3... N
+
+        // Verify the final turn number by calling one more time (optional, but good check)
+        var finalTurn = _sut.TurnCalculation(calculationType);
+        Assert.Equal(numberOfConcurrentCalls + 1, finalTurn.Turn);
     }
 
     [Theory]

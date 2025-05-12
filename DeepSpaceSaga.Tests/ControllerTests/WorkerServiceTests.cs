@@ -1,35 +1,16 @@
 namespace DeepSpaceSaga.Tests.ControllerTests;
 
-using DeepSpaceSaga.Common.Abstractions.Services;
-using log4net;
-using Moq;
-using System.IO;
-
 public class WorkerServiceTests : IDisposable
 {
     private readonly Mock<Executor> _mockExecutor;
     private readonly Mock<IGameServer> _mockServer;
-    private readonly string _configPath;
     private readonly WorkerService _workerService;
 
     public WorkerServiceTests()
     {
-        _configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
-        File.WriteAllText(_configPath, @"<?xml version=""1.0"" encoding=""utf-8"" ?>
-<configuration>
-  <log4net>
-    <root>
-      <level value=""ALL"" />
-      <appender-ref ref=""console"" />
-    </root>
-    <appender name=""console"" type=""log4net.Appender.ConsoleAppender"">
-      <layout type=""log4net.Layout.PatternLayout"">
-        <conversionPattern value=""%date %level %logger - %message%newline"" />
-      </layout>
-    </appender>
-  </log4net>
-</configuration>");
-
+        // Initialize log4net repositories
+        TestLoggerRepository.Initialize();
+        
         _mockExecutor = new Mock<Executor>(32);
         _mockServer = new Mock<IGameServer>();
         _workerService = new WorkerService(_mockExecutor.Object, _mockServer.Object);
@@ -37,10 +18,7 @@ public class WorkerServiceTests : IDisposable
 
     public void Dispose()
     {
-        if (File.Exists(_configPath))
-        {
-            File.Delete(_configPath);
-        }
+        // No need to dispose individual files, TestLoggerRepository handles cleanup
     }
 
     [Fact]
@@ -186,7 +164,7 @@ public class WorkerServiceTests : IDisposable
         var action = () => _workerService.StartProcessing();
 
         // Assert
-        action.Should().Throw<ObjectDisposedException>();
+        Assert.Throws<ObjectDisposedException>(action);
     }
 
     [Fact]
@@ -209,16 +187,15 @@ public class WorkerServiceTests : IDisposable
         calculationAction(new ExecutorState(), CalculationType.Tick);
 
         // Assert
-        eventWasRaised.Should().BeTrue();
+        Assert.True(eventWasRaised);
     }
 
     [Fact]
     public async Task StopProcessing_CancelsPendingOperations()
     {
         // Arrange
-        var cancellationTokenSource = new CancellationTokenSource();
         _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
-
+        
         // Act
         _workerService.StartProcessing();
         var stopTask = _workerService.StopProcessing();
@@ -226,6 +203,6 @@ public class WorkerServiceTests : IDisposable
 
         // Assert
         _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()), Times.Once());
-        (await Task.WhenAny(stopTask, Task.Delay(1000))).Should().Be(stopTask, "StopProcessing должен завершиться быстро");
+        Assert.True(stopTask.IsCompleted, "StopProcessing должен завершиться быстро");
     }
 } 

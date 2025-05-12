@@ -1,14 +1,16 @@
+using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+
 namespace DeepSpaceSaga.Tests.ControllerTests.GameLoopTools;
 
 public class ExecutorTests : IDisposable
 {
     private readonly Executor _sut;
-    private readonly ConcurrentQueue<(ExecutorState State, CalculationType Type)> _calculations;
+    private readonly ConcurrentQueue<(SessionInfo State, CalculationType Type)> _calculations;
 
     public ExecutorTests()
     {
         _sut = new Executor(tickInterval: 100); // Larger interval for testing
-        _calculations = new ConcurrentQueue<(ExecutorState, CalculationType)>();
+        _calculations = new ConcurrentQueue<(SessionInfo, CalculationType)>();
     }
 
     [Fact]
@@ -37,7 +39,7 @@ public class ExecutorTests : IDisposable
     public async Task Start_ExecutesTickCalculations()
     {
         // Arrange
-        void OnCalculation(ExecutorState state, CalculationType type) =>
+        void OnCalculation(SessionInfo state, CalculationType type) =>
             _calculations.Enqueue((state, type));
 
         // Act
@@ -54,7 +56,7 @@ public class ExecutorTests : IDisposable
     public async Task Start_ExecutesTurnCalculation_AfterTenTicks()
     {
         // Arrange
-        void OnCalculation(ExecutorState state, CalculationType type) =>
+        void OnCalculation(SessionInfo state, CalculationType type) =>
             _calculations.Enqueue((state, type));
 
         // Act
@@ -73,7 +75,7 @@ public class ExecutorTests : IDisposable
     {
         // Arrange
         var calculationCount = 0;
-        void OnCalculation(ExecutorState state, CalculationType type) =>
+        void OnCalculation(SessionInfo state, CalculationType type) =>
             Interlocked.Increment(ref calculationCount);
 
         // Act
@@ -118,7 +120,7 @@ public class ExecutorTests : IDisposable
     {
         // Arrange
         var calculationCount = 0;
-        void OnCalculation(ExecutorState state, CalculationType type) =>
+        void OnCalculation(SessionInfo state, CalculationType type) =>
             Interlocked.Increment(ref calculationCount);
 
         // Act
@@ -164,8 +166,8 @@ public class ExecutorTests : IDisposable
     public async Task Resume_PreservesExecutorState()
     {
         // Arrange
-        ExecutorState? lastState = null;
-        void OnCalculation(ExecutorState state, CalculationType type) => lastState = state;
+        SessionInfo? lastState = null;
+        void OnCalculation(SessionInfo state, CalculationType type) => lastState = state;
 
         // Act
         _sut.Start(OnCalculation);
@@ -186,8 +188,8 @@ public class ExecutorTests : IDisposable
     public async Task Start_ExecutesTurnsAndCycles()
     {
         // Arrange
-        ExecutorState? lastState = null;
-        void OnCalculation(ExecutorState state, CalculationType type)
+        SessionInfo? lastState = null;
+        void OnCalculation(SessionInfo state, CalculationType type)
         {
             lastState = state;
             _calculations.Enqueue((state, type));
@@ -209,7 +211,7 @@ public class ExecutorTests : IDisposable
     {
         // Arrange
         var statesDuringCalculation = new List<bool>();
-        void OnCalculation(ExecutorState state, CalculationType type)
+        void OnCalculation(SessionInfo state, CalculationType type)
         {
             statesDuringCalculation.Add(state.IsPaused);
             Thread.Sleep(50); // Имитируем длительные вычисления
@@ -232,7 +234,7 @@ public class ExecutorTests : IDisposable
         var calculationCount = 0;
         var errors = new ConcurrentBag<Exception>();
         
-        void OnCalculation(ExecutorState state, CalculationType type)
+        void OnCalculation(SessionInfo state, CalculationType type)
         {
             try
             {
@@ -276,8 +278,8 @@ public class ExecutorTests : IDisposable
     public async Task Stop_SetsPausedStateCorrectly()
     {
         // Arrange
-        ExecutorState? lastState = null;
-        void OnCalculation(ExecutorState state, CalculationType type) => lastState = state;
+        SessionInfo? lastState = null;
+        void OnCalculation(SessionInfo state, CalculationType type) => lastState = state;
 
         // Act
         _sut.Start(OnCalculation);

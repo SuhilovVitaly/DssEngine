@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+
 namespace DeepSpaceSaga.Tests.ControllerTests;
 
 public class WorkerServiceTests : IDisposable
@@ -25,13 +27,13 @@ public class WorkerServiceTests : IDisposable
     public void StartProcessing_WhenNotRunning_StartsExecutor()
     {
         // Arrange
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()));
 
         // Act
         _workerService.StartProcessing();
 
         // Assert
-        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()),
+        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()),
             Times.Once());
     }
 
@@ -39,14 +41,14 @@ public class WorkerServiceTests : IDisposable
     public void StartProcessing_WhenAlreadyRunning_DoesNotStartExecutorAgain()
     {
         // Arrange
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()));
         _workerService.StartProcessing(); // First start
 
         // Act
         _workerService.StartProcessing(); // Second start
 
         // Assert
-        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()),
+        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()),
             Times.Once());
     }
 
@@ -54,7 +56,7 @@ public class WorkerServiceTests : IDisposable
     public async Task StopProcessing_WhenRunning_StopsProcessing()
     {
         // Arrange
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()));
         _workerService.StartProcessing();
 
         // Act
@@ -63,7 +65,7 @@ public class WorkerServiceTests : IDisposable
         // Assert
         // Start new processing to verify internal state was reset
         _workerService.StartProcessing();
-        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()),
+        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()),
             Times.Exactly(2));
     }
 
@@ -93,13 +95,13 @@ public class WorkerServiceTests : IDisposable
         _mockServer.Setup(x => x.TurnCalculation(It.IsAny<CalculationType>()))
             .Returns(testSession);
 
-        Action<ExecutorState, CalculationType> calculationAction = null!;
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()))
-            .Callback<Action<ExecutorState, CalculationType>>(action => calculationAction = action);
+        Action<SessionInfo, CalculationType> calculationAction = null!;
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()))
+            .Callback<Action<SessionInfo, CalculationType>>(action => calculationAction = action);
 
         // Act
         _workerService.StartProcessing();
-        var state = new ExecutorState();
+        var state = new SessionInfo();
         calculationAction(state, CalculationType.Tick);
 
         // Assert
@@ -114,14 +116,14 @@ public class WorkerServiceTests : IDisposable
     public void Dispose_CallsStopProcessing()
     {
         // Arrange
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()));
         _workerService.StartProcessing();
 
         // Act
         _workerService.Dispose();
 
         // Assert
-        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()),
+        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()),
             Times.Once());
     }
 
@@ -171,9 +173,9 @@ public class WorkerServiceTests : IDisposable
     public void Calculation_WhenExceptionOccurs_DoesNotPropagateException()
     {
         // Arrange
-        Action<ExecutorState, CalculationType> calculationAction = null!;
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()))
-            .Callback<Action<ExecutorState, CalculationType>>(action => calculationAction = action);
+        Action<SessionInfo, CalculationType> calculationAction = null!;
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()))
+            .Callback<Action<SessionInfo, CalculationType>>(action => calculationAction = action);
 
         bool eventWasRaised = false;
         _workerService.OnGetDataFromServer += (_, _) => 
@@ -184,7 +186,7 @@ public class WorkerServiceTests : IDisposable
 
         // Act
         _workerService.StartProcessing();
-        calculationAction(new ExecutorState(), CalculationType.Tick);
+        calculationAction(new SessionInfo(), CalculationType.Tick);
 
         // Assert
         Assert.True(eventWasRaised);
@@ -194,7 +196,7 @@ public class WorkerServiceTests : IDisposable
     public async Task StopProcessing_CancelsPendingOperations()
     {
         // Arrange
-        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()));
+        _mockExecutor.Setup(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()));
         
         // Act
         _workerService.StartProcessing();
@@ -202,7 +204,7 @@ public class WorkerServiceTests : IDisposable
         await stopTask;
 
         // Assert
-        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<ExecutorState, CalculationType>>()), Times.Once());
+        _mockExecutor.Verify(x => x.Start(It.IsAny<Action<SessionInfo, CalculationType>>()), Times.Once());
         Assert.True(stopTask.IsCompleted, "StopProcessing должен завершиться быстро");
     }
 } 

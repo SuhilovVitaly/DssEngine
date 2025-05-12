@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Controller;
+﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+
+namespace DeepSpaceSaga.Controller;
 
 public class WorkerService : IWorkerService, IDisposable
 {
@@ -73,7 +75,7 @@ public class WorkerService : IWorkerService, IDisposable
         }
     }
 
-    private void Calculation(ExecutorState state, CalculationType type)
+    private void Calculation(SessionInfo state, CalculationType type)
     {
         try
         {

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Controller.GameLoopTools;
+﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+
+namespace DeepSpaceSaga.Controller.GameLoopTools;
 
 /// <summary>
 /// Manages game loop execution with configurable ticks, turns and cycles
@@ -12,10 +14,10 @@ public class Executor : IDisposable
     private readonly int _ticksPerTurn;
     private readonly int _turnsPerCycle;
     private readonly object _stateLock = new();
-    private readonly ExecutorState _state = new();
+    private readonly SessionInfo _state = new();
     private readonly Timer _timer;
 
-    private Action<ExecutorState, CalculationType>? _calculationEvent;
+    private Action<SessionInfo, CalculationType>? _calculationEvent;
     private bool _isDisposed;
 
     /// <summary>
@@ -41,7 +43,7 @@ public class Executor : IDisposable
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    public virtual void Start(Action<ExecutorState, CalculationType> onTickCalculation)
+    public virtual void Start(Action<SessionInfo, CalculationType> onTickCalculation)
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;

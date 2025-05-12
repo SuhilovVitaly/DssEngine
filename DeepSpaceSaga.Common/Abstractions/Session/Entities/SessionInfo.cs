@@ -1,7 +1,9 @@
-﻿namespace DeepSpaceSaga.Controller.GameLoopTools;
+namespace DeepSpaceSaga.Common.Abstractions.Session.Entities;
 
-public class ExecutorState
+public class SessionInfo
 {
+    public int Turn { get; set; }
+    
     private volatile int _tickTotal = 0;
     private volatile int _tickCounter = 0;
     private volatile int _turnCounter = 0;
@@ -22,4 +24,6 @@ public class ExecutorState
     public int IncrementCycleCounter() => Interlocked.Increment(ref _cycleCounter);
 
     public override string ToString() => $"[{CycleCounter:D3}-{TurnCounter:D3}-{TickCounter:D3}-{TickTotal:D3}]";
+    
+    public SessionState State { get; set; } 
 }

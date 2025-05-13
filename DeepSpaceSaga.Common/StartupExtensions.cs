@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+﻿using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 using DeepSpaceSaga.Common.Implementation.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -10,8 +11,9 @@ public static class StartupExtensions
 {
     public static IServiceCollection AddCommonServices(this IServiceCollection services)
     {
-        // Services 
-        services.AddSingleton<ISessionInfo, SessionInfo>();            
+        //  
+        services.AddSingleton<ISessionInfo, SessionInfo>();
+        services.AddSingleton<IGameFlowService, GameFlowService>();
 
         return services;
     }

@@ -7,7 +7,7 @@ public static class ControllerStartupExtensions
     {
         // Services 
         services.AddTransient<IExecutor, Executor>();
-        services.AddScoped<IWorkerService, WorkerService>();            
+        
 
         return services;
     }

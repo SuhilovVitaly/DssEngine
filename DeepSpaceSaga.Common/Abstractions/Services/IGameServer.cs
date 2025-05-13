@@ -2,5 +2,10 @@
 
 public interface IGameServer
 {
-    public GameSessionDTO TurnCalculation(CalculationType type);
+    event Action<GameSessionDTO>? OnTurnExecute;
+
+    void SessionStart();
+    void SessionPause();
+    void SessionResume();
+    void SessionStop();
 }

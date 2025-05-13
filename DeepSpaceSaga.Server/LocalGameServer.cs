@@ -4,43 +4,45 @@ namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
+    public event Action<GameSessionDTO>? OnTurnExecute;
+
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
-    private readonly ISessionInfo _sessionInfo;
-    private readonly object _lockObject = new();
 
-    public LocalGameServer(ISessionInfo sessionInfo)
+    private readonly IGameFlowService _flowManager;
+
+    public LocalGameServer(IGameFlowService gameFlowService)
     {
-        _sessionInfo = sessionInfo;
-    }
+        _flowManager = gameFlowService;
 
-    public GameSessionDTO TurnCalculation(CalculationType type)
+        _flowManager.TurnExecution = TurnExecution;
+    }    
+
+    public void TurnExecution(ISessionInfo info, CalculationType type)
     {
-        Logger?.Debug($"Calculation {type} {_sessionInfo.Turn}");
 
-        var newTurn = _sessionInfo.IncrementTurn();
-
-        return new GameSessionDTO 
-        { 
-            Id = Guid.NewGuid(), 
-            Turn = newTurn,
-            SpaceMap = []
-        };
-    }
-
-    private void UpdateSessionInfo(ISessionInfo sessionInfo)
-    {
-        sessionInfo.IncrementTurn();
+        OnTurnExecute?.Invoke(GameSessionMap(info));
     }
 
     private GameSessionDTO GameSessionMap(ISessionInfo sessionInfo)
     {
+        var turn = sessionInfo.IncrementTurn(); 
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
         
         return new GameSessionDTO 
         { 
             Id = Guid.NewGuid(), 
-            Turn = sessionInfo!.Turn,
+            Turn = turn,
+            FlowState = sessionInfo.ToString(),
             SpaceMap = []
         };
     }
+
+    public void SessionStart() => _flowManager.SessionStart();
+
+    public void SessionPause() => _flowManager.SessionPause();
+
+    public void SessionResume() => _flowManager.SessionResume();
+
+    public void SessionStop() => _flowManager.SessionStop();
+
 }

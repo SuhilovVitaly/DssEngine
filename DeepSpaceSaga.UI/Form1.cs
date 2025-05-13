@@ -1,53 +1,52 @@
-namespace DeepSpaceSaga.UI
+namespace DeepSpaceSaga.UI;
+
+public partial class Form1 : Form
 {
-    public partial class Form1 : Form
+    private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(Form1));
+
+    private IGameServer _gameServer;
+
+    public Form1()
     {
-        private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(Form1));
+        InitializeComponent();
 
-        private IWorkerService _worker;
+        _gameServer = Program.ServiceProvider?.GetService<IGameServer>()
+            ?? throw new InvalidOperationException("Failed to resolve IGameServer");
 
-        public Form1()
-        {
-            InitializeComponent();
+        _gameServer.OnTurnExecute += GameServer_OnGetDataFromServer;
+    }
 
-            _worker = Program.ServiceProvider?.GetService<IWorkerService>() 
-                ?? throw new InvalidOperationException("Failed to resolve IWorkerService");
+    private void GameServer_OnGetDataFromServer(GameSessionDTO session)
+    {
+        CrossThreadExtensions.PerformSafely(this, RefreshSessionInfo, session);
+    }
 
-            _worker.OnGetDataFromServer += WorkerService_OnGetDataFromServer;
-        }
+    private void RefreshSessionInfo(GameSessionDTO session)
+    {
+        crlSessionInfo.Text = session.FlowState + " Turn: " + session.Turn;
+    }
 
-        private void WorkerService_OnGetDataFromServer(string state, GameSessionDTO session)
-        {
-            CrossThreadExtensions.PerformSafely(this, RefreshSessionInfo, state, session);
-        }
+    private void crlStartProcessing_Click(object sender, EventArgs e)
+    {
+        _gameServer.SessionStart();
+        Logger.Debug("SessionStart command");
+    }
 
-        private void RefreshSessionInfo(string state, GameSessionDTO session)
-        {
-            crlSessionInfo.Text = state + " Turn: " + session.Turn;
-        }
+    private void crlStopProcessing_Click(object sender, EventArgs e)
+    {
+        _gameServer.SessionStop();
+        Logger.Debug("SessionPause command");
+    }
 
-        private void crlStartProcessing_Click(object sender, EventArgs e)
-        {
-            _worker.StartProcessing();
-            Logger.Debug("StartProcessing command");
-        }
+    private void crlResumeProcessing_Click(object sender, EventArgs e)
+    {
+        _gameServer.SessionResume();
+        Logger.Debug("SessionResume command");
+    }
 
-        private async void crlStopProcessing_Click(object sender, EventArgs e)
-        {
-            await _worker.StopProcessing();
-            Logger.Debug("StopProcessing command");
-        }
-
-        private void crlResumeProcessing_Click(object sender, EventArgs e)
-        {
-            _worker.ResumeProcessing();
-            Logger.Debug("ResumeProcessing command");
-        }
-
-        private void crlPauseProcessing_Click(object sender, EventArgs e)
-        {
-            _worker.PauseProcessing();
-            Logger.Debug("PauseProcessing command");
-        }
+    private void crlPauseProcessing_Click(object sender, EventArgs e)
+    {
+        _gameServer.SessionPause();
+        Logger.Debug("SessionPause command");
     }
 }

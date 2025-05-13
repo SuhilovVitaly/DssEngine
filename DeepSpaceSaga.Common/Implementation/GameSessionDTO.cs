@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public int Turn { get; set; }
-        public string FlowState { get; set; }
-        public List<int> SpaceMap { get; set; }
+        public string FlowState { get; set; } = "";
+        public List<int> SpaceMap { get; set; } = [];
     }
 }

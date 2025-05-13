@@ -2,13 +2,13 @@ namespace DeepSpaceSaga.Tests.CommonTests.Services;
 
 public class GameFlowServiceTests
 {
-    private readonly Mock<ISessionInfo> _sessionInfoMock;
+    private readonly Mock<ISessionInfoService> _sessionInfoMock;
     private readonly Mock<IExecutor> _executorMock;
     private readonly GameFlowService _sut;
 
     public GameFlowServiceTests()
     {
-        _sessionInfoMock = new Mock<ISessionInfo>();
+        _sessionInfoMock = new Mock<ISessionInfoService>();
         _executorMock = new Mock<IExecutor>();
         _sut = new GameFlowService(_sessionInfoMock.Object, _executorMock.Object);
     }
@@ -27,7 +27,7 @@ public class GameFlowServiceTests
         _sut.SessionStart();
 
         // Assert
-        _executorMock.Verify(x => x.Start(It.IsAny<Action<ISessionInfo, CalculationType>>()), Times.Once);
+        _executorMock.Verify(x => x.Start(It.IsAny<Action<ISessionInfoService, CalculationType>>()), Times.Once);
     }
 
     [Fact]
@@ -89,9 +89,9 @@ public class GameFlowServiceTests
     public void SessionStart_PassesCorrectDelegateToExecutor()
     {
         // Arrange
-        Action<ISessionInfo, CalculationType> capturedDelegate = null;
-        _executorMock.Setup(x => x.Start(It.IsAny<Action<ISessionInfo, CalculationType>>()))
-            .Callback<Action<ISessionInfo, CalculationType>>(d => capturedDelegate = d);
+        Action<ISessionInfoService, CalculationType> capturedDelegate = null;
+        _executorMock.Setup(x => x.Start(It.IsAny<Action<ISessionInfoService, CalculationType>>()))
+            .Callback<Action<ISessionInfoService, CalculationType>>(d => capturedDelegate = d);
 
         var wasExecuted = false;
         _sut.TurnExecution = (_, _) => wasExecuted = true;

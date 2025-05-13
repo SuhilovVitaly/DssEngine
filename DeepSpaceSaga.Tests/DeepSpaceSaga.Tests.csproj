@@ -50,7 +50,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CommonTests\Services\" />
     <Folder Include="ServerTests\" />
   </ItemGroup>
 

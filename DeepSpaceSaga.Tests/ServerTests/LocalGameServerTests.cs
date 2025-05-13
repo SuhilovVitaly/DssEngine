@@ -4,7 +4,7 @@ public class LocalGameServerTests
 {
     private readonly LocalGameServer _sut;
     private readonly IGameFlowService _gameFlowService;
-    private readonly SessionInfo _sessionInfo;
+    private readonly SessionInfoService _sessionInfo;
     private readonly Executor _executor;
     private GameSessionDTO? _lastExecutedSession;
 
@@ -14,7 +14,7 @@ public class LocalGameServerTests
         TestLoggerRepository.Initialize();
         
         // Setup dependencies
-        _sessionInfo = new SessionInfo();
+        _sessionInfo = new SessionInfoService();
         _executor = new Executor(_sessionInfo);
         _gameFlowService = new GameFlowService(_sessionInfo, _executor);
         _sut = new LocalGameServer(_gameFlowService);
@@ -86,6 +86,7 @@ public class LocalGameServerTests
         // Assert
         Assert.NotNull(_lastExecutedSession);
         Assert.NotEqual(Guid.Empty, _lastExecutedSession.Id);
+        Assert.NotEqual(string.Empty, _lastExecutedSession.FlowState);
         Assert.Equal(initialTurn + 1, _lastExecutedSession.Turn);
         Assert.NotNull(_lastExecutedSession.SpaceMap);
     }

@@ -1,11 +1,9 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-
-namespace DeepSpaceSaga.Common.Abstractions.Services;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
 
 public interface IGameFlowService
 {
-    ISessionInfo SessionInfo { get; }
-    Action<ISessionInfo, CalculationType> TurnExecution { get; set; }
+    ISessionInfoService SessionInfo { get; }
+    Action<ISessionInfoService, CalculationType> TurnExecution { get; set; }
     void SessionStart();
     void SessionPause();
     void SessionResume();

@@ -4,16 +4,16 @@ public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(Form1));
 
-    private GameManager _gameServer;
+    private GameManager _gameManager;
 
     public Form1()
     {
         InitializeComponent();
 
-        _gameServer = Program.ServiceProvider?.GetService<GameManager>()
-            ?? throw new InvalidOperationException("Failed to resolve IGameServer");
+        _gameManager = Program.ServiceProvider?.GetService<GameManager>()
+            ?? throw new InvalidOperationException("Failed to resolve GameManager");
 
-        _gameServer.OnUpdateGameData += GameServer_OnGetDataFromServer;
+        _gameManager.OnUpdateGameData += GameServer_OnGetDataFromServer;
     }
 
     private void GameServer_OnGetDataFromServer(GameSessionDTO session)
@@ -28,25 +28,25 @@ public partial class Form1 : Form
 
     private void crlStartProcessing_Click(object sender, EventArgs e)
     {
-        _gameServer.SessionStart();
+        _gameManager.SessionStart();
         Logger.Debug("SessionStart command");
     }
 
     private void crlStopProcessing_Click(object sender, EventArgs e)
     {
-        _gameServer.SessionStop();
+        _gameManager.SessionStop();
         Logger.Debug("SessionPause command");
     }
 
     private void crlResumeProcessing_Click(object sender, EventArgs e)
     {
-        _gameServer.SessionResume();
+        _gameManager.SessionResume();
         Logger.Debug("SessionResume command");
     }
 
     private void crlPauseProcessing_Click(object sender, EventArgs e)
     {
-        _gameServer.SessionPause();
+        _gameManager.SessionPause();
         Logger.Debug("SessionPause command");
     }
 }

@@ -12,7 +12,7 @@ public interface IExecutor : IDisposable
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    void Start(Action<ISessionInfo, CalculationType> onTickCalculation);
+    void Start(Action<ISessionInfoService, CalculationType> onTickCalculation);
 
     /// <summary>
     /// Stops the execution loop

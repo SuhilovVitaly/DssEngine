@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-
-namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer : IGameServer
 {
@@ -9,21 +7,23 @@ public class LocalGameServer : IGameServer
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
 
     private readonly IGameFlowService _flowManager;
+    private readonly ISessionContext _sessionContext;
 
-    public LocalGameServer(IGameFlowService gameFlowService)
+    public LocalGameServer(IGameFlowService gameFlowService, ISessionContext sessionContext)
     {
+        _sessionContext = sessionContext;
         _flowManager = gameFlowService;
 
         _flowManager.TurnExecution = TurnExecution;
     }    
 
-    public void TurnExecution(ISessionInfo info, CalculationType type)
+    public void TurnExecution(ISessionInfoService info, CalculationType type)
     {
 
         OnTurnExecute?.Invoke(GameSessionMap(info));
     }
 
-    private GameSessionDTO GameSessionMap(ISessionInfo sessionInfo)
+    private GameSessionDTO GameSessionMap(ISessionInfoService sessionInfo)
     {
         var turn = sessionInfo.IncrementTurn(); 
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
@@ -37,7 +37,10 @@ public class LocalGameServer : IGameServer
         };
     }
 
-    public void SessionStart() => _flowManager.SessionStart();
+    public void SessionStart()
+    {
+        _flowManager.SessionStart();
+    }
 
     public void SessionPause() => _flowManager.SessionPause();
 

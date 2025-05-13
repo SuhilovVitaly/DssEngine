@@ -1,10 +1,8 @@
-using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-
 namespace DeepSpaceSaga.Common.Implementation.Services;
 
-public class SessionInfo : ISessionInfo
+public class SessionInfoService : ISessionInfoService
 {
-    public SessionInfo()
+    public SessionInfoService()
     {
         Id = Guid.NewGuid();
     }

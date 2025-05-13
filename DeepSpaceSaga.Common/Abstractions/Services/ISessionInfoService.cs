@@ -3,7 +3,7 @@ namespace DeepSpaceSaga.Common.Abstractions.Session.Entities;
 /// <summary>
 /// Represents session information interface for managing game session state and counters
 /// </summary>
-public interface ISessionInfo
+public interface ISessionInfoService
 {
     Guid Id { get; }
     int Turn { get; set; }

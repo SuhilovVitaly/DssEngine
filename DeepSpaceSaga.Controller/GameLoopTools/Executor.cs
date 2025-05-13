@@ -12,10 +12,10 @@ public class Executor : IExecutor, IDisposable
     private readonly int _ticksPerTurn;
     private readonly int _turnsPerCycle;
     private readonly object _stateLock = new();
-    private readonly ISessionInfo _state;
+    private readonly ISessionInfoService _state;
     private readonly Timer _timer;
 
-    private Action<ISessionInfo, CalculationType>? _calculationEvent;
+    private Action<ISessionInfoService, CalculationType>? _calculationEvent;
     private bool _isDisposed;
 
     /// <summary>
@@ -23,7 +23,7 @@ public class Executor : IExecutor, IDisposable
     /// </summary>
     /// <param name="tickInterval">The interval between ticks in milliseconds</param>
     /// <exception cref="ArgumentException">Thrown when tickInterval is less than 1</exception>
-    public Executor(ISessionInfo state, int tickInterval = 32)
+    public Executor(ISessionInfoService state, int tickInterval = 32)
     {
         if (tickInterval < MinimumTickInterval)
             throw new ArgumentException($"Tick interval must be at least {MinimumTickInterval}ms", nameof(tickInterval));
@@ -43,7 +43,7 @@ public class Executor : IExecutor, IDisposable
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    public virtual void Start(Action<ISessionInfo, CalculationType> onTickCalculation)
+    public virtual void Start(Action<ISessionInfoService, CalculationType> onTickCalculation)
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;

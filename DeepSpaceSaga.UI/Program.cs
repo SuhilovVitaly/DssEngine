@@ -59,7 +59,7 @@ internal static class Program
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
-                services.AddScoped<SessionInfo>();
+                services.AddScoped<SessionInfoService>();
                 services.AddCommonServices();
                 services.AddClientControls();
                 services.AddControllerServices();

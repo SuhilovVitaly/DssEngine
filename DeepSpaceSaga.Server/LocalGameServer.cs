@@ -11,8 +11,13 @@ public class LocalGameServer : IGameServer
 
     public LocalGameServer(IGameFlowService gameFlowService, ISessionContext sessionContext)
     {
-        _sessionContext = sessionContext;
-        _flowManager = gameFlowService;
+        _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
+        _flowManager = gameFlowService ?? throw new ArgumentNullException(nameof(gameFlowService));
+
+        if (TurnExecution == null)
+        {
+            throw new InvalidOperationException("TurnExecution method must be defined");
+        }
 
         _flowManager.TurnExecution = TurnExecution;
     }    

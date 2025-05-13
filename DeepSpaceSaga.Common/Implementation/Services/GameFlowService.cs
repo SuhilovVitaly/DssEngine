@@ -34,6 +34,11 @@ public class GameFlowService : IGameFlowService
 
     public void SessionStart()
     {
+        if (TurnExecution == null)
+        {
+            throw new InvalidOperationException("TurnExecution delegate must be set before starting the game flow");
+        }
+
         _sessionContext.Metrics.Add(MetricsServer.SessionStart);
         _executor.Start(TurnExecution);
     }

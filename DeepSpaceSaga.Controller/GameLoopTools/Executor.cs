@@ -1,11 +1,9 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-
-namespace DeepSpaceSaga.Controller.GameLoopTools;
+﻿namespace DeepSpaceSaga.Controller.GameLoopTools;
 
 /// <summary>
 /// Manages game loop execution with configurable ticks, turns and cycles
 /// </summary>
-public class Executor : IDisposable
+public class Executor : IExecutor, IDisposable
 {
     private const int DefaultTicksPerTurn = 10;
     private const int DefaultTurnsPerCycle = 10;
@@ -14,10 +12,10 @@ public class Executor : IDisposable
     private readonly int _ticksPerTurn;
     private readonly int _turnsPerCycle;
     private readonly object _stateLock = new();
-    private readonly SessionInfo _state = new();
+    private readonly ISessionInfo _state;
     private readonly Timer _timer;
 
-    private Action<SessionInfo, CalculationType>? _calculationEvent;
+    private Action<ISessionInfo, CalculationType>? _calculationEvent;
     private bool _isDisposed;
 
     /// <summary>
@@ -25,10 +23,12 @@ public class Executor : IDisposable
     /// </summary>
     /// <param name="tickInterval">The interval between ticks in milliseconds</param>
     /// <exception cref="ArgumentException">Thrown when tickInterval is less than 1</exception>
-    public Executor(int tickInterval = 32)
+    public Executor(ISessionInfo state, int tickInterval = 32)
     {
         if (tickInterval < MinimumTickInterval)
             throw new ArgumentException($"Tick interval must be at least {MinimumTickInterval}ms", nameof(tickInterval));
+
+        _state = state;
 
         _ticksPerTurn = DefaultTicksPerTurn;
         _turnsPerCycle = DefaultTurnsPerCycle;
@@ -43,7 +43,7 @@ public class Executor : IDisposable
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    public virtual void Start(Action<SessionInfo, CalculationType> onTickCalculation)
+    public virtual void Start(Action<ISessionInfo, CalculationType> onTickCalculation)
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;

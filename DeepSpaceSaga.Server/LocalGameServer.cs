@@ -5,41 +5,34 @@ namespace DeepSpaceSaga.Server;
 public class LocalGameServer : IGameServer
 {
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
-    private readonly SessionInfo _sessionInfo;
+    private readonly ISessionInfo _sessionInfo;
     private readonly object _lockObject = new();
 
-    public LocalGameServer()
+    public LocalGameServer(ISessionInfo sessionInfo)
     {
-        _sessionInfo = new SessionInfo
-        {
-            Turn = 0,
-            State = SessionState.NotStarted
-        };
+        _sessionInfo = sessionInfo;
     }
 
     public GameSessionDTO TurnCalculation(CalculationType type)
     {
-        var sessionInfo = UpdateSessionInfo(_sessionInfo);
+        Logger?.Debug($"Calculation {type} {_sessionInfo.Turn}");
 
-        Logger?.Debug($"Calculation {type} {sessionInfo.Turn}");
+        var newTurn = _sessionInfo.IncrementTurn();
 
-        return GameSessionMap(sessionInfo);
+        return new GameSessionDTO 
+        { 
+            Id = Guid.NewGuid(), 
+            Turn = newTurn,
+            SpaceMap = []
+        };
     }
 
-    private SessionInfo UpdateSessionInfo(SessionInfo sessionInfo)
+    private void UpdateSessionInfo(ISessionInfo sessionInfo)
     {
-        SessionInfo returnSessionInfo;
-        
-        lock (_lockObject)
-        {
-            sessionInfo.Turn++;
-            returnSessionInfo = sessionInfo.DeepClone()!;
-        }
-
-        return returnSessionInfo;
+        sessionInfo.IncrementTurn();
     }
 
-    private GameSessionDTO GameSessionMap(SessionInfo sessionInfo)
+    private GameSessionDTO GameSessionMap(ISessionInfo sessionInfo)
     {
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
         

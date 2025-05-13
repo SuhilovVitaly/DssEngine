@@ -6,7 +6,7 @@ public static class ControllerStartupExtensions
     public static IServiceCollection AddControllerServices(this IServiceCollection services)
     {
         // Services 
-        services.AddTransient<Executor, Executor>();
+        services.AddTransient<IExecutor, Executor>();
         services.AddScoped<IWorkerService, WorkerService>();            
 
         return services;

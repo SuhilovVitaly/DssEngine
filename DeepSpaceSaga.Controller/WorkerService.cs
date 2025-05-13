@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-
-namespace DeepSpaceSaga.Controller;
+﻿namespace DeepSpaceSaga.Controller;
 
 public class WorkerService : IWorkerService, IDisposable
 {
@@ -8,14 +6,14 @@ public class WorkerService : IWorkerService, IDisposable
 
     public event Action<string, GameSessionDTO>? OnGetDataFromServer;
 
-    private Executor _gameLoopExecutor;
+    private IExecutor _gameLoopExecutor;
     private readonly IGameServer _gameServer;
     private bool _isDisposed;
     private CancellationTokenSource? _cancellationTokenSource;
     private Task? _gameLoop;
     private bool _isRunning;
 
-    public WorkerService(Executor gameLoopExecutor, IGameServer server)
+    public WorkerService(IExecutor gameLoopExecutor, IGameServer server)
     {
         _gameServer = server;
         _gameLoopExecutor = gameLoopExecutor;
@@ -75,11 +73,11 @@ public class WorkerService : IWorkerService, IDisposable
         }
     }
 
-    private void Calculation(SessionInfo state, CalculationType type)
+    private void Calculation(ISessionInfo state, CalculationType type)
     {
         try
         {
-            Debug.WriteLine($"{state.ToString()} {type} calculation");
+            Logger.Debug($"{state} {type} calculation");
             var session = _gameServer.TurnCalculation(type);
             OnGetDataFromServer?.Invoke(state.ToString(), session);
         }

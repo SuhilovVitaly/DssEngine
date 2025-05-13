@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Implementation.Services;
+
 namespace DeepSpaceSaga.Tests.ServerTests;
 
 public class LocalGameServerTests
@@ -8,7 +10,7 @@ public class LocalGameServerTests
     {
         // Initialize the logger
         TestLoggerRepository.Initialize();
-        _sut = new LocalGameServer();
+        _sut = new LocalGameServer(new SessionInfo());
     }
 
     [Fact]

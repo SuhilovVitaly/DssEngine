@@ -1,9 +1,25 @@
-namespace DeepSpaceSaga.Common.Abstractions.Session.Entities;
+using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 
-public class SessionInfo
+namespace DeepSpaceSaga.Common.Implementation.Services;
+
+public class SessionInfo : ISessionInfo
 {
-    public int Turn { get; set; }
+    public SessionInfo()
+    {
+        Id = Guid.NewGuid();
+    }
+
+    public Guid Id { get; set; }
     
+    private volatile int _turn;
+    public int Turn 
+    { 
+        get => _turn;
+        set => Interlocked.Exchange(ref _turn, value);
+    }
+
+    public int IncrementTurn() => Interlocked.Increment(ref _turn);
+
     private volatile int _tickTotal = 0;
     private volatile int _tickCounter = 0;
     private volatile int _turnCounter = 0;
@@ -24,6 +40,6 @@ public class SessionInfo
     public int IncrementCycleCounter() => Interlocked.Increment(ref _cycleCounter);
 
     public override string ToString() => $"[{CycleCounter:D3}-{TurnCounter:D3}-{TickCounter:D3}-{TickTotal:D3}]";
-    
-    public SessionState State { get; set; } 
+
+    public SessionState State { get; set; }
 }

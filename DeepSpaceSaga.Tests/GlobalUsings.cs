@@ -1,9 +1,10 @@
 // Global using directives
 global using DeepSpaceSaga.Common.Abstractions.Services;
+global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using DeepSpaceSaga.Common.Implementation;
 global using DeepSpaceSaga.Common.Implementation.GameLoop;
+global using DeepSpaceSaga.Common.Implementation.Services;
 global using DeepSpaceSaga.Common.Tools;
-global using DeepSpaceSaga.Controller;
 global using DeepSpaceSaga.Controller.GameLoopTools;
 global using DeepSpaceSaga.Server;
 global using FluentAssertions;

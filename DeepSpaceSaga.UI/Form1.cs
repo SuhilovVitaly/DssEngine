@@ -4,16 +4,16 @@ public partial class Form1 : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(Form1));
 
-    private IGameServer _gameServer;
+    private GameManager _gameServer;
 
     public Form1()
     {
         InitializeComponent();
 
-        _gameServer = Program.ServiceProvider?.GetService<IGameServer>()
+        _gameServer = Program.ServiceProvider?.GetService<GameManager>()
             ?? throw new InvalidOperationException("Failed to resolve IGameServer");
 
-        _gameServer.OnTurnExecute += GameServer_OnGetDataFromServer;
+        _gameServer.OnUpdateGameData += GameServer_OnGetDataFromServer;
     }
 
     private void GameServer_OnGetDataFromServer(GameSessionDTO session)

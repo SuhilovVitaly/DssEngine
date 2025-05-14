@@ -10,26 +10,26 @@ public class GameFlowService : IGameFlowService
     public Action<ISessionInfoService, CalculationType> TurnExecution { get; set; }
 
     public ISessionInfoService SessionInfo { get; }
-    private readonly IExecutor _executor;
+    private readonly ITurnSchedulerService _turnSchedulerService;
     private readonly ISessionContext _sessionContext;
 
-    public GameFlowService(ISessionInfoService sessionInfo, IExecutor executor, ISessionContext sessionContext)
+    public GameFlowService(ISessionInfoService sessionInfo, ITurnSchedulerService turnSchedulerService, ISessionContext sessionContext)
     {
         SessionInfo = sessionInfo;
-        _executor = executor;
+        _turnSchedulerService = turnSchedulerService;
         _sessionContext = sessionContext;
     }
 
     public void SessionPause()
     {
         _sessionContext.Metrics.Add(MetricsServer.SessionPause);
-        _executor.Stop();
+        _turnSchedulerService.Stop();
     }
 
     public void SessionResume()
     {
         _sessionContext.Metrics.Add(MetricsServer.SessionResume);
-        _executor.Resume();
+        _turnSchedulerService.Resume();
     }
 
     public void SessionStart()
@@ -40,12 +40,12 @@ public class GameFlowService : IGameFlowService
         }
 
         _sessionContext.Metrics.Add(MetricsServer.SessionStart);
-        _executor.Start(TurnExecution);
+        _turnSchedulerService.Start(TurnExecution);
     }
 
     public void SessionStop()
     {
         _sessionContext.Metrics.Add(MetricsServer.SessionStop);
-        _executor.Stop();
+        _turnSchedulerService.Stop();
     }
 }

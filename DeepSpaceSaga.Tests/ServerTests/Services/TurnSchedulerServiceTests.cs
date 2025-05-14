@@ -1,16 +1,15 @@
-using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-using DeepSpaceSaga.Common.Implementation.Services;
+using DeepSpaceSaga.Server.Services;
 
-namespace DeepSpaceSaga.Tests.ControllerTests.GameLoopTools;
+namespace DeepSpaceSaga.Tests.ServerTests.Services;
 
-public class ExecutorTests : IDisposable
+public class TurnSchedulerServiceTests : IDisposable
 {
-    private readonly Executor _sut;
+    private readonly TurnSchedulerService _sut;
     private readonly ConcurrentQueue<(ISessionInfoService State, CalculationType Type)> _calculations;
 
-    public ExecutorTests()
+    public TurnSchedulerServiceTests()
     {
-        _sut = new Executor(new SessionInfoService(),  tickInterval: 100); // Larger interval for testing
+        _sut = new TurnSchedulerService(new SessionInfoService(),  tickInterval: 100); // Larger interval for testing
         _calculations = new ConcurrentQueue<(ISessionInfoService, CalculationType)>();
     }
 
@@ -18,7 +17,7 @@ public class ExecutorTests : IDisposable
     public void Constructor_WithInvalidTickInterval_ThrowsArgumentException()
     {
         // Arrange & Act
-        var action = () => new Executor(new SessionInfoService(), tickInterval: 0);
+        var action = () => new TurnSchedulerService(new SessionInfoService(), tickInterval: 0);
 
         // Assert
         action.Should().Throw<ArgumentException>()

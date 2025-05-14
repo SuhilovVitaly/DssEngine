@@ -1,3 +1,4 @@
+using DeepSpaceSaga.Server.Services;
 using FluentAssertions;
 
 namespace DeepSpaceSaga.Tests.ServerTests;
@@ -11,7 +12,7 @@ public class LocalGameServerTests
     private readonly Mock<ISessionContext> _serverContextMock;
     private readonly Mock<IMetricsService> _gameFlowMetricsMock;
     private readonly Mock<IMetricsService> _serverMetricsMock;
-    private readonly Executor _executor;
+    private readonly TurnSchedulerService _turnSchedulerService;
     private GameSessionDTO? _lastExecutedSession;
 
     public LocalGameServerTests()
@@ -21,14 +22,14 @@ public class LocalGameServerTests
         
         // Setup dependencies
         _sessionInfo = new SessionInfoService();
-        _executor = new Executor(_sessionInfo);
+        _turnSchedulerService = new TurnSchedulerService(_sessionInfo);
         _sessionContextMock = new Mock<ISessionContext>();
         _serverContextMock = new Mock<ISessionContext>();
         _gameFlowMetricsMock = new Mock<IMetricsService>();
         _serverMetricsMock = new Mock<IMetricsService>();
         _sessionContextMock.Setup(x => x.Metrics).Returns(_gameFlowMetricsMock.Object);
         _serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
-        _gameFlowService = new GameFlowService(_sessionInfo, _executor, _sessionContextMock.Object);
+        _gameFlowService = new GameFlowService(_sessionInfo, _turnSchedulerService, _sessionContextMock.Object);
         _sut = new LocalGameServer(_gameFlowService, _serverContextMock.Object);
         
         // Subscribe to OnTurnExecute event

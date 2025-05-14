@@ -1,9 +1,11 @@
-﻿namespace DeepSpaceSaga.Controller.GameLoopTools;
+﻿using System.Timers;
+
+namespace DeepSpaceSaga.Server.Services;
 
 /// <summary>
 /// Manages game loop execution with configurable ticks, turns and cycles
 /// </summary>
-public class Executor : IExecutor, IDisposable
+public sealed class TurnSchedulerService : ITurnSchedulerService
 {
     private const int DefaultTicksPerTurn = 10;
     private const int DefaultTurnsPerCycle = 10;
@@ -21,9 +23,10 @@ public class Executor : IExecutor, IDisposable
     /// <summary>
     /// Initializes a new instance of the Executor
     /// </summary>
+    /// <param name="state"></param>
     /// <param name="tickInterval">The interval between ticks in milliseconds</param>
     /// <exception cref="ArgumentException">Thrown when tickInterval is less than 1</exception>
-    public Executor(ISessionInfoService state, int tickInterval = 32)
+    public TurnSchedulerService(ISessionInfoService state, int tickInterval = 32)
     {
         if (tickInterval < MinimumTickInterval)
             throw new ArgumentException($"Tick interval must be at least {MinimumTickInterval}ms", nameof(tickInterval));
@@ -43,7 +46,7 @@ public class Executor : IExecutor, IDisposable
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    public virtual void Start(Action<ISessionInfoService, CalculationType> onTickCalculation)
+    public void Start(Action<ISessionInfoService, CalculationType> onTickCalculation)
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;
@@ -107,17 +110,17 @@ public class Executor : IExecutor, IDisposable
     /// <summary>
     /// Stops the execution loop
     /// </summary>
-    public virtual void Stop()
+    public void Stop()
     {
         if (_isDisposed) return;
         _timer.Enabled = false;
         _state.IsPaused = true;
     }
 
-    public virtual void Resume()
+    public void Resume()
     {
         if (_isDisposed)
-            throw new ObjectDisposedException(nameof(Executor));
+            throw new ObjectDisposedException(nameof(TurnSchedulerService));
             
         if (_calculationEvent == null)
             throw new InvalidOperationException("Cannot resume execution without prior Start call");

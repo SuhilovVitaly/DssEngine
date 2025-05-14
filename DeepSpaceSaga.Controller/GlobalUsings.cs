@@ -3,7 +3,6 @@ global using DeepSpaceSaga.Common.Abstractions.Services;
 global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using DeepSpaceSaga.Common.Implementation;
 global using DeepSpaceSaga.Common.Implementation.GameLoop;
-global using DeepSpaceSaga.Controller.GameLoopTools;
 global using log4net;
 global using Microsoft.Extensions.DependencyInjection;
 global using System;

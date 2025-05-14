@@ -5,7 +5,7 @@ namespace DeepSpaceSaga.Common.Abstractions.Services;
 /// <summary>
 /// Interface for managing game loop execution with configurable ticks, turns and cycles
 /// </summary>
-public interface IExecutor : IDisposable
+public interface ITurnSchedulerService : IDisposable
 {
     /// <summary>
     /// Starts the execution loop

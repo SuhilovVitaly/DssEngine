@@ -3,7 +3,7 @@ namespace DeepSpaceSaga.Tests.CommonTests.Services;
 public class GameFlowServiceTests
 {
     private readonly Mock<ISessionInfoService> _sessionInfoMock;
-    private readonly Mock<IExecutor> _executorMock;
+    private readonly Mock<ITurnSchedulerService> _executorMock;
     private readonly Mock<ISessionContext> _sessionContextMock;
     private readonly Mock<IMetricsService> _metricsMock;
     private readonly GameFlowService _sut;
@@ -11,7 +11,7 @@ public class GameFlowServiceTests
     public GameFlowServiceTests()
     {
         _sessionInfoMock = new Mock<ISessionInfoService>();
-        _executorMock = new Mock<IExecutor>();
+        _executorMock = new Mock<ITurnSchedulerService>();
         _sessionContextMock = new Mock<ISessionContext>();
         _metricsMock = new Mock<IMetricsService>();
         _sessionContextMock.Setup(x => x.Metrics).Returns(_metricsMock.Object);

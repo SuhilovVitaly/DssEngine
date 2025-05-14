@@ -50,7 +50,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ServerTests\" />
+    <Folder Include="ControllerTests\GameLoopTools\" />
   </ItemGroup>
 
 </Project>

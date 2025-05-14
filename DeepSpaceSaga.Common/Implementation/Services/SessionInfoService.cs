@@ -38,6 +38,4 @@ public class SessionInfoService : ISessionInfoService
     public int IncrementCycleCounter() => Interlocked.Increment(ref _cycleCounter);
 
     public override string ToString() => $"[{CycleCounter:D3}-{TurnCounter:D3}-{TickCounter:D3}-{TickTotal:D3}]";
-
-    public SessionState State { get; set; }
 }

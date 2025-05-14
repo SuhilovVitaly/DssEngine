@@ -9,6 +9,7 @@
             services.AddTransient<ITurnSchedulerService, TurnSchedulerService>();
             services.AddScoped<ISessionContext, SessionContext>();
             services.AddSingleton<IGameServer, LocalGameServer>();
+            services.AddSingleton<ISchedulerService, SchedulerService>();
 
             return services;
         }

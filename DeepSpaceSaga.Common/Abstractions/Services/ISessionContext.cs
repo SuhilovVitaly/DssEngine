@@ -2,5 +2,6 @@
 
 public interface ISessionContext
 {
+    ISessionInfoService SessionInfo { get; }
     IMetricsService Metrics { get; }
 }

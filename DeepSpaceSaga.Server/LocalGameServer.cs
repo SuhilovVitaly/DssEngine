@@ -1,30 +1,16 @@
 ﻿namespace DeepSpaceSaga.Server;
 
-public class LocalGameServer : IGameServer
+public class LocalGameServer(ISchedulerService schedulerService, ISessionContext sessionContext): IGameServer
 {
     public event Action<GameSessionDTO>? OnTurnExecute;
 
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
-
-    private readonly IGameFlowService _flowManager;
-    private readonly ISessionContext _sessionContext;
-
-    public LocalGameServer(IGameFlowService gameFlowService, ISessionContext sessionContext)
-    {
-        _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
-        _flowManager = gameFlowService ?? throw new ArgumentNullException(nameof(gameFlowService));
-
-        if (TurnExecution == null)
-        {
-            throw new InvalidOperationException("TurnExecution method must be defined");
-        }
-
-        _flowManager.TurnExecution = TurnExecution;
-    }    
+    private readonly ISchedulerService _flowManager = schedulerService ?? throw new ArgumentNullException(nameof(schedulerService));
+    private readonly ISessionContext _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
 
     public void TurnExecution(ISessionInfoService info, CalculationType type)
     {
-
+        Logger?.Debug($"GameSessionMap {info.ToString()}");
         OnTurnExecute?.Invoke(GameSessionMap(info));
     }
 
@@ -44,7 +30,7 @@ public class LocalGameServer : IGameServer
 
     public void SessionStart()
     {
-        _flowManager.SessionStart();
+        _flowManager.SessionStart(TurnExecution);
     }
 
     public void SessionPause() => _flowManager.SessionPause();

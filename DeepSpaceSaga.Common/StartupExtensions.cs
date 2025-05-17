@@ -7,8 +7,10 @@ public static class StartupExtensions
     {
         //  
         services.AddSingleton<IMetricsService, MetricsService>();
-        services.AddSingleton<ISessionInfoService, SessionInfoService>();
-        services.AddSingleton<IGameFlowService, GameFlowService>();
+        
+        
+        services.AddSingleton<ISaveLoadService, SaveLoadService>();
+        //
 
         return services;
     }

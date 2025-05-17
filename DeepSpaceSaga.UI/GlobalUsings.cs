@@ -8,4 +8,3 @@ global using DeepSpaceSaga.Common.Implementation;
 global using DeepSpaceSaga.Controller;
 global using DeepSpaceSaga.UI.Tools; 
 global using System.Diagnostics.CodeAnalysis;
-global using DeepSpaceSaga.Server;

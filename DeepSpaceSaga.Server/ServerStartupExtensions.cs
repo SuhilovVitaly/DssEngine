@@ -8,6 +8,8 @@
             // Services 
             services.AddScoped<ISessionContext, SessionContext>();
             services.AddSingleton<IGameServer, LocalGameServer>();
+            services.AddSingleton<ISessionInfoService, SessionInfoService>();
+            services.AddSingleton<ISchedulerService, SchedulerService>();
 
             return services;
         }

@@ -1,9 +1,9 @@
-﻿namespace DeepSpaceSaga.Controller.GameLoopTools;
+﻿namespace DeepSpaceSaga.Common.Implementation.Services.GameLoopTools;
 
 /// <summary>
 /// Manages game loop execution with configurable ticks, turns and cycles
 /// </summary>
-public class Executor : IExecutor, IDisposable
+public class Executor : IDisposable
 {
     private const int DefaultTicksPerTurn = 10;
     private const int DefaultTurnsPerCycle = 10;
@@ -78,7 +78,7 @@ public class Executor : IExecutor, IDisposable
     private void TurnUpdate()
     {
         _state.ResetTickCounter();
-        
+
         if (_state.TurnCounter >= _turnsPerCycle)
         {
             CycleUpdate();
@@ -118,10 +118,10 @@ public class Executor : IExecutor, IDisposable
     {
         if (_isDisposed)
             throw new ObjectDisposedException(nameof(Executor));
-            
+
         if (_calculationEvent == null)
             throw new InvalidOperationException("Cannot resume execution without prior Start call");
-            
+
         _timer.Enabled = true;
         _state.IsPaused = false;
     }
@@ -129,7 +129,7 @@ public class Executor : IExecutor, IDisposable
     public void Dispose()
     {
         if (_isDisposed) return;
-        
+
         _timer.Dispose();
         _isDisposed = true;
         GC.SuppressFinalize(this);

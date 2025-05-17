@@ -1,10 +1,5 @@
-using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Implementation.Services;
-using DeepSpaceSaga.Controller;
 using DeepSpaceSaga.Server;
-using log4net;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using DeepSpaceSaga.Server.Services;
 
 namespace DeepSpaceSaga.UI;
 
@@ -62,7 +57,6 @@ internal static class Program
                 services.AddScoped<SessionInfoService>();
                 services.AddCommonServices();
                 services.AddClientControls();
-                services.AddControllerServices();
                 services.AddServerServices();                
             });
     }

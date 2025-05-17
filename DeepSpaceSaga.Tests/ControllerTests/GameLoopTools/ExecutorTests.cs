@@ -1,5 +1,5 @@
-using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-using DeepSpaceSaga.Common.Implementation.Services;
+using DeepSpaceSaga.Common.Implementation.Services.GameLoopTools;
+using DeepSpaceSaga.Server.Services;
 
 namespace DeepSpaceSaga.Tests.ControllerTests.GameLoopTools;
 

@@ -41,7 +41,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj" />
-    <ProjectReference Include="..\DeepSpaceSaga.Controller\DeepSpaceSaga.Controller.csproj" />
     <ProjectReference Include="..\DeepSpaceSaga.Server\DeepSpaceSaga.Server.csproj" />
   </ItemGroup>
 

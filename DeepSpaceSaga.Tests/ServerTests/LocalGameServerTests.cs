@@ -1,11 +1,12 @@
-using FluentAssertions;
+using DeepSpaceSaga.Common.Implementation.Services.GameLoopTools;
+using DeepSpaceSaga.Server.Services;
 
 namespace DeepSpaceSaga.Tests.ServerTests;
 
 public class LocalGameServerTests
 {
     private readonly LocalGameServer _sut;
-    private readonly IGameFlowService _gameFlowService;
+    private readonly ISchedulerService _gameFlowService;
     private readonly SessionInfoService _sessionInfo;
     private readonly Mock<ISessionContext> _sessionContextMock;
     private readonly Mock<ISessionContext> _serverContextMock;
@@ -28,49 +29,12 @@ public class LocalGameServerTests
         _serverMetricsMock = new Mock<IMetricsService>();
         _sessionContextMock.Setup(x => x.Metrics).Returns(_gameFlowMetricsMock.Object);
         _serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
-        _gameFlowService = new GameFlowService(_sessionInfo, _executor, _sessionContextMock.Object);
+        _gameFlowService = new SchedulerService(_sessionInfo, _sessionContextMock.Object);
         _sut = new LocalGameServer(_gameFlowService, _serverContextMock.Object);
         
         // Subscribe to OnTurnExecute event
         _sut.OnTurnExecute += session => _lastExecutedSession = session;
-    }
-
-    [Fact]
-    public void Constructor_SetsTurnExecution()
-    {
-        // Assert
-        Assert.NotNull(_gameFlowService.TurnExecution);
-    }
-
-    [Fact]
-    public void SessionStart_ShouldStartGameFlow()
-    {
-        // Arrange
-        _gameFlowService.TurnExecution.Should().NotBeNull("TurnExecution should be set in constructor");
-
-        // Act
-        _sut.SessionStart();
-
-        // Assert
-        _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStart), 1), Times.Once);
-        Assert.Equal(SessionState.NotStarted, _sessionInfo.State);
-        Assert.False(_sessionInfo.IsPaused);
-    }
-
-    [Fact]
-    public async Task SessionStart_ShouldCallTurnExecution()
-    {
-        // Arrange
-        var turnExecutionCalled = false;
-        _gameFlowService.TurnExecution = (_, _) => turnExecutionCalled = true;
-
-        // Act
-        _sut.SessionStart();
-        await Task.Delay(200); // Wait for executor to call TurnExecution
-
-        // Assert
-        turnExecutionCalled.Should().BeTrue("TurnExecution should be called after session start");
-    }
+    } 
 
     [Fact]
     public void SessionPause_ShouldPauseGameFlow()

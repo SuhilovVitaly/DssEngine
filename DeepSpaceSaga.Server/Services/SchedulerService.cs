@@ -1,22 +1,17 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Abstractions.Session.Entities;
-using DeepSpaceSaga.Common.Metrics;
+﻿using DeepSpaceSaga.Common.Implementation.Services.GameLoopTools;
 
-namespace DeepSpaceSaga.Common.Implementation.Services;
+namespace DeepSpaceSaga.Server.Services;
 
-public class GameFlowService : IGameFlowService
+public class SchedulerService : ISchedulerService
 {
-    // Public delegate for turn execution that can be set externally
-    public Action<ISessionInfoService, CalculationType> TurnExecution { get; set; }
-
     public ISessionInfoService SessionInfo { get; }
-    private readonly IExecutor _executor;
+    private readonly Executor _executor;
     private readonly ISessionContext _sessionContext;
 
-    public GameFlowService(ISessionInfoService sessionInfo, IExecutor executor, ISessionContext sessionContext)
+    public SchedulerService(ISessionInfoService sessionInfo, ISessionContext sessionContext)
     {
         SessionInfo = sessionInfo;
-        _executor = executor;
+        _executor = new Executor(SessionInfo);
         _sessionContext = sessionContext;
     }
 
@@ -32,15 +27,15 @@ public class GameFlowService : IGameFlowService
         _executor.Resume();
     }
 
-    public void SessionStart()
+    public void SessionStart(Action<ISessionInfoService, CalculationType> turnExecution)
     {
-        if (TurnExecution == null)
+        if (turnExecution == null)
         {
             throw new InvalidOperationException("TurnExecution delegate must be set before starting the game flow");
         }
 
         _sessionContext.Metrics.Add(MetricsServer.SessionStart);
-        _executor.Start(TurnExecution);
+        _executor.Start(turnExecution);
     }
 
     public void SessionStop()

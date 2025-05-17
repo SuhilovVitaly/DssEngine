@@ -1,10 +1,9 @@
 ﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
 
-public interface IGameFlowService
+public interface ISchedulerService
 {
     ISessionInfoService SessionInfo { get; }
-    Action<ISessionInfoService, CalculationType> TurnExecution { get; set; }
-    void SessionStart();
+    void SessionStart(Action<ISessionInfoService, CalculationType> turnExecution);
     void SessionPause();
     void SessionResume();
     void SessionStop();

@@ -6,10 +6,10 @@ public class LocalGameServer : IGameServer
 
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
 
-    private readonly IGameFlowService _flowManager;
+    private readonly ISchedulerService _flowManager;
     private readonly ISessionContext _sessionContext;
 
-    public LocalGameServer(IGameFlowService gameFlowService, ISessionContext sessionContext)
+    public LocalGameServer(ISchedulerService gameFlowService, ISessionContext sessionContext)
     {
         _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
         _flowManager = gameFlowService ?? throw new ArgumentNullException(nameof(gameFlowService));
@@ -18,13 +18,10 @@ public class LocalGameServer : IGameServer
         {
             throw new InvalidOperationException("TurnExecution method must be defined");
         }
-
-        _flowManager.TurnExecution = TurnExecution;
     }    
 
     public void TurnExecution(ISessionInfoService info, CalculationType type)
     {
-
         OnTurnExecute?.Invoke(GameSessionMap(info));
     }
 
@@ -44,7 +41,7 @@ public class LocalGameServer : IGameServer
 
     public void SessionStart()
     {
-        _flowManager.SessionStart();
+        _flowManager.SessionStart(TurnExecution);
     }
 
     public void SessionPause() => _flowManager.SessionPause();

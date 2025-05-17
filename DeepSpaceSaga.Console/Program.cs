@@ -1,5 +1,4 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Controller;
 using DeepSpaceSaga.Server;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,8 +47,8 @@ namespace DeepSpaceSaga.Console
 
            ServiceProvider = CreateHostBuilder().Build().Services;
            
-           var _worker = ServiceProvider.GetService<IWorkerService>();
-           _worker.StartProcessing();
+           var _worker = ServiceProvider.GetService<IGameServer>();
+            _worker.SessionStart();
            
            System.Console.WriteLine("Hello, World!");
            System.Console.ReadLine();
@@ -60,7 +59,6 @@ namespace DeepSpaceSaga.Console
            return Host.CreateDefaultBuilder()
                .ConfigureServices((_, services) => {
                    services.AddClientControls();
-                   services.AddControllerServices();
                    services.AddServerServices();
                });
        }

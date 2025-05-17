@@ -61,7 +61,8 @@ internal static class Program
             .ConfigureServices((context, services) => {
                 services.AddScoped<SessionInfoService>();
                 services.AddCommonServices();
-                services.AddClientControls();
+                services.AddClientScreens();
+                services.AddClientServices();
                 services.AddServerServices();                
             });
     }

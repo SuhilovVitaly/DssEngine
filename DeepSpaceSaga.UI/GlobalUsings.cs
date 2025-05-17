@@ -9,3 +9,5 @@ global using DeepSpaceSaga.Controller;
 global using DeepSpaceSaga.UI.Tools; 
 global using System.Diagnostics.CodeAnalysis;
 global using DeepSpaceSaga.Server;
+global using DeepSpaceSaga.UI.Screens.Background;
+global using DeepSpaceSaga.UI.Services.Screens;

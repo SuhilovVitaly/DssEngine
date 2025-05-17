@@ -3,13 +3,17 @@
 public class GameManager
 {
     public event Action<GameSessionDTO>? OnUpdateGameData;
+
+    public IScreensService Screens { get; set; }
     private readonly IGameServer _gameServer;
 
-    public GameManager(IGameServer gameServer) 
+    public GameManager(IGameServer gameServer, IScreensService screenManager) 
     {
         _gameServer = gameServer;
 
         _gameServer.OnTurnExecute += UpdateGameData;
+
+        Screens = screenManager;
     }
 
     public void SessionStart() => _gameServer.SessionStart();

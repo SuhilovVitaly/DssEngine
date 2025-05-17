@@ -1,0 +1,6 @@
+﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
+
+public interface IScreensService
+{
+    void ShowGameMenuScreen();
+}

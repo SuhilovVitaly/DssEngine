@@ -33,6 +33,7 @@
             crlSessionInfo = new Label();
             crlResumeProcessing = new Button();
             crlPauseProcessing = new Button();
+            crlNewGame = new Button();
             SuspendLayout();
             // 
             // crlStartProcessing
@@ -84,6 +85,16 @@
             crlPauseProcessing.UseVisualStyleBackColor = true;
             crlPauseProcessing.Click += crlPauseProcessing_Click;
             // 
+            // crlNewGame
+            // 
+            crlNewGame.Location = new Point(171, 305);
+            crlNewGame.Name = "crlNewGame";
+            crlNewGame.Size = new Size(394, 29);
+            crlNewGame.TabIndex = 0;
+            crlNewGame.Text = "New Game";
+            crlNewGame.UseVisualStyleBackColor = true;
+            crlNewGame.Click += crlNewGame_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -92,6 +103,7 @@
             Controls.Add(crlPauseProcessing);
             Controls.Add(crlResumeProcessing);
             Controls.Add(crlSessionInfo);
+            Controls.Add(crlNewGame);
             Controls.Add(crlStopProcessing);
             Controls.Add(crlStartProcessing);
             DoubleBuffered = true;
@@ -108,5 +120,6 @@
         private Label crlSessionInfo;
         private Button crlResumeProcessing;
         private Button crlPauseProcessing;
+        private Button crlNewGame;
     }
 }

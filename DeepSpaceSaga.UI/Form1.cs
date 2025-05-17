@@ -1,3 +1,5 @@
+using DeepSpaceSaga.UI.Screens.TacticGame;
+
 namespace DeepSpaceSaga.UI;
 
 public partial class Form1 : Form
@@ -48,5 +50,12 @@ public partial class Form1 : Form
     {
         _gameManager.SessionPause();
         Logger.Debug("SessionPause command");
+    }
+
+    private void crlNewGame_Click(object sender, EventArgs e)
+    {
+        var gameScreen = new ScreenTacticGame();
+        gameScreen.Show();
+        Hide();
     }
 }

@@ -1,4 +1,5 @@
 using DeepSpaceSaga.Server.Services;
+using DeepSpaceSaga.Server.Services.Scheduler;
 using FluentAssertions;
 
 namespace DeepSpaceSaga.Tests.ServerTests;

@@ -61,7 +61,6 @@ namespace DeepSpaceSaga.Console
                .ConfigureServices((_, services) => {
                    services.AddCommonServices();
                    services.AddClientControls();
-                   services.AddControllerServices();
                    services.AddServerServices();
                });
        }

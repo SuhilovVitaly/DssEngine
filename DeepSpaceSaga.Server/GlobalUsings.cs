@@ -8,3 +8,4 @@ global using DeepSpaceSaga.Server.Services;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Diagnostics.CodeAnalysis;
 global using Timer = System.Timers.Timer;
+global using System.Timers;

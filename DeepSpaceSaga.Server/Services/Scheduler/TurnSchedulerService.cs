@@ -1,11 +1,9 @@
-﻿using System.Timers;
-
-namespace DeepSpaceSaga.Server.Services;
+﻿namespace DeepSpaceSaga.Server.Services.Scheduler;
 
 /// <summary>
 /// Manages game loop execution with configurable ticks, turns and cycles
 /// </summary>
-public sealed class TurnSchedulerService : ITurnSchedulerService
+public sealed class TurnSchedulerService
 {
     private const int DefaultTicksPerTurn = 10;
     private const int DefaultTurnsPerCycle = 10;
@@ -81,7 +79,7 @@ public sealed class TurnSchedulerService : ITurnSchedulerService
     private void TurnUpdate()
     {
         _state.ResetTickCounter();
-        
+
         if (_state.TurnCounter >= _turnsPerCycle)
         {
             CycleUpdate();
@@ -121,10 +119,10 @@ public sealed class TurnSchedulerService : ITurnSchedulerService
     {
         if (_isDisposed)
             throw new ObjectDisposedException(nameof(TurnSchedulerService));
-            
+
         if (_calculationEvent == null)
             throw new InvalidOperationException("Cannot resume execution without prior Start call");
-            
+
         _timer.Enabled = true;
         _state.IsPaused = false;
     }
@@ -132,7 +130,7 @@ public sealed class TurnSchedulerService : ITurnSchedulerService
     public void Dispose()
     {
         if (_isDisposed) return;
-        
+
         _timer.Dispose();
         _isDisposed = true;
         GC.SuppressFinalize(this);

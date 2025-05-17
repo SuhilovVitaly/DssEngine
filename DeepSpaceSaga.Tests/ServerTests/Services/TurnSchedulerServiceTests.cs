@@ -1,4 +1,4 @@
-using DeepSpaceSaga.Server.Services;
+using DeepSpaceSaga.Server.Services.Scheduler;
 
 namespace DeepSpaceSaga.Tests.ServerTests.Services;
 

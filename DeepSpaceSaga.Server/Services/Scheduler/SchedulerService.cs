@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Server.Services;
+﻿namespace DeepSpaceSaga.Server.Services.Scheduler;
 
 public class SchedulerService(ISessionContext sessionContext) : ISchedulerService
 {
@@ -16,7 +16,7 @@ public class SchedulerService(ISessionContext sessionContext) : ISchedulerServic
         _turnSchedulerService.Resume();
     }
 
-    public void SessionStart(Action<ISessionInfoService, CalculationType> turnExecutionCallBack )
+    public void SessionStart(Action<ISessionInfoService, CalculationType> turnExecutionCallBack)
     {
         if (turnExecutionCallBack == null)
         {

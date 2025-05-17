@@ -62,7 +62,6 @@ internal static class Program
                 services.AddScoped<SessionInfoService>();
                 services.AddCommonServices();
                 services.AddClientControls();
-                services.AddControllerServices();
                 services.AddServerServices();                
             });
     }

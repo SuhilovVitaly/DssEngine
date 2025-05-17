@@ -1,8 +1,8 @@
 ﻿using System.Collections.Concurrent;
 
-namespace DeepSpaceSaga.Common.Implementation.Services
+namespace DeepSpaceSaga.Server.Services.Metrics
 {
-    public class MetricsService: IMetricsService
+    public class MetricsService : IMetricsService
     {
         private readonly ConcurrentDictionary<string, MetricData> _metrics = new();
 

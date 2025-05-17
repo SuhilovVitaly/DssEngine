@@ -1,12 +1,12 @@
 ﻿namespace DeepSpaceSaga.Server;
 
-public class LocalGameServer(ISchedulerService schedulerService, ISessionContext sessionContext): IGameServer
+public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext): IGameServer
 {
     public event Action<GameSessionDTO>? OnTurnExecute;
 
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
     private readonly ISchedulerService _flowManager = schedulerService ?? throw new ArgumentNullException(nameof(schedulerService));
-    private readonly ISessionContext _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
+    private readonly ISessionContextService _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
 
     public void TurnExecution(ISessionInfoService info, CalculationType type)
     {

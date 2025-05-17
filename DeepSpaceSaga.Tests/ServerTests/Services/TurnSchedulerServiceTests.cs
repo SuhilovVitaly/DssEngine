@@ -1,4 +1,5 @@
 using DeepSpaceSaga.Server.Services.Scheduler;
+using DeepSpaceSaga.Server.Services.SessionInfo;
 
 namespace DeepSpaceSaga.Tests.ServerTests.Services;
 

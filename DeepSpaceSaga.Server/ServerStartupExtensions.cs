@@ -1,4 +1,7 @@
-﻿using DeepSpaceSaga.Server.Services.Scheduler;
+﻿using DeepSpaceSaga.Server.Services.Metrics;
+using DeepSpaceSaga.Server.Services.Scheduler;
+using DeepSpaceSaga.Server.Services.SessionContext;
+using DeepSpaceSaga.Server.Services.SessionInfo;
 
 namespace DeepSpaceSaga.Server
 {
@@ -8,7 +11,9 @@ namespace DeepSpaceSaga.Server
         public static IServiceCollection AddServerServices(this IServiceCollection services)
         {
             // Services 
-            services.AddScoped<ISessionContext, SessionContext>();
+            services.AddSingleton<IMetricsService, MetricsService>();
+            services.AddSingleton<ISessionInfoService, SessionInfoService>();
+            services.AddScoped<ISessionContextService, SessionContextService>();
             services.AddSingleton<IGameServer, LocalGameServer>();
             services.AddSingleton<ISchedulerService, SchedulerService>();
 

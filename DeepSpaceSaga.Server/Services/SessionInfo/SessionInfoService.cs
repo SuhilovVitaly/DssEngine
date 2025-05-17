@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Common.Implementation.Services;
+namespace DeepSpaceSaga.Server.Services.SessionInfo;
 
 public class SessionInfoService : ISessionInfoService
 {
@@ -8,10 +8,10 @@ public class SessionInfoService : ISessionInfoService
     }
 
     public Guid Id { get; set; }
-    
+
     private volatile int _turn;
-    public int Turn 
-    { 
+    public int Turn
+    {
         get => _turn;
         set => Interlocked.Exchange(ref _turn, value);
     }

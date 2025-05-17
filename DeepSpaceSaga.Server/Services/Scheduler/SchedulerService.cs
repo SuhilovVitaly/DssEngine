@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Server.Services.Scheduler;
 
-public class SchedulerService(ISessionContext sessionContext) : ISchedulerService
+public class SchedulerService(ISessionContextService sessionContext) : ISchedulerService
 {
     private readonly TurnSchedulerService _turnSchedulerService = new(sessionContext.SessionInfo);
 

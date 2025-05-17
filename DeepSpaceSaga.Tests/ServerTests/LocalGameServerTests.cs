@@ -1,5 +1,6 @@
 using DeepSpaceSaga.Server.Services;
 using DeepSpaceSaga.Server.Services.Scheduler;
+using DeepSpaceSaga.Server.Services.SessionInfo;
 using FluentAssertions;
 
 namespace DeepSpaceSaga.Tests.ServerTests;
@@ -9,8 +10,8 @@ public class LocalGameServerTests
     private readonly LocalGameServer _sut;
     private readonly ISchedulerService _schedulerService;
     private readonly SessionInfoService _sessionInfo;
-    private readonly Mock<ISessionContext> _sessionContextMock;
-    private readonly Mock<ISessionContext> _serverContextMock;
+    private readonly Mock<ISessionContextService> _sessionContextMock;
+    private readonly Mock<ISessionContextService> _serverContextMock;
     private readonly Mock<IMetricsService> _gameFlowMetricsMock;
     private readonly Mock<IMetricsService> _serverMetricsMock;
     private readonly TurnSchedulerService _turnSchedulerService;
@@ -24,8 +25,8 @@ public class LocalGameServerTests
         // Setup dependencies
         _sessionInfo = new SessionInfoService();
         _turnSchedulerService = new TurnSchedulerService(_sessionInfo);
-        _sessionContextMock = new Mock<ISessionContext>();
-        _serverContextMock = new Mock<ISessionContext>();
+        _sessionContextMock = new Mock<ISessionContextService>();
+        _serverContextMock = new Mock<ISessionContextService>();
         _gameFlowMetricsMock = new Mock<IMetricsService>();
         _serverMetricsMock = new Mock<IMetricsService>();
         _sessionContextMock.Setup(x => x.Metrics).Returns(_gameFlowMetricsMock.Object);

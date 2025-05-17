@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Server.Services.Metrics;
+
 namespace DeepSpaceSaga.Tests.CommonTests.Services;
 
 public class MetricsServiceTests

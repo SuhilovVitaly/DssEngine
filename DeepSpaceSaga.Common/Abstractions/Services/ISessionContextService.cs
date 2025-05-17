@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
 
-public interface ISessionContext
+public interface ISessionContextService
 {
     ISessionInfoService SessionInfo { get; }
     IMetricsService Metrics { get; }

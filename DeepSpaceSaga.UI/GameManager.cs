@@ -18,7 +18,11 @@ public class GameManager
         GameContext = gameContext;
     }
 
-    public void SessionStart() => _gameServer.SessionStart();
+    public void SessionStart()
+    {
+        _gameServer.SessionStart();
+        Screens.ShowTacticalMapScreen();
+    }
 
     public void SessionPause() => _gameServer.SessionPause();
 

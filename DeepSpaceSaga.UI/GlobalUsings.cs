@@ -16,3 +16,7 @@ global using DeepSpaceSaga.Server.Services.SessionInfo;
 global using DeepSpaceSaga.UI.Screens.TacticGame;
 global using DeepSpaceSaga.UI.Screens.GameMenu;
 global using DeepSpaceSaga.UI.Services.GameContext;
+global using System.Drawing;
+global using System.Windows.Forms;
+global using DeepSpaceSaga.UI.Screens.CommonControls;
+global using DeepSpaceSaga.UI.Screens.TacticalMap;

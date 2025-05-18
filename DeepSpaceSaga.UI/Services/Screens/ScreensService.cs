@@ -2,23 +2,30 @@
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
-public class ScreensService(ScreenBackground screenBackground) : IScreensService
+public class ScreensService : IScreensService
 {
-    private readonly ScreenBackground _screenBackground = screenBackground;
-    private Form _screen;
+    private readonly ScreenBackground _screenBackground;
+
+    public ScreensService(ScreenBackground screenBackground)
+    {
+
+        _screenBackground = screenBackground;
+
+        _screenBackground.FirstShown += (sender, e) =>
+        {
+            ShowGameMenuScreen();
+        };
+    }
 
     public void ShowGameMenuScreen()
     {
-        _screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
-
-        _screenBackground.OpenWindow(_screen);
+        var screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
+        _screenBackground.ShowChildForm(screen);
     }
 
     public void ShowTacticalMapScreen()
     {
-        _screen.Visible = false;
-        _screen = Program.ServiceProvider.GetService<ScreenTacticalMap>();
-
-        _screenBackground.OpenWindow(_screen);
+        var screen = Program.ServiceProvider.GetService<ScreenTacticalMap>();
+        _screenBackground.ShowChildForm(screen);
     }
 }

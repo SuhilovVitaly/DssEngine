@@ -2,28 +2,41 @@
 
 public partial class ScreenGameMenu : Form
 {
-    private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(ScreenGameMenu));
-
     private GameManager _gameManager;
-
     public ScreenGameMenu(GameManager gameManager)
     {
         InitializeComponent();
 
-        _gameManager = gameManager ?? throw new InvalidOperationException("Failed to resolve GameManager");
-
-        Logger?.Info($"ScreenGameMenu builded susseccefully");
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(GameManager));
     }
 
-    private void crlExitGame_Click(object sender, EventArgs e)
+    protected override void OnPaint(PaintEventArgs e)
     {
-        Logger?.Info($"Exit application");
+        base.OnPaint(e);
+
+        // Draw border
+        using Pen borderPen = new Pen(UiConstants.FormBorderColor, UiConstants.FormBorderSize);
+        Rectangle borderRect = new(
+            UiConstants.FormBorderSize / 2,
+            UiConstants.FormBorderSize / 2,
+            Width - UiConstants.FormBorderSize,
+            Height - UiConstants.FormBorderSize
+        );
+        e.Graphics.DrawRectangle(borderPen, borderRect);
+    }
+
+    private void Event_ApplicationExit(object sender, EventArgs e)
+    {
         Application.Exit();
     }
 
-    private void Event_NewGameStart(object sender, EventArgs e)
+    private void Event_StartNewGameSession(object sender, EventArgs e)
     {
-        Logger?.Info($"New game session start");
-        _gameManager.Screens.ShowTacticalMapScreen();
+        _gameManager.SessionStart();
+    }
+
+    private void Event_LoadGame(object sender, EventArgs e)
+    {
+        
     }
 }

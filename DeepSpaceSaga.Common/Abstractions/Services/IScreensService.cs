@@ -3,4 +3,6 @@
 public interface IScreensService
 {
     void ShowGameMenuScreen();
+
+    void ShowTacticalMapScreen();
 }

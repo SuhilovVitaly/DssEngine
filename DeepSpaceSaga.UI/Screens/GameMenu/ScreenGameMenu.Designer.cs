@@ -29,27 +29,42 @@
         private void InitializeComponent()
         {
             crlExitGame = new Button();
+            crlNewGame = new Button();
             SuspendLayout();
             // 
             // crlExitGame
             // 
-            crlExitGame.Location = new Point(204, 370);
+            crlExitGame.Location = new Point(255, 462);
+            crlExitGame.Margin = new Padding(4, 4, 4, 4);
             crlExitGame.Name = "crlExitGame";
-            crlExitGame.Size = new Size(394, 29);
+            crlExitGame.Size = new Size(492, 36);
             crlExitGame.TabIndex = 1;
             crlExitGame.Text = "Exit Game";
             crlExitGame.UseVisualStyleBackColor = true;
             crlExitGame.Click += crlExitGame_Click;
             // 
+            // crlNewGame
+            // 
+            crlNewGame.Location = new Point(255, 86);
+            crlNewGame.Margin = new Padding(4);
+            crlNewGame.Name = "crlNewGame";
+            crlNewGame.Size = new Size(492, 36);
+            crlNewGame.TabIndex = 2;
+            crlNewGame.Text = "New Game";
+            crlNewGame.UseVisualStyleBackColor = true;
+            crlNewGame.Click += Event_NewGameStart;
+            // 
             // ScreenGameMenu
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DimGray;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1000, 562);
+            Controls.Add(crlNewGame);
             Controls.Add(crlExitGame);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 4, 4, 4);
             Name = "ScreenGameMenu";
             StartPosition = FormStartPosition.CenterParent;
             Text = "ScreenGameMenu";
@@ -59,5 +74,6 @@
         #endregion
 
         private Button crlExitGame;
+        private Button crlNewGame;
     }
 }

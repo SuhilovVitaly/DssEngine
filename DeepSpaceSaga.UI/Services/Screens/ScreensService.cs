@@ -1,15 +1,24 @@
-﻿using DeepSpaceSaga.UI.Screens.GameMenu;
+﻿using DeepSpaceSaga.UI.Screens.TacticalMap;
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
-internal class ScreensService(ScreenBackground screenBackground) : IScreensService
+public class ScreensService(ScreenBackground screenBackground) : IScreensService
 {
     private readonly ScreenBackground _screenBackground = screenBackground;
+    private Form _screen;
 
     public void ShowGameMenuScreen()
     {
-        var screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
+        _screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
 
-        _screenBackground.OpenWindow(screen);
+        _screenBackground.OpenWindow(_screen);
+    }
+
+    public void ShowTacticalMapScreen()
+    {
+        _screen.Visible = false;
+        _screen = Program.ServiceProvider.GetService<ScreenTacticalMap>();
+
+        _screenBackground.OpenWindow(_screen);
     }
 }

@@ -2,13 +2,9 @@
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
-internal class ScreensService : IScreensService
+internal class ScreensService(ScreenBackground screenBackground) : IScreensService
 {
-    private ScreenBackground _screenBackground;
-    public ScreensService(ScreenBackground screenBackground)
-    {
-        _screenBackground = screenBackground;
-    }
+    private readonly ScreenBackground _screenBackground = screenBackground;
 
     public void ShowGameMenuScreen()
     {

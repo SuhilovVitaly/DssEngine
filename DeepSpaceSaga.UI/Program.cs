@@ -1,11 +1,3 @@
-using DeepSpaceSaga.Common;
-using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Server;
-using DeepSpaceSaga.Server.Services.SessionInfo;
-using log4net;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 namespace DeepSpaceSaga.UI;
 
 internal static class Program
@@ -52,7 +44,8 @@ internal static class Program
         ServiceProvider = CreateHostBuilder().Build().Services;
 
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
+        // Application.Run(new Form1());
+        Application.Run(ServiceProvider?.GetService<ScreenTacticGame>());
     }
 
     static IHostBuilder CreateHostBuilder()

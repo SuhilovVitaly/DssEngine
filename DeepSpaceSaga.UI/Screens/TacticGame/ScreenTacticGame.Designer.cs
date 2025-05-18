@@ -30,7 +30,7 @@
         {
             SuspendLayout();
             // 
-            // TacticGameScreen
+            // ScreenTacticGame
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -38,7 +38,7 @@
             ClientSize = new Size(2055, 976);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "TacticGameScreen";
+            Name = "ScreenTacticGame";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "TacticGameScreen";
             WindowState = FormWindowState.Maximized;

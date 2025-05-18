@@ -1,12 +1,12 @@
-﻿using DeepSpaceSaga.UI.Screens.GameMenu;
-
-namespace DeepSpaceSaga.UI
+﻿namespace DeepSpaceSaga.UI
 {
     [ExcludeFromCodeCoverage]
     public static class StartupExtensions
     {
         public static IServiceCollection AddClientServices(this IServiceCollection services)
         {
+            //
+            services.AddSingleton<IGameContextService, GameContextService>();
             services.AddSingleton<IScreensService, ScreensService>();
             services.AddSingleton<GameManager>();
             return services;
@@ -16,6 +16,7 @@ namespace DeepSpaceSaga.UI
         {
             services.AddScoped<ScreenBackground>();
             services.AddScoped<ScreenGameMenu>();
+            services.AddScoped<ScreenTacticGame>();
             return services;
         }
     }

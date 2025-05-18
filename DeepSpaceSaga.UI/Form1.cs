@@ -54,7 +54,7 @@ public partial class Form1 : Form
 
     private void crlNewGame_Click(object sender, EventArgs e)
     {
-        var gameScreen = new ScreenTacticGame();
+        var gameScreen = Program.ServiceProvider?.GetService<ScreenTacticGame>();
         gameScreen.Show();
         Hide();
     }

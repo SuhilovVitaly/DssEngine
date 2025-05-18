@@ -31,7 +31,7 @@ public partial class ScreenBackground : Form
     private void OpenModalWindow(Form childForm)
     {
         childForm.ShowInTaskbar = false;
-        childForm.Visible = true;
+        childForm.StartPosition = FormStartPosition.CenterScreen;
         childForm.ShowDialog(this);
     }
 }

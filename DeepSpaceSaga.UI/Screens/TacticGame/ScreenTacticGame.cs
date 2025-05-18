@@ -6,12 +6,11 @@ public partial class ScreenTacticGame : Form
 
     private GameManager _gameManager;
 
-    public ScreenTacticGame()
+    public ScreenTacticGame(GameManager gameManager)
     {
         InitializeComponent();
 
-        _gameManager = Program.ServiceProvider?.GetService<GameManager>()
-            ?? throw new InvalidOperationException("Failed to resolve GameManager");
+        _gameManager = gameManager ?? throw new InvalidOperationException("Failed to resolve GameManager");
 
         _gameManager.OnUpdateGameData += GameServer_OnGetDataFromServer;
 

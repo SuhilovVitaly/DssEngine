@@ -1,7 +1,13 @@
 ﻿namespace DeepSpaceSaga.Server.Services.SessionContext;
 
-public class SessionContextService(ISessionInfoService sessionInfo, IMetricsService metrics) : ISessionContextService
+public class SessionContextService : ISessionContextService
 {
-    public ISessionInfoService SessionInfo { get; } = sessionInfo;
-    public IMetricsService Metrics { get; } = metrics;
+    public SessionContextService(ISessionInfoService sessionInfo, IMetricsService metrics)
+    {
+        SessionInfo = sessionInfo ?? throw new ArgumentNullException(nameof(sessionInfo));
+        Metrics = metrics ?? throw new ArgumentNullException(nameof(metrics));
+    }
+
+    public ISessionInfoService SessionInfo { get; }
+    public IMetricsService Metrics { get; }
 }

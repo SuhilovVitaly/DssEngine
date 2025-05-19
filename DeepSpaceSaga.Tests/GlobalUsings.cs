@@ -18,3 +18,5 @@ global using System.Threading.Tasks;
 global using Xunit;
 global using System.Drawing;
 global using DeepSpaceSaga.Common.Geometry;
+global using DeepSpaceSaga.Server.Services.SessionContext;
+global using DeepSpaceSaga.Server.Services.SessionInfo;

@@ -146,4 +146,87 @@ public class MetricsServiceTests
         Assert.False(success);
         Assert.Equal(0, average);
     }
+
+    [Fact]
+    public void Add_ShouldUseDefaultIncrementValue()
+    {
+        // Arrange
+        const string metricName = "default_increment_metric";
+
+        // Act
+        _serverMetrics.Add(metricName);
+        var result = _serverMetrics.Get(metricName);
+
+        // Assert
+        Assert.Equal(1, result);
+    }
+
+    [Fact]
+    public void AddMilliseconds_MultipleCalls_ShouldAccumulateAndAverageCorrectly()
+    {
+        // Arrange
+        const string metricName = "multi_perf_metric";
+        var values = new[] { 10.0, 20.0, 30.0, 40.0 };
+        var expectedSum = values.Sum();
+        var expectedAvg = values.Average();
+
+        // Act
+        foreach (var v in values)
+            _serverMetrics.AddMilliseconds(metricName, v);
+        var sum = _serverMetrics.Get(metricName);
+        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+
+        // Assert
+        Assert.Equal(expectedSum, sum);
+        Assert.Equal(expectedAvg, avg);
+    }
+
+    [Fact]
+    public void GetAverageMilliseconds_AfterAdd_ShouldReturnCorrectAverage()
+    {
+        // Arrange
+        const string metricName = "add_metric";
+        _serverMetrics.Add(metricName, 2.0);
+        _serverMetrics.Add(metricName, 4.0);
+
+        // Act
+        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+
+        // Assert
+        Assert.Equal((2.0 + 4.0) / 2, avg);
+    }
+
+    [Fact]
+    public void Add_And_AddMilliseconds_SameMetric_ShouldAccumulateCorrectly()
+    {
+        // Arrange
+        const string metricName = "mixed_metric";
+        _serverMetrics.Add(metricName, 5.0);
+        _serverMetrics.AddMilliseconds(metricName, 10.0);
+
+        // Act
+        var value = _serverMetrics.Get(metricName);
+        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+
+        // Assert
+        Assert.Equal(15.0, value);
+        Assert.Equal(15.0 / 2, avg);
+    }
+
+    [Fact]
+    public void Add_WithZeroAndNegativeValues_ShouldHandleCorrectly()
+    {
+        // Arrange
+        const string metricName = "zero_negative_metric";
+        _serverMetrics.Add(metricName, 0);
+        _serverMetrics.Add(metricName, -5.0);
+
+        // Act
+        var value = _serverMetrics.Get(metricName);
+        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+
+        // Assert
+        Assert.Equal(-5.0, value);
+        Assert.Equal((-5.0) / 2, avg);
+    }
 }

@@ -6,13 +6,13 @@ public class SchedulerService(ISessionContextService sessionContext) : ISchedule
 
     public void SessionPause()
     {
-        sessionContext.Metrics.Add(Common.Metrics.MetricsServer.SessionPause);
+        sessionContext.Metrics.Add(MetricsServer.SessionPause);
         _turnSchedulerService.Stop();
     }
 
     public void SessionResume()
     {
-        sessionContext.Metrics.Add(Common.Metrics.MetricsServer.SessionResume);
+        sessionContext.Metrics.Add(MetricsServer.SessionResume);
         _turnSchedulerService.Resume();
     }
 
@@ -23,13 +23,13 @@ public class SchedulerService(ISessionContextService sessionContext) : ISchedule
             throw new InvalidOperationException("TurnExecutionCallBack delegate must be set before starting the game flow");
         }
 
-        sessionContext.Metrics.Add(Common.Metrics.MetricsServer.SessionStart);
+        sessionContext.Metrics.Add(MetricsServer.SessionStart);
         _turnSchedulerService.Start(turnExecutionCallBack);
     }
 
     public void SessionStop()
     {
-        sessionContext.Metrics.Add(Common.Metrics.MetricsServer.SessionStop);
+        sessionContext.Metrics.Add(MetricsServer.SessionStop);
         _turnSchedulerService.Stop();
     }
 }

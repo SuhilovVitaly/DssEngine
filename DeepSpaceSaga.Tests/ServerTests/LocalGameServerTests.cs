@@ -1,7 +1,5 @@
-using DeepSpaceSaga.Server.Services;
 using DeepSpaceSaga.Server.Services.Scheduler;
 using DeepSpaceSaga.Server.Services.SessionInfo;
-using FluentAssertions;
 
 namespace DeepSpaceSaga.Tests.ServerTests;
 
@@ -31,11 +29,22 @@ public class LocalGameServerTests
         _serverMetricsMock = new Mock<IMetricsService>();
         _sessionContextMock.Setup(x => x.Metrics).Returns(_gameFlowMetricsMock.Object);
         _serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
+        _sessionContextMock.Setup(x => x.SessionInfo).Returns(_sessionInfo);
         _schedulerService = new SchedulerService(_sessionContextMock.Object);
         _sut = new LocalGameServer(_schedulerService, _serverContextMock.Object);
         
         // Subscribe to OnTurnExecute event
         _sut.OnTurnExecute += session => _lastExecutedSession = session;
+    }
+
+    [Fact]
+    public void SessionStart_ShouldStartGameFlow()
+    {
+        // Act
+        _sut.SessionStart();
+        
+        // Assert
+        _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStart), 1), Times.Once);
     }
 
     [Fact]
@@ -49,7 +58,7 @@ public class LocalGameServerTests
 
         // Assert
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionPause), 1), Times.Once);
-        Assert.True(_sessionInfo.IsPaused);
+        _sessionInfo.IsPaused.Should().BeTrue();
     }
 
     [Fact]
@@ -64,7 +73,7 @@ public class LocalGameServerTests
 
         // Assert
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionResume), 1), Times.Once);
-        Assert.False(_sessionInfo.IsPaused);
+        _sessionInfo.IsPaused.Should().BeFalse();
     }
 
     [Fact]
@@ -78,7 +87,7 @@ public class LocalGameServerTests
 
         // Assert
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStop), 1), Times.Once);
-        Assert.True(_sessionInfo.IsPaused);
+        _sessionInfo.IsPaused.Should().BeTrue();
     }
 
     [Fact]
@@ -91,11 +100,11 @@ public class LocalGameServerTests
         _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
 
         // Assert
-        Assert.NotNull(_lastExecutedSession);
-        Assert.NotEqual(Guid.Empty, _lastExecutedSession.Id);
-        Assert.NotEqual(string.Empty, _lastExecutedSession.FlowState);
-        Assert.Equal(initialTurn + 1, _lastExecutedSession.Turn);
-        Assert.NotNull(_lastExecutedSession.SpaceMap);
+        _lastExecutedSession.Should().NotBeNull();
+        _lastExecutedSession!.Id.Should().NotBe(Guid.Empty);
+        _lastExecutedSession.FlowState.Should().NotBeEmpty();
+        _lastExecutedSession.Turn.Should().Be(initialTurn + 1);
+        _lastExecutedSession.SpaceMap.Should().NotBeNull();
     }
 
     [Theory]
@@ -111,7 +120,58 @@ public class LocalGameServerTests
         _sut.TurnExecution(_sessionInfo, type);
 
         // Assert
-        Assert.NotNull(_lastExecutedSession);
-        Assert.Equal(initialTurn + 1, _lastExecutedSession.Turn);
+        _lastExecutedSession.Should().NotBeNull();
+        _lastExecutedSession!.Turn.Should().Be(initialTurn + 1);
+    }
+    
+    [Fact]
+    public void GameSessionMap_ShouldCreateCorrectDTO()
+    {
+        // Arrange & Act
+        _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
+        
+        // Assert
+        _lastExecutedSession.Should().NotBeNull();
+        _lastExecutedSession!.Id.Should().NotBe(Guid.Empty);
+        _lastExecutedSession.SpaceMap.Should().BeOfType<List<int>>();
+        _lastExecutedSession.SpaceMap.Should().BeEmpty();
+    }
+    
+    [Fact]
+    public void TurnExecution_WithoutSubscribers_ShouldNotThrowException()
+    {
+        // Arrange
+        var localGameServer = new LocalGameServer(_schedulerService, _serverContextMock.Object);
+        
+        // Act & Assert
+        var action = () => localGameServer.TurnExecution(_sessionInfo, CalculationType.Turn);
+        action.Should().NotThrow();
+    }
+    
+    [Fact]
+    public void Constructor_WithNullDependencies_ShouldThrowArgumentNullException()
+    {
+        // Act & Assert
+        var action1 = () => new LocalGameServer(null!, _serverContextMock.Object);
+        var action2 = () => new LocalGameServer(_schedulerService, null!);
+        
+        action1.Should().Throw<ArgumentNullException>().WithParameterName("schedulerService");
+        action2.Should().Throw<ArgumentNullException>().WithParameterName("sessionContext");
+    }
+    
+    [Fact]
+    public void SessionLifecycle_FullWorkflow_ShouldExecuteCorrectly()
+    {
+        // Arrange & Act
+        _sut.SessionStart();
+        _sut.SessionPause();
+        _sut.SessionResume();
+        _sut.SessionStop();
+        
+        // Assert
+        _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStart), 1), Times.Once);
+        _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionPause), 1), Times.Once);
+        _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionResume), 1), Times.Once);
+        _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStop), 1), Times.Once);
     }
 } 

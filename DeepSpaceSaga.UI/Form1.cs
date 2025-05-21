@@ -1,3 +1,4 @@
+using DeepSpaceSaga.Common.Abstractions.Dto;
 using DeepSpaceSaga.UI.Screens.TacticGame;
 
 namespace DeepSpaceSaga.UI;
@@ -18,14 +19,14 @@ public partial class Form1 : Form
         _gameManager.OnUpdateGameData += GameServer_OnGetDataFromServer;
     }
 
-    private void GameServer_OnGetDataFromServer(GameSessionDTO session)
+    private void GameServer_OnGetDataFromServer(GameSessionDto session)
     {
         CrossThreadExtensions.PerformSafely(this, RefreshSessionInfo, session);
     }
 
-    private void RefreshSessionInfo(GameSessionDTO session)
+    private void RefreshSessionInfo(GameSessionDto session)
     {
-        crlSessionInfo.Text = session.FlowState + " Turn: " + session.Turn;
+        crlSessionInfo.Text = " Turn: " + session.Turn;
     }
 
     private void crlStartProcessing_Click(object sender, EventArgs e)

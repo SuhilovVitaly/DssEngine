@@ -2,7 +2,7 @@
 
 public class GameManager
 {
-    public event Action<GameSessionDTO>? OnUpdateGameData;
+    public event Action<GameSessionDto>? OnUpdateGameData;
 
     public IScreensService Screens { get; set; }
     public IGameContextService GameContext { get; }
@@ -12,7 +12,7 @@ public class GameManager
     {
         _gameServer = gameServer;
 
-        _gameServer.OnTurnExecute += UpdateGameData;
+        _gameServer.OnTurnExecute += OnUpdateGameData;
 
         Screens = screenManager;
         GameContext = gameContext;
@@ -20,7 +20,7 @@ public class GameManager
 
     public void SessionStart()
     {
-        _gameServer.SessionStart();
+        _gameServer.SessionStart(new GameSession());
         Screens.ShowTacticalMapScreen();
     }
 
@@ -30,7 +30,7 @@ public class GameManager
 
     public void SessionStop() => _gameServer.SessionStop();
 
-    private void UpdateGameData(GameSessionDTO session)
+    private void UpdateGameData(GameSessionDto session)
     {
         OnUpdateGameData?.Invoke(session);
     }

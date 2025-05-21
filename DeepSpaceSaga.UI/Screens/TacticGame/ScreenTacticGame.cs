@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticGame;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto;
+
+namespace DeepSpaceSaga.UI.Screens.TacticGame;
 
 public partial class ScreenTacticGame : Form
 {
@@ -18,12 +20,12 @@ public partial class ScreenTacticGame : Form
         KeyDown += Window_KeyDown;
     }
 
-    private void GameServer_OnGetDataFromServer(GameSessionDTO session)
+    private void GameServer_OnGetDataFromServer(GameSessionDto session)
     {
         CrossThreadExtensions.PerformSafely(this, RefreshSessionInfo, session);
     }
 
-    private void RefreshSessionInfo(GameSessionDTO session)
+    private void RefreshSessionInfo(GameSessionDto session)
     {
         
     }

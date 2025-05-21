@@ -20,3 +20,5 @@ global using System.Drawing;
 global using System.Windows.Forms;
 global using DeepSpaceSaga.UI.Screens.CommonControls;
 global using DeepSpaceSaga.UI.Screens.TacticalMap;
+global using DeepSpaceSaga.Common.Abstractions.Dto;
+global using DeepSpaceSaga.Common.Abstractions.Entities;

@@ -1,3 +1,6 @@
+using DeepSpaceSaga.Common.Abstractions.Dto;
+using DeepSpaceSaga.Common.Abstractions.Entities;
+
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class CelestialObjectMapper

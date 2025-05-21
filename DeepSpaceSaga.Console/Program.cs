@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common;
+using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.Server;
 using log4net;
@@ -49,7 +50,33 @@ namespace DeepSpaceSaga.Console
            ServiceProvider = CreateHostBuilder().Build().Services;
            
            var _worker = ServiceProvider.GetService<IGameServer>();
-           _worker.SessionStart();
+           
+           var session = new GameSession();
+
+           var asteroid = new CelestialObject { X = 10, Y = 20 };
+           var spacecraft = new CelestialObject { X = 0, Y = 0, Type = CelestialObjectType.Spacecraft };
+
+           session.CelestialObjects.Add(asteroid.CelestialObjectId, asteroid);
+           session.CelestialObjects.Add(spacecraft.CelestialObjectId, spacecraft);
+           
+           
+           _worker.SessionStart(session);
+           
+           var firstCommand = new Command();
+
+           _worker.AddCommand(firstCommand);
+
+           Thread.Sleep(2000);
+
+           var secondCommand = new Command();
+
+           _worker.AddCommand(secondCommand);
+           
+           var contextDtoBeforeRemoveCommand = _worker.GetSessionContextDto();
+
+           _worker.RemoveCommand(firstCommand.CommandId);
+
+           var contextDtoAfterRemoveCommandWithoutDelay = _worker.GetSessionContextDto();
            
            System.Console.WriteLine("Hello, World!");
            System.Console.ReadLine();

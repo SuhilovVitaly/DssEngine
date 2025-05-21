@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Dto;
+using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Server.Services.Scheduler;
 using DeepSpaceSaga.Server.Services.SessionInfo;
 
@@ -13,7 +15,7 @@ public class LocalGameServerTests
     private readonly Mock<IMetricsService> _gameFlowMetricsMock;
     private readonly Mock<IMetricsService> _serverMetricsMock;
     private readonly TurnSchedulerService _turnSchedulerService;
-    private GameSessionDTO? _lastExecutedSession;
+    private GameSessionDto? _lastExecutedSession;
 
     public LocalGameServerTests()
     {
@@ -41,7 +43,7 @@ public class LocalGameServerTests
     public void SessionStart_ShouldStartGameFlow()
     {
         // Act
-        _sut.SessionStart();
+        _sut.SessionStart(new GameSession());
         
         // Assert
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStart), 1), Times.Once);
@@ -51,7 +53,7 @@ public class LocalGameServerTests
     public void SessionPause_ShouldPauseGameFlow()
     {
         // Arrange
-        _sut.SessionStart();
+        _sut.SessionStart(new GameSession());
 
         // Act
         _sut.SessionPause();
@@ -65,7 +67,7 @@ public class LocalGameServerTests
     public void SessionResume_ShouldResumeGameFlow()
     {
         // Arrange
-        _sut.SessionStart();
+        _sut.SessionStart(new GameSession());
         _sut.SessionPause();
 
         // Act
@@ -80,7 +82,7 @@ public class LocalGameServerTests
     public void SessionStop_ShouldStopGameFlow()
     {
         // Arrange
-        _sut.SessionStart();
+        _sut.SessionStart(new GameSession());
 
         // Act
         _sut.SessionStop();
@@ -102,9 +104,7 @@ public class LocalGameServerTests
         // Assert
         _lastExecutedSession.Should().NotBeNull();
         _lastExecutedSession!.Id.Should().NotBe(Guid.Empty);
-        _lastExecutedSession.FlowState.Should().NotBeEmpty();
         _lastExecutedSession.Turn.Should().Be(initialTurn + 1);
-        _lastExecutedSession.SpaceMap.Should().NotBeNull();
     }
 
     [Theory]
@@ -133,8 +133,6 @@ public class LocalGameServerTests
         // Assert
         _lastExecutedSession.Should().NotBeNull();
         _lastExecutedSession!.Id.Should().NotBe(Guid.Empty);
-        _lastExecutedSession.SpaceMap.Should().BeOfType<List<int>>();
-        _lastExecutedSession.SpaceMap.Should().BeEmpty();
     }
     
     [Fact]
@@ -163,7 +161,7 @@ public class LocalGameServerTests
     public void SessionLifecycle_FullWorkflow_ShouldExecuteCorrectly()
     {
         // Arrange & Act
-        _sut.SessionStart();
+        _sut.SessionStart(new GameSession());
         _sut.SessionPause();
         _sut.SessionResume();
         _sut.SessionStop();

@@ -2,10 +2,14 @@
 
 public interface IGameServer
 {
-    event Action<GameSessionDTO>? OnTurnExecute;
-
-    void SessionStart();
+    event Action<GameSessionDto>? OnTurnExecute;
+    
+    GameSessionDto GetSessionContextDto();
+    void SessionStart(GameSession session);
     void SessionPause();
     void SessionResume();
     void SessionStop();
+
+    void AddCommand(Command command);
+    void RemoveCommand(Guid commandId);
 }

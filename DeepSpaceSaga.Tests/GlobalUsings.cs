@@ -20,3 +20,5 @@ global using System.Drawing;
 global using DeepSpaceSaga.Common.Geometry;
 global using DeepSpaceSaga.Server.Services.SessionContext;
 global using DeepSpaceSaga.Server.Services.SessionInfo;
+global using DeepSpaceSaga.Common.Abstractions.Entities;
+global using DeepSpaceSaga.Common.Abstractions.Mappers;

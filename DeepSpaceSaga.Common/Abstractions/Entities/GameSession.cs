@@ -2,6 +2,11 @@ namespace DeepSpaceSaga.Common.Abstractions.Entities;
 
 public class GameSession
 {
+    public GameSession()
+    {
+        Id = Guid.NewGuid();
+    }
+
     public Guid Id { get; set; }
     public Dictionary<Guid, CelestialObject> CelestialObjects { get; set; } = new();
     public Dictionary<Guid, Command> Commands { get; set; } = new();

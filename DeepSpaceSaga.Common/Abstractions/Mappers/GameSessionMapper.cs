@@ -22,6 +22,7 @@ public static class GameSessionMapper
 
         return new GameSessionDto
         {
+            Id = gameSessionContext.Id,
             CelestialObjects = celestialObjectsCopy,
             Commands = commandsCopy
         };

@@ -1,8 +1,3 @@
-using DeepSpaceSaga.Common.Abstractions.Dto;
-using DeepSpaceSaga.Common.Abstractions.Entities;
-using DeepSpaceSaga.Server.Services.Scheduler;
-using DeepSpaceSaga.Server.Services.SessionInfo;
-
 namespace DeepSpaceSaga.Tests.ServerTests;
 
 public class LocalGameServerTests
@@ -97,6 +92,7 @@ public class LocalGameServerTests
     {
         // Arrange
         var initialTurn = _sessionInfo.Turn;
+        _sut.SessionStart(new GameSession());
 
         // Act
         _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
@@ -115,6 +111,7 @@ public class LocalGameServerTests
     {
         // Arrange
         var initialTurn = _sessionInfo.Turn;
+        _sut.SessionStart(new GameSession());
 
         // Act
         _sut.TurnExecution(_sessionInfo, type);
@@ -127,7 +124,10 @@ public class LocalGameServerTests
     [Fact]
     public void GameSessionMap_ShouldCreateCorrectDTO()
     {
-        // Arrange & Act
+        // Arrange
+        _sut.SessionStart(new GameSession());
+
+        // Act
         _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
         
         // Assert
@@ -140,6 +140,7 @@ public class LocalGameServerTests
     {
         // Arrange
         var localGameServer = new LocalGameServer(_schedulerService, _serverContextMock.Object);
+        localGameServer.SessionStart(new GameSession());
         
         // Act & Assert
         var action = () => localGameServer.TurnExecution(_sessionInfo, CalculationType.Turn);

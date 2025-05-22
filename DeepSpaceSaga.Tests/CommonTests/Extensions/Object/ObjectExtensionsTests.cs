@@ -1,5 +1,3 @@
-using DeepSpaceSaga.Common.Extensions.Object;
-
 namespace DeepSpaceSaga.Tests.CommonTests.Extensions.Object;
 
 public class ObjectExtensionsTests

@@ -4,7 +4,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
 {
     public event Action<GameSessionDto>? OnTurnExecute;
     
-    private GameSessionDto _gameSessionDto;
+    private GameSessionDto _gameSessionDto = new GameSessionDto();
 
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
     

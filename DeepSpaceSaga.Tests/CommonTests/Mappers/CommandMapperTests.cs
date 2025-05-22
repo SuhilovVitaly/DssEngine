@@ -2,6 +2,8 @@ using System;
 using Xunit;
 using FluentAssertions;
 
+namespace DeepSpaceSaga.Tests.CommonTests.Mappers;
+
 public class CommandMapperTests
 {
     [Fact]

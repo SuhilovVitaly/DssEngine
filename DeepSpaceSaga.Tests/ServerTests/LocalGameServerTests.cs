@@ -1,10 +1,3 @@
-using DeepSpaceSaga.Common.Abstractions.Entities;
-using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Server.Services;
-using DeepSpaceSaga.Server.Services.SessionContext;
-using FluentAssertions;
-using Moq;
-
 namespace DeepSpaceSaga.Tests.ServerTests;
 
 public class LocalGameServerTests
@@ -204,5 +197,88 @@ public class LocalGameServerTests
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionPause), 1), Times.Once);
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionResume), 1), Times.Once);
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStop), 1), Times.Once);
+    }
+
+    [Fact]
+    public void AddCommand_ShouldAddCommandToGameSession()
+    {
+        // Arrange
+        var session = new GameSession();
+        var command = new Command();
+        _sut.SessionStart(session);
+
+        // Act
+        _sut.AddCommand(command);
+
+        // Assert
+        _gameSession.Commands.Should().ContainKey(command.CommandId);
+        _gameSession.Commands[command.CommandId].Should().Be(command);
+    }
+
+    [Fact]
+    public void RemoveCommand_ShouldRemoveCommandFromGameSession()
+    {
+        // Arrange
+        var session = new GameSession();
+        var command = new Command();
+        _sut.SessionStart(session);
+        _sut.AddCommand(command);
+
+        // Act
+        _sut.RemoveCommand(command.CommandId);
+
+        // Assert
+        _gameSession.Commands.Should().NotContainKey(command.CommandId);
+    }
+
+    [Fact]
+    public void GetSessionContextDto_ShouldReturnCurrentGameSessionDto()
+    {
+        // Arrange
+        var session = new GameSession();
+        _sut.SessionStart(session);
+        _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
+
+        // Act
+        var result = _sut.GetSessionContextDto();
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Should().Be(_lastExecutedSession);
+    }
+
+    [Fact]
+    public void AddCommand_ShouldTriggerGameSessionChanged()
+    {
+        // Arrange
+        var session = new GameSession();
+        var command = new Command();
+        _sut.SessionStart(session);
+        var changeTriggered = false;
+        _gameSession.Changed += (s, e) => changeTriggered = true;
+
+        // Act
+        _sut.AddCommand(command);
+
+        // Assert
+        changeTriggered.Should().BeTrue();
+    }
+
+    [Fact]
+    public void RemoveCommand_ShouldTriggerGameSessionChanged()
+    {
+        // Arrange
+        var session = new GameSession();
+        var command = new Command();
+        _sut.SessionStart(session);
+        _sut.AddCommand(command);
+        var changeTriggered = false;
+        _gameSession.Changed += (s, e) => changeTriggered = true;
+
+        // Act
+        _sut.RemoveCommand(command.CommandId);
+
+        // Assert
+        changeTriggered.Should().BeTrue();
     }
 } 

@@ -1,3 +1,10 @@
+using DeepSpaceSaga.Common.Abstractions.Entities;
+using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Server.Services;
+using DeepSpaceSaga.Server.Services.SessionContext;
+using FluentAssertions;
+using Moq;
+
 namespace DeepSpaceSaga.Tests.ServerTests;
 
 public class LocalGameServerTests
@@ -11,6 +18,7 @@ public class LocalGameServerTests
     private readonly Mock<IMetricsService> _serverMetricsMock;
     private readonly TurnSchedulerService _turnSchedulerService;
     private GameSessionDto? _lastExecutedSession;
+    private GameSession _gameSession;
 
     public LocalGameServerTests()
     {
@@ -24,9 +32,17 @@ public class LocalGameServerTests
         _serverContextMock = new Mock<ISessionContextService>();
         _gameFlowMetricsMock = new Mock<IMetricsService>();
         _serverMetricsMock = new Mock<IMetricsService>();
+        _gameSession = new GameSession();
+        
         _sessionContextMock.Setup(x => x.Metrics).Returns(_gameFlowMetricsMock.Object);
-        _serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
         _sessionContextMock.Setup(x => x.SessionInfo).Returns(_sessionInfo);
+        _sessionContextMock.SetupSet(x => x.GameSession = It.IsAny<GameSession>());
+        _sessionContextMock.Setup(x => x.GameSession).Returns(_gameSession);
+        
+        _serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
+        _serverContextMock.SetupSet(x => x.GameSession = It.IsAny<GameSession>());
+        _serverContextMock.Setup(x => x.GameSession).Returns(() => _gameSession);
+        
         _schedulerService = new SchedulerService(_sessionContextMock.Object);
         _sut = new LocalGameServer(_schedulerService, _serverContextMock.Object);
         
@@ -37,18 +53,23 @@ public class LocalGameServerTests
     [Fact]
     public void SessionStart_ShouldStartGameFlow()
     {
+        // Arrange
+        var session = new GameSession();
+        
         // Act
-        _sut.SessionStart(new GameSession());
+        _sut.SessionStart(session);
         
         // Assert
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStart), 1), Times.Once);
+        _serverContextMock.VerifySet(x => x.GameSession = session);
     }
 
     [Fact]
     public void SessionPause_ShouldPauseGameFlow()
     {
         // Arrange
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
 
         // Act
         _sut.SessionPause();
@@ -62,7 +83,8 @@ public class LocalGameServerTests
     public void SessionResume_ShouldResumeGameFlow()
     {
         // Arrange
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
         _sut.SessionPause();
 
         // Act
@@ -77,7 +99,8 @@ public class LocalGameServerTests
     public void SessionStop_ShouldStopGameFlow()
     {
         // Arrange
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
 
         // Act
         _sut.SessionStop();
@@ -92,7 +115,8 @@ public class LocalGameServerTests
     {
         // Arrange
         var initialTurn = _sessionInfo.Turn;
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
 
         // Act
         _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
@@ -111,7 +135,8 @@ public class LocalGameServerTests
     {
         // Arrange
         var initialTurn = _sessionInfo.Turn;
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
 
         // Act
         _sut.TurnExecution(_sessionInfo, type);
@@ -125,7 +150,8 @@ public class LocalGameServerTests
     public void GameSessionMap_ShouldCreateCorrectDTO()
     {
         // Arrange
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
 
         // Act
         _sut.TurnExecution(_sessionInfo, CalculationType.Turn);
@@ -139,8 +165,13 @@ public class LocalGameServerTests
     public void TurnExecution_WithoutSubscribers_ShouldNotThrowException()
     {
         // Arrange
-        var localGameServer = new LocalGameServer(_schedulerService, _serverContextMock.Object);
-        localGameServer.SessionStart(new GameSession());
+        var serverContextMock = new Mock<ISessionContextService>();
+        var session = new GameSession();
+        serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
+        serverContextMock.SetupSet(x => x.GameSession = It.IsAny<GameSession>());
+        serverContextMock.Setup(x => x.GameSession).Returns(session);
+        var localGameServer = new LocalGameServer(_schedulerService, serverContextMock.Object);
+        localGameServer.SessionStart(session);
         
         // Act & Assert
         var action = () => localGameServer.TurnExecution(_sessionInfo, CalculationType.Turn);
@@ -162,7 +193,8 @@ public class LocalGameServerTests
     public void SessionLifecycle_FullWorkflow_ShouldExecuteCorrectly()
     {
         // Arrange & Act
-        _sut.SessionStart(new GameSession());
+        var session = new GameSession();
+        _sut.SessionStart(session);
         _sut.SessionPause();
         _sut.SessionResume();
         _sut.SessionStop();

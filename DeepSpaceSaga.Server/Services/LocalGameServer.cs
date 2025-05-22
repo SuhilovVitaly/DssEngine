@@ -3,7 +3,7 @@
 public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext): IGameServer
 {
     public event Action<GameSessionDto>? OnTurnExecute;
-    public GameSession GameSession { get; private set; }
+    
     private GameSessionDto _gameSessionDto;
 
     private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
@@ -15,19 +15,19 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     {
         Logger?.Debug($"GameSessionMap {info.ToString()}");
 
-        _gameSessionDto = SessionTurnFinalization(info, BaseProcessing.Process(GameSession));
+        _gameSessionDto = SessionTurnFinalization(info, BaseProcessing.Process(_sessionContext.GameSession));
         
         OnTurnExecute?.Invoke(_gameSessionDto);
     }
 
     public void AddCommand(Command command)
     {
-        GameSession.AddCommand(command);
+        _sessionContext.GameSession.AddCommand(command);
     }
 
     public void RemoveCommand(Guid commandId)
     {
-        GameSession.RemoveCommand(commandId);
+        _sessionContext.GameSession.RemoveCommand(commandId);
     }
     
     public GameSessionDto GetSessionContextDto()
@@ -48,14 +48,14 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     
     public void SessionStart(GameSession session)
     {
-        GameSession = session ?? throw new ArgumentNullException(nameof(session));
-        GameSession.Changed += GameSession_Changed;
+        _sessionContext.GameSession = session ?? throw new ArgumentNullException(nameof(session));
+        _sessionContext.GameSession.Changed += GameSession_Changed;
         _flowManager.SessionStart(TurnExecution);
     }
 
     private void GameSession_Changed(object? sender, EventArgs e)
     {
-        _gameSessionDto = GameSessionMapper.ToDto(GameSession);
+        _gameSessionDto = GameSessionMapper.ToDto(_sessionContext.GameSession);
     }
 
     public void SessionPause() => _flowManager.SessionPause();

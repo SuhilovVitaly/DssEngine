@@ -4,4 +4,5 @@ public interface ISessionContextService
 {   
     ISessionInfoService SessionInfo { get; }
     IMetricsService Metrics { get; }
+    GameSession GameSession { get; set; }
 }

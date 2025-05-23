@@ -8,6 +8,12 @@ public class SessionInfoService : ISessionInfoService
     }
 
     public Guid Id { get; set; }
+    public int Speed { get; set; } = 1;
+
+    public void SetSpeed(int speed)
+    {
+        Speed = speed;
+    }
 
     private volatile int _turn;
     public int Turn

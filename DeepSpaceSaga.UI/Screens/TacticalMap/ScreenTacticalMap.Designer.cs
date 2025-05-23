@@ -28,14 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            ControlGameSpeed = new MainGameScreen.GameSpeedControl();
             SuspendLayout();
+            // 
+            // ControlGameSpeed
+            // 
+            ControlGameSpeed.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            ControlGameSpeed.BackColor = Color.FromArgb(12, 12, 12);
+            ControlGameSpeed.Location = new Point(1777, 925);
+            ControlGameSpeed.Margin = new Padding(4, 4, 4, 4);
+            ControlGameSpeed.Name = "ControlGameSpeed";
+            ControlGameSpeed.Size = new Size(441, 97);
+            ControlGameSpeed.TabIndex = 0;
             // 
             // ScreenTacticalMap
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.DarkOliveGreen;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(2231, 1035);
+            Controls.Add(ControlGameSpeed);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Name = "ScreenTacticalMap";
@@ -45,5 +57,7 @@
         }
 
         #endregion
+
+        private MainGameScreen.GameSpeedControl ControlGameSpeed;
     }
 }

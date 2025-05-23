@@ -2,7 +2,7 @@
 
 public class SchedulerService(ISessionContextService sessionContext) : ISchedulerService
 {
-    private readonly TurnSchedulerService _turnSchedulerService = new(sessionContext.SessionInfo);
+    private readonly TurnSchedulerService _turnSchedulerService = new(sessionContext);
 
     public void SessionPause()
     {

@@ -15,7 +15,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     {
         Logger?.Debug($"GameSessionMap {info.ToString()}");
 
-        _gameSessionDto = SessionTurnFinalization(info, BaseProcessing.Process(_sessionContext.GameSession));
+        _gameSessionDto = SessionTurnFinalization(info, BaseProcessing.Process(_sessionContext));
         
         OnTurnExecute?.Invoke(_gameSessionDto);
     }
@@ -55,7 +55,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
 
     private void GameSession_Changed(object? sender, EventArgs e)
     {
-        _gameSessionDto = GameSessionMapper.ToDto(_sessionContext.GameSession);
+        _gameSessionDto = GameSessionMapper.ToDto(_sessionContext);
     }
 
     public void SessionPause() => _flowManager.SessionPause();

@@ -12,7 +12,7 @@ public sealed class TurnSchedulerService
     private readonly int _ticksPerTurn;
     private readonly int _turnsPerCycle;
     private readonly object _stateLock = new();
-    private readonly ISessionInfoService _state;
+    private readonly ISessionContextService _sessionContext;
     private readonly Timer _timer;
 
     private Action<ISessionInfoService, CalculationType>? _calculationEvent;
@@ -24,13 +24,11 @@ public sealed class TurnSchedulerService
     /// <param name="state"></param>
     /// <param name="tickInterval">The interval between ticks in milliseconds</param>
     /// <exception cref="ArgumentException">Thrown when tickInterval is less than 1</exception>
-    public TurnSchedulerService(ISessionInfoService state, int tickInterval = 32)
+    public TurnSchedulerService(ISessionContextService sessionContext, int tickInterval = 32)
     {
         if (tickInterval < MinimumTickInterval)
             throw new ArgumentException($"Tick interval must be at least {MinimumTickInterval}ms", nameof(tickInterval));
-
-        _state = state;
-
+        _sessionContext = sessionContext;
         _ticksPerTurn = DefaultTicksPerTurn;
         _turnsPerCycle = DefaultTurnsPerCycle;
         _timer = new Timer(tickInterval);
@@ -48,12 +46,12 @@ public sealed class TurnSchedulerService
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;
-        _state.IsPaused = false;
+        _sessionContext.SessionInfo.IsPaused = false;
     }
 
     private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
     {
-        if (_state.IsPaused) return;
+        if (_sessionContext.SessionInfo.IsPaused) return;
 
         lock (_stateLock)
         {
@@ -63,9 +61,9 @@ public sealed class TurnSchedulerService
 
     private void TickUpdate()
     {
-        var currentTickCount = _state.IncrementTickCounter();
+        var currentTickCount = _sessionContext.SessionInfo.IncrementTickCounter();
 
-        _state.IncrementTickTotal();
+        _sessionContext.SessionInfo.IncrementTickTotal();
 
         if (currentTickCount >= _ticksPerTurn)
         {
@@ -78,31 +76,31 @@ public sealed class TurnSchedulerService
 
     private void TurnUpdate()
     {
-        _state.ResetTickCounter();
+        _sessionContext.SessionInfo.ResetTickCounter();
 
-        if (_state.TurnCounter >= _turnsPerCycle)
+        if (_sessionContext.SessionInfo.TurnCounter >= _turnsPerCycle)
         {
             CycleUpdate();
         }
         else
         {
             TickCalculation(CalculationType.Turn);
-            _state.IncrementTurnCounter();
+            _sessionContext.SessionInfo.IncrementTurnCounter();
         }
     }
 
     private void CycleUpdate()
     {
-        _state.ResetTurnCounter();
-        _state.IncrementCycleCounter();
+        _sessionContext.SessionInfo.ResetTurnCounter();
+        _sessionContext.SessionInfo.IncrementCycleCounter();
         TickCalculation(CalculationType.Cycle);
     }
 
     private void TickCalculation(CalculationType type)
     {
-        _state.IsPaused = true;
-        _calculationEvent?.Invoke(_state, type);
-        _state.IsPaused = false;
+        _sessionContext.SessionInfo.IsPaused = true;
+        _calculationEvent?.Invoke(_sessionContext.SessionInfo, type);
+        _sessionContext.SessionInfo.IsPaused = false;
     }
 
     /// <summary>
@@ -112,7 +110,7 @@ public sealed class TurnSchedulerService
     {
         if (_isDisposed) return;
         _timer.Enabled = false;
-        _state.IsPaused = true;
+        _sessionContext.SessionInfo.IsPaused = true;
     }
 
     public void Resume()
@@ -124,7 +122,7 @@ public sealed class TurnSchedulerService
             throw new InvalidOperationException("Cannot resume execution without prior Start call");
 
         _timer.Enabled = true;
-        _state.IsPaused = false;
+        _sessionContext.SessionInfo.IsPaused = false;
     }
 
     public void Dispose()

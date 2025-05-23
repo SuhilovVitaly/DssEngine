@@ -2,22 +2,22 @@ namespace DeepSpaceSaga.Server.Processing;
 
 public static class BaseProcessing
 {
-    public static GameSessionDto Process(GameSession sessionContext)
+    public static GameSessionDto Process(ISessionContextService sessionContext)
     {
         try
         {
-            sessionContext.Turn++;
+            sessionContext.GameSession.Turn++;
         
-            Console.WriteLine($"[Process] Started processing for session {sessionContext.SessionId} Turn: {sessionContext.Turn}");
+            Console.WriteLine($"[Process] Started processing for session {sessionContext.GameSession.SessionId} Turn: {sessionContext.GameSession.Turn}");
 
-            foreach (var celestialObject in sessionContext.CelestialObjects.Values)
+            foreach (var celestialObject in sessionContext.GameSession.CelestialObjects.Values)
             {
                 celestialObject.X += 1;
                 celestialObject.Y += 1;
                 Console.WriteLine($"[Process] Processing celestial object Id is [{celestialObject.CelestialObjectId}] Type is [{celestialObject.Type}] Location is: [{celestialObject.X}:{celestialObject.Y}]");
             }
         
-            Console.WriteLine($"[Process] Finish processing for session {sessionContext.SessionId} Turn: {sessionContext.Turn}");
+            Console.WriteLine($"[Process] Finish processing for session {sessionContext.GameSession.SessionId} Turn: {sessionContext.GameSession.Turn}");
         }
         catch (Exception e)
         {

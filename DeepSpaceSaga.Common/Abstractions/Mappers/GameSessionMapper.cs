@@ -1,20 +1,22 @@
+using DeepSpaceSaga.Common.Abstractions.Services;
+
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class GameSessionMapper
 {
-    public static GameSessionDto ToDto(Entities.GameSession gameSessionContext)
+    public static GameSessionDto ToDto(ISessionContextService gameSessionContext)
     {
         Dictionary<Guid, CelestialObjectDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
             
         lock (gameSessionContext)
         {
-            celestialObjectsCopy = gameSessionContext.CelestialObjects
+            celestialObjectsCopy = gameSessionContext.GameSession.CelestialObjects
                 .ToDictionary(
                     kvp => kvp.Key,
                     kvp => CelestialObjectMapper.ToDto(kvp.Value));
                 
-            commandsCopy = gameSessionContext.Commands
+            commandsCopy = gameSessionContext.GameSession.Commands
                 .ToDictionary(
                     kvp => kvp.Key,
                     kvp => CommandMapper.ToDto(kvp.Value));
@@ -22,7 +24,8 @@ public static class GameSessionMapper
 
         return new GameSessionDto
         {
-            Id = gameSessionContext.Id,
+            Id = gameSessionContext.GameSession.Id,
+            State = GameStateMapper.ToDto(gameSessionContext),
             CelestialObjects = celestialObjectsCopy,
             Commands = commandsCopy
         };

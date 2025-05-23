@@ -10,7 +10,6 @@ public class GameSession
     public Guid Id { get; set; }
     public Dictionary<Guid, CelestialObject> CelestialObjects { get; set; } = new();
     public Dictionary<Guid, Command> Commands { get; set; } = new();
-    
     public event EventHandler? Changed;
     
     private readonly object _lock = new();

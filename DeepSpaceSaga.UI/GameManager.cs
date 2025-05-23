@@ -12,7 +12,7 @@ public class GameManager
     {
         _gameServer = gameServer;
 
-        _gameServer.OnTurnExecute += OnUpdateGameData;
+        _gameServer.OnTurnExecute += UpdateGameData;
 
         Screens = screenManager;
         GameContext = gameContext;

@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Dto;
+using DeepSpaceSaga.Common.Abstractions.Services;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 
@@ -6,14 +7,16 @@ public partial class ScreenTacticalMap : Form
 {
     private readonly SKControl _skControl;
     private GameManager _gameManager;
+    private readonly IScreensService _screensService;
     private bool isDrawInProcess = false;
     private GameSessionDto _gameSessionDto;
 
-    public ScreenTacticalMap(GameManager gameManager)
+    public ScreenTacticalMap(GameManager gameManager, IScreensService screensService)
     {
         InitializeComponent();
 
         _gameManager = gameManager ?? throw new ArgumentNullException(nameof(GameManager));
+        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
 
         _gameManager.OnUpdateGameData += UpdateGameData;
         _gameManager.OnUpdateGameData += ControlGameSpeed.UpdateGameData;
@@ -26,6 +29,10 @@ public partial class ScreenTacticalMap : Form
         Size = Screen.PrimaryScreen.Bounds.Size;
         Location = new Point(0, 0);
 
+        // Enable key handling
+        KeyPreview = true;
+        KeyDown += OnKeyDown;
+
         //_skControl = new SKControl
         //{
         //    Dock = DockStyle.Fill,
@@ -36,6 +43,15 @@ public partial class ScreenTacticalMap : Form
         //_skControl.BringToFront();
         //Controls.Add(_skControl);
         //_skControl.BringToFront();
+    }
+
+    private void OnKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Escape)
+        {
+            _gameManager.SessionPause();
+            _screensService.ShowGameMenuModal();
+        }
     }
 
     private void UpdateGameData(GameSessionDto sessionDto)

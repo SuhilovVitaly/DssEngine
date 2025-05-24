@@ -8,6 +8,18 @@ public partial class ScreenGameMenu : Form
     {
         InitializeComponent();
         _gameManager = gameManager;
+
+        // Enable key handling
+        KeyPreview = true;
+        KeyDown += OnKeyDown;
+    }
+
+    private void OnKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Escape)
+        {
+            Close();
+        }
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -32,7 +44,7 @@ public partial class ScreenGameMenu : Form
 
     private void button2_Click(object sender, EventArgs e)
     {
-        
+        Close();
     }
 
     private void button3_Click(object sender, EventArgs e)

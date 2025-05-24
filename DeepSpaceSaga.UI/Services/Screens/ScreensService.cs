@@ -1,5 +1,6 @@
 ﻿using DeepSpaceSaga.UI.Screens.TacticalMap;
 using DeepSpaceSaga.UI.Screens.GameMenu;
+using DeepSpaceSaga.UI.Screens.MainMenu;
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
@@ -59,6 +60,28 @@ public class ScreensService : IScreensService
         catch (Exception ex)
         {
             Console.WriteLine($"[ScreensService] ERROR showing tactical map: {ex.Message}");
+        }
+    }
+
+    public void ShowGameMenuModal()
+    {
+        try
+        {
+            Console.WriteLine("[ScreensService] Showing game menu modal");
+            var screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
+            if (screen != null)
+            {
+                _screenBackground.OpenWindow(screen);
+                Console.WriteLine("[ScreensService] Game menu modal displayed successfully");
+            }
+            else
+            {
+                Console.WriteLine("[ScreensService] ERROR: Failed to get ScreenGameMenu from service provider");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ScreensService] ERROR showing game menu modal: {ex.Message}");
         }
     }
 }

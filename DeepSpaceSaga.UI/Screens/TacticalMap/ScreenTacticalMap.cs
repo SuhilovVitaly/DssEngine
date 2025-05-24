@@ -26,16 +26,16 @@ public partial class ScreenTacticalMap : Form
         Size = Screen.PrimaryScreen.Bounds.Size;
         Location = new Point(0, 0);
 
-        _skControl = new SKControl
-        {
-            Dock = DockStyle.Fill,
-            Visible = true
-        };
+        //_skControl = new SKControl
+        //{
+        //    Dock = DockStyle.Fill,
+        //    Visible = true
+        //};
 
-        _skControl.PaintSurface += OnPaintSurface;
-        _skControl.BringToFront();
-        Controls.Add(_skControl);
-        _skControl.BringToFront();
+        //_skControl.PaintSurface += OnPaintSurface;
+        //_skControl.BringToFront();
+        //Controls.Add(_skControl);
+        //_skControl.BringToFront();
     }
 
     private void UpdateGameData(GameSessionDto sessionDto)
@@ -51,7 +51,7 @@ public partial class ScreenTacticalMap : Form
     private void RefreshControls(GameSessionDto sessionDto)
     {
         _gameSessionDto = sessionDto;
-        _skControl.Invalidate();
+        _skControl?.Invalidate();
     }
 
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)

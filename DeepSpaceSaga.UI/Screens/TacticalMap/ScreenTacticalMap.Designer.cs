@@ -45,10 +45,11 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.DarkOliveGreen;
+            BackColor = Color.Black;
             ClientSize = new Size(2231, 1035);
             Controls.Add(ControlGameSpeed);
             DoubleBuffered = true;
+            ForeColor = Color.WhiteSmoke;
             FormBorderStyle = FormBorderStyle.None;
             Name = "ScreenTacticalMap";
             StartPosition = FormStartPosition.CenterParent;

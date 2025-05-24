@@ -30,6 +30,12 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
         _sessionContext.GameSession.RemoveCommand(commandId);
     }
     
+    public void SetGameSpeed(int speed)
+    {
+        _sessionContext.SessionInfo.SetSpeed(speed);
+        RefreshGameSessionDto();
+    }
+
     public GameSessionDto GetSessionContextDto()
     {
         return _gameSessionDto;
@@ -50,19 +56,36 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     {
         _sessionContext.GameSession = session ?? throw new ArgumentNullException(nameof(session));
         _sessionContext.GameSession.Changed += GameSession_Changed;
-        _sessionContext.SessionInfo.IsPaused = false;
         _flowManager.SessionStart(TurnExecution);
     }
 
     private void GameSession_Changed(object? sender, EventArgs e)
     {
-        _gameSessionDto = GameSessionMapper.ToDto(_sessionContext);
+        RefreshGameSessionDto();
     }
 
-    public void SessionPause() => _flowManager.SessionPause();
+    private void RefreshGameSessionDto()
+    {
+        _gameSessionDto = GameSessionMapper.ToDto(_sessionContext);
+        OnTurnExecute?.Invoke(_gameSessionDto);
+    }
 
-    public void SessionResume() => _flowManager.SessionResume();
+    public void SessionPause()
+    {
+        _flowManager.SessionPause();
+        RefreshGameSessionDto();
+    }
 
-    public void SessionStop() => _flowManager.SessionStop();
+    public void SessionResume() 
+    { 
+        _flowManager.SessionResume();
+        RefreshGameSessionDto();
+    }
+
+    public void SessionStop()
+    {
+        _flowManager.SessionStop();
+        RefreshGameSessionDto();
+    }
 
 }

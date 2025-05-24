@@ -9,7 +9,7 @@ public interface IGameServer
     void SessionPause();
     void SessionResume();
     void SessionStop();
-
+    void SetGameSpeed(int speed);
     void AddCommand(Command command);
     void RemoveCommand(Guid commandId);
 }

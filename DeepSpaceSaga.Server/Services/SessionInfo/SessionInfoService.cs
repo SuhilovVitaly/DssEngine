@@ -13,6 +13,8 @@ public class SessionInfoService : ISessionInfoService
     public void SetSpeed(int speed)
     {
         Speed = speed;
+        IsPaused = false;
+        IsCalculationInProgress = false;
     }
 
     private volatile int _turn;

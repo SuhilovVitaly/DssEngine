@@ -8,12 +8,16 @@ public class SchedulerService(ISessionContextService sessionContext) : ISchedule
     {
         sessionContext.Metrics.Add(MetricsServer.SessionPause);
         _turnSchedulerService.Stop();
+        sessionContext.SessionInfo.IsPaused = true;
+        sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
     public void SessionResume()
     {
         sessionContext.Metrics.Add(MetricsServer.SessionResume);
         _turnSchedulerService.Resume();
+        sessionContext.SessionInfo.IsPaused = false;
+        sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
     public void SessionStart(Action<ISessionInfoService, CalculationType> turnExecutionCallBack)
@@ -25,6 +29,8 @@ public class SchedulerService(ISessionContextService sessionContext) : ISchedule
 
         sessionContext.Metrics.Add(MetricsServer.SessionStart);
         _turnSchedulerService.Start(turnExecutionCallBack);
+        sessionContext.SessionInfo.IsPaused = false;
+        sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
     public void SessionStop()

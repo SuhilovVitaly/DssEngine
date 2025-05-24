@@ -18,6 +18,11 @@ public class GameManager
         GameContext = gameContext;
     }
 
+    public void SetGameSpeed(int speed)
+    {
+        _gameServer.SetGameSpeed(speed);
+    }
+
     public void SessionStart()
     {
         _gameServer.SessionStart(new GameSession());

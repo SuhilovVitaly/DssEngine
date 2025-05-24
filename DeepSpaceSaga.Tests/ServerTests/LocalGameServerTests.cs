@@ -20,7 +20,13 @@ public class LocalGameServerTests
         var sessionInfo = new SessionInfoService();
         _gameFlowMetricsMock = new Mock<IMetricsService>();
         _serverMetricsMock = new Mock<IMetricsService>();
-        _sessionContext = new SessionContextService(sessionInfo, _gameFlowMetricsMock.Object);
+        var generationToolMock = new Mock<IGenerationTool>();
+        
+        // Setup unique ID generation to prevent duplicate key errors
+        var idCounter = 0;
+        generationToolMock.Setup(x => x.GetId()).Returns(() => idCounter++);
+        
+        _sessionContext = new SessionContextService(sessionInfo, _gameFlowMetricsMock.Object, generationToolMock.Object);
         _serverContextMock = new Mock<ISessionContextService>();
         _gameSession = new GameSession();
         

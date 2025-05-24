@@ -1,5 +1,3 @@
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
-
 namespace DeepSpaceSaga.Tests.CommonTests.Mappers;
 
 public class CelestialObjectMapperTests
@@ -95,10 +93,10 @@ public class CelestialObjectMapperTests
         var dto = CelestialObjectMapper.ToDto(celestialObject);
 
         // Assert
-        dto.Type.Should().Be(default(CelestialObjectType));
-        dto.IsPreScanned.Should().Be(default(bool));
-        dto.X.Should().Be(default(int));
-        dto.Y.Should().Be(default(int));
+        dto.Type.Should().Be(CelestialObjectType.Spacecraft);
+        dto.IsPreScanned.Should().Be(true);
+        dto.X.Should().Be(123);
+        dto.Y.Should().Be(678);
         dto.Id.Should().Be(celestialObject.Id);
     }
 } 

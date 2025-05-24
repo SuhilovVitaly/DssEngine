@@ -84,4 +84,26 @@ public class ScreensService : IScreensService
             Console.WriteLine($"[ScreensService] ERROR showing game menu modal: {ex.Message}");
         }
     }
+
+    public void CloseTacticalMapScreen()
+    {
+        try
+        {
+            Console.WriteLine("[ScreensService] Closing tactical map screen");
+            var existingScreen = _screenBackground.Controls.OfType<ScreenTacticalMap>().FirstOrDefault();
+            if (existingScreen != null)
+            {
+                _screenBackground.Invoke(() => existingScreen.Close());
+                Console.WriteLine("[ScreensService] Tactical map screen closed successfully");
+            }
+            else
+            {
+                Console.WriteLine("[ScreensService] No tactical map screen found to close");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ScreensService] ERROR closing tactical map screen: {ex.Message}");
+        }
+    }
 }

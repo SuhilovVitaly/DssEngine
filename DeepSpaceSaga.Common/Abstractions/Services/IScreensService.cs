@@ -7,4 +7,6 @@ public interface IScreensService
     void ShowTacticalMapScreen();
 
     void ShowGameMenuModal();
+
+    void CloseTacticalMapScreen();
 }

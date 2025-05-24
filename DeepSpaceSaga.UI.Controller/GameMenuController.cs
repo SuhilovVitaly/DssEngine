@@ -35,6 +35,7 @@ public class GameMenuController : IGameMenuController
 
     public async Task GoToMainMenuAsync()
     {
+        // Stop current session before going to main menu
         _gameManager.SessionStop();
         _gameManager.ShowMainMenuScreen();
         await Task.CompletedTask;

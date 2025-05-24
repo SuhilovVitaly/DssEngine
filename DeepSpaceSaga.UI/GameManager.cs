@@ -34,7 +34,11 @@ public class GameManager : IGameManager
 
     public void SessionResume() => _gameServer.SessionResume();
 
-    public void SessionStop() => _gameServer.SessionStop();
+    public void SessionStop()
+    {
+        _gameServer.SessionStop();
+        Screens.CloseTacticalMapScreen();
+    }
 
     public void ShowTacticalMapScreen()
     {

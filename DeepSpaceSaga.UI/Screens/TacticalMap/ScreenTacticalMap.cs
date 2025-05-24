@@ -49,7 +49,6 @@ public partial class ScreenTacticalMap : Form
     {
         if (e.KeyCode == Keys.Escape)
         {
-            _gameManager.SessionPause();
             _screensService.ShowGameMenuModal();
         }
     }
@@ -84,5 +83,10 @@ public partial class ScreenTacticalMap : Form
         //Global.GameManager.Screens.Settings.CenterScreenOnMap = session.GetPlayerSpaceShip().GetLocation();
 
         //Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.OuterSpace, _gameManager.Screens.Settings);
+    }
+
+    protected override void OnFormClosed(FormClosedEventArgs e)
+    {
+        base.OnFormClosed(e);
     }
 }

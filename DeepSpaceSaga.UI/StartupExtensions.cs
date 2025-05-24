@@ -1,11 +1,4 @@
-﻿using DeepSpaceSaga.UI.Screens.MainMenu;
-using DeepSpaceSaga.UI.Screens.TacticalMap;
-using DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
-using DeepSpaceSaga.UI.Controller;
-using DeepSpaceSaga.UI.Controller.Abstractions;
-using DeepSpaceSaga.UI.Presenters;
-
-namespace DeepSpaceSaga.UI
+﻿namespace DeepSpaceSaga.UI
 {
     [ExcludeFromCodeCoverage]
     public static class StartupExtensions

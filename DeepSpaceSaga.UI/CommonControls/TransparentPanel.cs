@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.UI.Screens.CommonControls;
+﻿namespace DeepSpaceSaga.UI.CommonControls;
 
 public class TransparentPanel : Panel
 {

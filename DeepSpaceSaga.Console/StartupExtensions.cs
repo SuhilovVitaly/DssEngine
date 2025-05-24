@@ -1,15 +1,13 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿namespace DeepSpaceSaga.Console;
+
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DeepSpaceSaga.Console
+[ExcludeFromCodeCoverage]
+public static class StartupExtensions
 {
-    [ExcludeFromCodeCoverage]
-    public static class StartupExtensions
+    public static IServiceCollection AddConsoleServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddClientControls(this IServiceCollection services)
-        {
-            
-            return services;
-        }
+        return services;
     }
 }

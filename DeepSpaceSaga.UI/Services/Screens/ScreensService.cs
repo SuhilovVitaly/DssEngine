@@ -1,8 +1,4 @@
-﻿using DeepSpaceSaga.UI.Screens.TacticalMap;
-using DeepSpaceSaga.UI.Screens.GameMenu;
-using DeepSpaceSaga.UI.Screens.MainMenu;
-
-namespace DeepSpaceSaga.UI.Services.Screens;
+﻿namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreensService : IScreensService
 {

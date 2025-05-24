@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace DeepSpaceSaga.Common.Extensions.Object;
 
-public static class ObjectExtensions
+public static class Extensions
 {
     /// <summary>
     /// Performs a deep clone of the object using JSON serialization.
@@ -42,5 +42,14 @@ public static class ObjectExtensions
 
         // Deserialize the JSON string back to an object of the same type
         return JsonSerializer.Deserialize<T>(json, options);
+    }
+
+    public static string ToJson(this object value)
+    {
+        return JsonSerializer.Serialize(value, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+        });
     }
 } 

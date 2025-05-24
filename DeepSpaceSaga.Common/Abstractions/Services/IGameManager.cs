@@ -1,5 +1,3 @@
-using DeepSpaceSaga.Common.Abstractions.Dto;
-
 namespace DeepSpaceSaga.Common.Abstractions.Services;
 
 /// <summary>

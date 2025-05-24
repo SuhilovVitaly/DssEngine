@@ -6,92 +6,89 @@ using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace DeepSpaceSaga.Console
+namespace DeepSpaceSaga.Console;
+
+class Program
 {
-    internal static class Program
-    {
-        public static IServiceProvider? ServiceProvider { get; private set; }
+    public static IServiceProvider? ServiceProvider { get; private set; }
 
-        // Define repository names
-        private const string CONSOLE_REPOSITORY_NAME = "ConsoleAppRepository";
-        private const string CONTROLLER_REPOSITORY_NAME = "ControllerAppRepository";
-        private const string SERVER_REPOSITORY_NAME = "ServerAppRepository";
+    // Define repository names
+    private const string CONSOLE_REPOSITORY_NAME = "ConsoleAppRepository";
+    private const string CONTROLLER_REPOSITORY_NAME = "ControllerAppRepository";
+    private const string SERVER_REPOSITORY_NAME = "ServerAppRepository";
 
-        // Get logger instance from the specific repository
-        private static readonly ILog Logger = LogManager.GetLogger(CONSOLE_REPOSITORY_NAME, typeof(Program));
-        
-       [STAThread]
-       static void Main()
-       {
-           // Create Logs directory if it doesn't exist
-           Directory.CreateDirectory("Logs");
-           
-           // Configure log4net for Console project
-           var consoleRepository = LogManager.CreateRepository(CONSOLE_REPOSITORY_NAME);
-           var consoleConfigFile = new FileInfo("log4net.config"); // Assumes log4net.config is in Console's output
-           log4net.Config.XmlConfigurator.Configure(consoleRepository, consoleConfigFile);
-
-           // Configure log4net for Controller project
-           var controllerRepository = LogManager.CreateRepository(CONTROLLER_REPOSITORY_NAME);
-           // Assuming DeepSpaceSaga.Controller/log4net.config is copied to output directory or accessible
-           var controllerConfigFile = new FileInfo("DeepSpaceSaga.Controller/log4net.config"); 
-           if (!controllerConfigFile.Exists) controllerConfigFile = new FileInfo("log4net.config.controller"); // Fallback or specific name
-           log4net.Config.XmlConfigurator.Configure(controllerRepository, controllerConfigFile);
-
-           // Configure log4net for Server project
-           var serverRepository = LogManager.CreateRepository(SERVER_REPOSITORY_NAME);
-           // Assuming DeepSpaceSaga.Server/log4net.config is copied to output directory or accessible
-           var serverConfigFile = new FileInfo("DeepSpaceSaga.Server/log4net.config"); 
-           if (!serverConfigFile.Exists) serverConfigFile = new FileInfo("log4net.config.server"); // Fallback or specific name
-           log4net.Config.XmlConfigurator.Configure(serverRepository, serverConfigFile);
-
-           Logger.Info("Start 'Deep Space Saga' game desktop client.");
-
-           ServiceProvider = CreateHostBuilder().Build().Services;
-           
-           var _worker = ServiceProvider.GetService<IGameServer>();
-           
-           var session = new GameSession();
-
-           var asteroid = new CelestialObject { X = 10, Y = 20 };
-           var spacecraft = new CelestialObject { X = 0, Y = 0, Type = CelestialObjectType.Spacecraft };
-
-           session.CelestialObjects.Add(asteroid.CelestialObjectId, asteroid);
-           session.CelestialObjects.Add(spacecraft.CelestialObjectId, spacecraft);
-           
-           
-           _worker.SessionStart(session);
-           
-           var firstCommand = new Command();
-
-           _worker.AddCommand(firstCommand);
-
-           Thread.Sleep(2000);
-
-           var secondCommand = new Command();
-
-           _worker.AddCommand(secondCommand);
-           
-           var contextDtoBeforeRemoveCommand = _worker.GetSessionContextDto();
-
-           _worker.RemoveCommand(firstCommand.CommandId);
-
-           var contextDtoAfterRemoveCommandWithoutDelay = _worker.GetSessionContextDto();
-           
-           System.Console.WriteLine("Hello, World!");
-           System.Console.ReadLine();
-       }
+    // Get logger instance from the specific repository
+    private static readonly ILog Logger = LogManager.GetLogger(CONSOLE_REPOSITORY_NAME, typeof(Program));
+    
+   [STAThread]
+   static void Main()
+   {
+       // Create Logs directory if it doesn't exist
+       Directory.CreateDirectory("Logs");
        
-       static IHostBuilder CreateHostBuilder()
-       {
-           return Host.CreateDefaultBuilder()
-               .ConfigureServices((_, services) => {
-                   services.AddCommonServices();
-                   services.AddClientControls();
-                   services.AddServerServices();
-               });
-       }
-    }
+       // Configure log4net for Console project
+       var consoleRepository = LogManager.CreateRepository(CONSOLE_REPOSITORY_NAME);
+       var consoleConfigFile = new FileInfo("log4net.config"); // Assumes log4net.config is in Console's output
+       log4net.Config.XmlConfigurator.Configure(consoleRepository, consoleConfigFile);
 
+       // Configure log4net for Controller project
+       var controllerRepository = LogManager.CreateRepository(CONTROLLER_REPOSITORY_NAME);
+       // Assuming DeepSpaceSaga.Controller/log4net.config is copied to output directory or accessible
+       var controllerConfigFile = new FileInfo("DeepSpaceSaga.Controller/log4net.config"); 
+       if (!controllerConfigFile.Exists) controllerConfigFile = new FileInfo("log4net.config.controller"); // Fallback or specific name
+       log4net.Config.XmlConfigurator.Configure(controllerRepository, controllerConfigFile);
+
+       // Configure log4net for Server project
+       var serverRepository = LogManager.CreateRepository(SERVER_REPOSITORY_NAME);
+       // Assuming DeepSpaceSaga.Server/log4net.config is copied to output directory or accessible
+       var serverConfigFile = new FileInfo("DeepSpaceSaga.Server/log4net.config"); 
+       if (!serverConfigFile.Exists) serverConfigFile = new FileInfo("log4net.config.server"); // Fallback or specific name
+       log4net.Config.XmlConfigurator.Configure(serverRepository, serverConfigFile);
+
+       Logger.Info("Start 'Deep Space Saga' game desktop client.");
+
+       ServiceProvider = CreateHostBuilder().Build().Services;
+       
+       var _worker = ServiceProvider.GetService<IGameServer>();
+       
+       var session = new GameSession();
+
+       var asteroid = new CelestialObject { X = 10, Y = 20 };
+       var spacecraft = new CelestialObject { X = 0, Y = 0, Type = CelestialObjectType.Spacecraft };
+
+       session.CelestialObjects.Add(asteroid.CelestialObjectId, asteroid);
+       session.CelestialObjects.Add(spacecraft.CelestialObjectId, spacecraft);
+       
+       
+       _worker.SessionStart(session);
+       
+       var firstCommand = new Command();
+
+       _worker.AddCommand(firstCommand);
+
+       Thread.Sleep(2000);
+
+       var secondCommand = new Command();
+
+       _worker.AddCommand(secondCommand);
+       
+       var contextDtoBeforeRemoveCommand = _worker.GetSessionContextDto();
+
+       _worker.RemoveCommand(firstCommand.CommandId);
+
+       var contextDtoAfterRemoveCommandWithoutDelay = _worker.GetSessionContextDto();
+       
+       System.Console.WriteLine("Hello, World!");
+       System.Console.ReadLine();
+   }
+   
+   static IHostBuilder CreateHostBuilder()
+   {
+       return Host.CreateDefaultBuilder()
+           .ConfigureServices((_, services) => {
+               services.AddCommonServices();
+               services.AddServerServices();
+           });
+   }
 }
 

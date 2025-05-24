@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace DeepSpaceSaga.Common.Geometry;
+﻿namespace DeepSpaceSaga.Common.Geometry;
 
 public class SpaceMapColor
 {
@@ -24,4 +22,13 @@ public class SpaceMapColor
     public byte Blue { get; set; }
     public byte Alpha { get; set; }
 
+}
+
+public static class SpaceMapColorHelper
+{
+    public static Color CreateRandomColor()
+    {
+        Random random = new Random();
+        return Color.FromArgb(random.Next(255), random.Next(255), random.Next(255));
+    }
 }

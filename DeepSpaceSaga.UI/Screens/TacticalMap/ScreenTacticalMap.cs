@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto;
-using DeepSpaceSaga.Common.Abstractions.Services;
-
-namespace DeepSpaceSaga.UI.Screens.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 
 public partial class ScreenTacticalMap : Form
 {

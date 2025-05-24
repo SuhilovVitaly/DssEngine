@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto;
-
-namespace DeepSpaceSaga.UI.Screens.TacticGame;
+﻿namespace DeepSpaceSaga.UI.Screens.TacticGame;
 
 public partial class ScreenTacticGame : Form
 {

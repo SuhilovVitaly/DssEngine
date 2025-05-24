@@ -8,14 +8,7 @@ public static class CrossThreadExtensions
     {
         if (target.InvokeRequired)
         {
-            try
-            {
-                target.Invoke(action);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Error {e.Message}");
-            }
+            target.Invoke(action);
         }
         else
         {

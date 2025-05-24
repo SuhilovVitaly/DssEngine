@@ -45,7 +45,6 @@ internal static class Program
     {
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
-                services.AddScoped<SessionInfoService>();
                 services.AddCommonServices();
                 services.AddClientScreens();
                 services.AddClientServices();

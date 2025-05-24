@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Presenters;
-
-namespace DeepSpaceSaga.UI.Screens.MainMenu;
+﻿namespace DeepSpaceSaga.UI.Screens.MainMenu;
 
 public partial class ScreenGameMenu : Form
 {

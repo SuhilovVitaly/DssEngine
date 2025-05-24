@@ -1,5 +1,3 @@
-using DeepSpaceSaga.UI.Controller.Models;
-
 namespace DeepSpaceSaga.UI.Controller.Abstractions;
 
 /// <summary>

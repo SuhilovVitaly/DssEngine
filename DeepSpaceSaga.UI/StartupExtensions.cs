@@ -34,6 +34,7 @@ namespace DeepSpaceSaga.UI
             
             // Register Presenters (UI coordination layer)
             services.AddScoped<IMainMenuPresenter, MainMenuPresenter>();
+            services.AddScoped<IGameMenuPresenter, GameMenuPresenter>();
             
             // TODO: Add other Controllers and Presenters here as they are created
             // services.AddScoped<ITacticalMapController, TacticalMapController>();

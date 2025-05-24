@@ -1,18 +1,66 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainMenu;
+﻿using DeepSpaceSaga.UI.Presenters;
+
+namespace DeepSpaceSaga.UI.Screens.MainMenu;
 
 public partial class ScreenGameMenu : Form
 {
-    private GameManager _gameManager;
+    private readonly IGameMenuPresenter _presenter;
 
-    public ScreenGameMenu(GameManager gameManager)
+    public ScreenGameMenu(IGameMenuPresenter presenter)
     {
+        _presenter = presenter ?? throw new ArgumentNullException(nameof(presenter));
+        
         InitializeComponent();
-        _gameManager = gameManager;
+        SetupEventHandlers();
+    }
 
+    #region Form Events
+
+    protected override async void OnLoad(EventArgs e)
+    {
+        base.OnLoad(e);
+        
+        try
+        {
+            await _presenter.InitializeAsync();
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Failed to initialize menu: {ex.Message}");
+        }
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void SetupEventHandlers()
+    {
         // Enable key handling
         KeyPreview = true;
         KeyDown += OnKeyDown;
+        
+        // Handle form closing to resume game
+        FormClosed += OnFormClosed;
+        
+        // Subscribe to presenter events
+        _presenter.ErrorOccurred += OnErrorOccurred;
+        
+        // Setup button click handlers
+        button2.Click += OnResumeClick; // RESUME button
+        button3.Click += OnSaveClick; // SAVE button  
+        button4.Click += OnLoadClick; // LOAD button
+        button1.Click += OnMainMenuClick; // MAIN MENU button
     }
+
+    private void ShowError(string message)
+    {
+        MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    #endregion
+
+    #region Event Handlers
 
     private void OnKeyDown(object sender, KeyEventArgs e)
     {
@@ -21,6 +69,83 @@ public partial class ScreenGameMenu : Form
             Close();
         }
     }
+
+    private async void OnFormClosed(object sender, FormClosedEventArgs e)
+    {
+        // Handle menu closing through presenter
+        await _presenter.HandleMenuClosingAsync();
+    }
+
+    private void OnErrorOccurred(object? sender, string error)
+    {
+        try
+        {
+            if (InvokeRequired)
+            {
+                Invoke(() => OnErrorOccurred(sender, error));
+                return;
+            }
+
+            ShowError(error);
+        }
+        catch (Exception ex)
+        {
+            // Log error but don't throw to prevent cascading failures
+            Console.WriteLine($"Error handling presenter error: {ex.Message}");
+        }
+    }
+
+    private async void OnResumeClick(object? sender, EventArgs e)
+    {
+        try
+        {
+            await _presenter.HandleResumeGameAsync();
+            Close(); // Close menu after resuming
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Failed to resume game: {ex.Message}");
+        }
+    }
+
+    private async void OnSaveClick(object? sender, EventArgs e)
+    {
+        try
+        {
+            await _presenter.HandleSaveGameAsync();
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Failed to save game: {ex.Message}");
+        }
+    }
+
+    private async void OnLoadClick(object? sender, EventArgs e)
+    {
+        try
+        {
+            await _presenter.HandleLoadGameAsync();
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Failed to load game: {ex.Message}");
+        }
+    }
+
+    private async void OnMainMenuClick(object? sender, EventArgs e)
+    {
+        try
+        {
+            await _presenter.HandleGoToMainMenuAsync();
+            Close(); // Close menu after going to main menu
+        }
+        catch (Exception ex)
+        {
+            ShowError($"Failed to go to main menu: {ex.Message}");
+        }
+    }
+
+    #endregion
 
     protected override void OnPaint(PaintEventArgs e)
     {
@@ -35,30 +160,5 @@ public partial class ScreenGameMenu : Form
             Height - UiConstants.FormBorderSize
         );
         e.Graphics.DrawRectangle(borderPen, borderRect);
-    }
-
-    private void button1_Click(object sender, EventArgs e)
-    {
-        
-    }
-
-    private void button2_Click(object sender, EventArgs e)
-    {
-        Close();
-    }
-
-    private void button3_Click(object sender, EventArgs e)
-    {
-        
-    }
-
-    private void Event_SaveGame(object sender, EventArgs e)
-    {
-        
-    }
-
-    private void Event_LoadGame(object sender, EventArgs e)
-    {
-        
     }
 }

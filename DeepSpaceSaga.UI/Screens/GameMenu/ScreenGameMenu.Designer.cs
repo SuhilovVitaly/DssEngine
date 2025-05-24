@@ -51,7 +51,7 @@
             button1.TabIndex = 0;
             button1.Text = "MAIN MENU";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            button1.Click += OnMainMenuClick;
             // 
             // button2
             // 
@@ -69,7 +69,7 @@
             button2.TabIndex = 0;
             button2.Text = "RESUME";
             button2.UseVisualStyleBackColor = false;
-            button2.Click += button2_Click;
+            button2.Click += OnResumeClick;
             // 
             // button3
             // 
@@ -87,7 +87,7 @@
             button3.TabIndex = 0;
             button3.Text = "SAVE";
             button3.UseVisualStyleBackColor = false;
-            button3.Click += Event_SaveGame;
+            button3.Click += OnSaveClick;
             // 
             // button4
             // 
@@ -105,7 +105,7 @@
             button4.TabIndex = 0;
             button4.Text = "LOAD";
             button4.UseVisualStyleBackColor = false;
-            button4.Click += Event_LoadGame;
+            button4.Click += OnLoadClick;
             // 
             // button5
             // 

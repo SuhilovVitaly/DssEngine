@@ -1,6 +1,9 @@
 ﻿using DeepSpaceSaga.UI.Screens.MainMenu;
 using DeepSpaceSaga.UI.Screens.TacticalMap;
 using DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
+using DeepSpaceSaga.UI.Controller;
+using DeepSpaceSaga.UI.Controller.Abstractions;
+using DeepSpaceSaga.UI.Presenters;
 
 namespace DeepSpaceSaga.UI
 {
@@ -14,8 +17,26 @@ namespace DeepSpaceSaga.UI
             services.AddSingleton<IScreensService, ScreensService>();
             services.AddSingleton<GameManager>();
 
+            // Register MVP components
+            services.AddMvpComponents();
+
             // Register screens after services
             services.AddClientScreens();
+
+            return services;
+        }
+
+        public static IServiceCollection AddMvpComponents(this IServiceCollection services)
+        {
+            // Register Controllers (business logic layer)
+            services.AddScoped<IMainMenuController, MainMenuController>();
+            
+            // Register Presenters (UI coordination layer)
+            services.AddScoped<IMainMenuPresenter, MainMenuPresenter>();
+            
+            // TODO: Add other Controllers and Presenters here as they are created
+            // services.AddScoped<ITacticalMapController, TacticalMapController>();
+            // services.AddScoped<ITacticalMapPresenter, TacticalMapPresenter>();
 
             return services;
         }

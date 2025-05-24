@@ -177,7 +177,7 @@ public class TurnSchedulerServiceTests : IDisposable
     public async Task Resume_PreservesExecutorState()
     {
         // Arrange
-        ISessionInfoService lastState = null;
+        ISessionInfoService? lastState = null;
         void OnCalculation(ISessionInfoService state, CalculationType type) => lastState = state;
 
         // Act

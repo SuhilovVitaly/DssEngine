@@ -48,7 +48,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
         Console.WriteLine($"[SessionTurnFinalization] Finish turn processing for session {sessionDto.Id} Turn: {sessionDto.State.Turn}");
 
-        return sessionDto;
+        return GameSessionMapper.ToDto(_sessionContext);
     }
     
     public void SessionStart(GameSession session)

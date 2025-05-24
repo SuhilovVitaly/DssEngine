@@ -7,11 +7,21 @@ global using System.IO;
 global using System.Drawing;
 global using System.Linq;
 global using System.Collections.Generic;
+global using System.Diagnostics;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using System.Diagnostics.CodeAnalysis;
+
+global using Microsoft.Extensions.DependencyInjection;
+
 global using Xunit;
 global using Moq;
 global using FluentAssertions;
+
 global using log4net;
 global using log4net.Config;
+
+global using DeepSpaceSaga.Common;
 global using DeepSpaceSaga.Common.Abstractions.Entities;
 global using DeepSpaceSaga.Common.Abstractions.Services;
 global using DeepSpaceSaga.Common.Abstractions.Dto;
@@ -21,9 +31,10 @@ global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using DeepSpaceSaga.Common.Geometry;
 global using DeepSpaceSaga.Common.Extensions.Object;
 global using DeepSpaceSaga.Common.Abstractions.Mappers;
+
+global using DeepSpaceSaga.Server;
 global using DeepSpaceSaga.Server.Services;
 global using DeepSpaceSaga.Server.Services.Metrics;
 global using DeepSpaceSaga.Server.Services.SessionInfo;
 global using DeepSpaceSaga.Server.Services.SessionContext;
 global using DeepSpaceSaga.Server.Services.Scheduler;
-global using DeepSpaceSaga.Server;

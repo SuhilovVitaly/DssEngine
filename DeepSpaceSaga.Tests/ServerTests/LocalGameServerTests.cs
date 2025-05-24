@@ -8,7 +8,6 @@ public class LocalGameServerTests
     private readonly Mock<ISessionContextService> _serverContextMock;
     private readonly Mock<IMetricsService> _gameFlowMetricsMock;
     private readonly Mock<IMetricsService> _serverMetricsMock;
-    private readonly TurnSchedulerService _turnSchedulerService;
     private GameSessionDto? _lastExecutedSession;
     private GameSession _gameSession;
 
@@ -111,7 +110,7 @@ public class LocalGameServerTests
         // Assert
         _lastExecutedSession.Should().NotBeNull();
         _lastExecutedSession!.Id.Should().NotBe(Guid.Empty);
-        _lastExecutedSession.State.Turn.Should().Be(initialTurn + 1);
+        _lastExecutedSession.State.ProcessedTurns.Should().Be(initialTurn + 1);
     }
 
     [Theory]
@@ -130,7 +129,7 @@ public class LocalGameServerTests
 
         // Assert
         _lastExecutedSession.Should().NotBeNull();
-        _lastExecutedSession!.State.Turn.Should().Be(initialTurn + 1);
+        _lastExecutedSession!.State.ProcessedTurns.Should().Be(initialTurn + 1);
     }
     
     [Fact]

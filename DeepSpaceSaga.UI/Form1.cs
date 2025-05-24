@@ -26,7 +26,7 @@ public partial class Form1 : Form
 
     private void RefreshSessionInfo(GameSessionDto session)
     {
-        crlSessionInfo.Text = " Turn: " + session.Turn;
+        crlSessionInfo.Text = " Turn: " + session.State.Turn;
     }
 
     private void crlStartProcessing_Click(object sender, EventArgs e)

@@ -111,7 +111,7 @@ public class LocalGameServerTests
         // Assert
         _lastExecutedSession.Should().NotBeNull();
         _lastExecutedSession!.Id.Should().NotBe(Guid.Empty);
-        _lastExecutedSession.Turn.Should().Be(initialTurn + 1);
+        _lastExecutedSession.State.Turn.Should().Be(initialTurn + 1);
     }
 
     [Theory]
@@ -130,7 +130,7 @@ public class LocalGameServerTests
 
         // Assert
         _lastExecutedSession.Should().NotBeNull();
-        _lastExecutedSession!.Turn.Should().Be(initialTurn + 1);
+        _lastExecutedSession!.State.Turn.Should().Be(initialTurn + 1);
     }
     
     [Fact]

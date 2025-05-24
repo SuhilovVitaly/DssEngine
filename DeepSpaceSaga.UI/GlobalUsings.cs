@@ -25,3 +25,5 @@ global using DeepSpaceSaga.Common.Abstractions.Entities;
 global using SkiaSharp.Views.Desktop;
 global using SkiaSharp;
 global using DeepSpaceSaga.Common.Abstractions.Session;
+global using System.ComponentModel;
+global using DeepSpaceSaga.UI.CommonControls;

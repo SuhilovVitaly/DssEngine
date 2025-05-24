@@ -5,3 +5,4 @@ global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Diagnostics.CodeAnalysis;
 global using DeepSpaceSaga.Common.Abstractions.Dto;
+global using DeepSpaceSaga.Common.Abstractions.Services;

@@ -33,6 +33,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     public void SetGameSpeed(int speed)
     {
         _sessionContext.SessionInfo.SetSpeed(speed);
+        SessionResume();
         RefreshGameSessionDto();
     }
 
@@ -45,9 +46,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     {
         var turn = sessionInfo.IncrementTurn(); 
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
-        Console.WriteLine($"[SessionTurnFinalization] Finish turn processing for session {sessionDto.Id} Turn: {sessionDto.Turn}");
-
-        sessionDto.Turn = turn;
+        Console.WriteLine($"[SessionTurnFinalization] Finish turn processing for session {sessionDto.Id} Turn: {sessionDto.State.Turn}");
 
         return sessionDto;
     }

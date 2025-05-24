@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.UI.Screens.TacticalMap;
+using DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 namespace DeepSpaceSaga.UI
 {

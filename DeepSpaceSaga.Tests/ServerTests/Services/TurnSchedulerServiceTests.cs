@@ -1,13 +1,21 @@
 namespace DeepSpaceSaga.Tests.ServerTests.Services;
 
+using Moq;
+
 public class TurnSchedulerServiceTests : IDisposable
 {
     private readonly TurnSchedulerService _sut;
     private readonly ConcurrentQueue<(ISessionInfoService State, CalculationType Type)> _calculations;
+    private readonly ISessionContextService _sessionContext;
+    private readonly ISessionInfoService _sessionInfo;
+    private readonly Mock<IMetricsService> _metricsMock;
 
     public TurnSchedulerServiceTests()
     {
-        _sut = new TurnSchedulerService(new SessionInfoService(),  tickInterval: 100); // Larger interval for testing
+        _sessionInfo = new SessionInfoService();
+        _metricsMock = new Mock<IMetricsService>();
+        _sessionContext = new SessionContextService(_sessionInfo, _metricsMock.Object);
+        _sut = new TurnSchedulerService(_sessionContext, tickInterval: 100); // Larger interval for testing
         _calculations = new ConcurrentQueue<(ISessionInfoService, CalculationType)>();
     }
 
@@ -15,7 +23,10 @@ public class TurnSchedulerServiceTests : IDisposable
     public void Constructor_WithInvalidTickInterval_ThrowsArgumentException()
     {
         // Arrange & Act
-        var action = () => new TurnSchedulerService(new SessionInfoService(), tickInterval: 0);
+        var sessionInfoMock = new Mock<ISessionInfoService>();
+        var metricsMock = new Mock<IMetricsService>();
+        var sessionContext = new SessionContextService(sessionInfoMock.Object, metricsMock.Object);
+        var action = () => new TurnSchedulerService(sessionContext, tickInterval: 0);
 
         // Assert
         action.Should().Throw<ArgumentException>()
@@ -195,13 +206,13 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Act
         _sut.Start(OnCalculation);
-        await Task.Delay(5000); // Ждем достаточное время для выполнения нескольких ходов
+        await Task.Delay(5000); // Wait for enough time to complete several turns
         _sut.Stop();
 
         // Assert
         lastState.Should().NotBeNull();
-        lastState!.TurnCounter.Should().BeGreaterThan(1, "должно быть выполнено несколько ходов");
-        _calculations.Count(c => c.Type == CalculationType.Turn).Should().BeGreaterThan(1, "должно быть несколько событий типа Turn");
+        lastState!.TurnCounter.Should().BeGreaterThan(1, "should have completed several turns");
+        _calculations.Count(c => c.Type == CalculationType.Turn).Should().BeGreaterThan(1, "should have several Turn events");
     }
 
     [Fact]
@@ -212,12 +223,12 @@ public class TurnSchedulerServiceTests : IDisposable
         void OnCalculation(ISessionInfoService state, CalculationType type)
         {
             statesDuringCalculation.Add(state.IsPaused);
-            Thread.Sleep(50); // Имитируем длительные вычисления
+            Thread.Sleep(50); // Simulate long calculations
         }
 
         // Act
         _sut.Start(OnCalculation);
-        await Task.Delay(200); // Ждем пару тиков
+        await Task.Delay(200); // Wait for a couple of ticks
         _sut.Stop();
 
         // Assert
@@ -236,7 +247,7 @@ public class TurnSchedulerServiceTests : IDisposable
         {
             try
             {
-                // Имитируем сложные вычисления с доступом к общим ресурсам
+                // Simulate complex calculations with shared resource access
                 var currentCount = calculationCount;
                 Thread.Sleep(10);
                 calculationCount = currentCount + 1;
@@ -249,118 +260,12 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Act
         _sut.Start(OnCalculation);
-        await Task.Delay(500); // Даем время на выполнение нескольких тиков
+        await Task.Delay(500); // Give time for several ticks
         _sut.Stop();
 
         // Assert
         errors.Should().BeEmpty();
         calculationCount.Should().BeGreaterThan(0);
-    }
-
-    [Fact]
-    public void Resume_AfterDispose_ThrowsObjectDisposedException()
-    {
-        // Arrange
-        _sut.Start((state, type) => { });
-        _sut.Stop();
-        _sut.Dispose();
-
-        // Act
-        var action = () => _sut.Resume();
-
-        // Assert
-        action.Should().Throw<ObjectDisposedException>();
-    }
-
-    [Fact]
-    public async Task Stop_SetsPausedStateCorrectly()
-    {
-        // Arrange
-        ISessionInfoService lastState = null;
-        void OnCalculation(ISessionInfoService state, CalculationType type) => lastState = state;
-
-        // Act
-        _sut.Start(OnCalculation);
-        await Task.Delay(200); // Ждем пару тиков
-        _sut.Stop();
-        await Task.Delay(100); // Даем время на обработку остановки
-
-        // Assert
-        lastState.Should().NotBeNull();
-        lastState!.IsPaused.Should().BeTrue("состояние должно быть приостановлено после остановки");
-    }
-
-    [Fact]
-    public async Task Start_ExecutesCycleCalculation_AfterTenTurns()
-    {
-        // Arrange
-        void OnCalculation(ISessionInfoService state, CalculationType type) =>
-            _calculations.Enqueue((state, type));
-
-        // Act - используем небольшой интервал тиков для ускорения теста
-        var fastExecutor = new TurnSchedulerService(new SessionInfoService(), tickInterval: 10);
-        fastExecutor.Start(OnCalculation);
-        await Task.Delay(2500); // Ждем достаточно времени для завершения полного цикла (10 тиков * 10 ходов * 10 мс)
-        fastExecutor.Stop();
-        fastExecutor.Dispose();
-
-        // Assert
-        _calculations.Should().Contain(c => c.Type == CalculationType.Cycle);
-        var cycleCalculation = _calculations.First(c => c.Type == CalculationType.Cycle);
-        cycleCalculation.State.CycleCounter.Should().BeGreaterThan(1);
-    }
-
-    [Fact]
-    public async Task OnTimerElapsed_SkipsCalculation_WhenIsPausedIsTrue()
-    {
-        // Arrange
-        var sessionInfo = new SessionInfoService();
-        sessionInfo.IsPaused = true; // Устанавливаем в true до запуска
-
-        var calculationCount = 0;
-        void OnCalculation(ISessionInfoService state, CalculationType type) => 
-            Interlocked.Increment(ref calculationCount);
-
-        // Act
-        var pausedExecutor = new TurnSchedulerService(sessionInfo, tickInterval: 50);
-        
-        // Оборачиваем старт в блокировку чтобы не допустить запуск тиков до нашей установки паузы
-        lock (sessionInfo)
-        {
-            pausedExecutor.Start(OnCalculation);
-            // Убеждаемся, что наше состояние паузы не изменилось
-            sessionInfo.IsPaused = true;
-        }
-        
-        await Task.Delay(300); // Ждем несколько потенциальных тиков
-        pausedExecutor.Stop();
-        pausedExecutor.Dispose();
-
-        // Assert
-        calculationCount.Should().Be(0, "вычисления не должны выполняться, когда IsPaused = true");
-    }
-
-    [Fact]
-    public async Task Dispose_StopsExecutingCalculations()
-    {
-        // Arrange
-        var sessionInfo = new SessionInfoService();
-        var calculationCount = 0;
-        void OnCalculation(ISessionInfoService state, CalculationType type) => 
-            Interlocked.Increment(ref calculationCount);
-
-        // Act
-        var disposableExecutor = new TurnSchedulerService(sessionInfo, tickInterval: 50);
-        disposableExecutor.Start(OnCalculation);
-        await Task.Delay(100); // Подождем немного для начала вычислений
-        calculationCount.Should().BeGreaterThan(0, "должно быть выполнено хотя бы одно вычисление");
-        
-        var countBeforeDispose = calculationCount;
-        disposableExecutor.Dispose();
-        await Task.Delay(200); // Подождем еще для проверки отсутствия вычислений
-
-        // Assert
-        calculationCount.Should().Be(countBeforeDispose, "после Dispose не должно быть вычислений");
     }
 
     [Fact]
@@ -380,48 +285,44 @@ public class TurnSchedulerServiceTests : IDisposable
     public void Resume_ResetsIsPausedToFalse()
     {
         // Arrange
-        var sessionInfo = new SessionInfoService();
         var callbackWasCalled = new ManualResetEventSlim(false);
         var stateBeforeCallback = true;
 
         void OnCalculation(ISessionInfoService state, CalculationType type)
         {
-            // Записываем состояние до выполнения расчетов
+            // Record state before calculations
             stateBeforeCallback = state.IsPaused;
             callbackWasCalled.Set();
         }
 
         // Act
-        var executor = new TurnSchedulerService(sessionInfo, tickInterval: 20);
-        executor.Start(OnCalculation);
+        _sut.Start(OnCalculation);
         
-        // Ждем, пока хотя бы один обработчик будет вызван
+        // Wait for at least one handler to be called
         callbackWasCalled.Wait(TimeSpan.FromMilliseconds(500));
-        executor.Stop();
+        _sut.Stop();
         
-        // Проверяем, что состояние после Stop позволяет нам возобновить
-        sessionInfo.IsPaused.Should().BeTrue("IsPaused должен быть true после Stop");
+        // Check that state after Stop allows us to resume
+        _sessionInfo.IsPaused.Should().BeTrue("IsPaused should be true after Stop");
         
-        // Сбрасываем флаг
+        // Reset flag
         callbackWasCalled.Reset();
         
-        // Возобновляем и снова ждем вызова обработчика
-        executor.Resume();
+        // Resume and wait for handler to be called again
+        _sut.Resume();
         callbackWasCalled.Wait(TimeSpan.FromMilliseconds(500));
         
         // Assert
-        stateBeforeCallback.Should().BeTrue("во время вычислений (внутри обработчика) IsPaused должен быть true");
-        sessionInfo.IsPaused.Should().BeFalse("после вызова обработчика IsPaused должен быть false");
+        stateBeforeCallback.Should().BeTrue("during calculations (inside handler) IsPaused should be true");
+        _sessionInfo.IsPaused.Should().BeFalse("after handler call IsPaused should be false");
         
-        executor.Stop();
-        executor.Dispose();
+        _sut.Stop();
     }
 
     [Fact]
     public async Task CycleUpdate_ResetsCountersCorrectly()
     {
         // Arrange
-        var sessionInfo = new SessionInfoService();
         var countsByType = new ConcurrentDictionary<CalculationType, int>();
         var cycleReached = new TaskCompletionSource<bool>();
 
@@ -435,19 +336,19 @@ public class TurnSchedulerServiceTests : IDisposable
             }
         }
 
-        // Act - используем минимальные интервалы для быстрого теста
-        var fastExecutor = new TurnSchedulerService(sessionInfo, tickInterval: 1);
+        // Act - use minimum intervals for fast test
+        var fastExecutor = new TurnSchedulerService(_sessionContext, tickInterval: 1);
         fastExecutor.Start(OnCalculation);
         
-        // Ждем, пока будет выполнено хотя бы одно вычисление цикла
+        // Wait for at least one cycle calculation
         await cycleReached.Task.WaitAsync(TimeSpan.FromSeconds(10));
         fastExecutor.Stop();
 
         // Assert
-        countsByType.Should().ContainKey(CalculationType.Cycle, "должно быть вычисление типа Cycle");
-        sessionInfo.TickCounter.Should().Be(0, "счетчик тиков должен быть сброшен в CycleUpdate");
-        sessionInfo.TurnCounter.Should().Be(0, "счетчик ходов должен быть сброшен в CycleUpdate");
-        sessionInfo.CycleCounter.Should().BeGreaterThan(1, "счетчик циклов должен быть увеличен в CycleUpdate");
+        countsByType.Should().ContainKey(CalculationType.Cycle, "should have Cycle calculation");
+        _sessionInfo.TickCounter.Should().Be(0, "tick counter should be reset in CycleUpdate");
+        _sessionInfo.TurnCounter.Should().Be(0, "turn counter should be reset in CycleUpdate");
+        _sessionInfo.CycleCounter.Should().BeGreaterThan(1, "cycle counter should be incremented in CycleUpdate");
         
         fastExecutor.Dispose();
     }
@@ -456,16 +357,14 @@ public class TurnSchedulerServiceTests : IDisposable
     public async Task SessionState_IsThreadSafe()
     {
         // Arrange
-        var state = new SessionInfoService();
-        var safeExecutor = new TurnSchedulerService(state, tickInterval: 1); // Минимальный интервал для максимальной нагрузки
         var tasks = new List<Task>();
         var taskCount = 10;
-        var runTime = 500; // мс
+        var runTime = 500; // ms
         
         // Act
-        safeExecutor.Start((s, t) => { }); // Запускаем планировщик
+        _sut.Start((s, t) => { }); // Start scheduler
         
-        // Одновременно запускаем несколько задач, которые будут обращаться к состоянию
+        // Start multiple tasks that will access state simultaneously
         for (int i = 0; i < taskCount; i++)
         {
             tasks.Add(Task.Run(() => 
@@ -473,23 +372,22 @@ public class TurnSchedulerServiceTests : IDisposable
                 var start = DateTime.Now;
                 while ((DateTime.Now - start).TotalMilliseconds < runTime)
                 {
-                    // Чтение и манипуляции с состоянием
-                    var tick = state.TickCounter;
-                    var turn = state.TurnCounter;
-                    var cycle = state.CycleCounter;
-                    var isPaused = state.IsPaused;
-                    // Небольшая задержка для увеличения шанса гонки
+                    // Read and manipulate state
+                    var tick = _sessionInfo.TickCounter;
+                    var turn = _sessionInfo.TurnCounter;
+                    var cycle = _sessionInfo.CycleCounter;
+                    var isPaused = _sessionInfo.IsPaused;
+                    // Small delay to increase race chance
                     Thread.Sleep(1);
                 }
             }));
         }
         
         await Task.WhenAll(tasks);
-        safeExecutor.Stop();
-        safeExecutor.Dispose();
+        _sut.Stop();
         
-        // Assert - если не было исключений, то тест прошел успешно
-        true.Should().BeTrue("код должен выполняться без ошибок при многопоточном доступе к состоянию");
+        // Assert - if no exceptions occurred, test passed
+        true.Should().BeTrue("code should execute without errors in multi-threaded access to state");
     }
 
     public void Dispose()

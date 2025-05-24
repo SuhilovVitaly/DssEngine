@@ -10,10 +10,6 @@ public partial class GameSpeedControl : UserControl
     public GameSpeedControl()
     {
         InitializeComponent();
-
-        //if (Global.GameManager is null) return;
-
-        //Global.GameManager.Events.OnRefreshData += Worker_RefreshData;
     }
 
     public void UpdateGameData(GameSessionDto session)
@@ -22,7 +18,7 @@ public partial class GameSpeedControl : UserControl
         {
             _gameManager = Program.ServiceProvider?.GetService<GameManager>() ?? throw new InvalidOperationException("Failed to resolve GameManager");
         }
-        //CrossThreadExtensions.PerformSafely(this, RereshControls, session);
+        CrossThreadExtensions.PerformSafely(this, RereshControls, session);
     }
 
     private void RereshControls(GameSessionDto session)

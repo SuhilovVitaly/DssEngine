@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.Server.Services.SessionContext;
+﻿using DeepSpaceSaga.Common.Tools;
+using DeepSpaceSaga.Server.Generation;
+
+namespace DeepSpaceSaga.Server.Services.SessionContext;
 
 public class SessionContextService : ISessionContextService
 {
@@ -6,11 +9,11 @@ public class SessionContextService : ISessionContextService
     public IMetricsService Metrics { get; }
     public GameSession GameSession { get; set; }
 
-    public SessionContextService(ISessionInfoService sessionInfo, IMetricsService metrics)
+    public SessionContextService(ISessionInfoService sessionInfo, IMetricsService metrics, IGenerationTool generationTool)
     {
         SessionInfo = sessionInfo ?? throw new ArgumentNullException(nameof(sessionInfo));
         Metrics = metrics ?? throw new ArgumentNullException(nameof(metrics));
 
-        GameSession = new GameSession();
+        GameSession = ScenarioGenerator.DefaultScenario(generationTool);
     }    
 }

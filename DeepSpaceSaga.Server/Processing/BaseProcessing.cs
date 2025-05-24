@@ -14,7 +14,7 @@ public static class BaseProcessing
             {
                 celestialObject.X += 1;
                 celestialObject.Y += 1;
-                Console.WriteLine($"[Process] Processing celestial object Id is [{celestialObject.CelestialObjectId}] Type is [{celestialObject.Type}] Location is: [{celestialObject.X}:{celestialObject.Y}]");
+                Console.WriteLine($"[Process] Processing celestial object Id is [{celestialObject.Id}] Type is [{celestialObject.Type}] Location is: [{celestialObject.X}:{celestialObject.Y}]");
             }
         
             Console.WriteLine($"[Process] Finish processing for session {sessionContext.GameSession.SessionId} Turn: {sessionContext.GameSession.Turn}");

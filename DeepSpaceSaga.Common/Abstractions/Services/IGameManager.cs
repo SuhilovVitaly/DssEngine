@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Tools;
+
 namespace DeepSpaceSaga.Common.Abstractions.Services;
 
 /// <summary>
@@ -45,4 +47,6 @@ public interface IGameManager
     /// Shows the main menu screen
     /// </summary>
     void ShowMainMenuScreen();
+
+    IGenerationTool GenerationTool { get; set; }
 } 

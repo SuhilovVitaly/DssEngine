@@ -4,7 +4,7 @@ public static class GameSessionMapper
 {
     public static GameSessionDto ToDto(ISessionContextService gameSessionContext)
     {
-        Dictionary<Guid, CelestialObjectDto> celestialObjectsCopy;
+        Dictionary<int, CelestialObjectDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
             
         lock (gameSessionContext)

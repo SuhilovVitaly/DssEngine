@@ -1,11 +1,11 @@
 using DeepSpaceSaga.Common.Abstractions.Dto;
-using DeepSpaceSaga.Common.Abstractions.Entities;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class CelestialObjectMapper
 {
-    public static CelestialObjectDto ToDto(CelestialObject celestialObject)
+    public static CelestialObjectDto ToDto(ICelestialObject celestialObject)
     {
         return new CelestialObjectDto
         {
@@ -13,7 +13,7 @@ public static class CelestialObjectMapper
             IsPreScanned = celestialObject.IsPreScanned,
             X = celestialObject.X,
             Y = celestialObject.Y,
-            CelestialObjectId = celestialObject.CelestialObjectId,
+            Id = celestialObject.Id,
         };
     }
 }

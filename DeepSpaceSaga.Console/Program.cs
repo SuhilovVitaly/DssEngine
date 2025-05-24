@@ -1,7 +1,9 @@
 ﻿using DeepSpaceSaga.Common;
 using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Common.Tools;
 using DeepSpaceSaga.Server;
+using DeepSpaceSaga.Server.Generation;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -49,18 +51,9 @@ class Program
 
        ServiceProvider = CreateHostBuilder().Build().Services;
        
-       var _worker = ServiceProvider.GetService<IGameServer>();
-       
-       var session = new GameSession();
-
-       var asteroid = new CelestialObject { X = 10, Y = 20 };
-       var spacecraft = new CelestialObject { X = 0, Y = 0, Type = CelestialObjectType.Spacecraft };
-
-       session.CelestialObjects.Add(asteroid.CelestialObjectId, asteroid);
-       session.CelestialObjects.Add(spacecraft.CelestialObjectId, spacecraft);
-       
-       
-       _worker.SessionStart(session);
+       var _worker = ServiceProvider.GetService<IGameServer>();        
+              
+       _worker.SessionStart(ScenarioGenerator.DefaultScenario(new GenerationTool()));
        
        var firstCommand = new Command();
 

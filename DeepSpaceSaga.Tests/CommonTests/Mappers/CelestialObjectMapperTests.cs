@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
+
 namespace DeepSpaceSaga.Tests.CommonTests.Mappers;
 
 public class CelestialObjectMapperTests
@@ -6,13 +8,14 @@ public class CelestialObjectMapperTests
     public void ToDto_Should_Map_All_Properties_Correctly()
     {
         // Arrange
-        var celestialObject = new CelestialObject
+        var celestialObject = new BaseAsteroid(1)
         {
+            Name = "Asteroid 001",
             Type = CelestialObjectType.Spacecraft,
             IsPreScanned = true,
             X = 123,
             Y = 678,
-            CelestialObjectId = Guid.NewGuid()
+            Id = new GenerationTool().GetId()
         };
 
         // Act
@@ -24,14 +27,22 @@ public class CelestialObjectMapperTests
         dto.IsPreScanned.Should().Be(celestialObject.IsPreScanned);
         dto.X.Should().Be(celestialObject.X);
         dto.Y.Should().Be(celestialObject.Y);
-        dto.CelestialObjectId.Should().Be(celestialObject.CelestialObjectId);
+        dto.Id.Should().Be(celestialObject.Id);
     }
 
     [Fact]
     public void ToDto_Should_Not_Return_Null()
     {
         // Arrange
-        var celestialObject = new CelestialObject();
+        var celestialObject = new BaseAsteroid(1)
+        {
+            Name = "Asteroid 001",
+            Type = CelestialObjectType.Spacecraft,
+            IsPreScanned = true,
+            X = 123,
+            Y = 678,
+            Id = new GenerationTool().GetId()
+        };
 
         // Act
         var dto = CelestialObjectMapper.ToDto(celestialObject);
@@ -47,7 +58,17 @@ public class CelestialObjectMapperTests
     public void ToDto_Should_Map_Different_CelestialObjectTypes_Correctly(CelestialObjectType type)
     {
         // Arrange
-        var celestialObject = new CelestialObject { Type = type };
+        var celestialObject = new BaseAsteroid(1)
+        {
+            Name = "Asteroid 001",
+            Type = CelestialObjectType.Spacecraft,
+            IsPreScanned = true,
+            X = 123,
+            Y = 678,
+            Id = new GenerationTool().GetId()
+        };
+
+        celestialObject.Type = type;
 
         // Act
         var dto = CelestialObjectMapper.ToDto(celestialObject);
@@ -60,7 +81,15 @@ public class CelestialObjectMapperTests
     public void ToDto_Should_Map_Default_Values_Correctly()
     {
         // Arrange
-        var celestialObject = new CelestialObject();
+        var celestialObject = new BaseAsteroid(1)
+        {
+            Name = "Asteroid 001",
+            Type = CelestialObjectType.Spacecraft,
+            IsPreScanned = true,
+            X = 123,
+            Y = 678,
+            Id = new GenerationTool().GetId()
+        };
 
         // Act
         var dto = CelestialObjectMapper.ToDto(celestialObject);
@@ -70,6 +99,6 @@ public class CelestialObjectMapperTests
         dto.IsPreScanned.Should().Be(default(bool));
         dto.X.Should().Be(default(int));
         dto.Y.Should().Be(default(int));
-        dto.CelestialObjectId.Should().Be(celestialObject.CelestialObjectId);
+        dto.Id.Should().Be(celestialObject.Id);
     }
 } 

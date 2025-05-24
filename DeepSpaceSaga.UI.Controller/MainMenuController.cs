@@ -1,3 +1,6 @@
+using DeepSpaceSaga.Common.Tools;
+using DeepSpaceSaga.Server.Generation;
+
 namespace DeepSpaceSaga.UI.Controller;
 
 /// <summary>
@@ -22,9 +25,9 @@ public class MainMenuController : IMainMenuController
         try
         {
             Console.WriteLine("[MainMenuController] Starting new game session...");
-            
+
             // Start new game session
-            var newGameSession = new GameSession();
+            var newGameSession = ScenarioGenerator.DefaultScenario(_gameManager.GenerationTool);
             _gameServer.SessionStart(newGameSession);
             Console.WriteLine($"[MainMenuController] Game session started with ID: {newGameSession.Id}");
             

@@ -47,11 +47,12 @@ public sealed class TurnSchedulerService
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;
         _sessionContext.SessionInfo.IsPaused = false;
+        _sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
     private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
     {
-        if (_sessionContext.SessionInfo.IsPaused) return;
+        if (_sessionContext.SessionInfo.IsPaused == true || _sessionContext.SessionInfo.IsCalculationInProgress) return;
 
         lock (_stateLock)
         {
@@ -98,9 +99,9 @@ public sealed class TurnSchedulerService
 
     private void TickCalculation(CalculationType type)
     {
-        _sessionContext.SessionInfo.IsPaused = true;
+        _sessionContext.SessionInfo.IsCalculationInProgress = true;
         _calculationEvent?.Invoke(_sessionContext.SessionInfo, type);
-        _sessionContext.SessionInfo.IsPaused = false;
+        _sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
     /// <summary>
@@ -111,6 +112,7 @@ public sealed class TurnSchedulerService
         if (_isDisposed) return;
         _timer.Enabled = false;
         _sessionContext.SessionInfo.IsPaused = true;
+        _sessionContext.SessionInfo.IsCalculationInProgress = true;
     }
 
     public void Resume()
@@ -123,6 +125,7 @@ public sealed class TurnSchedulerService
 
         _timer.Enabled = true;
         _sessionContext.SessionInfo.IsPaused = false;
+        _sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
     public void Dispose()

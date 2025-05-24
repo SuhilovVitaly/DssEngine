@@ -5,6 +5,8 @@ global using System.Threading;
 global using System.Threading.Tasks;
 global using System.IO;
 global using System.Drawing;
+global using System.Linq;
+global using System.Collections.Generic;
 global using Xunit;
 global using Moq;
 global using FluentAssertions;

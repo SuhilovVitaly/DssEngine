@@ -11,6 +11,7 @@ public interface ISessionInfoService
     int TickCounter { get; }
     int TurnCounter { get; }
     int CycleCounter { get; }
+    bool IsCalculationInProgress { get; set; }
     bool IsPaused { get; set; }
     int Speed { get; set; }
     void SetSpeed(int speed);

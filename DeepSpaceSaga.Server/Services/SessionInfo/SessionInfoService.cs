@@ -34,8 +34,8 @@ public class SessionInfoService : ISessionInfoService
     public int TurnCounter => _turnCounter;
     public int CycleCounter => _cycleCounter;
 
-    public bool IsPaused { get; set; } = true;
-
+    public bool IsCalculationInProgress { get; set; } = true;
+    public bool IsPaused { get; set; }
     public int IncrementTickTotal() => Interlocked.Increment(ref _tickTotal);
     public int IncrementTickCounter() => Interlocked.Increment(ref _tickCounter);
     public void ResetTickCounter() => Interlocked.Exchange(ref _tickCounter, 0);

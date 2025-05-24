@@ -195,6 +195,7 @@ public class LocalGameServerTests
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionPause), 1), Times.Once);
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionResume), 1), Times.Once);
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStop), 1), Times.Once);
+        _sessionContext.SessionInfo.IsPaused.Should().BeTrue();
     }
 
     [Fact]

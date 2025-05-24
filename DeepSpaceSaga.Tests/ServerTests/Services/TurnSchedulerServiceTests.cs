@@ -95,6 +95,7 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Assert
         calculationCount.Should().Be(initialCount);
+        _sessionInfo.IsPaused.Should().BeTrue();
     }
 
     [Fact]
@@ -143,6 +144,7 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Assert
         calculationCount.Should().BeGreaterThan(countBeforeStop);
+        _sessionInfo.IsPaused.Should().BeFalse();
     }
 
     [Fact]
@@ -191,6 +193,7 @@ public class TurnSchedulerServiceTests : IDisposable
         lastState.Should().NotBeNull();
         lastState!.TurnCounter.Should().BeGreaterThanOrEqualTo(turnCounterBeforeStop);
         lastState.TickCounter.Should().BeGreaterThan(tickCounterBeforeStop);
+        lastState.IsPaused.Should().BeFalse();
     }
 
     [Fact]
@@ -213,6 +216,7 @@ public class TurnSchedulerServiceTests : IDisposable
         lastState.Should().NotBeNull();
         lastState!.TurnCounter.Should().BeGreaterThan(1, "should have completed several turns");
         _calculations.Count(c => c.Type == CalculationType.Turn).Should().BeGreaterThan(1, "should have several Turn events");
+        lastState.IsPaused.Should().BeTrue();
     }
 
     [Fact]
@@ -222,7 +226,7 @@ public class TurnSchedulerServiceTests : IDisposable
         var statesDuringCalculation = new List<bool>();
         void OnCalculation(ISessionInfoService state, CalculationType type)
         {
-            statesDuringCalculation.Add(state.IsPaused);
+            statesDuringCalculation.Add(state.IsCalculationInProgress);
             Thread.Sleep(50); // Simulate long calculations
         }
 
@@ -233,7 +237,8 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Assert
         statesDuringCalculation.Should().NotBeEmpty();
-        statesDuringCalculation.All(isPaused => isPaused).Should().BeTrue();
+        statesDuringCalculation.All(isInProgress => isInProgress).Should().BeTrue();
+        _sessionInfo.IsPaused.Should().BeTrue();
     }
 
     [Fact]
@@ -266,6 +271,7 @@ public class TurnSchedulerServiceTests : IDisposable
         // Assert
         errors.Should().BeEmpty();
         calculationCount.Should().BeGreaterThan(0);
+        _sessionInfo.IsPaused.Should().BeTrue();
     }
 
     [Fact]
@@ -282,16 +288,16 @@ public class TurnSchedulerServiceTests : IDisposable
     }
 
     [Fact]
-    public void Resume_ResetsIsPausedToFalse()
+    public void Resume_ResetsCalculationStateCorrectly()
     {
         // Arrange
         var callbackWasCalled = new ManualResetEventSlim(false);
-        var stateBeforeCallback = true;
+        var stateBeforeCallback = false;
 
         void OnCalculation(ISessionInfoService state, CalculationType type)
         {
             // Record state before calculations
-            stateBeforeCallback = state.IsPaused;
+            stateBeforeCallback = state.IsCalculationInProgress;
             callbackWasCalled.Set();
         }
 
@@ -313,8 +319,8 @@ public class TurnSchedulerServiceTests : IDisposable
         callbackWasCalled.Wait(TimeSpan.FromMilliseconds(500));
         
         // Assert
-        stateBeforeCallback.Should().BeTrue("during calculations (inside handler) IsPaused should be true");
-        _sessionInfo.IsPaused.Should().BeFalse("after handler call IsPaused should be false");
+        stateBeforeCallback.Should().BeTrue("during calculations (inside handler) IsCalculationInProgress should be true");
+        _sessionInfo.IsPaused.Should().BeFalse("after Resume IsPaused should be false");
         
         _sut.Stop();
     }
@@ -349,6 +355,7 @@ public class TurnSchedulerServiceTests : IDisposable
         _sessionInfo.TickCounter.Should().Be(0, "tick counter should be reset in CycleUpdate");
         _sessionInfo.TurnCounter.Should().Be(0, "turn counter should be reset in CycleUpdate");
         _sessionInfo.CycleCounter.Should().BeGreaterThan(1, "cycle counter should be incremented in CycleUpdate");
+        _sessionInfo.IsPaused.Should().BeTrue();
         
         fastExecutor.Dispose();
     }
@@ -377,6 +384,7 @@ public class TurnSchedulerServiceTests : IDisposable
                     var turn = _sessionInfo.TurnCounter;
                     var cycle = _sessionInfo.CycleCounter;
                     var isPaused = _sessionInfo.IsPaused;
+                    var isCalculationInProgress = _sessionInfo.IsCalculationInProgress;
                     // Small delay to increase race chance
                     Thread.Sleep(1);
                 }
@@ -388,6 +396,7 @@ public class TurnSchedulerServiceTests : IDisposable
         
         // Assert - if no exceptions occurred, test passed
         true.Should().BeTrue("code should execute without errors in multi-threaded access to state");
+        _sessionInfo.IsPaused.Should().BeTrue();
     }
 
     public void Dispose()

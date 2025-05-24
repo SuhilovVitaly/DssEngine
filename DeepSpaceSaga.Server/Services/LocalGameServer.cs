@@ -50,6 +50,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     {
         _sessionContext.GameSession = session ?? throw new ArgumentNullException(nameof(session));
         _sessionContext.GameSession.Changed += GameSession_Changed;
+        _sessionContext.SessionInfo.IsPaused = false;
         _flowManager.SessionStart(TurnExecution);
     }
 

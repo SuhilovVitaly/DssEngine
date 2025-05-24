@@ -94,14 +94,19 @@ public partial class ScreenBackground : Form
     {
         if (childForm == null) return;
 
-        // Check if form already exists in controls
-        var existingForm = Controls.OfType<Form>().FirstOrDefault(f => f.GetType() == childForm.GetType());
+        // Check if form already exists in controls and is not disposed
+        var existingForm = Controls.OfType<Form>().FirstOrDefault(f => f.GetType() == childForm.GetType() && !f.IsDisposed);
 
-        foreach (Form form in Controls.OfType<Form>())
+        foreach (Form form in Controls.OfType<Form>().ToList())
         {
             if (form is ScreenTacticalMap == false)
             {
                 form.Visible = false;
+            }
+            else if (form.IsDisposed)
+            {
+                // Remove disposed forms from controls
+                Controls.Remove(form);
             }
         }
 

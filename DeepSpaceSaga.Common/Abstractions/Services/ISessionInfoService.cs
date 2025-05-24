@@ -23,4 +23,6 @@ public interface ISessionInfoService
     void ResetTurnCounter();
     int IncrementCycleCounter();
     string ToString();
+
+    void Reset();
 } 

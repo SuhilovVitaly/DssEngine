@@ -45,8 +45,10 @@ namespace DeepSpaceSaga.UI
 
         public static IServiceCollection AddClientScreens(this IServiceCollection services)
         {
-            // Register screens as scoped to maintain state within a scope 
-            services.AddScoped<ScreenTacticalMap>();
+            // Register ScreenTacticalMap as transient to create new instance each time
+            services.AddTransient<ScreenTacticalMap>();
+            
+            // Register other screens as scoped to maintain state within a scope 
             services.AddScoped<ScreenMainMenu>();
             services.AddScoped<ScreenTacticGame>();
             services.AddScoped<ScreenGameMenu>();

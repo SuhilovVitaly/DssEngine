@@ -7,6 +7,13 @@ public class SessionInfoService : ISessionInfoService
         Id = Guid.NewGuid();
     }
 
+    public void Reset()
+    {
+        Interlocked.Exchange(ref _cycleCounter, 0);
+        Interlocked.Exchange(ref _turnCounter, 0);
+        Interlocked.Exchange(ref _tickCounter, 0);
+    }
+
     public Guid Id { get; set; }
     public int Speed { get; set; } = 1;
 

@@ -4,7 +4,7 @@ namespace DeepSpaceSaga.Server.Services.Metrics
 {
     public class MetricsService : IMetricsService
     {
-        private readonly ConcurrentDictionary<string, MetricData> _metrics = new();
+        private ConcurrentDictionary<string, MetricData> _metrics = new();
 
         /// <summary>
         /// Adds or updates the value of a metric by the specified increment.
@@ -23,6 +23,11 @@ namespace DeepSpaceSaga.Server.Services.Metrics
                     Average = (data.CurrentValue + incrementValue) / (data.Count + 1)
                 }
             );
+        }
+
+        public void Reset()
+        {
+            _metrics = new();
         }
 
         /// <summary>

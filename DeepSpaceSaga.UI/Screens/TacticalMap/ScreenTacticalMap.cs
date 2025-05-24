@@ -49,6 +49,7 @@ public partial class ScreenTacticalMap : Form
     {
         if (e.KeyCode == Keys.Escape)
         {
+            _gameManager.SessionPause();
             _screensService.ShowGameMenuModal();
         }
     }

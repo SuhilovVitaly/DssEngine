@@ -93,8 +93,20 @@ public class ScreensService : IScreensService
             var existingScreen = _screenBackground.Controls.OfType<ScreenTacticalMap>().FirstOrDefault();
             if (existingScreen != null)
             {
-                _screenBackground.Invoke(() => existingScreen.Close());
-                Console.WriteLine("[ScreensService] Tactical map screen closed successfully");
+                if (_screenBackground.InvokeRequired)
+                {
+                    _screenBackground.Invoke(() => 
+                    {
+                        existingScreen.Close();
+                        _screenBackground.Controls.Remove(existingScreen);
+                    });
+                }
+                else
+                {
+                    existingScreen.Close();
+                    _screenBackground.Controls.Remove(existingScreen);
+                }
+                Console.WriteLine("[ScreensService] Tactical map screen closed and removed successfully");
             }
             else
             {

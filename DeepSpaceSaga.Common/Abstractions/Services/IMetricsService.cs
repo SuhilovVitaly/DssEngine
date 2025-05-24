@@ -9,4 +9,6 @@ public interface IMetricsService
     double Get(string metric);
 
     double GetAverageMillisecondst(string metric);
+
+    void Reset();
 }

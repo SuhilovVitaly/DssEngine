@@ -1,13 +1,13 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainMenu;
+﻿namespace DeepSpaceSaga.UI.Screens.GameMenu;
 
-public partial class ScreenGameMenu : Form
+public partial class ScreenMainMenu : Form
 {
     private GameManager _gameManager;
-
-    public ScreenGameMenu(GameManager gameManager)
+    public ScreenMainMenu(GameManager gameManager)
     {
         InitializeComponent();
-        _gameManager = gameManager;
+
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(GameManager));
     }
 
     protected override void OnPaint(PaintEventArgs e)
@@ -25,24 +25,14 @@ public partial class ScreenGameMenu : Form
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void Event_ApplicationExit(object sender, EventArgs e)
     {
-        
+        Application.Exit();
     }
 
-    private void button2_Click(object sender, EventArgs e)
+    private void Event_StartNewGameSession(object sender, EventArgs e)
     {
-        
-    }
-
-    private void button3_Click(object sender, EventArgs e)
-    {
-        
-    }
-
-    private void Event_SaveGame(object sender, EventArgs e)
-    {
-        
+        _gameManager.SessionStart();
     }
 
     private void Event_LoadGame(object sender, EventArgs e)

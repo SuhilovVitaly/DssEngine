@@ -19,7 +19,7 @@ public class ScreensService : IScreensService
 
     public void ShowGameMenuScreen()
     {
-        var screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
+        var screen = Program.ServiceProvider.GetService<ScreenMainMenu>();
         _screenBackground.ShowChildForm(screen);
     }
 

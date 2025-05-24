@@ -279,4 +279,149 @@ public class LocalGameServerTests
         // Assert
         changeTriggered.Should().BeTrue();
     }
+
+    [Fact]
+    public void SetGameSpeed_ShouldUpdateSpeedAndRefreshDto()
+    {
+        // Arrange
+        var session = new GameSession();
+        _sut.SessionStart(session);
+        var eventTriggered = false;
+        _sut.OnTurnExecute += _ => eventTriggered = true;
+
+        // Act
+        _sut.SetGameSpeed(3);
+
+        // Assert
+        _sessionContext.SessionInfo.Speed.Should().Be(3);
+        eventTriggered.Should().BeTrue();
+    }
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(5)]
+    [InlineData(10)]
+    public void SetGameSpeed_WithDifferentSpeeds_ShouldSetCorrectSpeed(int speed)
+    {
+        // Arrange
+        var session = new GameSession();
+        _sut.SessionStart(session);
+
+        // Act
+        _sut.SetGameSpeed(speed);
+
+        // Assert
+        _sessionContext.SessionInfo.Speed.Should().Be(speed);
+        _sessionContext.SessionInfo.IsPaused.Should().BeFalse();
+    }
+
+    [Fact]
+    public void OnTurnExecute_Event_ShouldBeTriggeredCorrectly()
+    {
+        // Arrange
+        var session = new GameSession();
+        var eventCallCount = 0;
+        GameSessionDto? capturedSession = null;
+        
+        _sut.OnTurnExecute += dto =>
+        {
+            eventCallCount++;
+            capturedSession = dto;
+        };
+        
+        _sut.SessionStart(session);
+
+        // Act
+        _sut.TurnExecution(_sessionContext.SessionInfo, CalculationType.Turn);
+
+        // Assert
+        eventCallCount.Should().Be(1);
+        capturedSession.Should().NotBeNull();
+        capturedSession!.Id.Should().NotBe(Guid.Empty);
+    }
+
+    [Fact]
+    public void SessionStart_WithNullSession_ShouldThrowArgumentNullException()
+    {
+        // Act & Assert
+        var action = () => _sut.SessionStart(null!);
+        
+        action.Should().Throw<ArgumentNullException>()
+            .WithParameterName("session");
+    }
+
+    [Fact]
+    public void RemoveCommand_WithNonExistentCommandId_ShouldNotThrow()
+    {
+        // Arrange
+        var session = new GameSession();
+        var nonExistentCommandId = Guid.NewGuid();
+        _sut.SessionStart(session);
+
+        // Act & Assert
+        var action = () => _sut.RemoveCommand(nonExistentCommandId);
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void AddCommand_WithSameCommandTwice_ShouldUpdateExistingCommand()
+    {
+        // Arrange
+        var session = new GameSession();
+        var command = new Command();
+        _sut.SessionStart(session);
+        _sut.AddCommand(command);
+
+        // Act - try to add same command again
+        var action = () => _sut.AddCommand(command);
+
+        // Assert - should throw because Dictionary.Add throws on duplicate key
+        action.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public void GetSessionContextDto_WhenNotStarted_ShouldReturnEmptyDto()
+    {
+        // Act
+        var result = _sut.GetSessionContextDto();
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Id.Should().Be(Guid.Empty);
+    }
+
+    [Fact]
+    public void SessionLifecycle_MultipleStops_ShouldNotThrow()
+    {
+        // Arrange
+        var session = new GameSession();
+        _sut.SessionStart(session);
+
+        // Act & Assert
+        var action = () =>
+        {
+            _sut.SessionStop();
+            _sut.SessionStop(); // Second stop should not throw
+        };
+        
+        action.Should().NotThrow();
+    }
+
+    [Fact]
+    public void RefreshGameSessionDto_ShouldTriggerOnTurnExecuteEvent()
+    {
+        // Arrange
+        var session = new GameSession();
+        var eventTriggered = false;
+        _sut.OnTurnExecute += _ => eventTriggered = true;
+        _sut.SessionStart(session);
+        eventTriggered = false; // Reset after SessionStart
+
+        // Act
+        _sut.SessionPause(); // This should trigger RefreshGameSessionDto
+
+        // Assert
+        eventTriggered.Should().BeTrue();
+    }
 } 

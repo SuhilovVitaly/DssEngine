@@ -1,5 +1,3 @@
-using DeepSpaceSaga.Server.Services.Scheduler;
-
 namespace DeepSpaceSaga.Tests.ServerTests.Services.Scheduler;
 
 public class SchedulerServiceTests

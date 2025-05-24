@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Screens.TacticalMap;
+﻿using DeepSpaceSaga.UI.Screens.MainMenu;
+using DeepSpaceSaga.UI.Screens.TacticalMap;
 using DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 namespace DeepSpaceSaga.UI
@@ -21,11 +22,12 @@ namespace DeepSpaceSaga.UI
 
         public static IServiceCollection AddClientScreens(this IServiceCollection services)
         {
-            // Register screens as scoped to maintain state within a scope
+            // Register screens as scoped to maintain state within a scope 
             services.AddScoped<ScreenTacticalMap>();
-            services.AddScoped<ScreenGameMenu>();
+            services.AddScoped<ScreenMainMenu>();
             services.AddScoped<ScreenTacticGame>();
-            
+            services.AddScoped<ScreenGameMenu>();
+
             // Register main background screen last to avoid circular dependency
             services.AddScoped<ScreenBackground>();
             

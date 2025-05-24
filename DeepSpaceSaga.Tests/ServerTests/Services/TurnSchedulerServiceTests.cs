@@ -1,7 +1,5 @@
 namespace DeepSpaceSaga.Tests.ServerTests.Services;
 
-using Moq;
-
 public class TurnSchedulerServiceTests : IDisposable
 {
     private readonly TurnSchedulerService _sut;

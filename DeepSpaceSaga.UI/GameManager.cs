@@ -5,17 +5,16 @@ public class GameManager
     public event Action<GameSessionDto>? OnUpdateGameData;
 
     public IScreensService Screens { get; set; }
-    public IGameContextService GameContext { get; }
+
     private readonly IGameServer _gameServer;
 
-    public GameManager(IGameServer gameServer, IScreensService screenManager, IGameContextService gameContext) 
+    public GameManager(IGameServer gameServer, IScreensService screenManager) 
     {
         _gameServer = gameServer;
 
         _gameServer.OnTurnExecute += UpdateGameData;
 
         Screens = screenManager;
-        GameContext = gameContext;
     }
 
     public void SetGameSpeed(int speed)

@@ -13,7 +13,6 @@ namespace DeepSpaceSaga.UI
         public static IServiceCollection AddClientServices(this IServiceCollection services)
         {
             // Register core services first
-            services.AddSingleton<IGameContextService, GameContextService>();
             services.AddSingleton<IScreensService, ScreensService>();
             services.AddSingleton<GameManager>();
 

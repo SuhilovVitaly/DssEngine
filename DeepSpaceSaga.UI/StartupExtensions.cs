@@ -15,6 +15,7 @@ namespace DeepSpaceSaga.UI
             // Register core services first
             services.AddSingleton<IScreensService, ScreensService>();
             services.AddSingleton<GameManager>();
+            services.AddSingleton<IGameManager>(provider => provider.GetRequiredService<GameManager>());
 
             // Register MVP components
             services.AddMvpComponents();
@@ -29,6 +30,7 @@ namespace DeepSpaceSaga.UI
         {
             // Register Controllers (business logic layer)
             services.AddScoped<IMainMenuController, MainMenuController>();
+            services.AddScoped<IGameMenuController, GameMenuController>();
             
             // Register Presenters (UI coordination layer)
             services.AddScoped<IMainMenuPresenter, MainMenuPresenter>();

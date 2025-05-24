@@ -8,18 +8,16 @@ namespace DeepSpaceSaga.UI.Controller;
 /// </summary>
 public class GameMenuController : IGameMenuController
 {
-    private readonly IGameServer _gameServer;
-    private readonly IScreensService _screensService;
+    private readonly IGameManager _gameManager;
 
-    public GameMenuController(IGameServer gameServer, IScreensService screensService)
+    public GameMenuController(IGameManager gameManager)
     {
-        _gameServer = gameServer ?? throw new ArgumentNullException(nameof(gameServer));
-        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
     }
 
     public async Task ResumeGameAsync()
     {
-        // Resume game logic here
+        _gameManager.SessionResume();
         await Task.CompletedTask;
     }
 
@@ -37,7 +35,7 @@ public class GameMenuController : IGameMenuController
 
     public async Task GoToMainMenuAsync()
     {
-        // Go to main menu logic here
+        _gameManager.ShowMainMenuScreen();
         await Task.CompletedTask;
     }
 } 

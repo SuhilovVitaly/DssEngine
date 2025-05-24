@@ -1,6 +1,8 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.Common.Abstractions.Services;
 
-public class GameManager
+namespace DeepSpaceSaga.UI;
+
+public class GameManager : IGameManager
 {
     public event Action<GameSessionDto>? OnUpdateGameData;
 
@@ -33,6 +35,16 @@ public class GameManager
     public void SessionResume() => _gameServer.SessionResume();
 
     public void SessionStop() => _gameServer.SessionStop();
+
+    public void ShowTacticalMapScreen()
+    {
+        Screens.ShowTacticalMapScreen();
+    }
+
+    public void ShowMainMenuScreen()
+    {
+        Screens.ShowGameMenuScreen();
+    }
 
     private void UpdateGameData(GameSessionDto session)
     {

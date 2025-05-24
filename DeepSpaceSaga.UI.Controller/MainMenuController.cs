@@ -11,12 +11,12 @@ namespace DeepSpaceSaga.UI.Controller;
 public class MainMenuController : IMainMenuController
 {
     private readonly IGameServer _gameServer;
-    private readonly IScreensService _screensService;
+    private readonly IGameManager _gameManager;
     
-    public MainMenuController(IGameServer gameServer, IScreensService screensService)
+    public MainMenuController(IGameServer gameServer, IGameManager gameManager)
     {
         _gameServer = gameServer ?? throw new ArgumentNullException(nameof(gameServer));
-        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ public class MainMenuController : IMainMenuController
             Console.WriteLine($"[MainMenuController] Game session started with ID: {newGameSession.Id}");
             
             // Navigate to tactical map screen
-            _screensService.ShowTacticalMapScreen();
+            _gameManager.ShowTacticalMapScreen();
             Console.WriteLine("[MainMenuController] Navigated to tactical map screen");
             
             // Simulate async operation

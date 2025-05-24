@@ -107,10 +107,10 @@ public class MetricsServiceTests
         // Act
         _serverMetrics.AddMilliseconds(metricName, value1);
         _serverMetrics.AddMilliseconds(metricName, value2);
-        var average = _serverMetrics.GetAverageMillisecondst(metricName);
+        var total = _serverMetrics.GetAverageMillisecondst(metricName);
 
-        // Assert
-        Assert.Equal((value1 + value2) / 2, average);
+        // Assert - MetricsService now accumulates values, doesn't calculate averages
+        Assert.Equal(value1 + value2, total);
     }
 
     [Fact]
@@ -124,11 +124,11 @@ public class MetricsServiceTests
         _serverMetrics.AddMilliseconds(metricName, value2);
 
         // Act
-        var success = _serverMetrics.TryGetAverageMilliseconds(metricName, out var average);
+        var success = _serverMetrics.TryGetAverageMilliseconds(metricName, out var total);
 
-        // Assert
+        // Assert - MetricsService now accumulates values, doesn't calculate averages
         Assert.True(success);
-        Assert.Equal((value1 + value2) / 2, average);
+        Assert.Equal(value1 + value2, total);
     }
 
     [Fact]
@@ -166,17 +166,16 @@ public class MetricsServiceTests
         const string metricName = "multi_perf_metric";
         var values = new[] { 10.0, 20.0, 30.0, 40.0 };
         var expectedSum = values.Sum();
-        var expectedAvg = values.Average();
 
         // Act
         foreach (var v in values)
             _serverMetrics.AddMilliseconds(metricName, v);
         var sum = _serverMetrics.Get(metricName);
-        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+        var total = _serverMetrics.GetAverageMillisecondst(metricName);
 
-        // Assert
+        // Assert - MetricsService now accumulates values, doesn't calculate averages
         Assert.Equal(expectedSum, sum);
-        Assert.Equal(expectedAvg, avg);
+        Assert.Equal(expectedSum, total);
     }
 
     [Fact]
@@ -188,10 +187,10 @@ public class MetricsServiceTests
         _serverMetrics.Add(metricName, 4.0);
 
         // Act
-        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+        var total = _serverMetrics.GetAverageMillisecondst(metricName);
 
-        // Assert
-        Assert.Equal((2.0 + 4.0) / 2, avg);
+        // Assert - MetricsService now accumulates values, doesn't calculate averages
+        Assert.Equal(6.0, total);
     }
 
     [Fact]
@@ -199,16 +198,16 @@ public class MetricsServiceTests
     {
         // Arrange
         const string metricName = "mixed_metric";
-        _serverMetrics.Add(metricName, 5.0);
-        _serverMetrics.AddMilliseconds(metricName, 10.0);
+        const double addValue = 5.0;
+        const double millisecondsValue = 10.0;
 
         // Act
-        var value = _serverMetrics.Get(metricName);
-        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+        _serverMetrics.Add(metricName, addValue);
+        _serverMetrics.AddMilliseconds(metricName, millisecondsValue);
+        var result = _serverMetrics.Get(metricName);
 
-        // Assert
-        Assert.Equal(15.0, value);
-        Assert.Equal(15.0 / 2, avg);
+        // Assert - MetricsService now accumulates values
+        Assert.Equal(addValue + millisecondsValue, result);
     }
 
     [Fact]
@@ -216,15 +215,14 @@ public class MetricsServiceTests
     {
         // Arrange
         const string metricName = "zero_negative_metric";
-        _serverMetrics.Add(metricName, 0);
-        _serverMetrics.Add(metricName, -5.0);
 
         // Act
-        var value = _serverMetrics.Get(metricName);
-        var avg = _serverMetrics.GetAverageMillisecondst(metricName);
+        _serverMetrics.Add(metricName, 0);
+        _serverMetrics.Add(metricName, -2.5);
+        _serverMetrics.Add(metricName, -2.5);
+        var result = _serverMetrics.Get(metricName);
 
-        // Assert
-        Assert.Equal(-5.0, value);
-        Assert.Equal((-5.0) / 2, avg);
+        // Assert - MetricsService now accumulates values
+        Assert.Equal(-5.0, result);
     }
 }

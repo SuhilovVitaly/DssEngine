@@ -1,4 +1,8 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
+﻿using System.Windows.Forms;
+using DeepSpaceSaga.UI.Rendering.TacticalMap;
+using SkiaSharp.Views.Desktop;
+
+namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class GameTacticalMap : UserControl
 {
@@ -23,12 +27,19 @@ public partial class GameTacticalMap : UserControl
         _skControl.PaintSurface += OnPaintSurface;
         Controls.Add(_skControl);
         _skControl.BringToFront();
+        
+        // Enable key events for UserControl
+        this.SetStyle(ControlStyles.Selectable, true);
+        this.TabStop = true;
     }
 
     protected override void OnLoad(EventArgs e)
     {
         base.OnLoad(e);
         InitializeGameManager();
+        
+        // Set focus to enable key events
+        this.Focus();
     }
 
     private void InitializeGameManager()
@@ -62,7 +73,7 @@ public partial class GameTacticalMap : UserControl
         if (IsDisposed) return;
         
         _sessionDto = session;
-        InformationAboutContol.Text = $"{session.State.ProcessedTurns:D5}";
+        InformationAboutContol.Text = $"{session.State.ProcessedTurns:D5}{Environment.NewLine}Zoom: {_gameManager.ScreenInfo.Zoom.Scale}";
 
         // Only invalidate if data actually changed
         if (_lastProcessedTurns != session.State.ProcessedTurns)
@@ -83,5 +94,21 @@ public partial class GameTacticalMap : UserControl
         canvas.Clear(SKColors.Black);
 
         DrawTacticalMap.DrawTacticalMapScreen(_sessionDto, _gameManager.ScreenInfo);
+    }
+
+    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+        if (keyData == Keys.Add)
+        {
+            _gameManager?.ScreenInfo?.Zoom?.In();
+            return true;
+        }
+        else if (keyData == Keys.Subtract)
+        {
+            _gameManager?.ScreenInfo?.Zoom?.Out();
+            return true;
+        }
+        
+        return base.ProcessCmdKey(ref msg, keyData);
     }
 }

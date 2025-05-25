@@ -10,7 +10,19 @@ public class DrawGrid
         new SpaceMapColor(Color.FromArgb(42, 42, 42)),
         new SpaceMapColor(Color.FromArgb(62, 62, 62))
     };
+    
+    // Additional fine detail grids for high zoom levels
+    private static readonly float[] FineGridSteps = { 1, 5 };
+    private static readonly SpaceMapColor[] FineGridColors = { 
+        new SpaceMapColor(Color.FromArgb(8, 8, 8)),
+        new SpaceMapColor(Color.FromArgb(10, 10, 10))
+    };
+    
     private const float MinGridStepThreshold = 10f;
+    
+    // Adaptive quality thresholds
+    private const float HighDetailScaleThreshold = 5.0f;  // Show fine grids when scale > 5
+    private const float LowDetailScaleThreshold = 0.1f;   // Show only large grids when scale < 0.1
     
     // Simple cache for performance optimization
     private static float _lastScale = -1;
@@ -29,12 +41,14 @@ public class DrawGrid
         // Collect all lines by color for batch drawing
         var linesByColor = new Dictionary<SpaceMapColor, List<(SpaceMapPoint from, SpaceMapPoint to)>>();
         
-        for (int i = 0; i < GridSteps.Length; i++)
+        var currentScale = screenInfo.Zoom.DrawScaleFactor;
+        
+        // Adaptive quality: choose grid levels based on scale
+        var gridsToRender = GetAdaptiveGridConfiguration(currentScale);
+        
+        foreach (var (step, color) in gridsToRender)
         {
-            var step = GridSteps[i];
-            var color = GridColors[i];
-            
-            var stepAfterScale = step * screenInfo.Zoom.DrawScaleFactor;
+            var stepAfterScale = step * currentScale;
             
             // Skip drawing if grid step is too small
             if (stepAfterScale < MinGridStepThreshold)
@@ -51,6 +65,42 @@ public class DrawGrid
         {
             DrawLinesBatch(screenInfo, kvp.Key, kvp.Value);
         }
+    }
+    
+    private static List<(float step, SpaceMapColor color)> GetAdaptiveGridConfiguration(float scale)
+    {
+        var grids = new List<(float step, SpaceMapColor color)>();
+        
+        if (scale < LowDetailScaleThreshold)
+        {
+            // Very low scale - only show largest grids for performance
+            grids.Add((GridSteps[2], GridColors[2])); // 1000
+            grids.Add((GridSteps[3], GridColors[3])); // 10000
+        }
+        else if (scale > HighDetailScaleThreshold)
+        {
+            // High scale - show fine detail grids
+            for (int i = 0; i < FineGridSteps.Length; i++)
+            {
+                grids.Add((FineGridSteps[i], FineGridColors[i]));
+            }
+            
+            // Also show standard grids
+            for (int i = 0; i < GridSteps.Length; i++)
+            {
+                grids.Add((GridSteps[i], GridColors[i]));
+            }
+        }
+        else
+        {
+            // Normal scale - show standard grids
+            for (int i = 0; i < GridSteps.Length; i++)
+            {
+                grids.Add((GridSteps[i], GridColors[i]));
+            }
+        }
+        
+        return grids;
     }
     
     private static void CollectGridLines(IScreenInfo screenInfo, float step, float stepAfterScale, List<(SpaceMapPoint from, SpaceMapPoint to)> lines)

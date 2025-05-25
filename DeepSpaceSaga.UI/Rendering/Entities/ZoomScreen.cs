@@ -11,28 +11,22 @@ public class ZoomScreen : IZoomScreen
 
     public void In()
     {
-        Scale++;
-
-        //if (Scale > 8) Scale = 8;
-
         Scale = Scale - SetDeltaByScale(Scale);
 
         if (Scale < 40) Scale = 40;
 
-        DrawScaleFactor = 100.0f / Scale;
+        DrawScaleFactor = (float)Math.Round(100.0f / Scale, 1);
 
         OnZoomIn?.Invoke();    
     }
 
     public void Out()
     {
-        Scale--;
-        //if (Scale < 1) Scale = 1;
         Scale = Scale + SetDeltaByScale(Scale);
 
         if (Scale > 1000) Scale = 1000;
 
-        DrawScaleFactor = 100.0f / Scale;
+        DrawScaleFactor = (float)Math.Round(100.0f / Scale, 1);
 
         OnZoomOut?.Invoke();
     }

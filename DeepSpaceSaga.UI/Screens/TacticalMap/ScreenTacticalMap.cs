@@ -23,25 +23,15 @@ public partial class ScreenTacticalMap : Form
         ShowInTaskbar = false;
 
         // Set size to primary screen dimensions
-        Size = Screen.PrimaryScreen.Bounds.Size;
+        Size = new Size((int)_gameManager.ScreenInfo.Width, (int)_gameManager.ScreenInfo.Height);// Screen.PrimaryScreen.Bounds.Size;
         Location = new Point(0, 0);
 
         // Enable key handling
         KeyPreview = true;
         KeyDown += OnKeyDown;
+        MouseWheel += Window_MouseWheel;
 
-        //_skControl = new SKControl
-        //{
-        //    Dock = DockStyle.Fill,
-        //    Visible = true
-        //};
-
-        //_skControl.PaintSurface += OnPaintSurface;
-        //_skControl.BringToFront();
-        //Controls.Add(_skControl);
-        //_skControl.BringToFront();
-
-        GameTacticalMapControl.Dock = DockStyle.Fill;
+        GameTacticalMapControl.Dock = DockStyle.Fill;        
     }
 
     private void OnKeyDown(object sender, KeyEventArgs e)
@@ -76,17 +66,23 @@ public partial class ScreenTacticalMap : Form
         var canvas = e.Surface.Canvas;
 
         canvas.Clear(SKColors.Black);
-
-        //var session = Global.GameManager.GetSession();
-
-        //Global.GameManager.Screens.Settings.GraphicSurface = canvas;
-        //Global.GameManager.Screens.Settings.CenterScreenOnMap = session.GetPlayerSpaceShip().GetLocation();
-
-        //Global.Resources.DrawTool.DrawTacticalMapScreen(session, Global.GameManager.OuterSpace, _gameManager.Screens.Settings);
     }
 
     protected override void OnFormClosed(FormClosedEventArgs e)
     {
         base.OnFormClosed(e);
+    }
+
+    private void Window_MouseWheel(object? sender, MouseEventArgs e)
+    {
+        if (e.Delta > 0)
+        {
+            _gameManager.ScreenInfo.Zoom.In();
+        }
+        else
+        {
+            _gameManager.ScreenInfo.Zoom.Out();
+        }
+        Refresh();
     }
 }

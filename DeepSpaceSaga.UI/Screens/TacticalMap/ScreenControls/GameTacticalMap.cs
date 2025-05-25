@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using DeepSpaceSaga.UI.Rendering.TacticalMap;
 using SkiaSharp.Views.Desktop;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;

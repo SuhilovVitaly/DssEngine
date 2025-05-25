@@ -9,7 +9,7 @@ public class CelestialObjectMapperTests
         var celestialObject = new BaseAsteroid(1)
         {
             Name = "Asteroid 001",
-            Type = CelestialObjectType.Spacecraft,
+            Type = CelestialObjectType.SpaceshipPlayer,
             IsPreScanned = true,
             X = 123,
             Y = 678,
@@ -35,7 +35,7 @@ public class CelestialObjectMapperTests
         var celestialObject = new BaseAsteroid(1)
         {
             Name = "Asteroid 001",
-            Type = CelestialObjectType.Spacecraft,
+            Type = CelestialObjectType.SpaceshipPlayer,
             IsPreScanned = true,
             X = 123,
             Y = 678,
@@ -52,14 +52,14 @@ public class CelestialObjectMapperTests
     [Theory]
     [InlineData(CelestialObjectType.Unknown)]
     [InlineData(CelestialObjectType.Asteroid)]
-    [InlineData(CelestialObjectType.Spacecraft)]
+    [InlineData(CelestialObjectType.SpaceshipPlayer)]
     public void ToDto_Should_Map_Different_CelestialObjectTypes_Correctly(CelestialObjectType type)
     {
         // Arrange
         var celestialObject = new BaseAsteroid(1)
         {
             Name = "Asteroid 001",
-            Type = CelestialObjectType.Spacecraft,
+            Type = CelestialObjectType.SpaceshipPlayer,
             IsPreScanned = true,
             X = 123,
             Y = 678,
@@ -82,7 +82,7 @@ public class CelestialObjectMapperTests
         var celestialObject = new BaseAsteroid(1)
         {
             Name = "Asteroid 001",
-            Type = CelestialObjectType.Spacecraft,
+            Type = CelestialObjectType.SpaceshipPlayer,
             IsPreScanned = true,
             X = 123,
             Y = 678,
@@ -93,7 +93,7 @@ public class CelestialObjectMapperTests
         var dto = CelestialObjectMapper.ToDto(celestialObject);
 
         // Assert
-        dto.Type.Should().Be(CelestialObjectType.Spacecraft);
+        dto.Type.Should().Be(CelestialObjectType.SpaceshipPlayer);
         dto.IsPreScanned.Should().Be(true);
         dto.X.Should().Be(123);
         dto.Y.Should().Be(678);

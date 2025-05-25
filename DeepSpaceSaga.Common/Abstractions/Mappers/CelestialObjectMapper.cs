@@ -14,6 +14,11 @@ public static class CelestialObjectMapper
             X = celestialObject.X,
             Y = celestialObject.Y,
             Id = celestialObject.Id,
+            Name = celestialObject.Name,
+            Direction = celestialObject.Direction,
+            OwnerId = celestialObject.OwnerId,  
+            Size = celestialObject.Size,
+            Speed = celestialObject.Speed
         };
     }
 }

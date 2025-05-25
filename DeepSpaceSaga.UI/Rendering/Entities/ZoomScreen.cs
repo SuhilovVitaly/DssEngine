@@ -4,7 +4,7 @@ namespace DeepSpaceSaga.UI.Render.Model;
 
 public class ZoomScreen : IZoomScreen
 {
-    public int Scale { get; set; } = 100;
+    public int Scale { get; set; } = 1;
     public float DrawScaleFactor { get; set; } = 1;
     public event Action? OnZoomIn;
     public event Action? OnZoomOut;  

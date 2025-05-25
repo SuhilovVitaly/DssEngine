@@ -1,11 +1,19 @@
 ﻿using DeepSpaceSaga.Common.Geometry;
 using DeepSpaceSaga.UI.Render.Model;
 using DeepSpaceSaga.UI.Rendering.Abstractions;
+using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreenParameters : IScreenInfo
 {
+    [DllImport("user32.dll")]
+    private static extern int GetSystemMetrics(int nIndex);
+    
+    private const int SM_CXSCREEN = 0;
+    private const int SM_CYSCREEN = 1;
+
     private static readonly ILog Logger = LogManager.GetLogger(typeof(ScreenParameters));
     public SpaceMapPoint Center { get; private set; }
     public float Width { get; private set; }
@@ -33,13 +41,16 @@ public class ScreenParameters : IScreenInfo
             throw new Exception($"Wrong ID of monitor: {monitorId}");
         }
 
-        var resolution = screens[monitorId].Bounds;
+        // Get the actual screen bounds (this will be the logical size)
+        var screen = screens[monitorId];
+        
+        // Get real screen resolution using WinAPI
+        var realWidth = GetSystemMetrics(SM_CXSCREEN);
+        var realHeight = GetSystemMetrics(SM_CYSCREEN);
+        var resolution = new Rectangle(0, 0, realWidth, realHeight);
 
         MonitorId = monitorId;
-
-        Initialization(resolution, 10100, 10000);
-
-        Logger.Debug($"Finish screen initialization: {resolution.Width}x{resolution.Height}");
+        Initialization(resolution, 10000, 10000);
     }
 
     private void Initialization(Rectangle screen, int centerScreenX = 10000, int centerScreenY = 10000)

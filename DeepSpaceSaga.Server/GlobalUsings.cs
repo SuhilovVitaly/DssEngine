@@ -22,3 +22,7 @@ global using DeepSpaceSaga.Server.Services.Scheduler;
 global using DeepSpaceSaga.Server.Services.SessionContext;
 global using DeepSpaceSaga.Server.Services.SessionInfo;
 global using Timer = System.Timers.Timer;
+global using DeepSpaceSaga.Server.Processing.Handlers;
+global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+global using DeepSpaceSaga.Common.Tools;
+global using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;

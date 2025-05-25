@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Server;
 
-public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext): IGameServer
+public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext, IProcessingService processingService) : IGameServer
 {
     public event Action<GameSessionDto>? OnTurnExecute;
     
@@ -10,12 +10,13 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     
     private readonly ISchedulerService _flowManager = schedulerService ?? throw new ArgumentNullException(nameof(schedulerService));
     private readonly ISessionContextService _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
+    private readonly IProcessingService _processingService = processingService ?? throw new ArgumentNullException(nameof(processingService));
 
     public void TurnExecution(ISessionInfoService info, CalculationType type)
     {
         Logger?.Debug($"GameSessionMap {info.ToString()}");
 
-        _gameSessionDto = SessionTurnFinalization(info, BaseProcessing.Process(_sessionContext));
+        _gameSessionDto = SessionTurnFinalization(info, _processingService.Process(_sessionContext));
         
         OnTurnExecute?.Invoke(_gameSessionDto);
     }

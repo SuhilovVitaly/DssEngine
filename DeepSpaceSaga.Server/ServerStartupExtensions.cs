@@ -5,6 +5,7 @@ public static class ServerStartupExtensions
 {
     public static IServiceCollection AddServerServices(this IServiceCollection services)
     {
+        services.AddSingleton<IProcessingService, TurnProcessing>();
         services.AddSingleton<IGameServer, LocalGameServer>();
         services.AddSingleton<IMetricsService, MetricsService>();
         services.AddSingleton<ISchedulerService, SchedulerService>();

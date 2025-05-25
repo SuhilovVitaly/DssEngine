@@ -32,3 +32,8 @@ global using DeepSpaceSaga.UI.Services.Screens;
 global using DeepSpaceSaga.UI.CommonControls;
 global using System.Diagnostics.CodeAnalysis;
 global using DeepSpaceSaga.UI.Tools;
+global using DeepSpaceSaga.Common.Abstractions.Session;
+global using DeepSpaceSaga.UI.Rendering.Abstractions;
+global using DeepSpaceSaga.Common.Geometry;
+global using DeepSpaceSaga.UI.Render.Extensions;
+global using DeepSpaceSaga.UI.Render.Tools;

@@ -1,6 +1,7 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.Common.Tools;
 using DeepSpaceSaga.Server.Generation;
+using DeepSpaceSaga.UI.Rendering.Abstractions;
 
 namespace DeepSpaceSaga.UI;
 
@@ -9,6 +10,7 @@ public class GameManager : IGameManager
     public event Action<GameSessionDto>? OnUpdateGameData;
     public IGenerationTool GenerationTool { get; set; }
     public IScreensService Screens { get; set; }
+    public IScreenInfo ScreenInfo { get; set; }
 
     private readonly IGameServer _gameServer;
 
@@ -19,6 +21,7 @@ public class GameManager : IGameManager
         _gameServer.OnTurnExecute += UpdateGameData;
 
         Screens = screenManager;
+        ScreenInfo = new ScreenParameters();
         GenerationTool = generationTool;
     }
 

@@ -40,6 +40,8 @@ public partial class ScreenTacticalMap : Form
         //_skControl.BringToFront();
         //Controls.Add(_skControl);
         //_skControl.BringToFront();
+
+        GameTacticalMapControl.Dock = DockStyle.Fill;
     }
 
     private void OnKeyDown(object sender, KeyEventArgs e)

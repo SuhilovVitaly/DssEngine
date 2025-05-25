@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             ControlGameSpeed = new MainGameScreen.GameSpeedControl();
-            gameSessionInformation1 = new ScreenControls.GameSessionInformation();
+            gameSessionInformation1 = new GameSessionInformation();
+            GameTacticalMapControl = new GameTacticalMap();
             SuspendLayout();
             // 
             // ControlGameSpeed
@@ -55,6 +56,14 @@
             gameSessionInformation1.TabIndex = 1;
             gameSessionInformation1.Title = "Game Session Information";
             // 
+            // GameTacticalMapControl
+            // 
+            GameTacticalMapControl.BackColor = Color.FromArgb(8, 8, 8);
+            GameTacticalMapControl.Location = new Point(516, 92);
+            GameTacticalMapControl.Name = "GameTacticalMapControl";
+            GameTacticalMapControl.Size = new Size(1018, 833);
+            GameTacticalMapControl.TabIndex = 2;
+            // 
             // ScreenTacticalMap
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -63,6 +72,7 @@
             ClientSize = new Size(2231, 1035);
             Controls.Add(gameSessionInformation1);
             Controls.Add(ControlGameSpeed);
+            Controls.Add(GameTacticalMapControl);
             DoubleBuffered = true;
             ForeColor = Color.WhiteSmoke;
             FormBorderStyle = FormBorderStyle.None;
@@ -76,5 +86,6 @@
 
         private MainGameScreen.GameSpeedControl ControlGameSpeed;
         private ScreenControls.GameSessionInformation gameSessionInformation1;
+        private GameTacticalMap GameTacticalMapControl;
     }
 }

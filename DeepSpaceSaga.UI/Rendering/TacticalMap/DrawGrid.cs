@@ -7,14 +7,8 @@ public class DrawGrid
 {
     public static void Execute(IScreenInfo screenParameters)
     {
-        const int baseGridStep = 500;
-        var gridStep = baseGridStep - (screenParameters.Zoom.Scale - 1) * 100;
-        
-        // Stop drawing grid if step is too small
-        if (gridStep < 5)
-            return;
-            
-        var gridColor = new SpaceMapColor(Color.WhiteSmoke);
+        const int gridStep = 200;
+        var gridColor = new SpaceMapColor(Color.FromArgb(42, 42, 42));
         
         // Calculate screen center
         var screenCenterX = screenParameters.Width / 2;

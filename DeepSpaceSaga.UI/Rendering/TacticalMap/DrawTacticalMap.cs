@@ -8,8 +8,19 @@ public static class DrawTacticalMap
 {
     public static void DrawTacticalMapScreen(GameSessionDto session, IScreenInfo screenParameters)
     {
-        //DrawTools.DrawLine(screenParameters, new SpaceMapColor(Color.Azure), new SpaceMapPoint(0,0), new SpaceMapPoint(1000, 10000));
-
         DrawGrid.Execute(screenParameters);
+
+        var centerScreen = UiTools.ToScreenCoordinates(screenParameters, screenParameters.CenterScreenOnMap.X, screenParameters.CenterScreenOnMap.Y);
+        // Draw green circle at screen center
+        var centerX = screenParameters.Width / 2;
+        var centerY = screenParameters.Height / 2;
+        var greenColor = new SpaceMapColor(Color.Green);
+        DrawTools.FillEllipse(screenParameters, centerScreen.X, centerScreen.Y, 10, greenColor);
+        
+        // Draw Hello World text in bottom left corner
+        var font = new Font("Arial", 16);
+        var whiteColor = new SpaceMapColor(Color.White);
+        var textRect = new RectangleF(10, screenParameters.Height - 30, 200, 20);
+        DrawTools.DrawString(screenParameters, $"Zoom is {screenParameters.Zoom.Scale} DrawScaleFactor {screenParameters.Zoom.DrawScaleFactor}", font, whiteColor, textRect);
     }
 }

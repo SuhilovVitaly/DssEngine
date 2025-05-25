@@ -4,7 +4,7 @@ namespace DeepSpaceSaga.UI.Render.Model;
 
 public class ZoomScreen : IZoomScreen
 {
-    public int Scale { get; set; } = 1;
+    public int Scale { get; set; } = 100;
     public float DrawScaleFactor { get; set; } = 1;
     public event Action? OnZoomIn;
     public event Action? OnZoomOut;  
@@ -12,11 +12,14 @@ public class ZoomScreen : IZoomScreen
     public void In()
     {
         Scale++;
-        //Scale = Scale - SetDeltaByScale(Scale);
 
-        //if(Scale < 40) Scale = 40;
+        //if (Scale > 8) Scale = 8;
 
-        //DrawScaleFactor = 100.0f / Scale;
+        Scale = Scale - SetDeltaByScale(Scale);
+
+        if (Scale < 40) Scale = 40;
+
+        DrawScaleFactor = 100.0f / Scale;
 
         OnZoomIn?.Invoke();    
     }
@@ -24,11 +27,12 @@ public class ZoomScreen : IZoomScreen
     public void Out()
     {
         Scale--;
-        //Scale = Scale + SetDeltaByScale(Scale);
+        //if (Scale < 1) Scale = 1;
+        Scale = Scale + SetDeltaByScale(Scale);
 
-        //if (Scale > 1000) Scale = 1000;
+        if (Scale > 1000) Scale = 1000;
 
-        //DrawScaleFactor = 100.0f / Scale;
+        DrawScaleFactor = 100.0f / Scale;
 
         OnZoomOut?.Invoke();
     }

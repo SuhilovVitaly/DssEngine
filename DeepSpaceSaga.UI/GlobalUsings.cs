@@ -37,3 +37,6 @@ global using DeepSpaceSaga.UI.Rendering.Abstractions;
 global using DeepSpaceSaga.Common.Geometry;
 global using DeepSpaceSaga.UI.Render.Extensions;
 global using DeepSpaceSaga.UI.Render.Tools;
+global using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+global using DeepSpaceSaga.Common.Tools;
+global using DeepSpaceSaga.Server.Generation;

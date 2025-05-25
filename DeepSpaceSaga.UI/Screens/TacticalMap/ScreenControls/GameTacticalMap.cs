@@ -1,14 +1,14 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
-
-namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
+﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class GameTacticalMap : UserControl
 {
     private GameManager _gameManager;
     private bool _isInitialized;
     private readonly SKControl _skControl;
-    GameSessionDto _sessionDto;
+    private GameSessionDto _sessionDto;
+    
+    // Performance optimization: cache last rendered data
+    private int _lastProcessedTurns = -1;
 
     public GameTacticalMap()
     {
@@ -21,7 +21,6 @@ public partial class GameTacticalMap : UserControl
         };
 
         _skControl.PaintSurface += OnPaintSurface;
-        _skControl.BringToFront();
         Controls.Add(_skControl);
         _skControl.BringToFront();
     }
@@ -55,16 +54,22 @@ public partial class GameTacticalMap : UserControl
     private void UpdateGameData(GameSessionDto session)
     {
         if (IsDisposed) return;
-        CrossThreadExtensions.PerformSafely(this, RereshControls, session);
+        CrossThreadExtensions.PerformSafely(this, RefreshControls, session);
     }
 
-    private void RereshControls(GameSessionDto session)
+    private void RefreshControls(GameSessionDto session)
     {
         if (IsDisposed) return;
+        
         _sessionDto = session;
         InformationAboutContol.Text = $"{session.State.ProcessedTurns:D5}";
 
-        _skControl.Invalidate();
+        // Only invalidate if data actually changed
+        if (_lastProcessedTurns != session.State.ProcessedTurns)
+        {
+            _lastProcessedTurns = session.State.ProcessedTurns;
+            _skControl.Invalidate();
+        }
     }
 
     private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)

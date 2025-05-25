@@ -1,9 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Server.Generation;
-using DeepSpaceSaga.UI.Rendering.Abstractions;
-
-namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI;
 
 public class GameManager : IGameManager
 {

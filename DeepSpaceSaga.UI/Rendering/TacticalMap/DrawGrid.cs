@@ -1,55 +1,57 @@
-﻿using DeepSpaceSaga.UI.Render.Tools;
-using DeepSpaceSaga.Common.Geometry;
-
-namespace DeepSpaceSaga.UI.Rendering.TacticalMap;
+﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public class DrawGrid
 {
-    public static void Execute(IScreenInfo screenParameters)
+    public static void Execute(IScreenInfo screenInfo)
     {
-        const int gridStep = 200;
-        var gridColor = new SpaceMapColor(Color.FromArgb(42, 42, 42));
-        
-        // Calculate screen center
-        var screenCenterX = screenParameters.Width / 2;
-        var screenCenterY = screenParameters.Height / 2;
-        
-        // Calculate how many grid cells fit on screen
-        var cellsOnScreenWidth = (int)Math.Ceiling(screenParameters.Width / (float)gridStep);
-        var cellsOnScreenHeight = (int)Math.Ceiling(screenParameters.Height / (float)gridStep);
-        
-        // Add one cell on each side for safety
-        var totalCellsWidth = cellsOnScreenWidth + 2;
-        var totalCellsHeight = cellsOnScreenHeight + 2;
-        
-        // Find the grid line that should be closest to the left edge of screen
-        var worldCenterX = screenParameters.CenterScreenOnMap.X;
-        var worldCenterY = screenParameters.CenterScreenOnMap.Y;
-        
-        // Find the leftmost grid line we need to draw
-        var leftmostGridX = (float)(Math.Floor((worldCenterX - screenCenterX) / gridStep) * gridStep) - gridStep;
-        var topmostGridY = (float)(Math.Floor((worldCenterY - screenCenterY) / gridStep) * gridStep) - gridStep;
-        
-        // Draw vertical lines
-        for (int i = 0; i < totalCellsWidth; i++)
+        DrawCommonGrid(screenInfo, 10, new SpaceMapColor(Color.FromArgb(12, 12, 12)));
+        DrawCommonGrid(screenInfo, 100, new SpaceMapColor(Color.FromArgb(22, 22, 22)));
+        DrawCommonGrid(screenInfo, 1000, new SpaceMapColor(Color.FromArgb(42, 42, 42)));
+        DrawCommonGrid(screenInfo, 10000, new SpaceMapColor(Color.FromArgb(62, 62, 62)));
+    }
+
+    private static void DrawCommonGrid(IScreenInfo screenInfo, float step, SpaceMapColor color)
+    {
+        var mapTopLeftCorner = GetCommonLeftCorner(screenInfo, step);
+
+        var stepAfterScale = step * screenInfo.Zoom.DrawScaleFactor;
+
+        var stepsInScreenWidth = (int)(screenInfo.Width / stepAfterScale) * 2 + 2;
+        var stepsInScreenHeight = (int)(screenInfo.Height / stepAfterScale) * 2 + 2;
+
+        for (var i = 0; i <= stepsInScreenWidth; i++)
         {
-            var worldX = leftmostGridX + (i * gridStep);
-            var screenX = worldX - worldCenterX + screenCenterX;
-            
-            DrawTools.DrawLine(screenParameters, gridColor,
-                new SpaceMapPoint(screenX, 0),
-                new SpaceMapPoint(screenX, screenParameters.Height));
+            var lineFrom = new SpaceMapPoint(mapTopLeftCorner.X + i * stepAfterScale, mapTopLeftCorner.Y);
+            var lineTo = new SpaceMapPoint(mapTopLeftCorner.X + i * stepAfterScale, mapTopLeftCorner.Y + stepsInScreenHeight * stepAfterScale);
+
+            DrawTools.DrawLine(screenInfo, color, lineFrom, lineTo);
         }
-        
-        // Draw horizontal lines
-        for (int i = 0; i < totalCellsHeight; i++)
+
+        for (var i = 0; i <= stepsInScreenHeight; i++)
         {
-            var worldY = topmostGridY + (i * gridStep);
-            var screenY = worldY - worldCenterY + screenCenterY;
-            
-            DrawTools.DrawLine(screenParameters, gridColor,
-                new SpaceMapPoint(0, screenY),
-                new SpaceMapPoint(screenParameters.Width, screenY));
+            var lineFrom = new SpaceMapPoint(mapTopLeftCorner.X, mapTopLeftCorner.Y + i * stepAfterScale);
+            var lineTo = new SpaceMapPoint(mapTopLeftCorner.X + stepsInScreenWidth * stepAfterScale, mapTopLeftCorner.Y + i * stepAfterScale);
+
+            DrawTools.DrawLine(screenInfo, color, lineFrom, lineTo);
         }
+    }
+
+    internal static SpaceMapPoint GetCommonLeftCorner(IScreenInfo screenInfo, float cellSize)
+    {
+        var screenLeftX = screenInfo.CenterScreenOnMap.X - (screenInfo.Width / 2);
+        var screenLeftY = screenInfo.CenterScreenOnMap.Y - (screenInfo.Height / 2);
+
+        var positionX = (int)(screenLeftX / cellSize) * cellSize;
+        var positionY = (int)(screenLeftY / cellSize) * cellSize;
+
+        var cornerPosition = UiTools.ToScreenCoordinatesFull(screenInfo, new SpaceMapPoint(positionX, positionY), true);
+
+        while (cornerPosition.X > 0)
+        {
+            cornerPosition.X = cornerPosition.X - cellSize * screenInfo.Zoom.DrawScaleFactor;
+            cornerPosition.Y = cornerPosition.Y - cellSize * screenInfo.Zoom.DrawScaleFactor;
+        }
+
+        return cornerPosition;
     }
 }

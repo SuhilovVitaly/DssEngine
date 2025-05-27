@@ -23,6 +23,8 @@ global using log4net.Config;
 
 global using DeepSpaceSaga.Common;
 global using DeepSpaceSaga.Common.Abstractions.Entities;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Items;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 global using DeepSpaceSaga.Common.Abstractions.Services;
@@ -31,6 +33,7 @@ global using DeepSpaceSaga.Common.Tools;
 global using DeepSpaceSaga.Common.Implementation.GameLoop;
 global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using DeepSpaceSaga.Common.Geometry;
+global using DeepSpaceSaga.Common.Extensions;
 global using DeepSpaceSaga.Common.Extensions.Object;
 global using DeepSpaceSaga.Common.Abstractions.Mappers;
 

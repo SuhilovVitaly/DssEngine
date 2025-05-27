@@ -23,6 +23,7 @@ global using log4net.Config;
 
 global using DeepSpaceSaga.Common;
 global using DeepSpaceSaga.Common.Abstractions.Entities;
+global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 global using DeepSpaceSaga.Common.Abstractions.Services;
 global using DeepSpaceSaga.Common.Abstractions.Dto;
@@ -39,3 +40,4 @@ global using DeepSpaceSaga.Server.Services.Metrics;
 global using DeepSpaceSaga.Server.Services.SessionInfo;
 global using DeepSpaceSaga.Server.Services.SessionContext;
 global using DeepSpaceSaga.Server.Services.Scheduler;
+global using DeepSpaceSaga.Server.Processing;

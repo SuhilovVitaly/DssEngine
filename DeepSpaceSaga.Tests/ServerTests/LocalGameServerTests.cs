@@ -5,11 +5,9 @@ public class LocalGameServerTests
     private readonly LocalGameServer _sut;
     private readonly ISchedulerService _schedulerService;
     private readonly ISessionContextService _sessionContext;
-    private readonly Mock<ISessionContextService> _serverContextMock;
     private readonly Mock<IMetricsService> _gameFlowMetricsMock;
-    private readonly Mock<IMetricsService> _serverMetricsMock;
+    private readonly Mock<IProcessingService> _processingServiceMock;
     private GameSessionDto? _lastExecutedSession;
-    private GameSession _gameSession;
 
     public LocalGameServerTests()
     {
@@ -19,24 +17,29 @@ public class LocalGameServerTests
         // Setup dependencies
         var sessionInfo = new SessionInfoService();
         _gameFlowMetricsMock = new Mock<IMetricsService>();
-        _serverMetricsMock = new Mock<IMetricsService>();
+        _processingServiceMock = new Mock<IProcessingService>();
         var generationToolMock = new Mock<IGenerationTool>();
         
         // Setup unique ID generation to prevent duplicate key errors
         var idCounter = 0;
         generationToolMock.Setup(x => x.GetId()).Returns(() => idCounter++);
         
+        // Use real SessionContextService instead of mock to avoid lock issues
         _sessionContext = new SessionContextService(sessionInfo, _gameFlowMetricsMock.Object, generationToolMock.Object);
-        _serverContextMock = new Mock<ISessionContextService>();
-        _gameSession = new GameSession();
         
-        _serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
-        _serverContextMock.SetupSet(x => x.GameSession = It.IsAny<GameSession>());
-        _serverContextMock.Setup(x => x.GameSession).Returns(() => _gameSession);
-        _serverContextMock.Setup(x => x.SessionInfo).Returns(sessionInfo);
+        // Setup processing service mock to return a valid GameSessionDto
+        _processingServiceMock.Setup(x => x.Process(It.IsAny<ISessionContextService>()))
+            .Returns(() => new GameSessionDto 
+            { 
+                Id = Guid.NewGuid(),
+                State = new GameStateDto(),
+                CelestialObjects = new Dictionary<int, CelestialObjectDto>(),
+                Commands = new Dictionary<Guid, CommandDto>()
+            });
         
+        // Use real SessionContextService for scheduler and LocalGameServer to avoid lock issues
         _schedulerService = new SchedulerService(_sessionContext);
-        _sut = new LocalGameServer(_schedulerService, _serverContextMock.Object);
+        _sut = new LocalGameServer(_schedulerService, _sessionContext, _processingServiceMock.Object);
         
         // Subscribe to OnTurnExecute event
         _sut.OnTurnExecute += session => _lastExecutedSession = session;
@@ -53,7 +56,7 @@ public class LocalGameServerTests
         
         // Assert
         _gameFlowMetricsMock.Verify(x => x.Add(It.Is<string>(s => s == MetricsServer.SessionStart), 1), Times.Once);
-        _serverContextMock.VerifySet(x => x.GameSession = session);
+        _sessionContext.GameSession.Should().Be(session);
     }
 
     [Fact]
@@ -157,20 +160,23 @@ public class LocalGameServerTests
     public void TurnExecution_WithoutSubscribers_ShouldNotThrowException()
     {
         // Arrange
-        var serverContextMock = new Mock<ISessionContextService>();
-        var session = new GameSession();
         var sessionInfo = new SessionInfoService();
-    
-        serverContextMock.Setup(x => x.Metrics).Returns(_serverMetricsMock.Object);
-        serverContextMock.SetupSet(x => x.GameSession = It.IsAny<GameSession>());
-        serverContextMock.Setup(x => x.GameSession).Returns(session);
-        serverContextMock.Setup(x => x.SessionInfo).Returns(sessionInfo);
+        var metricsMock = new Mock<IMetricsService>();
+        var generationToolMock = new Mock<IGenerationTool>();
         
-        var localGameServer = new LocalGameServer(_schedulerService, serverContextMock.Object);
+        // Setup unique ID generation to prevent duplicate key errors
+        var idCounter = 100;
+        generationToolMock.Setup(x => x.GetId()).Returns(() => idCounter++);
+        
+        var sessionContext = new SessionContextService(sessionInfo, metricsMock.Object, generationToolMock.Object);
+        var schedulerService = new SchedulerService(sessionContext);
+        var localGameServer = new LocalGameServer(schedulerService, sessionContext, _processingServiceMock.Object);
+        
+        var session = new GameSession();
         localGameServer.SessionStart(session);
         
         // Act & Assert
-        var action = () => localGameServer.TurnExecution(_sessionContext.SessionInfo, CalculationType.Turn);
+        var action = () => localGameServer.TurnExecution(sessionInfo, CalculationType.Turn);
         action.Should().NotThrow();
     }
     
@@ -178,11 +184,13 @@ public class LocalGameServerTests
     public void Constructor_WithNullDependencies_ShouldThrowArgumentNullException()
     {
         // Act & Assert
-        var action1 = () => new LocalGameServer(null!, _serverContextMock.Object);
-        var action2 = () => new LocalGameServer(_schedulerService, null!);
+        var action1 = () => new LocalGameServer(null!, _sessionContext, _processingServiceMock.Object);
+        var action2 = () => new LocalGameServer(_schedulerService, null!, _processingServiceMock.Object);
+        var action3 = () => new LocalGameServer(_schedulerService, _sessionContext, null!);
         
         action1.Should().Throw<ArgumentNullException>().WithParameterName("schedulerService");
         action2.Should().Throw<ArgumentNullException>().WithParameterName("sessionContext");
+        action3.Should().Throw<ArgumentNullException>().WithParameterName("processingService");
     }
     
     [Fact]
@@ -215,8 +223,8 @@ public class LocalGameServerTests
         _sut.AddCommand(command);
 
         // Assert
-        _gameSession.Commands.Should().ContainKey(command.CommandId);
-        _gameSession.Commands[command.CommandId].Should().Be(command);
+        _sessionContext.GameSession.Commands.Should().ContainKey(command.CommandId);
+        _sessionContext.GameSession.Commands[command.CommandId].Should().Be(command);
     }
 
     [Fact]
@@ -232,7 +240,7 @@ public class LocalGameServerTests
         _sut.RemoveCommand(command.CommandId);
 
         // Assert
-        _gameSession.Commands.Should().NotContainKey(command.CommandId);
+        _sessionContext.GameSession.Commands.Should().NotContainKey(command.CommandId);
     }
 
     [Fact]
@@ -259,7 +267,7 @@ public class LocalGameServerTests
         var command = new Command();
         _sut.SessionStart(session);
         var changeTriggered = false;
-        _gameSession.Changed += (s, e) => changeTriggered = true;
+        _sessionContext.GameSession.Changed += (s, e) => changeTriggered = true;
 
         // Act
         _sut.AddCommand(command);
@@ -277,7 +285,7 @@ public class LocalGameServerTests
         _sut.SessionStart(session);
         _sut.AddCommand(command);
         var changeTriggered = false;
-        _gameSession.Changed += (s, e) => changeTriggered = true;
+        _sessionContext.GameSession.Changed += (s, e) => changeTriggered = true;
 
         // Act
         _sut.RemoveCommand(command.CommandId);

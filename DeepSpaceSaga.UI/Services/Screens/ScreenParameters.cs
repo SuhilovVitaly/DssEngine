@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Geometry;
+﻿using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Common.Geometry;
 using DeepSpaceSaga.UI.Render.Model;
 using DeepSpaceSaga.UI.Rendering.Abstractions;
 using System.Drawing;
@@ -23,6 +24,8 @@ public class ScreenParameters : IScreenInfo
     public SKCanvas GraphicSurface { get; set; }
     public IZoomScreen Zoom { get; private set; } = new ZoomScreen();
     public int MonitorId { get; set; }
+    public SpaceMapPoint MousePosition { get; private set; }
+    public SpaceMapPoint RelativeMousePosition { get; private set; }
 
     public ScreenParameters()
     {
@@ -62,6 +65,13 @@ public class ScreenParameters : IScreenInfo
 
         Width = screen.Width;
         Height = screen.Height;
+    }
+
+    public void SetMousePosition(SpaceMapPoint mousePosition)
+    {
+        MousePosition = mousePosition;
+
+        RelativeMousePosition = UiTools.ToRelativeCoordinates(this, mousePosition, Center);
     }
 }
 

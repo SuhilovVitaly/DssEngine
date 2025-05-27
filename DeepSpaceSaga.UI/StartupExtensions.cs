@@ -9,6 +9,7 @@
             services.AddSingleton<IScreensService, ScreensService>();
             services.AddSingleton<GameManager>();
             services.AddSingleton<IGameManager>(provider => provider.GetRequiredService<GameManager>());
+            services.AddScoped<IOuterSpaceService, OuterSpaceService>();
 
             // Register MVP components
             services.AddMvpComponents();

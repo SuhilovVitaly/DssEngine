@@ -27,13 +27,7 @@ public class MainMenuController : IMainMenuController
             Console.WriteLine("[MainMenuController] Starting new game session...");
 
             // Start new game session
-            var newGameSession = ScenarioGenerator.DefaultScenario(_gameManager.GenerationTool);
-            _gameServer.SessionStart(newGameSession);
-            Console.WriteLine($"[MainMenuController] Game session started with ID: {newGameSession.Id}");
-            
-            // Navigate to tactical map screen
-            _gameManager.ShowTacticalMapScreen();
-            Console.WriteLine("[MainMenuController] Navigated to tactical map screen");
+            _gameManager.SessionStart();
             
             // Simulate async operation
             await Task.CompletedTask;

@@ -39,6 +39,8 @@
             label5 = new Label();
             txtSpeed = new Label();
             label4 = new Label();
+            crlScreenCoordinatesRelative = new Label();
+            label3 = new Label();
             ((ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -69,7 +71,7 @@
             // crlGameCoordinates
             // 
             crlGameCoordinates.ForeColor = Color.White;
-            crlGameCoordinates.Location = new Point(131, 192);
+            crlGameCoordinates.Location = new Point(131, 203);
             crlGameCoordinates.Margin = new Padding(4, 0, 4, 0);
             crlGameCoordinates.Name = "crlGameCoordinates";
             crlGameCoordinates.Size = new Size(130, 25);
@@ -80,7 +82,7 @@
             // crlScreenCoordinates
             // 
             crlScreenCoordinates.ForeColor = Color.White;
-            crlScreenCoordinates.Location = new Point(131, 168);
+            crlScreenCoordinates.Location = new Point(131, 154);
             crlScreenCoordinates.Margin = new Padding(4, 0, 4, 0);
             crlScreenCoordinates.Name = "crlScreenCoordinates";
             crlScreenCoordinates.Size = new Size(130, 25);
@@ -92,7 +94,7 @@
             // 
             label7.AutoSize = true;
             label7.ForeColor = Color.White;
-            label7.Location = new Point(24, 192);
+            label7.Location = new Point(24, 203);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new Size(84, 25);
@@ -104,7 +106,7 @@
             // 
             label6.AutoSize = true;
             label6.ForeColor = Color.White;
-            label6.Location = new Point(24, 168);
+            label6.Location = new Point(24, 154);
             label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
             label6.Size = new Size(90, 25);
@@ -114,7 +116,7 @@
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.FromArgb(64, 64, 64);
-            pictureBox1.Location = new Point(18, 156);
+            pictureBox1.Location = new Point(18, 142);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(288, 1);
@@ -161,11 +163,36 @@
             label4.TabIndex = 5;
             label4.Text = "Speed.....................";
             // 
+            // crlScreenCoordinatesRelative
+            // 
+            crlScreenCoordinatesRelative.ForeColor = Color.White;
+            crlScreenCoordinatesRelative.Location = new Point(131, 179);
+            crlScreenCoordinatesRelative.Margin = new Padding(4, 0, 4, 0);
+            crlScreenCoordinatesRelative.Name = "crlScreenCoordinatesRelative";
+            crlScreenCoordinatesRelative.Size = new Size(130, 25);
+            crlScreenCoordinatesRelative.TabIndex = 15;
+            crlScreenCoordinatesRelative.Text = "10000:10000";
+            crlScreenCoordinatesRelative.TextAlign = ContentAlignment.TopCenter;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(24, 179);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(106, 25);
+            label3.TabIndex = 14;
+            label3.Text = "XY Screen R";
+            label3.TextAlign = ContentAlignment.TopRight;
+            // 
             // GameSessionInformation
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(12, 12, 12);
+            Controls.Add(crlScreenCoordinatesRelative);
+            Controls.Add(label3);
             Controls.Add(txtTurn);
             Controls.Add(txtSpeed);
             Controls.Add(crlGameCoordinates);
@@ -192,6 +219,8 @@
             Controls.SetChildIndex(crlGameCoordinates, 0);
             Controls.SetChildIndex(txtSpeed, 0);
             Controls.SetChildIndex(txtTurn, 0);
+            Controls.SetChildIndex(label3, 0);
+            Controls.SetChildIndex(crlScreenCoordinatesRelative, 0);
             ((ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -209,5 +238,7 @@
         private Label label7;
         private Label label6;
         private PictureBox pictureBox1;
+        private Label crlScreenCoordinatesRelative;
+        private Label label3;
     }
 }

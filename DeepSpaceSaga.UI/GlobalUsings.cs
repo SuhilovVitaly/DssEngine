@@ -40,3 +40,4 @@ global using DeepSpaceSaga.UI.Render.Tools;
 global using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 global using DeepSpaceSaga.Common.Tools;
 global using DeepSpaceSaga.Server.Generation;
+global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;

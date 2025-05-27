@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using DeepSpaceSaga.Common.Extensions;
 using SkiaSharp.Views.Desktop;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
@@ -26,7 +27,10 @@ public partial class GameTacticalMap : UserControl
         _skControl.PaintSurface += OnPaintSurface;
         Controls.Add(_skControl);
         _skControl.BringToFront();
-        
+
+        _skControl.MouseClick += MapClick;
+        _skControl.MouseMove += MapMouseMove;
+
         // Enable key events for UserControl
         this.SetStyle(ControlStyles.Selectable, true);
         this.TabStop = true;
@@ -109,5 +113,35 @@ public partial class GameTacticalMap : UserControl
         }
         
         return base.ProcessCmdKey(ref msg, keyData);
+    }
+
+    private void MapMouseMove(object sender, MouseEventArgs e)
+    {
+        var location = e.Location.ToSpaceMapCoordinates();
+
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(_gameManager.ScreenInfo, location, _gameManager.ScreenInfo.Center);
+
+        var mouseLocation = UiTools.ToTacticalMapCoordinates(_gameManager.ScreenInfo, mouseScreenCoordinates, _gameManager.ScreenInfo.CenterScreenOnMap);
+
+        _gameManager.TacticalMapMouseMove(mouseLocation, location);
+    }
+
+    private void MapClick(object sender, MouseEventArgs e)
+    {
+        var location = e.Location.ToSpaceMapCoordinates();
+
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(_gameManager.ScreenInfo, location, _gameManager.ScreenInfo.Center);
+
+        var mouseLocation = UiTools.ToTacticalMapCoordinates(_gameManager.ScreenInfo, mouseScreenCoordinates, _gameManager.ScreenInfo.CenterScreenOnMap);
+
+        if (e.Button == MouseButtons.Left)
+        {
+            _gameManager.TacticalMapMouseClick(mouseLocation);
+        }
+
+        if (e.Button == MouseButtons.Right)
+        {
+            _gameManager.TacticalMapLeftMouseClick(mouseLocation);
+        }
     }
 }

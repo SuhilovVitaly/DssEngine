@@ -15,3 +15,4 @@ global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using Microsoft.Extensions.DependencyInjection;
 global using System.Diagnostics.CodeAnalysis;
 global using DeepSpaceSaga.Common.Abstractions.Services;
+global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;

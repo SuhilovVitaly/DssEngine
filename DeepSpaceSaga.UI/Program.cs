@@ -2,7 +2,7 @@ namespace DeepSpaceSaga.UI;
 
 internal static class Program
 {
-    public static IServiceProvider ServiceProvider { get; private set; }
+    public static IServiceProvider? ServiceProvider { get; private set; }
 
     // Get logger instance from the specific repository
     private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(Program));
@@ -46,6 +46,7 @@ internal static class Program
         return Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) => {
                 services.AddCommonServices();
+                services.AddUiControllerServices();
                 services.AddClientScreens();
                 services.AddClientServices();
                 services.AddServerServices();                

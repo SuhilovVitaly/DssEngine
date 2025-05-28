@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class OuterSpaceService : IOuterSpaceService
 {

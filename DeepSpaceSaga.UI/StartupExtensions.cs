@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI
+﻿using DeepSpaceSaga.UI.Controller.Services;
+
+namespace DeepSpaceSaga.UI
 {
     [ExcludeFromCodeCoverage]
     public static class StartupExtensions
@@ -9,7 +11,7 @@
             services.AddSingleton<IScreensService, ScreensService>();
             services.AddSingleton<GameManager>();
             services.AddSingleton<IGameManager>(provider => provider.GetRequiredService<GameManager>());
-            services.AddScoped<IOuterSpaceService, OuterSpaceService>();
+            
 
             // Register MVP components
             services.AddMvpComponents();

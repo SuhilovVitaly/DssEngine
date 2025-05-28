@@ -1,7 +1,5 @@
-using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Server.Generation;
-
-namespace DeepSpaceSaga.UI.Controller;
+using DeepSpaceSaga.Common.Abstractions.UI.Screens;
+namespace DeepSpaceSaga.UI.Controller.Screens;
 
 /// <summary>
 /// Controller for Main Menu screen handling business logic and coordination

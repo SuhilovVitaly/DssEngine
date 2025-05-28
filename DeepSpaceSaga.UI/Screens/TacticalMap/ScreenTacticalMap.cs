@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap;
+﻿using DeepSpaceSaga.UI.Controller.Services;
+
+namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 
 public partial class ScreenTacticalMap : Form
 {

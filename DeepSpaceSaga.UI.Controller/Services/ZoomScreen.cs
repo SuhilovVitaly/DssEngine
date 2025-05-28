@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.UI.Rendering.Abstractions;
-
-namespace DeepSpaceSaga.UI.Render.Model;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class ZoomScreen : IZoomScreen
 {
@@ -11,7 +9,7 @@ public class ZoomScreen : IZoomScreen
 
     public void In()
     {
-        Scale = Scale - SetDeltaByScale(Scale);
+        Scale -= SetDeltaByScale(Scale);
 
         if (Scale < 40) Scale = 40;
 
@@ -22,7 +20,7 @@ public class ZoomScreen : IZoomScreen
 
     public void Out()
     {
-        Scale = Scale + SetDeltaByScale(Scale);
+        Scale += SetDeltaByScale(Scale);
 
         if (Scale > 1000) Scale = 1000;
 

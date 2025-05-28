@@ -1,29 +1,29 @@
-namespace DeepSpaceSaga.UI.Presenters;
+namespace DeepSpaceSaga.UI.Controller.Screens.Presenters;
 
 /// <summary>
-/// Interface for Main Menu Presenter handling View coordination
+/// Interface for Game Menu Presenter handling View coordination
 /// </summary>
-public interface IMainMenuPresenter
+public interface IGameMenuPresenter
 {
-    /// <summary>
-    /// Event fired when game info is updated
-    /// </summary>
-    event EventHandler<GameInfoModel>? GameInfoUpdated;
-
     /// <summary>
     /// Event fired when an error occurs
     /// </summary>
     event EventHandler<string>? ErrorOccurred;
 
     /// <summary>
-    /// Initializes the presenter and loads initial data
+    /// Initializes the presenter
     /// </summary>
     Task InitializeAsync();
 
     /// <summary>
-    /// Handles new game command
+    /// Handles resume game command
     /// </summary>
-    Task HandleNewGameAsync();
+    Task HandleResumeGameAsync();
+
+    /// <summary>
+    /// Handles save game command
+    /// </summary>
+    Task HandleSaveGameAsync();
 
     /// <summary>
     /// Handles load game command
@@ -31,14 +31,14 @@ public interface IMainMenuPresenter
     Task HandleLoadGameAsync();
 
     /// <summary>
-    /// Handles exit application command
+    /// Handles go to main menu command
     /// </summary>
-    Task HandleExitAsync();
+    Task HandleGoToMainMenuAsync();
 
     /// <summary>
-    /// Refreshes game information
+    /// Handles menu closing (resume game)
     /// </summary>
-    Task RefreshGameInfoAsync();
+    Task HandleMenuClosingAsync();
 
     /// <summary>
     /// Checks if the presenter is busy with an operation

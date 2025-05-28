@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
+﻿using DeepSpaceSaga.UI.Controller.Services;
+
+namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class GameSessionInformation : ControlWindow
 {

@@ -1,20 +1,12 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Geometry;
-using DeepSpaceSaga.UI.Render.Model;
-using DeepSpaceSaga.UI.Rendering.Abstractions;
-using System.Drawing;
-using System.Runtime.InteropServices;
+﻿using System.Drawing;
+using DeepSpaceSaga.UI.Rendering.Tools;
+using log4net;
+using SkiaSharp;
 
-namespace DeepSpaceSaga.UI.Services.Screens;
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class ScreenParameters : IScreenInfo
 {
-    [DllImport("user32.dll")]
-    private static extern int GetSystemMetrics(int nIndex);
-    
-    private const int SM_CXSCREEN = 0;
-    private const int SM_CYSCREEN = 1;
-
     private static readonly ILog Logger = LogManager.GetLogger(typeof(ScreenParameters));
     public SpaceMapPoint Center { get; private set; }
     public float Width { get; private set; }
@@ -27,32 +19,12 @@ public class ScreenParameters : IScreenInfo
     public SpaceMapPoint MousePosition { get; private set; }
     public SpaceMapPoint RelativeMousePosition { get; private set; }
 
-    public ScreenParameters()
+    public ScreenParameters(IScreenResolution screenResolution)
     {
         Logger.Debug("Start screen initialization");
+        var resolution = new Rectangle(0, 0, screenResolution.Width, screenResolution.Height);
 
-        var monitorId = 0;
-        var screens = Screen.AllScreens;
-
-        if (screens == null || screens.Length == 0)
-        {
-            throw new Exception("Monitors not found");
-        }
-
-        if (monitorId >= screens.Length)
-        {
-            throw new Exception($"Wrong ID of monitor: {monitorId}");
-        }
-
-        // Get the actual screen bounds (this will be the logical size)
-        var screen = screens[monitorId];
-        
-        // Get real screen resolution using WinAPI
-        var realWidth = GetSystemMetrics(SM_CXSCREEN);
-        var realHeight = GetSystemMetrics(SM_CYSCREEN);
-        var resolution = new Rectangle(0, 0, realWidth, realHeight);
-
-        MonitorId = monitorId;
+        MonitorId = screenResolution.MonitorId;
         Initialization(resolution, 10000, 10000);
     }
 

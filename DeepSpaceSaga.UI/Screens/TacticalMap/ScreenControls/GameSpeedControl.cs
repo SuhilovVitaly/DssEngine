@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
+﻿using DeepSpaceSaga.UI.Controller.Services;
+
+namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 
 public partial class GameSpeedControl : UserControl
 {

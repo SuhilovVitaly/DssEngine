@@ -1,4 +1,7 @@
-namespace DeepSpaceSaga.UI.Presenters;
+using DeepSpaceSaga.Common.Abstractions.UI.Screens;
+using log4net;
+
+namespace DeepSpaceSaga.UI.Controller.Screens.Presenters;
 
 /// <summary>
 /// Presenter for Main Menu screen handling View coordination and UI logic
@@ -6,7 +9,7 @@ namespace DeepSpaceSaga.UI.Presenters;
 public class MainMenuPresenter : IMainMenuPresenter
 {
     private readonly IMainMenuController _controller;
-    private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(MainMenuPresenter));
+    private static readonly ILog Logger = LogManager.GetLogger("ControllerAppRepository", typeof(MainMenuPresenter));
     
     private bool _isBusy = false;
 

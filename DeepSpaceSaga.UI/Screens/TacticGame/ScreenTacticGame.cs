@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticGame;
+﻿using DeepSpaceSaga.UI.Controller.Services;
+
+namespace DeepSpaceSaga.UI.Screens.TacticGame;
 
 public partial class ScreenTacticGame : Form
 {

@@ -1,5 +1,7 @@
 ﻿using System.Windows.Forms;
 using DeepSpaceSaga.Common.Extensions;
+using DeepSpaceSaga.UI.Controller.Services;
+using DeepSpaceSaga.UI.Rendering.Tools;
 using SkiaSharp.Views.Desktop;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;

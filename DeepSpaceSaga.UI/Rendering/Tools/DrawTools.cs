@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Tools;
+﻿using DeepSpaceSaga.Common.Abstractions.UI;
+
+namespace DeepSpaceSaga.UI.Render.Tools;
 
 public class DrawTools
 {

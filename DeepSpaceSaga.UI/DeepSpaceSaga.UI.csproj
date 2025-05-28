@@ -36,4 +36,9 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Rendering\Abstractions\" />
+    <Folder Include="Rendering\Entities\" />
+  </ItemGroup>
+
 </Project>

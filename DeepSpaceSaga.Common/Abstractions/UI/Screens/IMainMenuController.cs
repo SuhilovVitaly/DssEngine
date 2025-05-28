@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.UI.Controller.Abstractions;
+namespace DeepSpaceSaga.Common.Abstractions.UI.Screens;
 
 /// <summary>
 /// Interface for Main Menu Controller handling business logic and coordination

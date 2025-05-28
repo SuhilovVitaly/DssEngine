@@ -11,4 +11,13 @@
     <ProjectReference Include="..\DeepSpaceSaga.Server\DeepSpaceSaga.Server.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="3.116.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

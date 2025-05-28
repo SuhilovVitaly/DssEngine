@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Services.Screens;
+﻿using DeepSpaceSaga.UI.Screens.MainMenu;
+
+namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreensService : IScreensService
 {

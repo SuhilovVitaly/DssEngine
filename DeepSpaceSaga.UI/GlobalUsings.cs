@@ -19,7 +19,6 @@ global using DeepSpaceSaga.Common.Abstractions.Entities;
 global using DeepSpaceSaga.Controller;
 global using DeepSpaceSaga.Server;
 global using DeepSpaceSaga.UI.Controller;
-global using DeepSpaceSaga.UI.Screens.MainMenu;
 global using DeepSpaceSaga.UI.Screens.TacticalMap;
 global using DeepSpaceSaga.UI.Screens.TacticGame;
 global using DeepSpaceSaga.UI.Screens.GameMenu;

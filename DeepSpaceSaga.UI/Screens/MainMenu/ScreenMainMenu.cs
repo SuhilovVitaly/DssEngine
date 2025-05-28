@@ -1,7 +1,7 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 using DeepSpaceSaga.UI.Controller.Screens.Presenters;
 
-namespace DeepSpaceSaga.UI.Screens.GameMenu;
+namespace DeepSpaceSaga.UI.Screens.MainMenu;
 
 public partial class ScreenMainMenu : Form
 {

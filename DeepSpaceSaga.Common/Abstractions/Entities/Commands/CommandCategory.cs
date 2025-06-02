@@ -11,5 +11,6 @@ public enum CommandCategory
     CargoOperations,
     EventAcknowledgement,
     TrackActivity,
-    CrewInteraction
+    CrewInteraction,
+    CommandAccept
 }

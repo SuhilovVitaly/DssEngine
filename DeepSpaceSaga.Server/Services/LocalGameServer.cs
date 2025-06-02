@@ -23,9 +23,9 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
         OnTurnExecute?.Invoke(_gameSessionDto);
     }
 
-    public void AddCommand(ICommand command)
+    public async Task AddCommand(ICommand command)
     {
-        _sessionContext.GameSession.AddCommand(command);
+        await _sessionContext.GameSession.AddCommand(command);
     }
 
     public void RemoveCommand(Guid commandId)

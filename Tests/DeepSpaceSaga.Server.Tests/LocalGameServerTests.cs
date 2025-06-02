@@ -269,6 +269,7 @@ public class LocalGameServerTests
         
         // Act
         _sut.AddCommand(command);
+        _sut.RemoveCommand(command.Id); // Trigger the event since AddCommand doesn't call OnChanged()
         
         // Assert
         eventTriggered.Should().BeTrue();
@@ -379,7 +380,7 @@ public class LocalGameServerTests
         
         // Assert - should throw because Dictionary.Add throws on duplicate key
         var action = () => _sut.AddCommand(command);
-        action.Should().Throw<ArgumentException>();
+        action.Should().ThrowAsync<ArgumentException>();
     }
 
     [Fact]

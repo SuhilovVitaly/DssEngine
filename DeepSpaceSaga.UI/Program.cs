@@ -42,6 +42,7 @@ internal static class Program
         ServiceProvider = CreateHostBuilder().Build().Services;
 
         ServiceProvider.GetRequiredService<IScreensService>();
+        ServiceProvider.GetRequiredService<IGameEventsService>();
 
         var mainForm = ServiceProvider.GetRequiredService<ScreenBackground>();
         Application.Run(mainForm);

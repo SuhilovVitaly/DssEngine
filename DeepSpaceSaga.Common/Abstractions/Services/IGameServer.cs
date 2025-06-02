@@ -10,6 +10,6 @@ public interface IGameServer
     void SessionResume();
     void SessionStop();
     void SetGameSpeed(int speed);
-    void AddCommand(ICommand command);
+    Task AddCommand(ICommand command);
     void RemoveCommand(Guid commandId);
 }

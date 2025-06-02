@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace DeepSpaceSaga.Common.Abstractions.Entities;
 
 public class GameSession
@@ -11,6 +13,7 @@ public class GameSession
     public Dictionary<int, ICelestialObject> CelestialObjects { get; set; } = new();
     public ConcurrentDictionary<Guid, ICommand> Commands { get; set; } = new();
     public ConcurrentDictionary<long, IGameActionEvent> Events { get; set; } = new();
+    public ConcurrentDictionary<long, long> FinishedEvents { get; set; } = new();
     public event EventHandler? Changed;
     
     private readonly object _lock = new();
@@ -34,13 +37,14 @@ public class GameSession
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AddCommand(ICommand command)
+    public async Task AddCommand(ICommand command)
     {
         if (!Commands.TryAdd(command.Id, command))
         {
             throw new ArgumentException($"Command with ID {command.Id} already exists.", nameof(command));
         }
-        OnChanged();
+
+        await Task.CompletedTask;
     }
     
     public void RemoveCommand(Guid commandId)

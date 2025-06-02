@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Abstractions.UI;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+using DeepSpaceSaga.Common.Abstractions.UI;
 
 namespace DeepSpaceSaga.UI.Controller.Services;
 
@@ -31,6 +32,11 @@ public class GameManager : IGameManager
         _gameServer.SetGameSpeed(speed);
     }
 
+    public async void CommandExecute(ICommand command)
+    {
+        await _gameServer.AddCommand(command);
+    }
+
     public void SessionStart()
     {
         _gameServer.SessionStart(ScenarioGenerator.DefaultScenario(GenerationTool));
@@ -59,9 +65,7 @@ public class GameManager : IGameManager
     }
 
     private void UpdateGameData(GameSessionDto session)
-    {
-        
-
+    {       
         OnUpdateGameData?.Invoke(session);
     }
 

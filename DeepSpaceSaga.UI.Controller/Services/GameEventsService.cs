@@ -1,4 +1,5 @@
-﻿using log4net;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities;
+using log4net;
 
 namespace DeepSpaceSaga.UI.Controller.Services;
 
@@ -17,7 +18,16 @@ public class GameEventsService : IGameEventsService
     {
         if (session.GameActionEvents.Count > 0)
         {
-            var x = "";
+            foreach (var gameEvent in session.GameActionEvents.Values)
+            {
+                _gameManager.CommandExecute(new Command
+                {
+                    Category = Common.Abstractions.Entities.Commands.CommandCategory.CommandAccept,
+                    CelestialObjectId = gameEvent.Id,
+                    IsOneTimeCommand = true,
+                    TargetCelestialObjectId = gameEvent.Id,
+                });
+            }            
         }
     }
 }

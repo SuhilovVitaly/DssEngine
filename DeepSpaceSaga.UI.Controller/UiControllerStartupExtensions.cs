@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.UI.Controller.Screens;
-using DeepSpaceSaga.UI.Controller.Screens.Presenters;
-
-namespace DeepSpaceSaga.UI.Controller;
+﻿namespace DeepSpaceSaga.UI.Controller;
 
 [ExcludeFromCodeCoverage]
 public static class UiControllerStartupExtensions
@@ -22,7 +19,6 @@ public static class UiControllerStartupExtensions
         services.AddScoped<IGameMenuController, GameMenuController>();
             
         // Register Presenters (UI coordination layer)
-        services.AddScoped<IMainMenuPresenter, MainMenuPresenter>();
         services.AddScoped<IGameMenuPresenter, GameMenuPresenter>();
     }
 }

@@ -33,5 +33,5 @@ public interface IMainMenuController
     /// Gets game information for display
     /// </summary>
     /// <returns>Game information model</returns>
-    Task<GameInfoModel> GetGameInfoAsync();
+    GameInfoModel GetGameInfo();
 } 

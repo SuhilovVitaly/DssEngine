@@ -1,12 +1,9 @@
-﻿using DeepSpaceSaga.Common.Abstractions.UI.Screens;
-
-namespace DeepSpaceSaga.UI.Screens.MainMenu;
+﻿namespace DeepSpaceSaga.UI.Screens.MainMenu;
 
 public partial class ScreenMainMenu : Form
 {
     private static readonly ILog Logger = LogManager.GetLogger(GeneralSettings.WinFormLoggerRepository, typeof(ScreenMainMenu));
     private readonly IMainMenuController _controller;
-    private GameInfoModel _currentGameInfo = new();
 
     public ScreenMainMenu(IMainMenuController controller)
     {
@@ -53,6 +50,8 @@ public partial class ScreenMainMenu : Form
 
     private void DrawGameInfo(Graphics graphics)
     {
+        var _currentGameInfo = _controller.GetGameInfo();
+
         if (_currentGameInfo == null) return;
 
         try

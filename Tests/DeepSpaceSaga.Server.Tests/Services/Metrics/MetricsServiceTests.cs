@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Services;
+namespace DeepSpaceSaga.Server.Tests.Services.Metrics;
 
 public class MetricsServiceTests
 {
@@ -198,16 +198,16 @@ public class MetricsServiceTests
     {
         // Arrange
         const string metricName = "mixed_metric";
-        const double addValue = 5.0;
-        const double millisecondsValue = 10.0;
+        const double addValue = 10.0;
+        const double addMillisecondsValue = 20.0;
 
         // Act
         _serverMetrics.Add(metricName, addValue);
-        _serverMetrics.AddMilliseconds(metricName, millisecondsValue);
+        _serverMetrics.AddMilliseconds(metricName, addMillisecondsValue);
         var result = _serverMetrics.Get(metricName);
 
-        // Assert - MetricsService now accumulates values
-        Assert.Equal(addValue + millisecondsValue, result);
+        // Assert
+        Assert.Equal(addValue + addMillisecondsValue, result);
     }
 
     [Fact]
@@ -217,12 +217,12 @@ public class MetricsServiceTests
         const string metricName = "zero_negative_metric";
 
         // Act
-        _serverMetrics.Add(metricName, 0);
-        _serverMetrics.Add(metricName, -2.5);
-        _serverMetrics.Add(metricName, -2.5);
+        _serverMetrics.Add(metricName, 0.0);
+        _serverMetrics.Add(metricName, -5.0);
+        _serverMetrics.Add(metricName, 10.0);
         var result = _serverMetrics.Get(metricName);
 
-        // Assert - MetricsService now accumulates values
-        Assert.Equal(-5.0, result);
+        // Assert
+        Assert.Equal(5.0, result);
     }
-}
+} 

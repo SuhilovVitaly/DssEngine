@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Geometry;
+namespace DeepSpaceSaga.Common.Tests.Geometry;
 
 public class SpaceMapVectorTests
 {
@@ -38,4 +38,4 @@ public class SpaceMapVectorTests
         vector.PointTo.Should().Be(newTo);
         vector.Direction.Should().Be(newDirection);
     }
-}
+} 

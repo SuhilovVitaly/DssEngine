@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Mappers;
+namespace DeepSpaceSaga.Common.Tests.Mappers;
 
 public class CommandMapperTests
 {

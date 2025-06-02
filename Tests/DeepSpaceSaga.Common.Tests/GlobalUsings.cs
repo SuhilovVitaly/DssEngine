@@ -41,11 +41,3 @@ global using DeepSpaceSaga.Common.Extensions.Object;
 global using DeepSpaceSaga.Common.Abstractions.Mappers;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
 global using DeepSpaceSaga.Common.Abstractions.Events;
-
-global using DeepSpaceSaga.Server;
-global using DeepSpaceSaga.Server.Services;
-global using DeepSpaceSaga.Server.Services.Metrics;
-global using DeepSpaceSaga.Server.Services.SessionInfo;
-global using DeepSpaceSaga.Server.Services.SessionContext;
-global using DeepSpaceSaga.Server.Services.Scheduler;
-global using DeepSpaceSaga.Server.Processing;

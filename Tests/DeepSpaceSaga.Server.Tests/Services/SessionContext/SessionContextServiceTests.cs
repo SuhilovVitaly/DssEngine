@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.ServerTests.Services.SessionContext;
+namespace DeepSpaceSaga.Server.Tests.Services.SessionContext;
 
 public class SessionContextServiceTests
 {
@@ -68,4 +68,4 @@ public class SessionContextServiceTests
         // Assert
         act.Should().Throw<ArgumentNullException>();
     }
-}
+} 

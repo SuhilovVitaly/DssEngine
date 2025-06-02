@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Entities.Items;
+namespace DeepSpaceSaga.Common.Tests.Entities.Items;
 
 public class AbstractItemTests
 {

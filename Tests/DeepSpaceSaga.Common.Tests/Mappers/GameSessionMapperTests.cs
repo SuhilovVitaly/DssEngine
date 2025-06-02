@@ -1,6 +1,4 @@
-using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
-
-namespace DeepSpaceSaga.Tests.CommonTests.Mappers;
+namespace DeepSpaceSaga.Common.Tests.Mappers;
 
 public class GameSessionMapperTests
 {
@@ -181,7 +179,6 @@ public class GameSessionMapperTests
     public void ToDto_Should_Use_Lock_For_Thread_Safety()
     {
         // Arrange
-        var lockTaken = false;
         var celestialObject = new BaseAsteroid(1)
         {
             Name = "Test Asteroid",

@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Geometry;
+namespace DeepSpaceSaga.Common.Tests.Geometry;
 
 public class SpaceMapLineTests
 {
@@ -47,4 +47,4 @@ public class SpaceMapLineTests
         line.From.Should().Be(point);
         line.To.Should().Be(point);
     }
-}
+} 

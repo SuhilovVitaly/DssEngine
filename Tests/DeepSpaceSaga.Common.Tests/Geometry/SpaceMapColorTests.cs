@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Geometry;
+namespace DeepSpaceSaga.Common.Tests.Geometry;
 
 public class SpaceMapColorTests
 {
@@ -68,4 +68,4 @@ public class SpaceMapColorTests
         Assert.Equal((byte)202, color.Blue);
         Assert.Equal((byte)203, color.Alpha);
     }
-}
+} 

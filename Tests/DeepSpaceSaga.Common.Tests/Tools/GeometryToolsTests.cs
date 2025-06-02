@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Tools;
+namespace DeepSpaceSaga.Common.Tests.Tools;
 
 public class GeometryToolsTests
 {
@@ -186,15 +186,15 @@ public class GeometryToolsTests
         var (tangent1, tangent2) = GeometryTools.CalculateTangents(externalPoint, circleCenter, radius);
 
         // Assert
-        // Проверяем, что точки касания находятся на окружности
+        // Check that tangent points are on the circle
         var distance1 = GeometryTools.Distance(tangent1, circleCenter);
         var distance2 = GeometryTools.Distance(tangent2, circleCenter);
         
         distance1.Should().BeApproximately(radius, 0.001);
         distance2.Should().BeApproximately(radius, 0.001);
 
-        // Проверяем, что касательные перпендикулярны радиусам
-        // Для этого проверим, что расстояние от внешней точки до точек касания одинаково
+        // Check that tangents are perpendicular to radii
+        // For this we check that distance from external point to tangent points is equal
         var distanceToTangent1 = GeometryTools.Distance(externalPoint, tangent1);
         var distanceToTangent2 = GeometryTools.Distance(externalPoint, tangent2);
         

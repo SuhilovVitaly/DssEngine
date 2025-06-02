@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Extensions.Object;
+namespace DeepSpaceSaga.Common.Tests.Extensions.Object;
 
 public class ObjectExtensionsTests
 {
@@ -61,7 +61,7 @@ public class ObjectExtensionsTests
         Assert.NotNull(clone!.Reference);
         Assert.Equal("A", clone.Name);
         Assert.Equal("B", clone.Reference!.Name);
-        // Проверяем, что цикл сохранился
+        // Check that cycle is preserved
         Assert.Same(clone, clone.Reference.Reference);
     }
 
@@ -70,4 +70,4 @@ public class ObjectExtensionsTests
         public string Name { get; set; } = string.Empty;
         public CyclicObject? Reference { get; set; }
     }
-}
+} 

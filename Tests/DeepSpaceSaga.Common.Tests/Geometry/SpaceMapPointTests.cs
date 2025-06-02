@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Geometry;
+namespace DeepSpaceSaga.Common.Tests.Geometry;
 
 public class SpaceMapPointTests
 {
@@ -31,4 +31,4 @@ public class SpaceMapPointTests
         point.X.Should().Be(99.99f);
         point.Y.Should().Be(-42.42f);
     }
-}
+} 

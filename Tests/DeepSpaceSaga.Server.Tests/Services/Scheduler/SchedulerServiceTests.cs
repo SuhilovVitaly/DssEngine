@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.ServerTests.Services.Scheduler;
+namespace DeepSpaceSaga.Server.Tests.Services.Scheduler;
 
 public class SchedulerServiceTests
 {
@@ -84,4 +84,4 @@ public class SchedulerServiceTests
         _metricsMock.Verify(m => m.Add(MetricsServer.SessionStop, 1), Times.Once);
         // Проверить, что TurnSchedulerService.Stop() вызван невозможно напрямую, но отсутствие исключения и вызов метрики достаточно
     }
-}
+} 

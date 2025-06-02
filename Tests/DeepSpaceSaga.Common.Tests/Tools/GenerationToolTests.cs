@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Tests.CommonTests.Tools;
+namespace DeepSpaceSaga.Common.Tests.Tools;
 
 public class GenerationToolTests
 {

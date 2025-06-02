@@ -8,10 +8,13 @@ public class GameActionEventMapper
     {
         List<DialogDto> dialogsCopy = new();
 
-        foreach (var dialog in gameEvent.ConnectedDialogs)
+        if(gameEvent.ConnectedDialogs != null)
         {
-            dialogsCopy.Add(DialogMapper.ToDto(dialog));
-        }
+            foreach (var dialog in gameEvent.ConnectedDialogs)
+            {
+                dialogsCopy.Add(DialogMapper.ToDto(dialog));
+            }
+        }        
 
         return new GameActionEventDto
         {
@@ -22,7 +25,7 @@ public class GameActionEventMapper
            EventType = gameEvent.EventType,
            ModuleId = gameEvent.ModuleId,
            TargetObjectId = gameEvent.TargetObjectId,
-           Dialog = DialogMapper.ToDto(gameEvent.Dialog)
+           Dialog = gameEvent.Dialog != null ? DialogMapper.ToDto(gameEvent.Dialog) : null,
         };
     }
 }

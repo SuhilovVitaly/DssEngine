@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.UI;
+
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {
@@ -58,6 +60,8 @@ public class GameManager : IGameManager
 
     private void UpdateGameData(GameSessionDto session)
     {
+        
+
         OnUpdateGameData?.Invoke(session);
     }
 

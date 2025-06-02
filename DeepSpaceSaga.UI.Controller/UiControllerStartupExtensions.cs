@@ -5,9 +5,10 @@ public static class UiControllerStartupExtensions
 {
     public static void AddUiControllerServices(this IServiceCollection services)
     {
-        services.AddSingleton<IOuterSpaceService, OuterSpaceService>();
+        services.AddSingleton<IOuterSpaceService, OuterSpaceService>();        
         services.AddSingleton<IGameManager, GameManager>();
-        
+        services.AddSingleton<IGameEventsService, GameEventsService>();
+
         // Register MVP components
         services.AddMvpComponents();
     }

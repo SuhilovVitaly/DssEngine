@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Implementation.Entities.Events;
-using DeepSpaceSaga.Common.Tools;
-
-namespace DeepSpaceSaga.Server.Processing.Handlers;
+﻿namespace DeepSpaceSaga.Server.Processing.Handlers;
 
 public class ProcessingEventInvokerHandler
 {
@@ -9,7 +6,7 @@ public class ProcessingEventInvokerHandler
     {
         if(sessionContext.SessionInfo.Turn == 1)
         {
-            var x = new GameActionEvent
+            var gameActionEvent = new GameActionEvent
             {
                 Id = new GenerationTool().GetId(),
                 CelestialObjectId = 1,
@@ -18,7 +15,7 @@ public class ProcessingEventInvokerHandler
                 TriggerCommand = null
             };
 
-            sessionContext.GameSession.Events.TryAdd(x.Id, x);
+            sessionContext.GameSession.Events.TryAdd(gameActionEvent.Id, gameActionEvent);
         }        
     }
 }

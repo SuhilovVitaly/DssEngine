@@ -26,3 +26,4 @@ global using DeepSpaceSaga.Server.Processing.Handlers;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Tools;
 global using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
+global using DeepSpaceSaga.Common.Implementation.Entities.Events;

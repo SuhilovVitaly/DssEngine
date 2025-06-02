@@ -6,13 +6,17 @@ public class TurnProcessing : IProcessingService
     {
         try
         {
+            new ProcessingEventAcknowledgeHandler().Execute(sessionContext);
             new ProcessingLocationsHandler().Execute(sessionContext);     
+            new ProcessingEventInvokerHandler().Execute(sessionContext);
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
         }
         
-        return GameSessionMapper.ToDto(sessionContext);
+        var turnResult = GameSessionMapper.ToDto(sessionContext);
+
+        return turnResult;
     }
 }

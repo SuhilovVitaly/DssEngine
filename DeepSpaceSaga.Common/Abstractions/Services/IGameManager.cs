@@ -92,4 +92,6 @@ public interface IGameManager
     /// </summary>
     /// <param name="mouseLocation">Mouse location</param>
     void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation);
+
+    void CommandExecute(ICommand command);
 } 

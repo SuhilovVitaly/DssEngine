@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Server", "Dee
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Common", "DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj", "{0BF8DBD6-9AED-49A6-ABF2-2FF735AF7482}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Tests", "DeepSpaceSaga.Tests\DeepSpaceSaga.Tests.csproj", "{3B3AF493-6058-4F66-8657-BB4A6610A4B0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Console", "DeepSpaceSaga.Console\DeepSpaceSaga.Console.csproj", "{DBD4C71B-A53E-4224-8028-845F3D75A4AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0E3FD5BA-3DB2-4841-9D8D-3E196C79089E}"
@@ -18,15 +16,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepSpaceSaga.UI.Controller", "DeepSpaceSaga.UI.Controller\DeepSpaceSaga.UI.Controller.csproj", "{B1216D29-A470-4FFB-9F64-9604250BFF57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.UI.Controller", "DeepSpaceSaga.UI.Controller\DeepSpaceSaga.UI.Controller.csproj", "{B1216D29-A470-4FFB-9F64-9604250BFF57}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeepSpaceSagaTests", "DeepSpaceSagaTests", "{A7888C7C-B143-45F8-AC51-ACD045469D9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepSpaceSaga.Server.Tests", "Tests\DeepSpaceSaga.Server.Tests\DeepSpaceSaga.Server.Tests.csproj", "{B3F1DF9B-DF14-4419-A809-38921960550A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Server.Tests", "Tests\DeepSpaceSaga.Server.Tests\DeepSpaceSaga.Server.Tests.csproj", "{B3F1DF9B-DF14-4419-A809-38921960550A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepSpaceSaga.Common.Tests", "Tests\DeepSpaceSaga.Common.Tests\DeepSpaceSaga.Common.Tests.csproj", "{2A7BE2D7-6131-413D-861C-248D6CFB2FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.Common.Tests", "Tests\DeepSpaceSaga.Common.Tests\DeepSpaceSaga.Common.Tests.csproj", "{2A7BE2D7-6131-413D-861C-248D6CFB2FF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepSpaceSaga.UI.Controller.Tests", "Tests\DeepSpaceSaga.UI.Controller.Tests\DeepSpaceSaga.UI.Controller.Tests.csproj", "{CBA3288E-D9A8-4720-ADDB-61C7AB99A093}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepSpaceSaga.UI.Controller.Tests", "Tests\DeepSpaceSaga.UI.Controller.Tests\DeepSpaceSaga.UI.Controller.Tests.csproj", "{CBA3288E-D9A8-4720-ADDB-61C7AB99A093}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +44,6 @@ Global
 		{0BF8DBD6-9AED-49A6-ABF2-2FF735AF7482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BF8DBD6-9AED-49A6-ABF2-2FF735AF7482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BF8DBD6-9AED-49A6-ABF2-2FF735AF7482}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B3AF493-6058-4F66-8657-BB4A6610A4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B3AF493-6058-4F66-8657-BB4A6610A4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B3AF493-6058-4F66-8657-BB4A6610A4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B3AF493-6058-4F66-8657-BB4A6610A4B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBD4C71B-A53E-4224-8028-845F3D75A4AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBD4C71B-A53E-4224-8028-845F3D75A4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBD4C71B-A53E-4224-8028-845F3D75A4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -74,12 +68,12 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BE2B75E4-6CB2-4D51-88FA-2A86680693C3}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B3F1DF9B-DF14-4419-A809-38921960550A} = {A7888C7C-B143-45F8-AC51-ACD045469D9A}
 		{2A7BE2D7-6131-413D-861C-248D6CFB2FF6} = {A7888C7C-B143-45F8-AC51-ACD045469D9A}
 		{CBA3288E-D9A8-4720-ADDB-61C7AB99A093} = {A7888C7C-B143-45F8-AC51-ACD045469D9A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE2B75E4-6CB2-4D51-88FA-2A86680693C3}
 	EndGlobalSection
 EndGlobal

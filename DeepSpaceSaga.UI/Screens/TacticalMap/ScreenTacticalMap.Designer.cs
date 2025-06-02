@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             ControlGameSpeed = new MainGameScreen.GameSpeedControl();
-            gameSessionInformation1 = new GameSessionInformation();
+            sessionInformationControl = new GameSessionInformation();
             GameTacticalMapControl = new GameTacticalMap();
             SuspendLayout();
             // 
@@ -43,18 +43,19 @@
             ControlGameSpeed.Size = new Size(441, 97);
             ControlGameSpeed.TabIndex = 0;
             // 
-            // gameSessionInformation1
+            // sessionInformationControl
             // 
-            gameSessionInformation1.BackColor = Color.FromArgb(12, 12, 12);
-            gameSessionInformation1.BorderStyle = BorderStyle.FixedSingle;
-            gameSessionInformation1.IsDraggible = true;
-            gameSessionInformation1.IsResizible = true;
-            gameSessionInformation1.Location = new Point(14, 14);
-            gameSessionInformation1.Margin = new Padding(5);
-            gameSessionInformation1.Name = "gameSessionInformation1";
-            gameSessionInformation1.Size = new Size(351, 231);
-            gameSessionInformation1.TabIndex = 1;
-            gameSessionInformation1.Title = "Game Session Information";
+            sessionInformationControl.BackColor = Color.FromArgb(12, 12, 12);
+            sessionInformationControl.BorderStyle = BorderStyle.FixedSingle;
+            sessionInformationControl.GameManager = null;
+            sessionInformationControl.IsDraggible = true;
+            sessionInformationControl.IsResizible = true;
+            sessionInformationControl.Location = new Point(14, 14);
+            sessionInformationControl.Margin = new Padding(5);
+            sessionInformationControl.Name = "sessionInformationControl";
+            sessionInformationControl.Size = new Size(351, 231);
+            sessionInformationControl.TabIndex = 1;
+            sessionInformationControl.Title = "Game Session Information";
             // 
             // GameTacticalMapControl
             // 
@@ -70,7 +71,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(2231, 1035);
-            Controls.Add(gameSessionInformation1);
+            Controls.Add(sessionInformationControl);
             Controls.Add(ControlGameSpeed);
             Controls.Add(GameTacticalMapControl);
             DoubleBuffered = true;
@@ -85,7 +86,7 @@
         #endregion
 
         private MainGameScreen.GameSpeedControl ControlGameSpeed;
-        private ScreenControls.GameSessionInformation gameSessionInformation1;
+        private ScreenControls.GameSessionInformation sessionInformationControl;
         private GameTacticalMap GameTacticalMapControl;
     }
 }

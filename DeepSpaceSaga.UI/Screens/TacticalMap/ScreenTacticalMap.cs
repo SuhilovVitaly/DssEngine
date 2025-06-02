@@ -12,10 +12,14 @@ public partial class ScreenTacticalMap : Form
 
     public ScreenTacticalMap(IGameManager gameManager, IScreensService screensService)
     {
-        InitializeComponent();
-
         _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
         _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+
+        InitializeComponent();
+
+        // Initialize dependencies for child controls
+        sessionInformationControl.GameManager = _gameManager;
+
 
         _gameManager.OnUpdateGameData += UpdateGameData;
         _gameManager.OnUpdateGameData += ControlGameSpeed.UpdateGameData;

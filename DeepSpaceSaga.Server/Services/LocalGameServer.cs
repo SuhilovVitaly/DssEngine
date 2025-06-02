@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+
+namespace DeepSpaceSaga.Server;
 
 public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext, IProcessingService processingService) : IGameServer
 {
@@ -21,7 +23,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
         OnTurnExecute?.Invoke(_gameSessionDto);
     }
 
-    public void AddCommand(Command command)
+    public void AddCommand(ICommand command)
     {
         _sessionContext.GameSession.AddCommand(command);
     }

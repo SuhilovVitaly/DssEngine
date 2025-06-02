@@ -21,7 +21,6 @@ global using DeepSpaceSaga.Server;
 global using DeepSpaceSaga.UI.Controller;
 global using DeepSpaceSaga.UI.Screens.TacticalMap;
 global using DeepSpaceSaga.UI.Screens.TacticGame;
-global using DeepSpaceSaga.UI.Screens.GameMenu;
 global using DeepSpaceSaga.UI.Screens.Background;
 global using DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 global using DeepSpaceSaga.UI.Services.Screens;
@@ -40,3 +39,5 @@ global using DeepSpaceSaga.Common.Abstractions.UI;
 global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens;
 global using DeepSpaceSaga.UI.Screens.MainMenu;
+global using DeepSpaceSaga.UI.Screens.GameMenu;
+

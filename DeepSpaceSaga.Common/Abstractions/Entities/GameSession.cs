@@ -9,7 +9,7 @@ public class GameSession
 
     public Guid Id { get; set; }
     public Dictionary<int, ICelestialObject> CelestialObjects { get; set; } = new();
-    public Dictionary<Guid, ICommand> Commands { get; set; } = new();
+    public ConcurrentDictionary<Guid, ICommand> Commands { get; set; } = new();
     public event EventHandler? Changed;
     
     private readonly object _lock = new();
@@ -33,21 +33,18 @@ public class GameSession
         Changed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void AddCommand(Command command)
+    public void AddCommand(ICommand command)
     {
-        lock (_lock)
+        if (!Commands.TryAdd(command.Id, command))
         {
-            Commands.Add(command.Id, command);
+            throw new ArgumentException($"Command with ID {command.Id} already exists.", nameof(command));
         }
         OnChanged();
     }
     
     public void RemoveCommand(Guid commandId)
     {
-        lock (_lock)
-        {
-            Commands.Remove(commandId);
-        }
+        Commands.TryRemove(commandId, out _);
         OnChanged();
     }
 }

@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+
 namespace DeepSpaceSaga.Tests.ServerTests;
 
 public class LocalGameServerTests
@@ -383,7 +385,7 @@ public class LocalGameServerTests
     {
         // Arrange
         var session = new GameSession();
-        var command = new Command();
+        ICommand command = new Command();
         _sut.SessionStart(session);
         _sut.AddCommand(command);
 

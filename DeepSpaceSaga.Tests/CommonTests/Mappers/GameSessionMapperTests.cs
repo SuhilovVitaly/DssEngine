@@ -19,7 +19,7 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             CelestialObjects = new Dictionary<int, ICelestialObject>(),
-            Commands = new Dictionary<Guid, ICommand>()
+            Commands = new ConcurrentDictionary<Guid, ICommand>()
         };
 
         _mockSessionContext.Setup(x => x.SessionInfo).Returns(_mockSessionInfo.Object);
@@ -41,13 +41,13 @@ public class GameSessionMapperTests
             Id = 1
         };
 
-        var command = new Command
+        ICommand command = new Command
         {
             Id = Guid.NewGuid()
         };
 
         _gameSession.CelestialObjects.Add(1, celestialObject);
-        _gameSession.Commands.Add(command.Id, command);
+        _gameSession.Commands.TryAdd(command.Id, command);
 
         // Act
         var result = GameSessionMapper.ToDto(_mockSessionContext.Object);
@@ -142,18 +142,18 @@ public class GameSessionMapperTests
     public void ToDto_Should_Map_Multiple_Commands()
     {
         // Arrange
-        var command1 = new Command
+        ICommand command1 = new Command
         {
             Id = Guid.NewGuid()
         };
 
-        var command2 = new Command
+        ICommand command2 = new Command
         {
             Id = Guid.NewGuid()
         };
 
-        _gameSession.Commands.Add(command1.Id, command1);
-        _gameSession.Commands.Add(command2.Id, command2);
+        _gameSession.Commands.TryAdd(command1.Id, command1);
+        _gameSession.Commands.TryAdd(command2.Id, command2);
 
         // Act
         var result = GameSessionMapper.ToDto(_mockSessionContext.Object);

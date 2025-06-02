@@ -5,16 +5,16 @@ namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 public partial class ScreenTacticalMap : Form
 {
     private readonly SKControl _skControl;
-    private GameManager _gameManager;
+    private IGameManager _gameManager;
     private readonly IScreensService _screensService;
     private bool isDrawInProcess = false;
     private GameSessionDto _gameSessionDto;
 
-    public ScreenTacticalMap(GameManager gameManager, IScreensService screensService)
+    public ScreenTacticalMap(IGameManager gameManager, IScreensService screensService)
     {
         InitializeComponent();
 
-        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(GameManager));
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
         _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
 
         _gameManager.OnUpdateGameData += UpdateGameData;

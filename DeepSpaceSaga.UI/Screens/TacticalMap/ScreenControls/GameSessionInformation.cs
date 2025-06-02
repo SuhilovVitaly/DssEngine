@@ -4,7 +4,7 @@ namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class GameSessionInformation : ControlWindow
 {
-    private GameManager _gameManager;
+    private IGameManager _gameManager;
     private bool _isInitialized;
 
     public GameSessionInformation()
@@ -25,7 +25,7 @@ public partial class GameSessionInformation : ControlWindow
 
         try
         {
-            _gameManager = Program.ServiceProvider?.GetService<GameManager>();
+            _gameManager = Program.ServiceProvider?.GetService<IGameManager>();
             if (_gameManager != null)
             {
                 _gameManager.OnUpdateGameData += UpdateGameData;

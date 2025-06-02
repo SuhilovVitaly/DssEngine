@@ -25,10 +25,16 @@ internal static class Program
         var configFile = new FileInfo("log4net.config");
         log4net.Config.XmlConfigurator.Configure(winFormRepository, configFile);
 
+        // Configure log4net for Controller project
+        var controllerRepository = LogManager.CreateRepository(GeneralSettings.ControllerLoggerRepository);
+        var controllerConfigFile = new FileInfo("DeepSpaceSaga.Controller/log4net.config.controller");
+        if (!controllerConfigFile.Exists) controllerConfigFile = new FileInfo("log4net.config");
+        log4net.Config.XmlConfigurator.Configure(controllerRepository, controllerConfigFile);
+
         // Configure log4net for Server project
         var serverRepository = LogManager.CreateRepository(GeneralSettings.ServerLoggerRepository);
-        var serverConfigFile = new FileInfo("DeepSpaceSaga.Server/log4net.config");
-        if (!serverConfigFile.Exists) serverConfigFile = new FileInfo("log4net.config.server");
+        var serverConfigFile = new FileInfo("DeepSpaceSaga.Server/log4net.config.server");
+        if (!serverConfigFile.Exists) serverConfigFile = new FileInfo("log4net.config");
         log4net.Config.XmlConfigurator.Configure(serverRepository, serverConfigFile);
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");

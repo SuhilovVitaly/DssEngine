@@ -6,7 +6,7 @@ public partial class GameSpeedControl : UserControl
 {
     private int _lastGameSpeed = 1;
     private bool _lastGameIsPaused = true;
-    private GameManager _gameManager;
+    private IGameManager _gameManager;
     public GameSpeedControl()
     {
         InitializeComponent();
@@ -16,7 +16,7 @@ public partial class GameSpeedControl : UserControl
     {
         if(_gameManager is null)
         {
-            _gameManager = Program.ServiceProvider?.GetService<GameManager>() ?? throw new InvalidOperationException("Failed to resolve GameManager");
+            _gameManager = Program.ServiceProvider?.GetService<IGameManager>() ?? throw new InvalidOperationException("Failed to resolve GameManager");
         }
 
         CrossThreadExtensions.PerformSafely(this, RereshControls, session);

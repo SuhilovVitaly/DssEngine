@@ -1,16 +1,11 @@
-namespace DeepSpaceSaga.UI.Controller;
+namespace DeepSpaceSaga.UI.Controller.Screens;
 
 /// <summary>
 /// Controller for handling Game Menu business logic
 /// </summary>
-public class GameMenuController : IGameMenuController
+public class GameMenuController(IGameManager gameManager) : IGameMenuController
 {
-    private readonly IGameManager _gameManager;
-
-    public GameMenuController(IGameManager gameManager)
-    {
-        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
-    }
+    private readonly IGameManager _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
 
     public async Task ResumeGameAsync()
     {

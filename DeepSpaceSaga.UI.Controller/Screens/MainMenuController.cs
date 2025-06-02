@@ -1,19 +1,16 @@
-using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Server.Generation;
-
-namespace DeepSpaceSaga.UI.Controller;
+namespace DeepSpaceSaga.UI.Controller.Screens;
 
 /// <summary>
 /// Controller for Main Menu screen handling business logic and coordination
 /// </summary>
 public class MainMenuController : IMainMenuController
 {
-    private readonly IGameServer _gameServer;
+    //private readonly IGameServer _gameServer;
     private readonly IGameManager _gameManager;
     
     public MainMenuController(IGameServer gameServer, IGameManager gameManager)
     {
-        _gameServer = gameServer ?? throw new ArgumentNullException(nameof(gameServer));
+        //_gameServer = gameServer ?? throw new ArgumentNullException(nameof(gameServer));
         _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
     }
 
@@ -115,17 +112,15 @@ public class MainMenuController : IMainMenuController
     /// <summary>
     /// Gets game information for display
     /// </summary>
-    public async Task<GameInfoModel> GetGameInfoAsync()
+    public GameInfoModel GetGameInfo()
     {
         try
-        {
-            var isLoadAvailable = await IsLoadGameAvailableAsync();
-            
+        {            
             return new GameInfoModel(
                 gameTitle: "Deep Space Saga",
                 versionInfo: "Version 1.0.0",
-                isLoadGameEnabled: isLoadAvailable,
-                statusMessage: isLoadAvailable ? "Saved games found" : "No saved games available"
+                isLoadGameEnabled: false,
+                statusMessage: false ? "Saved games found" : "No saved games available"
             );
         }
         catch (Exception ex)

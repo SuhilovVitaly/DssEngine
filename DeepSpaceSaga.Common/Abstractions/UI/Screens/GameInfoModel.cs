@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.UI.Controller.Models;
+namespace DeepSpaceSaga.Common.Abstractions.UI.Screens;
 
 /// <summary>
 /// Model containing game information for display purposes

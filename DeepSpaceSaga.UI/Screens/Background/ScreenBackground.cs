@@ -126,8 +126,16 @@ public partial class ScreenBackground : Form
         {
             // Show existing form and bring to front
             existingForm.Visible = true;
-            existingForm.BringToFront();
-            existingForm.Focus();
+            try
+            {
+                existingForm.BringToFront();
+                existingForm.Focus();
+            }
+            catch (Exception ex)
+            {
+                // Log error but continue execution
+                Console.WriteLine($"[ScreenBackground] Error bringing existing form to front: {ex.Message}");
+            }
             return;
         }
 
@@ -144,7 +152,16 @@ public partial class ScreenBackground : Form
 
         Controls.Add(childForm);
         childForm.Show();
-        childForm.BringToFront();
-        childForm.Focus();
+        
+        try
+        {
+            childForm.BringToFront();
+            childForm.Focus();
+        }
+        catch (Exception ex)
+        {
+            // Log error but continue execution
+            Console.WriteLine($"[ScreenBackground] Error bringing new form to front: {ex.Message}");
+        }
     }
 }

@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.UI.Controller.Abstractions;
+namespace DeepSpaceSaga.Common.Abstractions.UI.Screens;
 
 /// <summary>
 /// Interface for Main Menu Controller handling business logic and coordination
@@ -33,5 +33,5 @@ public interface IMainMenuController
     /// Gets game information for display
     /// </summary>
     /// <returns>Game information model</returns>
-    Task<GameInfoModel> GetGameInfoAsync();
+    GameInfoModel GetGameInfo();
 } 

@@ -1,6 +1,8 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 using DeepSpaceSaga.Common.Abstractions.Session;
+using DeepSpaceSaga.Common.Abstractions.UI;
+using DeepSpaceSaga.UI.Rendering.Tools;
 
 namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 

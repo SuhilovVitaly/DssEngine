@@ -1,4 +1,5 @@
 using DeepSpaceSaga.Common.Tools;
+using DeepSpaceSaga.Common.Abstractions.UI;
 
 namespace DeepSpaceSaga.Common.Abstractions.Services;
 
@@ -11,6 +12,31 @@ public interface IGameManager
     /// Event fired when game data is updated
     /// </summary>
     event Action<GameSessionDto>? OnUpdateGameData;
+
+    /// <summary>
+    /// Generation tool for creating game content
+    /// </summary>
+    IGenerationTool GenerationTool { get; set; }
+
+    /// <summary>
+    /// Screens service for managing UI screens
+    /// </summary>
+    IScreensService Screens { get; set; }
+
+    /// <summary>
+    /// Screen information and parameters
+    /// </summary>
+    IScreenInfo ScreenInfo { get; set; }
+
+    /// <summary>
+    /// Outer space service for space-related operations
+    /// </summary>
+    IOuterSpaceService OuterSpace { get; set; }
+
+    /// <summary>
+    /// Current mouse position on tactical map
+    /// </summary>
+    SpaceMapPoint TacticalMapMousePosition { get; }
 
     /// <summary>
     /// Sets the game speed
@@ -48,5 +74,22 @@ public interface IGameManager
     /// </summary>
     void ShowMainMenuScreen();
 
-    IGenerationTool GenerationTool { get; set; }
+    /// <summary>
+    /// Handles mouse movement on tactical map
+    /// </summary>
+    /// <param name="coordinatesGame">Game coordinates</param>
+    /// <param name="coordinatesScreen">Screen coordinates</param>
+    void TacticalMapMouseMove(SpaceMapPoint coordinatesGame, SpaceMapPoint coordinatesScreen);
+
+    /// <summary>
+    /// Handles mouse click on tactical map
+    /// </summary>
+    /// <param name="coordinates">Click coordinates</param>
+    void TacticalMapMouseClick(SpaceMapPoint coordinates);
+
+    /// <summary>
+    /// Handles left mouse click on tactical map
+    /// </summary>
+    /// <param name="mouseLocation">Mouse location</param>
+    void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation);
 } 

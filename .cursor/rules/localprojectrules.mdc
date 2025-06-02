@@ -4,3 +4,5 @@ globs:
 alwaysApply: false
 ---
 All usings should by in file GlobalUsings.cs in root every project. All locals usings should be deleted
+
+When user asks to "read all rules" or "прочти все правила", always first search for and read the .ai-instructions.md file in the project before responding with the rules summary.

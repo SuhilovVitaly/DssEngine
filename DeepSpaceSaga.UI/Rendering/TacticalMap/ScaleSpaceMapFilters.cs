@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.Common.Abstractions.UI;
+
+namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public static class ScaleSpaceMapFilters
 {

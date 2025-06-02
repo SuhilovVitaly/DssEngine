@@ -1,19 +1,25 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap;
+﻿using DeepSpaceSaga.UI.Controller.Services;
+
+namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 
 public partial class ScreenTacticalMap : Form
 {
     private readonly SKControl _skControl;
-    private GameManager _gameManager;
+    private IGameManager _gameManager;
     private readonly IScreensService _screensService;
     private bool isDrawInProcess = false;
     private GameSessionDto _gameSessionDto;
 
-    public ScreenTacticalMap(GameManager gameManager, IScreensService screensService)
+    public ScreenTacticalMap(IGameManager gameManager, IScreensService screensService)
     {
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
+        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+
         InitializeComponent();
 
-        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(GameManager));
-        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+        // Initialize dependencies for child controls
+        sessionInformationControl.GameManager = _gameManager;
+
 
         _gameManager.OnUpdateGameData += UpdateGameData;
         _gameManager.OnUpdateGameData += ControlGameSpeed.UpdateGameData;

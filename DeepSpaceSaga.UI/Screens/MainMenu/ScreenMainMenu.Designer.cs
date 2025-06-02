@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.UI.Screens.GameMenu
+﻿namespace DeepSpaceSaga.UI.Screens.MainMenu
 {
     partial class ScreenMainMenu
     {

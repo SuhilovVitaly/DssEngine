@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.UI.Render.Tools;
+﻿using DeepSpaceSaga.Common.Abstractions.UI;
+using DeepSpaceSaga.Common.Geometry;
+
+namespace DeepSpaceSaga.UI.Rendering.Tools;
 
 public class UiTools
 {
@@ -40,7 +43,7 @@ public class UiTools
         return new SpaceMapPoint(relativeX, relativeY);
     }
 
-    internal static SpaceMapPoint ToScreenCoordinates(IScreenInfo screenInfo, double positionX, double positionY)
+    public static SpaceMapPoint ToScreenCoordinates(IScreenInfo screenInfo, float positionX, float positionY)
     {
         return ToScreenCoordinates(screenInfo, new SpaceMapPoint((float)positionX, (float)positionY));
     }

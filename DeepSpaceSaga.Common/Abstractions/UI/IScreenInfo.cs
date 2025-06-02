@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Geometry;
-using SkiaSharp;
-
-namespace DeepSpaceSaga.UI.Rendering.Abstractions;
+﻿namespace DeepSpaceSaga.Common.Abstractions.UI;
 
 public interface IScreenInfo
 {

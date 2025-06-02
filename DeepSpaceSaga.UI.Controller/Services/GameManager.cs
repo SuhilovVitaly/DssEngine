@@ -1,4 +1,4 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {
@@ -11,14 +11,15 @@ public class GameManager : IGameManager
 
     private readonly IGameServer _gameServer;
 
-    public GameManager(IGameServer gameServer, IScreensService screenManager, IGenerationTool generationTool, IOuterSpaceService outerSpace) 
+    public GameManager(IGameServer gameServer, IScreensService screenManager, IGenerationTool generationTool, 
+        IOuterSpaceService outerSpace, IScreenResolution screenResolution) 
     {
         _gameServer = gameServer;
 
         _gameServer.OnTurnExecute += UpdateGameData;
 
         Screens = screenManager;
-        ScreenInfo = new ScreenParameters();
+        ScreenInfo = new ScreenParameters(screenResolution);
         GenerationTool = generationTool;
         OuterSpace = outerSpace;
     }

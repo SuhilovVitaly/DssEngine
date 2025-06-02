@@ -1,5 +1,7 @@
-﻿using DeepSpaceSaga.UI.Render.Tools;
+﻿using DeepSpaceSaga.Common.Abstractions.UI;
+using DeepSpaceSaga.UI.Render.Tools;
 using DeepSpaceSaga.Common.Geometry;
+using DeepSpaceSaga.UI.Rendering.Tools;
 
 namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 

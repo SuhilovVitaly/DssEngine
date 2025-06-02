@@ -1,12 +1,14 @@
 ﻿using System.Windows.Forms;
 using DeepSpaceSaga.Common.Extensions;
+using DeepSpaceSaga.UI.Controller.Services;
+using DeepSpaceSaga.UI.Rendering.Tools;
 using SkiaSharp.Views.Desktop;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class GameTacticalMap : UserControl
 {
-    private GameManager _gameManager;
+    private IGameManager _gameManager;
     private bool _isInitialized;
     private readonly SKControl _skControl;
     private GameSessionDto _sessionDto;
@@ -51,7 +53,7 @@ public partial class GameTacticalMap : UserControl
 
         try
         {
-            _gameManager = Program.ServiceProvider?.GetService<GameManager>();
+            _gameManager = Program.ServiceProvider?.GetService<IGameManager>();
             if (_gameManager != null)
             {
                 _gameManager.OnUpdateGameData += UpdateGameData;

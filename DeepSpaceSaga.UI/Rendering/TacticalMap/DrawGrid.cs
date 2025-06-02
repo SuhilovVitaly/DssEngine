@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
+﻿using DeepSpaceSaga.Common.Abstractions.UI;
+using DeepSpaceSaga.UI.Rendering.Tools;
+
+namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 
 public class DrawGrid
 {

@@ -2,11 +2,11 @@ namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class CommandMapper
 {
-    public static CommandDto ToDto(Command command)
+    public static CommandDto ToDto(ICommand command)
     {
         return new CommandDto
         {
-            CommandId = command.CommandId,
+            CommandId = command.Id,
         };
     }
 }

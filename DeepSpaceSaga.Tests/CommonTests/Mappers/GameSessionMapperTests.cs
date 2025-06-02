@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+
 namespace DeepSpaceSaga.Tests.CommonTests.Mappers;
 
 public class GameSessionMapperTests
@@ -17,7 +19,7 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             CelestialObjects = new Dictionary<int, ICelestialObject>(),
-            Commands = new Dictionary<Guid, Command>()
+            Commands = new Dictionary<Guid, ICommand>()
         };
 
         _mockSessionContext.Setup(x => x.SessionInfo).Returns(_mockSessionInfo.Object);
@@ -41,11 +43,11 @@ public class GameSessionMapperTests
 
         var command = new Command
         {
-            CommandId = Guid.NewGuid()
+            Id = Guid.NewGuid()
         };
 
         _gameSession.CelestialObjects.Add(1, celestialObject);
-        _gameSession.Commands.Add(command.CommandId, command);
+        _gameSession.Commands.Add(command.Id, command);
 
         // Act
         var result = GameSessionMapper.ToDto(_mockSessionContext.Object);
@@ -58,7 +60,7 @@ public class GameSessionMapperTests
         result.Commands.Should().HaveCount(1);
         
         result.CelestialObjects.Should().ContainKey(1);
-        result.Commands.Should().ContainKey(command.CommandId);
+        result.Commands.Should().ContainKey(command.Id);
     }
 
     [Fact]
@@ -142,24 +144,24 @@ public class GameSessionMapperTests
         // Arrange
         var command1 = new Command
         {
-            CommandId = Guid.NewGuid()
+            Id = Guid.NewGuid()
         };
 
         var command2 = new Command
         {
-            CommandId = Guid.NewGuid()
+            Id = Guid.NewGuid()
         };
 
-        _gameSession.Commands.Add(command1.CommandId, command1);
-        _gameSession.Commands.Add(command2.CommandId, command2);
+        _gameSession.Commands.Add(command1.Id, command1);
+        _gameSession.Commands.Add(command2.Id, command2);
 
         // Act
         var result = GameSessionMapper.ToDto(_mockSessionContext.Object);
 
         // Assert
         result.Commands.Should().HaveCount(2);
-        result.Commands.Should().ContainKey(command1.CommandId);
-        result.Commands.Should().ContainKey(command2.CommandId);
+        result.Commands.Should().ContainKey(command1.Id);
+        result.Commands.Should().ContainKey(command2.Id);
     }
 
     [Fact]

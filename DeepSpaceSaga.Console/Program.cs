@@ -4,7 +4,6 @@ using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.Common.Tools;
 using DeepSpaceSaga.Server;
 using DeepSpaceSaga.Server.Generation;
-using DeepSpaceSaga.UI.Controller;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -68,7 +67,7 @@ class Program
        
        var contextDtoBeforeRemoveCommand = _worker.GetSessionContextDto();
 
-       _worker.RemoveCommand(firstCommand.CommandId);
+       _worker.RemoveCommand(firstCommand.Id);
 
        var contextDtoAfterRemoveCommandWithoutDelay = _worker.GetSessionContextDto();
        
@@ -81,7 +80,6 @@ class Program
        return Host.CreateDefaultBuilder()
            .ConfigureServices((_, services) => {
                services.AddCommonServices();
-               services.AddUiControllerServices();
                services.AddServerServices();
            });
    }

@@ -223,8 +223,8 @@ public class LocalGameServerTests
         _sut.AddCommand(command);
 
         // Assert
-        _sessionContext.GameSession.Commands.Should().ContainKey(command.CommandId);
-        _sessionContext.GameSession.Commands[command.CommandId].Should().Be(command);
+        _sessionContext.GameSession.Commands.Should().ContainKey(command.Id);
+        _sessionContext.GameSession.Commands[command.Id].Should().Be(command);
     }
 
     [Fact]
@@ -237,10 +237,10 @@ public class LocalGameServerTests
         _sut.AddCommand(command);
 
         // Act
-        _sut.RemoveCommand(command.CommandId);
+        _sut.RemoveCommand(command.Id);
 
         // Assert
-        _sessionContext.GameSession.Commands.Should().NotContainKey(command.CommandId);
+        _sessionContext.GameSession.Commands.Should().NotContainKey(command.Id);
     }
 
     [Fact]
@@ -288,7 +288,7 @@ public class LocalGameServerTests
         _sessionContext.GameSession.Changed += (s, e) => changeTriggered = true;
 
         // Act
-        _sut.RemoveCommand(command.CommandId);
+        _sut.RemoveCommand(command.Id);
 
         // Assert
         changeTriggered.Should().BeTrue();

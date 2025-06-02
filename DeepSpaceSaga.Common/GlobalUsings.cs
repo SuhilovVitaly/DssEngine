@@ -18,3 +18,4 @@ global using DeepSpaceSaga.Common.Abstractions.Services;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Geometry;
 global using SkiaSharp;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Commands;

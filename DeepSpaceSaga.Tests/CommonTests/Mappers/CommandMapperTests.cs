@@ -7,7 +7,7 @@ public class CommandMapperTests
     {
         // Arrange
         var commandId = Guid.NewGuid();
-        var command = new DeepSpaceSaga.Common.Abstractions.Entities.Command { CommandId = commandId };
+        var command = new DeepSpaceSaga.Common.Abstractions.Entities.Command { Id = commandId };
 
         // Act
         var dto = DeepSpaceSaga.Common.Abstractions.Mappers.CommandMapper.ToDto(command);

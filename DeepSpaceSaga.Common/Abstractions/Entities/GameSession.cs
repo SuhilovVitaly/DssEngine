@@ -1,5 +1,3 @@
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
-
 namespace DeepSpaceSaga.Common.Abstractions.Entities;
 
 public class GameSession
@@ -11,7 +9,7 @@ public class GameSession
 
     public Guid Id { get; set; }
     public Dictionary<int, ICelestialObject> CelestialObjects { get; set; } = new();
-    public Dictionary<Guid, Command> Commands { get; set; } = new();
+    public Dictionary<Guid, ICommand> Commands { get; set; } = new();
     public event EventHandler? Changed;
     
     private readonly object _lock = new();
@@ -39,7 +37,7 @@ public class GameSession
     {
         lock (_lock)
         {
-            Commands.Add(command.CommandId, command);
+            Commands.Add(command.Id, command);
         }
         OnChanged();
     }

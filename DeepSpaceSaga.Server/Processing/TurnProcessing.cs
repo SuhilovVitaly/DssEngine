@@ -7,6 +7,7 @@ public class TurnProcessing : IProcessingService
         try
         {
             new ProcessingLocationsHandler().Execute(sessionContext);     
+            new ProcessingEventInvokerHandler().Execute(sessionContext);
         }
         catch (Exception e)
         {

@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Events;
-
-namespace DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.Commands;
 
 public class BaseGameEvent : IGameActionEvent
 {

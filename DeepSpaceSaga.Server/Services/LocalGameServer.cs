@@ -25,6 +25,10 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
 
     public async Task AddCommand(ICommand command)
     {
+        if (command.IsPauseProcessed)
+        {
+            SessionPause();
+        }
         await _sessionContext.GameSession.AddCommand(command);
     }
 

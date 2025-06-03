@@ -3,7 +3,7 @@ namespace DeepSpaceSaga.Server.Tests.Services;
 public class TurnSchedulerServiceTests : IDisposable
 {
     private readonly TurnSchedulerService _sut;
-    private readonly ConcurrentQueue<(ISessionInfoService State, CalculationType Type)> _calculations;
+    private readonly ConcurrentQueue<CalculationType> _calculations;
     private readonly ISessionContextService _sessionContext;
     private readonly ISessionInfoService _sessionInfo;
     private readonly Mock<IMetricsService> _metricsMock;
@@ -20,7 +20,7 @@ public class TurnSchedulerServiceTests : IDisposable
         
         _sessionContext = new SessionContextService(_sessionInfo, _metricsMock.Object, generationToolMock.Object);
         _sut = new TurnSchedulerService(_sessionContext, tickInterval: 100); // Larger interval for testing
-        _calculations = new ConcurrentQueue<(ISessionInfoService, CalculationType)>();
+        _calculations = new ConcurrentQueue<CalculationType>();
     }
 
     [Fact]
@@ -58,8 +58,8 @@ public class TurnSchedulerServiceTests : IDisposable
     public async Task Start_ExecutesTickCalculations()
     {
         // Arrange
-        void OnCalculation(ISessionInfoService state, CalculationType type) =>
-            _calculations.Enqueue((state, type));
+        void OnCalculation(CalculationType type) =>
+            _calculations.Enqueue(type);
 
         // Act
         _sut.Start(OnCalculation);
@@ -68,15 +68,15 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Assert
         _calculations.Count.Should().BeGreaterThanOrEqualTo(2);
-        _calculations.All(c => c.Type == CalculationType.Tick).Should().BeTrue();
+        _calculations.All(c => c == CalculationType.Tick).Should().BeTrue();
     }
 
     [Fact]
     public async Task Start_ExecutesTurnCalculation_AfterTenTicks()
     {
         // Arrange
-        void OnCalculation(ISessionInfoService state, CalculationType type) =>
-            _calculations.Enqueue((state, type));
+        void OnCalculation(CalculationType type) =>
+            _calculations.Enqueue(type);
 
         // Act
         _sut.Start(OnCalculation);
@@ -84,9 +84,9 @@ public class TurnSchedulerServiceTests : IDisposable
         _sut.Stop();
 
         // Assert
-        _calculations.Should().Contain(c => c.Type == CalculationType.Turn);
-        var turnCalculation = _calculations.First(c => c.Type == CalculationType.Turn);
-        turnCalculation.State.TurnCounter.Should().Be(1);
+        _calculations.Should().Contain(c => c == CalculationType.Turn);
+        var turnCalculation = _calculations.First(c => c == CalculationType.Turn);
+        turnCalculation.Should().Be(CalculationType.Turn);
     }
 
     [Fact]
@@ -94,7 +94,7 @@ public class TurnSchedulerServiceTests : IDisposable
     {
         // Arrange
         var calculationCount = 0;
-        void OnCalculation(ISessionInfoService state, CalculationType type) =>
+        void OnCalculation(CalculationType type) =>
             Interlocked.Increment(ref calculationCount);
 
         // Act
@@ -140,7 +140,7 @@ public class TurnSchedulerServiceTests : IDisposable
     {
         // Arrange
         var calculationCount = 0;
-        void OnCalculation(ISessionInfoService state, CalculationType type) =>
+        void OnCalculation(CalculationType type) =>
             Interlocked.Increment(ref calculationCount);
 
         // Act
@@ -161,7 +161,7 @@ public class TurnSchedulerServiceTests : IDisposable
     public void Resume_WhenDisposed_ThrowsObjectDisposedException()
     {
         // Arrange
-        _sut.Start((state, type) => { });
+        _sut.Start(type => { });
         _sut.Stop();
         _sut.Dispose();
 
@@ -187,22 +187,22 @@ public class TurnSchedulerServiceTests : IDisposable
     public async Task Resume_PreservesExecutorState()
     {
         // Arrange
-        ISessionInfoService? lastState = null;
-        void OnCalculation(ISessionInfoService state, CalculationType type) => lastState = state;
+        CalculationType? lastType = null;
+        void OnCalculation(CalculationType type) => lastType = type;
 
         // Act
         _sut.Start(OnCalculation);
         await Task.Delay(350); // Wait for some ticks
-        var turnCounterBeforeStop = lastState?.TurnCounter ?? 0;
-        var tickCounterBeforeStop = lastState?.TickCounter ?? 0;
+        var turnCounterBeforeStop = _sessionInfo.TurnCounter;
+        var tickCounterBeforeStop = _sessionInfo.TickCounter;
         _sut.Stop();
         _sut.Resume();
         await Task.Delay(200); // Wait for more ticks
 
         // Assert
-        lastState.Should().NotBeNull();
-        lastState!.TurnCounter.Should().BeGreaterThanOrEqualTo(turnCounterBeforeStop);
-        lastState.TickCounter.Should().BeGreaterThan(tickCounterBeforeStop);
+        lastType.Should().NotBeNull();
+        _sessionInfo.TurnCounter.Should().BeGreaterThanOrEqualTo(turnCounterBeforeStop);
+        _sessionInfo.TickCounter.Should().BeGreaterThan(tickCounterBeforeStop);
     }
 
     [Fact]
@@ -210,7 +210,7 @@ public class TurnSchedulerServiceTests : IDisposable
     {
         // Arrange
         var cycles = new List<CalculationType>();
-        void OnCalculation(ISessionInfoService state, CalculationType type) => cycles.Add(type);
+        void OnCalculation(CalculationType type) => cycles.Add(type);
 
         // Act
         _sut.Start(OnCalculation);
@@ -233,11 +233,11 @@ public class TurnSchedulerServiceTests : IDisposable
         // Arrange
         _sessionInfo.IsPaused = false;
         var calculations = 0;
-        void OnCalculation(ISessionInfoService state, CalculationType type)
+        void OnCalculation(CalculationType type)
         {
             calculations++;
             if (calculations == 1)
-                state.IsPaused.Should().BeFalse();
+                _sessionInfo.IsPaused.Should().BeFalse();
         }
 
         // Act
@@ -253,10 +253,10 @@ public class TurnSchedulerServiceTests : IDisposable
     public async Task Executor_HandlesMultipleThreadsCorrectly()
     {
         // Arrange
-        var calculations = new ConcurrentBag<(ISessionInfoService, CalculationType)>();
-        void OnCalculation(ISessionInfoService state, CalculationType type)
+        var calculations = new ConcurrentBag<CalculationType>();
+        void OnCalculation(CalculationType type)
         {
-            calculations.Add((state, type));
+            calculations.Add(type);
             Thread.Sleep(10); // Simulate some work
         }
 
@@ -267,8 +267,8 @@ public class TurnSchedulerServiceTests : IDisposable
 
         // Assert
         calculations.Should().NotBeEmpty();
-        var states = calculations.Select(c => c.Item1).Distinct().ToList();
-        states.Should().HaveCountGreaterThanOrEqualTo(1); // Should have at least one unique state
+        var distinctTypes = calculations.Distinct().ToList();
+        distinctTypes.Should().HaveCountGreaterThanOrEqualTo(1); // Should have at least one type
     }
 
     [Fact]
@@ -278,7 +278,7 @@ public class TurnSchedulerServiceTests : IDisposable
         _sut.Dispose();
 
         // Act
-        var action = () => _sut.Start((state, type) => { });
+        var action = () => _sut.Start(type => { });
 
         // Assert
         action.Should().Throw<ObjectDisposedException>();
@@ -289,7 +289,7 @@ public class TurnSchedulerServiceTests : IDisposable
     {
         // Arrange
         var calculations = new List<CalculationType>();
-        void OnCalculation(ISessionInfoService state, CalculationType type)
+        void OnCalculation(CalculationType type)
         {
             calculations.Add(type);
         }
@@ -313,10 +313,10 @@ public class TurnSchedulerServiceTests : IDisposable
     public async Task CycleUpdate_ResetsCountersCorrectly()
     {
         // Arrange
-        var states = new List<ISessionInfoService>();
-        void OnCalculation(ISessionInfoService state, CalculationType type)
+        var calculationsReceived = 0;
+        void OnCalculation(CalculationType type)
         {
-            states.Add(state);
+            calculationsReceived++;
         }
 
         // Act
@@ -325,12 +325,11 @@ public class TurnSchedulerServiceTests : IDisposable
         _sut.Stop();
 
         // Assert
-        var lastState = states.LastOrDefault();
-        lastState.Should().NotBeNull();
+        calculationsReceived.Should().BeGreaterThan(0);
         // Check that counters are being tracked
-        lastState!.TickCounter.Should().BeGreaterThanOrEqualTo(0);
-        lastState.TurnCounter.Should().BeGreaterThanOrEqualTo(0);
-        lastState.CycleCounter.Should().BeGreaterThanOrEqualTo(0);
+        _sessionInfo.TickCounter.Should().BeGreaterThanOrEqualTo(0);
+        _sessionInfo.TurnCounter.Should().BeGreaterThanOrEqualTo(0);
+        _sessionInfo.CycleCounter.Should().BeGreaterThanOrEqualTo(0);
     }
 
     [Fact]
@@ -338,14 +337,14 @@ public class TurnSchedulerServiceTests : IDisposable
     {
         // Arrange
         var accessCount = 0;
-        void OnCalculation(ISessionInfoService state, CalculationType type)
+        void OnCalculation(CalculationType type)
         {
             Interlocked.Increment(ref accessCount);
             // Simulate concurrent access
-            var temp = state.TickCounter;
+            var temp = _sessionInfo.TickCounter;
             Thread.Sleep(1);
-            var temp2 = state.TurnCounter;
-            var temp3 = state.CycleCounter;
+            var temp2 = _sessionInfo.TurnCounter;
+            var temp3 = _sessionInfo.CycleCounter;
         }
 
         // Act

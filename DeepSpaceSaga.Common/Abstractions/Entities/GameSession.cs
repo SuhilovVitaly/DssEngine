@@ -2,15 +2,10 @@ namespace DeepSpaceSaga.Common.Abstractions.Entities;
 
 public class GameSession
 {
-    public GameSession()
-    {
-        Id = Guid.NewGuid();
-    }
-
-    public Guid Id { get; set; }
-    public Dictionary<int, ICelestialObject> CelestialObjects { get; set; } = new();
+    public Guid Id { get; init; } = Guid.NewGuid();
+    public ConcurrentDictionary<int, ICelestialObject> CelestialObjects { get; set; } = new();
     public ConcurrentDictionary<Guid, ICommand> Commands { get; set; } = new();
-    public ConcurrentDictionary<long, IGameActionEvent> Events { get; set; } = new();
+    public ConcurrentDictionary<long, IGameActionEvent> ActiveEvents { get; set; } = new();
     public ConcurrentDictionary<long, long> FinishedEvents { get; set; } = new();
     public event EventHandler? Changed;
 

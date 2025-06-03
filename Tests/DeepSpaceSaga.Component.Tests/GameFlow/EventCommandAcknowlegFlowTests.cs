@@ -17,10 +17,10 @@ public class EventCommandAcknowlegFlowTests
 
         var gameServer = new LocalGameServer(new SchedulerService(sessionContext), sessionContext, new TurnProcessing());
         
-        gameServer.TurnExecution(sessionInfo, CalculationType.Turn);
+        gameServer.TurnExecution(CalculationType.Turn);
         var sessionContextDtoTurn0 = gameServer.GetSessionContextDto();
         
-        gameServer.TurnExecution(sessionInfo, CalculationType.Turn);
+        gameServer.TurnExecution(CalculationType.Turn);
         var sessionContextDtoTurn1 = gameServer.GetSessionContextDto();
 
         var gameEvent = sessionContextDtoTurn1.GameActionEvents.FirstOrDefault().Value;
@@ -33,7 +33,7 @@ public class EventCommandAcknowlegFlowTests
             IsPauseProcessed = true
         });
         
-        gameServer.TurnExecution(sessionInfo, CalculationType.Turn);
+        gameServer.TurnExecution(CalculationType.Turn);
         var sessionContextDtoTurn2 = gameServer.GetSessionContextDto();
 
         // Act & Assert

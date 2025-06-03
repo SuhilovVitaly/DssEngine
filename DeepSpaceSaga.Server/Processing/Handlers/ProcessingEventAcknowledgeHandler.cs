@@ -22,7 +22,7 @@ public class ProcessingEventAcknowledgeHandler
             {
                 sessionContext.GameSession.FinishedEvents.TryAdd(acknowledgedEvent.Key, acknowledgedEvent.Key);
 
-                sessionContext.GameSession.Events.TryRemove(acknowledgedEvent.Key, out _);
+                sessionContext.GameSession.ActiveEvents.TryRemove(acknowledgedEvent.Key, out _);
 
                 sessionContext.GameSession.Commands.TryRemove(acknowledgedEvent.Value.Id, out _);
             }

@@ -11,5 +11,4 @@ public interface IGameServer
     void SessionStop();
     void SetGameSpeed(int speed);
     Task AddCommand(ICommand command);
-    void RemoveCommand(Guid commandId);
 }

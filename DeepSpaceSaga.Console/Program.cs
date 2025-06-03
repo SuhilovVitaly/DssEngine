@@ -67,8 +67,6 @@ class Program
        
        var contextDtoBeforeRemoveCommand = _worker.GetSessionContextDto();
 
-       _worker.RemoveCommand(firstCommand.Id);
-
        var contextDtoAfterRemoveCommandWithoutDelay = _worker.GetSessionContextDto();
        
        System.Console.WriteLine("Hello, World!");

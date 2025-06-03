@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
-
-namespace DeepSpaceSaga.Server.Services;
+﻿namespace DeepSpaceSaga.Server.Services;
 
 public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext, IProcessingService processingService) : IGameServer
 {
@@ -14,11 +12,11 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
     private readonly ISessionContextService _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
     private readonly IProcessingService _processingService = processingService ?? throw new ArgumentNullException(nameof(processingService));
 
-    public void TurnExecution(ISessionInfoService info, CalculationType type)
+    public void TurnExecution(CalculationType type)
     {
-        Logger?.Debug($"GameSessionMap {info.ToString()}");
+        Logger?.Debug($"GameSessionMap {_sessionContext.SessionInfo.ToString()}");
 
-        _gameSessionDto = SessionTurnFinalization(info, _processingService.Process(_sessionContext));
+        _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo, _processingService.Process(_sessionContext));
         
         OnTurnExecute?.Invoke(_gameSessionDto);
     }
@@ -30,11 +28,6 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
             SessionPause();
         }
         await _sessionContext.GameSession.AddCommand(command);
-    }
-
-    public void RemoveCommand(Guid commandId)
-    {
-        _sessionContext.GameSession.RemoveCommand(commandId);
     }
     
     public void SetGameSpeed(int speed)
@@ -51,7 +44,7 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
 
     private GameSessionDto SessionTurnFinalization(ISessionInfoService sessionInfo, GameSessionDto sessionDto)
     {
-        var turn = sessionInfo.IncrementTurn(); 
+        sessionInfo.IncrementTurn(); 
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
         Console.WriteLine($"[SessionTurnFinalization] Finish turn processing for session {sessionDto.Id} Turn: {sessionDto.State.Turn}");
 

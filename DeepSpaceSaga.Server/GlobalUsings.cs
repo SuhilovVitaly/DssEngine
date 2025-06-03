@@ -2,7 +2,7 @@
 global using System;
 global using System.Collections.Generic;
 global using System.Collections.Concurrent;
-global using System.Linq;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
 global using System.Threading.Tasks;
 global using System.IO;
 global using System.Timers;

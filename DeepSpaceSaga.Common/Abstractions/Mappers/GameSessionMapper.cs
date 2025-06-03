@@ -20,7 +20,7 @@ public static class GameSessionMapper
                     kvp => kvp.Key,
                     kvp => CommandMapper.ToDto(kvp.Value));
 
-            gameActionEventsCopy = gameSessionContext.GameSession.Events
+            gameActionEventsCopy = gameSessionContext.GameSession.ActiveEvents
                 .ToDictionary(
                     kvp => kvp.Key,
                     kvp => GameActionEventMapper.ToDto(kvp.Value));

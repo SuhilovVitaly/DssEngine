@@ -15,13 +15,14 @@ public sealed class TurnSchedulerService
     private readonly ISessionContextService _sessionContext;
     private readonly Timer _timer;
 
-    private Action<ISessionInfoService, CalculationType>? _calculationEvent;
+    private Action<CalculationType>? _calculationEvent;
     private bool _isDisposed;
 
     /// <summary>
     /// Initializes a new instance of the Executor
     /// </summary>
     /// <param name="state"></param>
+    /// <param name="sessionContext"></param>
     /// <param name="tickInterval">The interval between ticks in milliseconds</param>
     /// <exception cref="ArgumentException">Thrown when tickInterval is less than 1</exception>
     public TurnSchedulerService(ISessionContextService sessionContext, int tickInterval = 32)
@@ -42,7 +43,7 @@ public sealed class TurnSchedulerService
     /// </summary>
     /// <param name="onTickCalculation">Callback to be executed on each calculation step</param>
     /// <exception cref="ArgumentNullException">Thrown when onTickCalculation is null</exception>
-    public void Start(Action<ISessionInfoService, CalculationType> onTickCalculation)
+    public void Start(Action<CalculationType> onTickCalculation)
     {
         _calculationEvent = onTickCalculation ?? throw new ArgumentNullException(nameof(onTickCalculation));
         _timer.Enabled = true;
@@ -100,7 +101,7 @@ public sealed class TurnSchedulerService
     private void TickCalculation(CalculationType type)
     {
         _sessionContext.SessionInfo.IsCalculationInProgress = true;
-        _calculationEvent?.Invoke(_sessionContext.SessionInfo, type);
+        _calculationEvent?.Invoke(type);
         _sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 

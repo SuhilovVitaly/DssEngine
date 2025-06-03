@@ -17,7 +17,7 @@ public class ProcessingEventInvokerHandler
 
             if(sessionContext.GameSession.FinishedEvents.Keys.Contains(gameActionEvent.Id) == false)
             {
-                sessionContext.GameSession.Events.TryAdd(gameActionEvent.Id, gameActionEvent);
+                sessionContext.GameSession.ActiveEvents.TryAdd(gameActionEvent.Id, gameActionEvent);
             }           
         }        
     }

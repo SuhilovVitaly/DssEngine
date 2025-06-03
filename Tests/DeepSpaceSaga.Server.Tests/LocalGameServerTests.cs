@@ -114,7 +114,7 @@ public class LocalGameServerTests
         _sut.SessionStart(session);
 
         // Act
-        _sut.TurnExecution(_sessionContext.SessionInfo, CalculationType.Turn);
+        _sut.TurnExecution(CalculationType.Turn);
 
         // Assert
         _lastExecutedSession.Should().NotBeNull();
@@ -134,7 +134,7 @@ public class LocalGameServerTests
         _sut.SessionStart(session);
 
         // Act
-        _sut.TurnExecution(_sessionContext.SessionInfo, type);
+        _sut.TurnExecution(type);
 
         // Assert
         _lastExecutedSession.Should().NotBeNull();
@@ -149,7 +149,7 @@ public class LocalGameServerTests
         _sut.SessionStart(session);
 
         // Act
-        _sut.TurnExecution(_sessionContext.SessionInfo, CalculationType.Turn);
+        _sut.TurnExecution(CalculationType.Turn);
         
         // Assert
         _lastExecutedSession.Should().NotBeNull();
@@ -176,7 +176,7 @@ public class LocalGameServerTests
         localGameServer.SessionStart(session);
         
         // Act & Assert
-        var action = () => localGameServer.TurnExecution(sessionInfo, CalculationType.Turn);
+        var action = () => localGameServer.TurnExecution(CalculationType.Turn);
         action.Should().NotThrow();
     }
     
@@ -226,21 +226,6 @@ public class LocalGameServerTests
         _sessionContext.GameSession.Commands[command.Id].Should().Be(command);
     }
 
-    [Fact]
-    public void RemoveCommand_ShouldRemoveCommandFromGameSession()
-    {
-        // Arrange
-        var session = new GameSession();
-        _sut.SessionStart(session);
-        var command = new Command { Id = Guid.NewGuid() };
-        _sut.AddCommand(command);
-        
-        // Act
-        _sut.RemoveCommand(command.Id);
-        
-        // Assert
-        _sessionContext.GameSession.Commands.Should().NotContainKey(command.Id);
-    }
 
     [Fact]
     public void GetSessionContextDto_ShouldReturnCurrentGameSessionDto()
@@ -255,42 +240,6 @@ public class LocalGameServerTests
         // Assert
         result.Should().NotBeNull();
         // The result comes from processing service mock
-    }
-
-    [Fact]
-    public void AddCommand_ShouldTriggerGameSessionChanged()
-    {
-        // Arrange
-        var session = new GameSession();
-        _sut.SessionStart(session);
-        var command = new Command { Id = Guid.NewGuid() };
-        var eventTriggered = false;
-        _sut.OnTurnExecute += _ => eventTriggered = true;
-        
-        // Act
-        _sut.AddCommand(command);
-        _sut.RemoveCommand(command.Id); // Trigger the event since AddCommand doesn't call OnChanged()
-        
-        // Assert
-        eventTriggered.Should().BeTrue();
-    }
-
-    [Fact]
-    public void RemoveCommand_ShouldTriggerGameSessionChanged()
-    {
-        // Arrange
-        var session = new GameSession();
-        _sut.SessionStart(session);
-        var command = new Command { Id = Guid.NewGuid() };
-        _sut.AddCommand(command);
-        var eventTriggered = false;
-        _sut.OnTurnExecute += _ => eventTriggered = true;
-        
-        // Act
-        _sut.RemoveCommand(command.Id);
-        
-        // Assert
-        eventTriggered.Should().BeTrue();
     }
 
     [Fact]
@@ -336,7 +285,7 @@ public class LocalGameServerTests
         _sut.OnTurnExecute += sessionDto => capturedSession = sessionDto;
         
         // Act
-        _sut.TurnExecution(_sessionContext.SessionInfo, CalculationType.Turn);
+        _sut.TurnExecution(CalculationType.Turn);
         
         // Assert
         capturedSession.Should().NotBeNull();
@@ -352,19 +301,6 @@ public class LocalGameServerTests
         // Act & Assert
         var action = () => _sut.SessionStart(null!);
         action.Should().Throw<ArgumentNullException>().WithParameterName("session");
-    }
-
-    [Fact]
-    public void RemoveCommand_WithNonExistentCommandId_ShouldNotThrow()
-    {
-        // Arrange
-        var session = new GameSession();
-        _sut.SessionStart(session);
-        var nonExistentCommandId = Guid.NewGuid();
-        
-        // Act & Assert
-        var action = () => _sut.RemoveCommand(nonExistentCommandId);
-        action.Should().NotThrow();
     }
 
     [Fact]

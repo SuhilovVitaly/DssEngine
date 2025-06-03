@@ -16,7 +16,7 @@ public class GameSessionMapperTests
         _gameSession = new GameSession
         {
             Id = Guid.NewGuid(),
-            CelestialObjects = new Dictionary<int, ICelestialObject>(),
+            CelestialObjects = new ConcurrentDictionary<int, ICelestialObject>(),
             Commands = new ConcurrentDictionary<Guid, ICommand>()
         };
 
@@ -44,7 +44,7 @@ public class GameSessionMapperTests
             Id = Guid.NewGuid()
         };
 
-        _gameSession.CelestialObjects.Add(1, celestialObject);
+        _gameSession.CelestialObjects.TryAdd(1, celestialObject);
         _gameSession.Commands.TryAdd(command.Id, command);
 
         // Act
@@ -93,7 +93,7 @@ public class GameSessionMapperTests
             Id = 1
         };
 
-        _gameSession.CelestialObjects.Add(1, celestialObject);
+        _gameSession.CelestialObjects.TryAdd(1, celestialObject);
 
         // Act
         var result = GameSessionMapper.ToDto(_mockSessionContext.Object);
@@ -124,8 +124,8 @@ public class GameSessionMapperTests
             Id = 2
         };
 
-        _gameSession.CelestialObjects.Add(1, asteroid1);
-        _gameSession.CelestialObjects.Add(2, asteroid2);
+        _gameSession.CelestialObjects.TryAdd(1, asteroid1);
+        _gameSession.CelestialObjects.TryAdd(2, asteroid2);
 
         // Act
         var result = GameSessionMapper.ToDto(_mockSessionContext.Object);
@@ -186,7 +186,7 @@ public class GameSessionMapperTests
             Id = 1
         };
 
-        _gameSession.CelestialObjects.Add(1, celestialObject);
+        _gameSession.CelestialObjects.TryAdd(1, celestialObject);
 
         // Act & Assert
         // This test verifies that the method can be called without throwing exceptions

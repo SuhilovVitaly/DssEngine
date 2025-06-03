@@ -20,7 +20,7 @@ public class ScenarioGenerator
 
         foreach (var celestialObject in celestialObjects)
         {
-            session.CelestialObjects.Add(celestialObject.Id, celestialObject);
+            session.CelestialObjects.TryAdd(celestialObject.Id, celestialObject);
         }
 
         return session;

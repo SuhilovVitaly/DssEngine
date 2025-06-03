@@ -20,7 +20,7 @@ public class SchedulerService(ISessionContextService sessionContext) : ISchedule
         sessionContext.SessionInfo.IsCalculationInProgress = false;
     }
 
-    public void SessionStart(Action<ISessionInfoService, CalculationType> turnExecutionCallBack)
+    public void SessionStart(Action<CalculationType> turnExecutionCallBack)
     {
         if (turnExecutionCallBack == null)
         {

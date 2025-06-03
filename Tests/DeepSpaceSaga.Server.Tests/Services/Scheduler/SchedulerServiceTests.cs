@@ -22,7 +22,7 @@ public class SchedulerServiceTests
     {
         // Arrange
         var callbackCalled = false;
-        Action<ISessionInfoService, CalculationType> callback = (_, _) => callbackCalled = true;
+        Action<CalculationType> callback = (_) => callbackCalled = true;
 
         // Act
         _sut.SessionStart(callback);
@@ -31,7 +31,7 @@ public class SchedulerServiceTests
         _metricsMock.Verify(m => m.Add(MetricsServer.SessionStart, 1), Times.Once);
         // Проверяем, что не выбрасывается исключение и callback можно вызвать
         callbackCalled = false;
-        callback(_sessionInfoMock.Object, CalculationType.Tick);
+        callback(CalculationType.Tick);
         callbackCalled.Should().BeTrue();
     }
 
@@ -62,7 +62,7 @@ public class SchedulerServiceTests
     public void SessionResume_ShouldAddMetricAndResumeScheduler()
     {
         // Arrange
-        Action<ISessionInfoService, CalculationType> callback = (_, _) => { };
+        Action<CalculationType> callback = ( _) => { };
         _sut.SessionStart(callback);
 
         // Act

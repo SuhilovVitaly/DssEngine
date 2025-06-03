@@ -1,14 +1,14 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
 
-namespace DeepSpaceSaga.Server;
+namespace DeepSpaceSaga.Server.Services;
 
 public class LocalGameServer(ISchedulerService schedulerService, ISessionContextService sessionContext, IProcessingService processingService) : IGameServer
 {
     public event Action<GameSessionDto>? OnTurnExecute;
     
-    private GameSessionDto _gameSessionDto = new GameSessionDto();
+    private GameSessionDto _gameSessionDto = new();
 
-    private static readonly ILog Logger = LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
+    private static readonly ILog? Logger = GetLoggerSafe();
     
     private readonly ISchedulerService _flowManager = schedulerService ?? throw new ArgumentNullException(nameof(schedulerService));
     private readonly ISessionContextService _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
@@ -91,5 +91,16 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
         _flowManager.SessionStop();
         RefreshGameSessionDto();
     }
-
+    
+    private static ILog? GetLoggerSafe()
+    {
+        try
+        {
+            return LogManager.GetLogger(Settings.LoggerRepository, typeof(LocalGameServer));
+        }
+        catch
+        {
+            return null; // No logging in tests
+        }
+    }
 }

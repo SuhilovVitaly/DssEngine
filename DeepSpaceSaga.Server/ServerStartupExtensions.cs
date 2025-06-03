@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server;
+﻿using DeepSpaceSaga.Server.Services;
+
+namespace DeepSpaceSaga.Server;
 
 [ExcludeFromCodeCoverage]
 public static class ServerStartupExtensions

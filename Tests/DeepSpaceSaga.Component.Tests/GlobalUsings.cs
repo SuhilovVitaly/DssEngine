@@ -1,0 +1,13 @@
+global using Xunit;
+global using Moq;
+global using DeepSpaceSaga.Common.Abstractions.Entities;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+global using DeepSpaceSaga.Common.Abstractions.Services;
+global using DeepSpaceSaga.Common.Implementation.GameLoop;
+global using DeepSpaceSaga.Common.Tools;
+global using DeepSpaceSaga.Server.Processing;
+global using DeepSpaceSaga.Server.Services;
+global using DeepSpaceSaga.Server.Services.Scheduler;
+global using DeepSpaceSaga.Server.Services.SessionContext;
+global using DeepSpaceSaga.Server.Services.SessionInfo;
+global using FluentAssertions;

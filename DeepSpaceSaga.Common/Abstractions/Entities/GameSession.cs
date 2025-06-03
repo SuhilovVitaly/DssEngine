@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace DeepSpaceSaga.Common.Abstractions.Entities;
 
 public class GameSession
@@ -15,22 +13,6 @@ public class GameSession
     public ConcurrentDictionary<long, IGameActionEvent> Events { get; set; } = new();
     public ConcurrentDictionary<long, long> FinishedEvents { get; set; } = new();
     public event EventHandler? Changed;
-    
-    private readonly object _lock = new();
-    private Guid _sessionId;
-    private int _turn;
-
-    public Guid SessionId
-    {
-        get { lock (_lock) { return _sessionId; } }
-        set { lock (_lock) { _sessionId = value; } }
-    }
-
-    public int Turn
-    {
-        get { lock (_lock) { return _turn; } }
-        set { lock (_lock) { _turn = value; } }
-    }
 
     private void OnChanged()
     {

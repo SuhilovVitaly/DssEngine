@@ -100,4 +100,9 @@ public class LocalGameServer(ISchedulerService schedulerService, ISessionContext
             return null; // No logging in tests
         }
     }
+
+    public Task SaveGame(string saveName)
+    {
+        throw new NotImplementedException();
+    }
 }

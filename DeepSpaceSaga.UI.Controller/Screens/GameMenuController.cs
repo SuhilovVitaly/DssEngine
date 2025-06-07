@@ -15,8 +15,7 @@ public class GameMenuController(IGameManager gameManager) : IGameMenuController
 
     public async Task SaveGameAsync()
     {
-        // Save game logic here  
-        await Task.CompletedTask;
+       await _gameManager.SaveGame("quick.save");
     }
 
     public async Task LoadGameAsync()

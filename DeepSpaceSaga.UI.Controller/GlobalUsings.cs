@@ -14,3 +14,4 @@ global using DeepSpaceSaga.Server.Generation;
 global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens.Presenters;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Commands;

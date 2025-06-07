@@ -26,4 +26,5 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.Characters;
 global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 global using System.Diagnostics;
 global using DeepSpaceSaga.Common.Abstractions.Events;
-global using DeepSpaceSaga.Common.Abstractions.Dto;
+global using DeepSpaceSaga.Common.Tools;
+global using DeepSpaceSaga.Common.Abstractions.UI;

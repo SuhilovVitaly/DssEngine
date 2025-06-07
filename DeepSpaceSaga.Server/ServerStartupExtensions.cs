@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Server.Services;
-
-namespace DeepSpaceSaga.Server;
+﻿namespace DeepSpaceSaga.Server;
 
 [ExcludeFromCodeCoverage]
 public static class ServerStartupExtensions
@@ -13,6 +11,7 @@ public static class ServerStartupExtensions
         services.AddSingleton<ISchedulerService, SchedulerService>();
         services.AddSingleton<ISessionContextService, SessionContextService>();
         services.AddSingleton<ISessionInfoService, SessionInfoService>();
+        services.AddSingleton<ISaveLoadService, SaveLoadService>();
 
         return services;
     }

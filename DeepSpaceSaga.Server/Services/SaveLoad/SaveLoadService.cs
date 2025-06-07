@@ -22,6 +22,9 @@ public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
 
     public void Save(ISessionContextService sessionContext, string saveFileName)
     {
-        throw new NotImplementedException();
+        var snapshot = new GameSnapshot
+        {
+            Session = GameSessionMapper.ToDto(sessionContext),
+        };
     }
 }

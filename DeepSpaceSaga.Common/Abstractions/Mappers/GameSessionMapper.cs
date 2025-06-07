@@ -7,6 +7,7 @@ public static class GameSessionMapper
         Dictionary<int, CelestialObjectDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
         Dictionary<long, GameActionEventDto> gameActionEventsCopy;
+        Dictionary<long, long> finishedEventsCopy;
 
         lock (gameSessionContext)
         {
@@ -24,6 +25,11 @@ public static class GameSessionMapper
                 .ToDictionary(
                     kvp => kvp.Key,
                     kvp => GameActionEventMapper.ToDto(kvp.Value));
+
+            finishedEventsCopy = gameSessionContext.GameSession.FinishedEvents
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value);
         }
 
         return new GameSessionDto
@@ -32,6 +38,7 @@ public static class GameSessionMapper
             State = GameStateMapper.ToDto(gameSessionContext),
             CelestialObjects = celestialObjectsCopy,
             GameActionEvents = gameActionEventsCopy,
+            FinishedEvents = finishedEventsCopy,
             Commands = commandsCopy
         };
     }

@@ -93,4 +93,5 @@ public interface IGameManager
     void CommandExecute(ICommand command);
 
     Task<int> SaveGame(string savename);
+    Task<int> LoadGame(string savename);
 } 

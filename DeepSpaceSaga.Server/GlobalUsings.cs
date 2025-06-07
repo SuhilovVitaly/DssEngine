@@ -29,3 +29,5 @@ global using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 global using DeepSpaceSaga.Common.Implementation.Entities.Events;
 global using DeepSpaceSaga.Server.Services;
 global using DeepSpaceSaga.Server.Services.SaveLoad;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;

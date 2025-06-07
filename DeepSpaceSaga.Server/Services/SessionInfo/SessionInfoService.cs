@@ -7,6 +7,18 @@ public class SessionInfoService : ISessionInfoService
         Id = Guid.NewGuid();
     }
 
+    public SessionInfoService(int cycleCounter, int turnCounter, int tickCounter) : this()
+    {
+        _cycleCounter = cycleCounter;
+        _turnCounter = turnCounter;
+        _tickCounter = tickCounter;
+    }
+
+    public SessionInfoService(int cycleCounter, int turnCounter, int tickCounter, int tickTotal) : this(cycleCounter, turnCounter, tickCounter)
+    {
+        _tickTotal = tickTotal;
+    }
+
     public void Reset()
     {
         Interlocked.Exchange(ref _cycleCounter, 0);

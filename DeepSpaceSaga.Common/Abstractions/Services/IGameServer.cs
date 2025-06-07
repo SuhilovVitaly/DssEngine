@@ -12,4 +12,5 @@ public interface IGameServer
     void SetGameSpeed(int speed);
     Task AddCommand(ICommand command);
     Task SaveGame(string saveName);
+    Task LoadGame(string saveName);
 }

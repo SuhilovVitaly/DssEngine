@@ -31,6 +31,13 @@ public class GameManager : IGameManager
         return 0;
     }
 
+    public async Task<int> LoadGame(string savename)
+    {
+        await _gameServer.LoadGame(savename);
+
+        return 0;
+    }
+
     public void SetGameSpeed(int speed)
     {
         _gameServer.SetGameSpeed(speed);

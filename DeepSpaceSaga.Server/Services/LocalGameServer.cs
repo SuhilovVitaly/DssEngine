@@ -112,4 +112,11 @@ public class LocalGameServer(
 
         return Task.CompletedTask;
     }
+
+    public Task LoadGame(string saveName)
+    {
+        _saveLoadService.Load(saveName);
+
+        return Task.CompletedTask;
+    }
 }

@@ -1,7 +1,27 @@
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class GameSessionMapper
 {
+    public static GameSession ToGameObject(GameSessionDto gameSessionDto)
+    {
+        ConcurrentDictionary<int, ICelestialObject> celestialObjectsCopy;
+
+        lock (gameSessionDto)
+        {
+            celestialObjectsCopy = gameSessionDto.CelestialObjects
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => CelestialObjectMapper.ToGameObject(kvp.Value));
+        }
+
+        return new GameSession
+        {
+            CelestialObjects = celestialObjectsCopy
+        };
+    }
+
     public static GameSessionDto ToDto(ISessionContextService gameSessionContext)
     {
         Dictionary<int, CelestialObjectDto> celestialObjectsCopy;

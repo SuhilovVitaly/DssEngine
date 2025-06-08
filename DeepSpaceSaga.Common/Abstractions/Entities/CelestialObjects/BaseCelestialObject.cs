@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 
-[Serializable]
+
 public class BaseCelestialObject : ICelestialObject
 {
     public int Id { get; set; }

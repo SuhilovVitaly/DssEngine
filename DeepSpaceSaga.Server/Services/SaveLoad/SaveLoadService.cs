@@ -10,7 +10,7 @@ public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
 
-public void DeleteSave(string saveFileName)
+    public void DeleteSave(string saveFileName)
     {
         throw new NotImplementedException();
     }
@@ -36,6 +36,8 @@ public void DeleteSave(string saveFileName)
             new MetricsService(),
             new GenerationTool()
             );
+
+        loadedSessionContext.GameSession = GameSessionMapper.ToGameObject(snapshotAfterLoad.Session);
 
         return loadedSessionContext;
     }

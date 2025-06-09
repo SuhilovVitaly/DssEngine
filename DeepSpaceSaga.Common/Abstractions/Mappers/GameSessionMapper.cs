@@ -10,10 +10,11 @@ public static class GameSessionMapper
 
         lock (gameSessionDto)
         {
-            celestialObjectsCopy = gameSessionDto.CelestialObjects
-                .ToDictionary(
-                    kvp => kvp.Key,
-                    kvp => CelestialObjectMapper.ToGameObject(kvp.Value));
+            celestialObjectsCopy = new ConcurrentDictionary<int, ICelestialObject>(
+                gameSessionDto.CelestialObjects
+                    .ToDictionary(
+                        kvp => kvp.Key,
+                        kvp => CelestialObjectMapper.ToGameObject(kvp.Value)));
         }
 
         return new GameSession

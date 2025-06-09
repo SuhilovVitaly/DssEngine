@@ -115,7 +115,7 @@ public class LocalGameServer(
 
     public Task LoadGame(string saveName)
     {
-        _saveLoadService.Load(saveName);
+        SessionStart(_saveLoadService.Load(saveName).GameSession);
 
         return Task.CompletedTask;
     }

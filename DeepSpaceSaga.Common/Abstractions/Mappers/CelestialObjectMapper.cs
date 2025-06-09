@@ -1,5 +1,6 @@
 using DeepSpaceSaga.Common.Abstractions.Dto;
 using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+using DeepSpaceSaga.Common.Abstractions.Mappers.CelestialObjects;
 
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
@@ -15,7 +16,7 @@ public static class CelestialObjectMapper
             case CelestialObjectType.PointInMap:
                 break;
             case CelestialObjectType.Asteroid:
-                break;
+                return AsteroidMapper.ToGameObject(celestialObjectDto);
             case CelestialObjectType.Station:
                 break;
             case CelestialObjectType.SpaceshipPlayer:
@@ -36,7 +37,7 @@ public static class CelestialObjectMapper
                 break;
         }
 
-        return AsteroidGenerator.;
+        return null;
     }
 
     public static CelestialObjectDto ToDto(ICelestialObject celestialObject)

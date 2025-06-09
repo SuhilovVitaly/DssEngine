@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Mappers;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class GameStateMapper
 {

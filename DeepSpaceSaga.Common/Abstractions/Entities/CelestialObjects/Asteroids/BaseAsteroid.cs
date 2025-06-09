@@ -1,8 +1,20 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 
-public class BaseAsteroid(int maxDrillAttempts) : BaseCelestialObject, IAsteroid
+namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
+
+public class BaseAsteroid : BaseCelestialObject, IAsteroid
 {
-    public int RemainingDrillAttempts { get; private set; } = maxDrillAttempts;
+    public int RemainingDrillAttempts { get; set; }
+
+    public BaseAsteroid(int maxDrillAttempts) => RemainingDrillAttempts = maxDrillAttempts;
+
+    public BaseAsteroid(CelestialObjectSaveFormatDto celestialObjectDto)
+    {
+        LoadObject(celestialObjectDto);
+
+        RemainingDrillAttempts = celestialObjectDto.RemainingDrillAttempts;
+    }
 
     public void Drill()
     {

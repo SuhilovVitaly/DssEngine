@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.Common.Abstractions.Dto;
+namespace DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 
 public class CommandDto
 {

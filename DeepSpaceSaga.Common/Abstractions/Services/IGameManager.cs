@@ -1,5 +1,4 @@
-using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Common.Abstractions.UI;
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 
 namespace DeepSpaceSaga.Common.Abstractions.Services;
 
@@ -94,4 +93,7 @@ public interface IGameManager
     void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation);
 
     void CommandExecute(ICommand command);
+
+    Task<int> SaveGame(string savename);
+    Task<int> LoadGame(string savename);
 } 

@@ -1,5 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
-using DeepSpaceSaga.Common.Abstractions.UI;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 
 namespace DeepSpaceSaga.UI.Controller.Services;
 
@@ -25,6 +24,20 @@ public class GameManager : IGameManager
         ScreenInfo = new ScreenParameters(screenResolution);
         GenerationTool = generationTool;
         OuterSpace = outerSpace;
+    }
+
+    public async Task<int> SaveGame(string savename)
+    {
+        await _gameServer.SaveGame(savename);
+
+        return 0;
+    }
+
+    public async Task<int> LoadGame(string savename)
+    {
+        await _gameServer.LoadGame(savename);
+
+        return 0;
     }
 
     public void SetGameSpeed(int speed)

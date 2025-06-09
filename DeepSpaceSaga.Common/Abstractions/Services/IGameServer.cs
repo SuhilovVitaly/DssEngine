@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.Common.Abstractions.Services;
 
 public interface IGameServer
 {
@@ -11,4 +13,6 @@ public interface IGameServer
     void SessionStop();
     void SetGameSpeed(int speed);
     Task AddCommand(ICommand command);
+    Task SaveGame(string saveName);
+    Task LoadGame(string saveName);
 }

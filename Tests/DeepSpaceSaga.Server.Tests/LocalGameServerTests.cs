@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
 namespace DeepSpaceSaga.Server.Tests;
 
 public class LocalGameServerTests
@@ -7,6 +9,7 @@ public class LocalGameServerTests
     private readonly ISessionContextService _sessionContext;
     private readonly Mock<IMetricsService> _gameFlowMetricsMock;
     private readonly Mock<IProcessingService> _processingServiceMock;
+    private readonly Mock<ISaveLoadService> _saveLoadServiceMock;
     private GameSessionDto? _lastExecutedSession;
 
     public LocalGameServerTests()
@@ -18,6 +21,7 @@ public class LocalGameServerTests
         var sessionInfo = new SessionInfoService();
         _gameFlowMetricsMock = new Mock<IMetricsService>();
         _processingServiceMock = new Mock<IProcessingService>();
+        _saveLoadServiceMock = new Mock<ISaveLoadService>();
         var generationToolMock = new Mock<IGenerationTool>();
         
         // Setup unique ID generation to prevent duplicate key errors
@@ -39,7 +43,7 @@ public class LocalGameServerTests
         
         // Use real SessionContextService for scheduler and LocalGameServer to avoid lock issues
         _schedulerService = new SchedulerService(_sessionContext);
-        _sut = new LocalGameServer(_schedulerService, _sessionContext, _processingServiceMock.Object);
+        _sut = new LocalGameServer(_schedulerService, _sessionContext, _processingServiceMock.Object, _saveLoadServiceMock.Object);
         
         // Subscribe to OnTurnExecute event
         _sut.OnTurnExecute += session => _lastExecutedSession = session;
@@ -162,6 +166,7 @@ public class LocalGameServerTests
         // Arrange
         var sessionInfo = new SessionInfoService();
         var metricsMock = new Mock<IMetricsService>();
+        var saveLoadServiceMock = new Mock<ISaveLoadService>();
         var generationToolMock = new Mock<IGenerationTool>();
         
         // Setup unique ID generation to prevent duplicate key errors
@@ -170,7 +175,7 @@ public class LocalGameServerTests
         
         var sessionContext = new SessionContextService(sessionInfo, metricsMock.Object, generationToolMock.Object);
         var schedulerService = new SchedulerService(sessionContext);
-        var localGameServer = new LocalGameServer(schedulerService, sessionContext, _processingServiceMock.Object);
+        var localGameServer = new LocalGameServer(schedulerService, sessionContext, _processingServiceMock.Object, saveLoadServiceMock.Object);
         
         var session = new GameSession();
         localGameServer.SessionStart(session);
@@ -184,13 +189,15 @@ public class LocalGameServerTests
     public void Constructor_WithNullDependencies_ShouldThrowArgumentNullException()
     {
         // Act & Assert
-        var action1 = () => new LocalGameServer(null!, _sessionContext, _processingServiceMock.Object);
-        var action2 = () => new LocalGameServer(_schedulerService, null!, _processingServiceMock.Object);
-        var action3 = () => new LocalGameServer(_schedulerService, _sessionContext, null!);
+        var action1 = () => new LocalGameServer(null!, _sessionContext, _processingServiceMock.Object, _saveLoadServiceMock.Object);
+        var action2 = () => new LocalGameServer(_schedulerService, null!, _processingServiceMock.Object, _saveLoadServiceMock.Object);
+        var action3 = () => new LocalGameServer(_schedulerService, _sessionContext, null!, _saveLoadServiceMock.Object);
+        var action4 = () => new LocalGameServer(_schedulerService, _sessionContext, _processingServiceMock.Object, null!);
         
         action1.Should().Throw<ArgumentNullException>().WithParameterName("schedulerService");
         action2.Should().Throw<ArgumentNullException>().WithParameterName("sessionContext");
         action3.Should().Throw<ArgumentNullException>().WithParameterName("processingService");
+        action4.Should().Throw<ArgumentNullException>().WithParameterName("saveLoadService");
     }
     
     [Fact]

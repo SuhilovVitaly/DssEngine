@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.UI.Controller.Services;
 
 namespace DeepSpaceSaga.UI.Screens.MainGameScreen;
 

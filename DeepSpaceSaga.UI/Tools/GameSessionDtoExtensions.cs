@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 
 namespace DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 

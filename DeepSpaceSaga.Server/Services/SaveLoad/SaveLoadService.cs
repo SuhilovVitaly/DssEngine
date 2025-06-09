@@ -46,7 +46,7 @@ public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
     {
         var snapshot = new GameSnapshot
         {
-            Session = GameSessionMapper.ToDto(sessionContext),
+            Session = GameSessionMapper.ToSaveFormat(sessionContext),
         };
 
         // Create saves directory if it doesn't exist

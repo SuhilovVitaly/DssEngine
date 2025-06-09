@@ -8,6 +8,7 @@ public class EventCommandAcknowlegFlowTests
         // Arrange
         var sessionInfo = new SessionInfoService();
         var metricsMock = new Mock<IMetricsService>();
+        var saveLoadServiceMock = new Mock<ISaveLoadService>();
         var generationToolMock = new Mock<IGenerationTool>();
 
         var idCounter = 10;
@@ -15,7 +16,7 @@ public class EventCommandAcknowlegFlowTests
         
         ISessionContextService sessionContext = new SessionContextService(sessionInfo, metricsMock.Object, generationToolMock.Object);
 
-        var gameServer = new LocalGameServer(new SchedulerService(sessionContext), sessionContext, new TurnProcessing());
+        var gameServer = new LocalGameServer(new SchedulerService(sessionContext), sessionContext, new TurnProcessing(), saveLoadServiceMock.Object);
         
         gameServer.TurnExecution(CalculationType.Turn);
         var sessionContextDtoTurn0 = gameServer.GetSessionContextDto();

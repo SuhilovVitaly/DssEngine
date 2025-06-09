@@ -2,6 +2,6 @@
 {
     public class GameSnapshot
     {
-        public GameSessionDto Session { get; set; }
+        public GameSessionSaveFormatDto Session { get; set; }
     }
 }

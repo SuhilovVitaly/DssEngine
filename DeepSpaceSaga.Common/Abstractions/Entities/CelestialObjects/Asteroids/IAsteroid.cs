@@ -2,6 +2,6 @@
 
 public interface IAsteroid : ICelestialObject
 {
-    int RemainingDrillAttempts { get; }
+    int RemainingDrillAttempts { get; set; }
     void Drill();
 }

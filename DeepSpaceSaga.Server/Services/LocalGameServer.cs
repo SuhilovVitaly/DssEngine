@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-
-namespace DeepSpaceSaga.Server.Services;
+﻿namespace DeepSpaceSaga.Server.Services;
 
 public class LocalGameServer(
     ISchedulerService schedulerService, 
@@ -15,7 +13,7 @@ public class LocalGameServer(
     private static readonly ILog? Logger = GetLoggerSafe();
     
     private readonly ISchedulerService _flowManager = schedulerService ?? throw new ArgumentNullException(nameof(schedulerService));
-    private readonly ISessionContextService _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
+    private ISessionContextService _sessionContext = sessionContext ?? throw new ArgumentNullException(nameof(sessionContext));
     private readonly IProcessingService _processingService = processingService ?? throw new ArgumentNullException(nameof(processingService));
     private readonly ISaveLoadService _saveLoadService = saveLoadService ?? throw new ArgumentNullException(nameof(saveLoadService));
 
@@ -117,7 +115,7 @@ public class LocalGameServer(
 
     public Task LoadGame(string saveName)
     {
-        SessionStart(_saveLoadService.Load(saveName).GameSession);
+        _sessionContext = _saveLoadService.Load(saveName);
 
         return Task.CompletedTask;
     }

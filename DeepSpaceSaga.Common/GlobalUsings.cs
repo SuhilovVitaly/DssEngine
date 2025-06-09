@@ -28,3 +28,7 @@ global using System.Diagnostics;
 global using DeepSpaceSaga.Common.Abstractions.Events;
 global using DeepSpaceSaga.Common.Tools;
 global using DeepSpaceSaga.Common.Abstractions.UI;
+global using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
+global using System.Text;
+global using System.Xml.Linq;

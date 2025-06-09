@@ -1,14 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace DeepSpaceSaga.Common.Abstractions.Mappers.CelestialObjects
+﻿namespace DeepSpaceSaga.Common.Abstractions.Mappers.CelestialObjects
 {
     public static class AsteroidMapper
     {

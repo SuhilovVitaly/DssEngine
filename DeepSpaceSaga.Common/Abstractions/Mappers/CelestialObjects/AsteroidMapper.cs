@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

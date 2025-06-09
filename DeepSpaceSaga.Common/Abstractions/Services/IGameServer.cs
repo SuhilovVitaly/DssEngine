@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.Common.Abstractions.Services;
 
 public interface IGameServer
 {

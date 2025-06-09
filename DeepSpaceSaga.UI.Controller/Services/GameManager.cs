@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {

@@ -3,6 +3,7 @@ using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 using DeepSpaceSaga.Common.Abstractions.Session;
 using DeepSpaceSaga.Common.Abstractions.UI;
 using DeepSpaceSaga.UI.Rendering.Tools;
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 
 namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 

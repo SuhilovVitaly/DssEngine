@@ -1,3 +1,6 @@
+using DeepSpaceSaga.Common.Abstractions.Dto.Save;
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class GameSessionMapper

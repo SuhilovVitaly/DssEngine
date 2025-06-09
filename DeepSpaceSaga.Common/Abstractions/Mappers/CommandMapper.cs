@@ -1,3 +1,4 @@
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 using System.Reflection;
 

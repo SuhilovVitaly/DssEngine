@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 
 public class BaseCelestialObject : ICelestialObject
 {

@@ -1,3 +1,5 @@
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
 namespace DeepSpaceSaga.Server.Tests;
 
 public class LocalGameServerTests

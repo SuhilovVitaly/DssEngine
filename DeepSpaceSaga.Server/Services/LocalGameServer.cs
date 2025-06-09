@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.Server.Services;
 
 public class LocalGameServer(
     ISchedulerService schedulerService, 

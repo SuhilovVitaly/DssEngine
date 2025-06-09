@@ -1,4 +1,4 @@
-using DeepSpaceSaga.Common.Abstractions.Dto;
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 using DeepSpaceSaga.Common.Abstractions.Mappers.CelestialObjects;

@@ -26,7 +26,7 @@ public class DrawCelestialObjects
                     DrawStation(screenInfo, currentObject, session);
                     break;
                 case CelestialObjectType.SpaceshipPlayer:
-                    DrawPlayerSpaceship(screenInfo, currentObject);
+                    DrawPlayerSpaceship(screenInfo, currentObject, session);
                     break;
                 case CelestialObjectType.SpaceshipNpcNeutral:
                     DrawCelestialObject(screenInfo, currentObject, session);
@@ -48,7 +48,7 @@ public class DrawCelestialObjects
         }
     }
 
-    private static void DrawPlayerSpaceship(IScreenInfo screenInfo, CelestialObjectDto spaceShip)
+    private static void DrawPlayerSpaceship(IScreenInfo screenInfo, CelestialObjectDto spaceShip, GameSessionDto session)
     {
         var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, spaceShip.GetLocation(), true);
         var color = spaceShip.GetColor();
@@ -56,6 +56,7 @@ public class DrawCelestialObjects
         DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
         DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
         DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 8, color);
+        DrawCelestialObjectInfo(screenInfo, spaceShip, color, session);
     }
 
     private static void DrawStation(IScreenInfo screenInfo, CelestialObjectDto spaceStation, GameSessionDto session)

@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
-
-namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 
 public class BaseAsteroid : BaseCelestialObject, IAsteroid
 {

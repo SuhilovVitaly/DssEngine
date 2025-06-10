@@ -32,3 +32,4 @@ global using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 global using System.Text;
 global using System.Xml.Linq;
+global using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;

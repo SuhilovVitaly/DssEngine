@@ -28,6 +28,8 @@ public class GameEventsService : IGameEventsService
                     IsOneTimeCommand = true,
                     TargetCelestialObjectId = gameEvent.Id,
                 });
+
+                _gameManager.GameEventInvoke(gameEvent); 
             }            
         }
     }

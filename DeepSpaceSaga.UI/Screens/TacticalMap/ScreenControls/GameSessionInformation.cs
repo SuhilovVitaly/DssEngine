@@ -16,6 +16,10 @@ public partial class GameSessionInformation : ControlWindow
             if (_gameManager != null)
             {
                 _gameManager.OnUpdateGameData -= UpdateGameData;
+
+                _gameManager.OuterSpace.OnSelectCelestialObject -= OuterSpace_OnSelectCelestialObject;
+                _gameManager.OuterSpace.OnShowCelestialObject -= OuterSpace_OnShowCelestialObject;
+                _gameManager.OuterSpace.OnHideCelestialObject -= OuterSpace_OnHideCelestialObject;
             }
             
             _gameManager = value;
@@ -23,6 +27,10 @@ public partial class GameSessionInformation : ControlWindow
             if (_gameManager != null && !DesignMode)
             {
                 _gameManager.OnUpdateGameData += UpdateGameData;
+
+                _gameManager.OuterSpace.OnSelectCelestialObject += OuterSpace_OnSelectCelestialObject;
+                _gameManager.OuterSpace.OnShowCelestialObject += OuterSpace_OnShowCelestialObject;
+                _gameManager.OuterSpace.OnHideCelestialObject += OuterSpace_OnHideCelestialObject;
                 _isInitialized = true;
             }
         }
@@ -38,7 +46,22 @@ public partial class GameSessionInformation : ControlWindow
     // Constructor with dependency injection
     public GameSessionInformation(IGameManager gameManager) : this()
     {
-        GameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
+        GameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));        
+    }
+
+    private void OuterSpace_OnHideCelestialObject(CelestialObjectDto obj)
+    {
+        UpdateGameData(_gameManager.GameSession());
+    }
+
+    private void OuterSpace_OnShowCelestialObject(CelestialObjectDto obj)
+    {
+        UpdateGameData(_gameManager.GameSession());
+    }
+
+    private void OuterSpace_OnSelectCelestialObject(CelestialObjectDto obj)
+    {
+        UpdateGameData(_gameManager.GameSession());
     }
 
     protected override void OnLoad(EventArgs e)
@@ -61,5 +84,8 @@ public partial class GameSessionInformation : ControlWindow
         crlScreenCoordinates.Text = _gameManager?.ScreenInfo?.MousePosition?.X + ":" + _gameManager?.ScreenInfo?.MousePosition?.Y;
         crlScreenCoordinatesRelative.Text = _gameManager?.ScreenInfo?.RelativeMousePosition?.X + ":" + _gameManager?.ScreenInfo?.RelativeMousePosition?.Y;
         crlGameCoordinates.Text = _gameManager?.TacticalMapMousePosition?.X + ":" + _gameManager?.TacticalMapMousePosition?.Y;
+
+        crlActiveId.Text = _gameManager?.OuterSpace.ActiveObjectId.ToString();
+        crlSelectedId.Text = _gameManager?.OuterSpace.SelectedObjectId.ToString();
     }
 }

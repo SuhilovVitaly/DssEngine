@@ -41,6 +41,10 @@
             label4 = new Label();
             crlScreenCoordinatesRelative = new Label();
             label3 = new Label();
+            crlActiveId = new Label();
+            label8 = new Label();
+            label9 = new Label();
+            crlSelectedId = new Label();
             ((ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -186,11 +190,59 @@
             label3.Text = "XY Screen R";
             label3.TextAlign = ContentAlignment.TopRight;
             // 
+            // crlActiveId
+            // 
+            crlActiveId.ForeColor = Color.White;
+            crlActiveId.Location = new Point(131, 253);
+            crlActiveId.Margin = new Padding(4, 0, 4, 0);
+            crlActiveId.Name = "crlActiveId";
+            crlActiveId.Size = new Size(130, 25);
+            crlActiveId.TabIndex = 17;
+            crlActiveId.Text = "0";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(24, 253);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(81, 25);
+            label8.TabIndex = 16;
+            label8.Text = "Active Id";
+            label8.TextAlign = ContentAlignment.TopRight;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.ForeColor = Color.White;
+            label9.Location = new Point(24, 289);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(99, 25);
+            label9.TabIndex = 16;
+            label9.Text = "Selected Id";
+            label9.TextAlign = ContentAlignment.TopRight;
+            // 
+            // crlSelectedId
+            // 
+            crlSelectedId.ForeColor = Color.White;
+            crlSelectedId.Location = new Point(131, 289);
+            crlSelectedId.Margin = new Padding(4, 0, 4, 0);
+            crlSelectedId.Name = "crlSelectedId";
+            crlSelectedId.Size = new Size(130, 25);
+            crlSelectedId.TabIndex = 17;
+            crlSelectedId.Text = "0";
+            // 
             // GameSessionInformation
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(12, 12, 12);
+            Controls.Add(crlSelectedId);
+            Controls.Add(crlActiveId);
+            Controls.Add(label9);
+            Controls.Add(label8);
             Controls.Add(crlScreenCoordinatesRelative);
             Controls.Add(label3);
             Controls.Add(txtTurn);
@@ -206,7 +258,7 @@
             Controls.Add(label5);
             Margin = new Padding(5);
             Name = "GameSessionInformation";
-            Size = new Size(375, 239);
+            Size = new Size(375, 339);
             Controls.SetChildIndex(crlCloseButton, 0);
             Controls.SetChildIndex(label5, 0);
             Controls.SetChildIndex(txtCelestialObjects, 0);
@@ -221,6 +273,10 @@
             Controls.SetChildIndex(txtTurn, 0);
             Controls.SetChildIndex(label3, 0);
             Controls.SetChildIndex(crlScreenCoordinatesRelative, 0);
+            Controls.SetChildIndex(label8, 0);
+            Controls.SetChildIndex(label9, 0);
+            Controls.SetChildIndex(crlActiveId, 0);
+            Controls.SetChildIndex(crlSelectedId, 0);
             ((ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -240,5 +296,9 @@
         private PictureBox pictureBox1;
         private Label crlScreenCoordinatesRelative;
         private Label label3;
+        private Label crlActiveId;
+        private Label label8;
+        private Label label9;
+        private Label crlSelectedId;
     }
 }

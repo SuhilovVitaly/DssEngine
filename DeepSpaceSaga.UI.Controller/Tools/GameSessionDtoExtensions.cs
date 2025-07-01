@@ -1,7 +1,12 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
+using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
+using System.Drawing;
+using System.Linq;
 
-namespace DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
+namespace DeepSpaceSaga.UI.Controller.Tools;
 
 public static class GameSessionDtoExtensions
 {
@@ -35,10 +40,33 @@ public static class GameSessionDtoExtensions
         }
 
         return new SpaceMapColor(Color.FromArgb(30, 45, 65));
+    }    
+
+    public static List<CelestialObjectDto> GetCelestialObjectsByDistance(this GameSessionDto gameSession, SpaceMapPoint coordinates, int range)
+    {
+
+        var resultObjects = gameSession.CelestialObjects.Values.Select(celestialObject => (celestialObject,
+                    GeometryTools.Distance(
+                        coordinates,
+                        celestialObject.GetLocation())
+                )).
+            Where(e => e.Item2 < range).
+            OrderBy(e => e.Item2).
+            Select(e => e.celestialObject).
+            ToList();
+
+        return resultObjects;
     }
 
-    public static SpaceMapPoint GetLocation(this CelestialObjectDto celestialObject)
+    public static CelestialObjectDto GetPlayerSpaceShip(this GameSessionDto gameSession)
     {
-        return new SpaceMapPoint((float)celestialObject.X, (float)celestialObject.Y);
+        foreach (var celestialObject in from celestialObject in gameSession.CelestialObjects.Values
+                                        where celestialObject.Type == CelestialObjectType.SpaceshipPlayer
+                                        select celestialObject)
+        {
+            return celestialObject;
+        }
+
+        throw new InvalidOperationException("Player spaceship not found in the game session");
     }
 }

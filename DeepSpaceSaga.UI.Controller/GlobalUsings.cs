@@ -15,3 +15,6 @@ global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens.Presenters;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+global using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+global using DeepSpaceSaga.Common.Abstractions.Session;
+global using DeepSpaceSaga.UI.Controller.Tools;

@@ -4,6 +4,7 @@ using DeepSpaceSaga.Common.Abstractions.Session;
 using DeepSpaceSaga.Common.Abstractions.UI;
 using DeepSpaceSaga.UI.Rendering.Tools;
 using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.UI.Controller.Tools;
 
 namespace DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 

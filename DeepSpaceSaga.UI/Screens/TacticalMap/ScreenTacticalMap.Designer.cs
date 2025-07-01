@@ -53,7 +53,7 @@
             sessionInformationControl.Location = new Point(14, 14);
             sessionInformationControl.Margin = new Padding(5);
             sessionInformationControl.Name = "sessionInformationControl";
-            sessionInformationControl.Size = new Size(351, 231);
+            sessionInformationControl.Size = new Size(351, 336);
             sessionInformationControl.TabIndex = 1;
             sessionInformationControl.Title = "Game Session Information";
             // 

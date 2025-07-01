@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-
-namespace DeepSpaceSaga.UI.Controller.Services;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {
@@ -11,6 +9,7 @@ public class GameManager : IGameManager
     public IOuterSpaceService OuterSpace { get; set; }
     public SpaceMapPoint TacticalMapMousePosition { get; private set; }
 
+    private GameSessionDto _gameSessionDto;
     private readonly IGameServer _gameServer;
 
     public GameManager(IGameServer gameServer, IScreensService screenManager, IGenerationTool generationTool, 
@@ -23,7 +22,12 @@ public class GameManager : IGameManager
         Screens = screenManager;
         ScreenInfo = new ScreenParameters(screenResolution);
         GenerationTool = generationTool;
-        OuterSpace = outerSpace;
+        OuterSpace = outerSpace;        
+    }
+
+    public GameSessionDto GameSession()
+    {
+        return _gameSessionDto;
     }
 
     public async Task<int> SaveGame(string savename)
@@ -78,24 +82,9 @@ public class GameManager : IGameManager
     }
 
     private void UpdateGameData(GameSessionDto session)
-    {       
+    {
+        _gameSessionDto = session;
         OnUpdateGameData?.Invoke(session);
-    }
-
-    public void TacticalMapMouseMove(SpaceMapPoint coordinatesGame, SpaceMapPoint coordinatesScreen)
-    {
-        ScreenInfo.SetMousePosition(coordinatesScreen);
-
-        TacticalMapMousePosition = coordinatesGame;
-    }
-
-    public void TacticalMapMouseClick(SpaceMapPoint coordinates)
-    {
-
-    }
-    public void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation)
-    {
-
     }
 
     public void GameEventInvoke(GameActionEventDto gameEvent)

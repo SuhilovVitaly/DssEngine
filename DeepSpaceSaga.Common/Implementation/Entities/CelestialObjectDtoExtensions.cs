@@ -4,15 +4,10 @@ using DeepSpaceSaga.Common.Geometry;
 
 namespace DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 
-public static class CelestialObjectExtensions
+public static class CelestialObjectDtoExtensions
 {
-    public static SpaceMapPoint GetLocation(this ICelestialObject celestialObject)
+    public static SpaceMapPoint GetLocation(this CelestialObjectDto celestialObject)
     {
         return new SpaceMapPoint((float)celestialObject.X, (float)celestialObject.Y);
-    }
-
-    public static ISpacecraft ToSpaceship(this ICelestialObject celestialObject)
-    {
-        return celestialObject as ISpacecraft;
     }
 }

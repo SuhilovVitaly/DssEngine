@@ -120,31 +120,37 @@ public partial class GameTacticalMap : UserControl
 
     private void MapMouseMove(object sender, MouseEventArgs e)
     {
+        if(_sessionDto == null) { return; }
+
         var location = e.Location.ToSpaceMapCoordinates();
 
         var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(_gameManager.ScreenInfo, location, _gameManager.ScreenInfo.Center);
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(_gameManager.ScreenInfo, mouseScreenCoordinates, _gameManager.ScreenInfo.CenterScreenOnMap);
 
-        _gameManager.TacticalMapMouseMove(mouseLocation, location);
+        _gameManager.OuterSpace.HandleMouseMove(_sessionDto, mouseLocation);
     }
 
     private void MapClick(object sender, MouseEventArgs e)
     {
+        if (_sessionDto == null) { return; }
+
         var location = e.Location.ToSpaceMapCoordinates();
 
         var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(_gameManager.ScreenInfo, location, _gameManager.ScreenInfo.Center);
 
         var mouseLocation = UiTools.ToTacticalMapCoordinates(_gameManager.ScreenInfo, mouseScreenCoordinates, _gameManager.ScreenInfo.CenterScreenOnMap);
 
+       // var objectsInClickPoint = _sessionDto.
+
         if (e.Button == MouseButtons.Left)
         {
-            _gameManager.TacticalMapMouseClick(mouseLocation);
+            _gameManager.OuterSpace.HandleMouseClick(_sessionDto, mouseLocation);
         }
 
         if (e.Button == MouseButtons.Right)
         {
-            _gameManager.TacticalMapLeftMouseClick(mouseLocation);
+            //_gameManager.OuterSpace.TacticalMapLeftMouseClick(mouseLocation);
         }
     }
 }

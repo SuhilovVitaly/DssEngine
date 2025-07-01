@@ -7,6 +7,7 @@ namespace DeepSpaceSaga.Common.Abstractions.Services;
 /// </summary>
 public interface IGameManager
 {
+    GameSessionDto GameSession();
     /// <summary>
     /// Event fired when game data is updated
     /// </summary>
@@ -72,25 +73,6 @@ public interface IGameManager
     /// Shows the main menu screen
     /// </summary>
     void ShowMainMenuScreen();
-
-    /// <summary>
-    /// Handles mouse movement on tactical map
-    /// </summary>
-    /// <param name="coordinatesGame">Game coordinates</param>
-    /// <param name="coordinatesScreen">Screen coordinates</param>
-    void TacticalMapMouseMove(SpaceMapPoint coordinatesGame, SpaceMapPoint coordinatesScreen);
-
-    /// <summary>
-    /// Handles mouse click on tactical map
-    /// </summary>
-    /// <param name="coordinates">Click coordinates</param>
-    void TacticalMapMouseClick(SpaceMapPoint coordinates);
-
-    /// <summary>
-    /// Handles left mouse click on tactical map
-    /// </summary>
-    /// <param name="mouseLocation">Mouse location</param>
-    void TacticalMapLeftMouseClick(SpaceMapPoint mouseLocation);
 
     void CommandExecute(ICommand command);
 

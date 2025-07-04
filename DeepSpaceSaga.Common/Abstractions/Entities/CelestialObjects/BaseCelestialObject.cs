@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-
-namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 
 public class BaseCelestialObject : ICelestialObject
 {
@@ -15,7 +13,9 @@ public class BaseCelestialObject : ICelestialObject
     public bool IsPreScanned { get; set; }
     public float Size { get; set; }
 
-    public void LoadObject( CelestialObjectSaveFormatDto celestialObjectDto)
+    public IModularSystem ModulesS { get; } = new ModularSystem();
+
+    public void LoadObject(CelestialObjectSaveFormatDto celestialObjectDto)
     {
         Id = celestialObjectDto.Id;
         OwnerId = celestialObjectDto.OwnerId;

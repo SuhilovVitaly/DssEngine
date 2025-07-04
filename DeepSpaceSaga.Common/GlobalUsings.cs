@@ -38,3 +38,6 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Mining;
 global using DeepSpaceSaga.Common.Implementation.Entities.Equipment.Mining.Operations;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Commands;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Cargo;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Systems;
+global using DeepSpaceSaga.Common.Implementation.Entities.Systems;

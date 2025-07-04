@@ -17,4 +17,8 @@
     <PackageReference Include="SkiaSharp" Version="3.116.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Implementation\Entities\Equipment\Cargo\" />
+  </ItemGroup>
+
 </Project>

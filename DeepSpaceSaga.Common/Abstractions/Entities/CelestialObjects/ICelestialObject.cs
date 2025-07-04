@@ -12,4 +12,6 @@ public interface ICelestialObject
     CelestialObjectType Type { get; set; }
     bool IsPreScanned { get; set; }
     float Size { get; set; }
+
+    IModularSystem ModulesS { get; }
 }

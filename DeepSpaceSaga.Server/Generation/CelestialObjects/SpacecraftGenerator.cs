@@ -1,10 +1,14 @@
-﻿namespace DeepSpaceSaga.Server.Generation.CelestialObjects
+﻿using DeepSpaceSaga.Server.Generation.Modules;
+
+namespace DeepSpaceSaga.Server.Generation.CelestialObjects
 {
     public static class SpacecraftGenerator
     {
         public static ICelestialObject BuildPlayerSpacecraft(int id, float size, double direction, double x, double y, double speed, string name)
         {
-            return new BaseSpaceship
+            var randomizer = new GenerationTool();
+
+            var spacecraft = new BaseSpaceship
             {
                 Id = id,
                 Agility = 0,
@@ -19,6 +23,10 @@
                 Y = y,
                 IsPreScanned = true,
             };
+
+            spacecraft.ModulesS.Add(MiningModulesGenerator.CreateMiningLaser(randomizer, spacecraft.Id, "MLC8002"));
+
+            return spacecraft;
         }
     }
 }

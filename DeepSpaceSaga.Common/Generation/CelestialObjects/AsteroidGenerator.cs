@@ -1,9 +1,7 @@
-﻿namespace DeepSpaceSaga.Server.Generation.CelestialObjects;
+﻿namespace DeepSpaceSaga.Common.Generation.CelestialObjects;
 
 public class AsteroidGenerator
 {
-    private static readonly ILog _logger = LogManager.GetLogger(typeof(AsteroidGenerator));
-
     public static ICelestialObject BuildAsteroid(int id,
         int maxDrillAttempts, float size, double direction, double x, double y, double speed, string name, bool isPreScanned = false)
     {
@@ -27,7 +25,6 @@ public class AsteroidGenerator
         }
         catch (Exception ex)
         {
-            _logger.Error(ex.Message);
             throw;
         }
 

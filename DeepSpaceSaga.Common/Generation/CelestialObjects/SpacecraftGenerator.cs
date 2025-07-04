@@ -1,6 +1,7 @@
-﻿using DeepSpaceSaga.Server.Generation.Modules;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
+using DeepSpaceSaga.Common.Generation.CelestialObjects.Modules;
 
-namespace DeepSpaceSaga.Server.Generation.CelestialObjects
+namespace DeepSpaceSaga.Common.Generation.CelestialObjects
 {
     public static class SpacecraftGenerator
     {
@@ -18,7 +19,7 @@ namespace DeepSpaceSaga.Server.Generation.CelestialObjects
                 OwnerId = id,
                 Size = size,
                 Speed = speed,
-                Type  = CelestialObjectType.SpaceshipPlayer,
+                Type = CelestialObjectType.SpaceshipPlayer,
                 X = x,
                 Y = y,
                 IsPreScanned = true,

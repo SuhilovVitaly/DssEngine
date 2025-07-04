@@ -34,7 +34,6 @@ global using System.Text.Json.Serialization;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
 global using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
-global using DeepSpaceSaga.Server.Generation.CelestialObjects;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Mining;
 global using DeepSpaceSaga.Common.Implementation.Entities.Equipment.Mining;

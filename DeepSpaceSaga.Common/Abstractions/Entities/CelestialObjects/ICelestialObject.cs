@@ -13,5 +13,5 @@ public interface ICelestialObject
     bool IsPreScanned { get; set; }
     float Size { get; set; }
 
-    IModularSystem ModulesS { get; }
+    IModularSystem ModulesS { get; set; }
 }

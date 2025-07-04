@@ -2,7 +2,9 @@
 
 public interface IModule : ICoreItem
 {
+    string Code { get; set; }
     long TargetId { get; set; }
+    double Power { get; set; }
     bool IsAutoRun { get; set; }
     bool IsCalculated { get; set; }
     double ActivationCost { get; set; }

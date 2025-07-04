@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.Generation;
+﻿using DeepSpaceSaga.Common.Generation.CelestialObjects;
+
+namespace DeepSpaceSaga.Common.Generation;
 
 public class ScenarioGenerator
 {

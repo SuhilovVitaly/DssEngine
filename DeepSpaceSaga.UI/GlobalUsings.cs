@@ -33,7 +33,6 @@ global using DeepSpaceSaga.UI.Render.Extensions;
 global using DeepSpaceSaga.UI.Render.Tools;
 global using DeepSpaceSaga.UI.Render.Rendering.TacticalMap;
 global using DeepSpaceSaga.Common.Tools;
-global using DeepSpaceSaga.Server.Generation;
 global using System.Runtime.InteropServices;
 global using DeepSpaceSaga.Common.Abstractions.UI;
 global using DeepSpaceSaga.Common.Abstractions.UI.Screens;

@@ -1,5 +1,5 @@
-﻿using DeepSpaceSaga.Common.Tools;
-using DeepSpaceSaga.Server.Generation;
+﻿using DeepSpaceSaga.Common.Generation;
+using DeepSpaceSaga.Common.Tools;
 
 namespace DeepSpaceSaga.Server.Services.SessionContext;
 

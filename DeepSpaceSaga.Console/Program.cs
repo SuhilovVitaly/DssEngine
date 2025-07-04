@@ -1,9 +1,9 @@
 ﻿using DeepSpaceSaga.Common;
 using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Common.Generation;
 using DeepSpaceSaga.Common.Tools;
 using DeepSpaceSaga.Server;
-using DeepSpaceSaga.Server.Generation;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

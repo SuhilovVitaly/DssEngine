@@ -41,3 +41,5 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Commands;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Cargo;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Systems;
 global using DeepSpaceSaga.Common.Implementation.Entities.Systems;
+global using DeepSpaceSaga.Common.Generation.CelestialObjects.Modules;
+global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;

@@ -4,7 +4,10 @@ namespace DeepSpaceSaga.Common.Implementation.Entities.Equipment;
 
 public abstract class AbstractModule : AbstractItem
 {
+    public string Code { get; set; }
     public long TargetId { get; set; }
+    public double Power { get; set; }
+    public double ActivationCost { get; set; }
     public bool IsAutoRun { get; set; } = false;
     public bool IsCalculated { get; set; } = true;
     public bool IsActive { get; set; }

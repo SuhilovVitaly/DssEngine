@@ -1,16 +1,12 @@
-using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroids;
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
-using DeepSpaceSaga.Common.Abstractions.Mappers.CelestialObjects;
-
 namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class CelestialObjectMapper
 {
-    // TODO: Generator in Server
     public static ICelestialObject ToGameObject(CelestialObjectSaveFormatDto celestialObjectDto)
     {
+        var modules = celestialObjectDto.Modules.Select(module => ModuleMapper.ToGameObject(module)).ToList();
+        ICelestialObject celestialObject = null;
+
         switch (celestialObjectDto.Type)
         {
             case CelestialObjectType.Unknown:
@@ -18,11 +14,13 @@ public static class CelestialObjectMapper
             case CelestialObjectType.PointInMap:
                 break;
             case CelestialObjectType.Asteroid:
-                return new BaseAsteroid(celestialObjectDto) as ICelestialObject;
+                celestialObject = new BaseAsteroid(celestialObjectDto) as ICelestialObject;
+                break;
             case CelestialObjectType.Station:
                 break;
             case CelestialObjectType.SpaceshipPlayer:
-                return new BaseSpaceship(celestialObjectDto) as ICelestialObject;
+                celestialObject = new BaseSpaceship(celestialObjectDto) as ICelestialObject;
+                break;
             case CelestialObjectType.SpaceshipNpcNeutral:
                 break;
             case CelestialObjectType.SpaceshipNpcEnemy:
@@ -39,7 +37,16 @@ public static class CelestialObjectMapper
                 break;
         }
 
-        return null;
+        var modulesSystem = new ModularSystem();
+        
+        foreach (var module in modules)
+        {
+            modulesSystem.Add(module);
+        }
+
+        celestialObject.ModulesS = modulesSystem;
+
+        return celestialObject;
     }
 
     public static CelestialObjectDto ToDto(ICelestialObject celestialObject)

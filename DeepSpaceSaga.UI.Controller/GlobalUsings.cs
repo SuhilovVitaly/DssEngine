@@ -10,7 +10,6 @@ global using DeepSpaceSaga.Common.Abstractions.UI;
 global using DeepSpaceSaga.Common.Abstractions.Dto;
 global using DeepSpaceSaga.Common.Geometry;
 global using DeepSpaceSaga.Common.Tools;
-global using DeepSpaceSaga.Server.Generation;
 global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens.Presenters;

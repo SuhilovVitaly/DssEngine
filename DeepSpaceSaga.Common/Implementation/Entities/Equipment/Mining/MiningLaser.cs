@@ -3,8 +3,7 @@
 public class MiningLaser : AbstractModule, IModule, IMiningLaser
 {
     public Category Category { get; set; } = Category.MiningLaser;
-    public double ActivationCost { get; set; }
-    public double Power { get; set; }
+      
     public double MiningRange { get; set; }
     public double BasePrice { get; set; } = 2000;
 

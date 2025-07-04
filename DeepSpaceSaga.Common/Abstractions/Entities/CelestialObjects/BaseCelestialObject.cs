@@ -13,7 +13,7 @@ public class BaseCelestialObject : ICelestialObject
     public bool IsPreScanned { get; set; }
     public float Size { get; set; }
 
-    public IModularSystem ModulesS { get; } = new ModularSystem();
+    public IModularSystem ModulesS { get; set; } = new ModularSystem();
 
     public void LoadObject(CelestialObjectSaveFormatDto celestialObjectDto)
     {

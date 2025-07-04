@@ -1,7 +1,7 @@
 using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
-using DeepSpaceSaga.Server.Generation.CelestialObjects;
+using DeepSpaceSaga.Common.Generation.CelestialObjects;
 using FluentAssertions;
 
 namespace DeepSpaceSaga.Server.Tests.Generation.CelestialObjects;

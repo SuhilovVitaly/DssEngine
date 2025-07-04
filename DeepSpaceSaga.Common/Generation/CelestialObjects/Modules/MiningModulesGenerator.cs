@@ -1,16 +1,19 @@
-﻿namespace DeepSpaceSaga.Server.Generation.Modules;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Equipment.Mining;
+
+namespace DeepSpaceSaga.Common.Generation.CelestialObjects.Modules;
 
 public class MiningModulesGenerator
 {
-    public static IModule CreateMiningLaser(IGenerationTool randomizer, int ownerId, string id)
+    public static IModule CreateMiningLaser(IGenerationTool randomizer, long ownerId, string code)
     {
         IMiningLaser resultModule = new MiningLaser
         {
             Id = randomizer.GetId(),
             OwnerId = ownerId,
+            Code = code
         };
 
-        switch (id)
+        switch (code)
         {
             case "MLC8002":
                 resultModule.MiningRange = 3000;

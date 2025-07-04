@@ -12,6 +12,8 @@ public class CelestialObjectSaveFormatDto
     public CelestialObjectType Type { get; set; } = CelestialObjectType.Unknown;
     public bool IsPreScanned { get; set; }
     public float Size { get; set; }
+    // Modular System
+    public List<ModuleDto> Modules { get; set; } = new List<ModuleDto>();
     // Asteroid fields
     public int RemainingDrillAttempts { get; set; }
 }

@@ -104,6 +104,13 @@ public static class CelestialObjectMapper
                 break;
         }
 
+        baseCelestialObject.Modules = MapCelestialObjectModules(celestialObject.ModulesS.GetAll());
+
         return baseCelestialObject;
+    }
+
+    private static List<ModuleDto> MapCelestialObjectModules(List<IModule> modules)
+    {
+        return modules.Select(module => ModuleMapper.ToDto(module)).ToList();
     }
 }

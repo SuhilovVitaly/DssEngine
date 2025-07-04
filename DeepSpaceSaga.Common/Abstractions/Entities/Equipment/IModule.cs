@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Items;
-
-namespace DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 
 public interface IModule : ICoreItem
 {

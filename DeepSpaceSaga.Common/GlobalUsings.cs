@@ -33,3 +33,8 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Asteroi
 global using System.Text;
 global using System.Xml.Linq;
 global using DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Items;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Mining;
+global using DeepSpaceSaga.Common.Implementation.Entities.Equipment.Mining.Operations;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Commands;

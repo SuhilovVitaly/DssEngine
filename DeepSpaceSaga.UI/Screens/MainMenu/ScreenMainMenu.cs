@@ -10,7 +10,12 @@ public partial class ScreenMainMenu : Form
         _controller = controller ?? throw new ArgumentNullException(nameof(controller));
         
         InitializeComponent();
-        
+
+        Cursor = CursorManager.DefaultCursor;
+        crlNewGame.Cursor = CursorManager.SelectedCursor;
+        crlLoadGame.Cursor = CursorManager.SelectedCursor;
+        crlExit.Cursor = CursorManager.SelectedCursor;
+
         Logger.Debug("ScreenMainMenu initialized with MVP pattern");
     }
 

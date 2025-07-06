@@ -19,6 +19,7 @@ public partial class ScreenTacticGame : Form
 
         KeyPreview = true;
         KeyDown += Window_KeyDown;
+        Cursor = CursorManager.DefaultCursor;
     }
 
     private void GameServer_OnGetDataFromServer(GameSessionDto session)

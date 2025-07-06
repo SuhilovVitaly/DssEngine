@@ -12,6 +12,13 @@ public partial class ScreenGameMenu : Form
         
         InitializeComponent();
         SetupEventHandlers();
+
+        Cursor = CursorManager.DefaultCursor;
+        crlResume.Cursor = CursorManager.SelectedCursor;
+        crlSave.Cursor = CursorManager.SelectedCursor;
+        crlLoad.Cursor = CursorManager.SelectedCursor;
+        crlSettings.Cursor = CursorManager.SelectedCursor;
+        crlMainMenu.Cursor = CursorManager.SelectedCursor;
     }
 
     #region Form Events
@@ -47,10 +54,10 @@ public partial class ScreenGameMenu : Form
         _presenter.ErrorOccurred += OnErrorOccurred;
         
         // Setup button click handlers
-        button2.Click += OnResumeClick; // RESUME button
-        button3.Click += OnSaveClick; // SAVE button  
-        button4.Click += OnLoadClick; // LOAD button
-        button1.Click += OnMainMenuClick; // MAIN MENU button
+        crlResume.Click += OnResumeClick; // RESUME button
+        crlSave.Click += OnSaveClick; // SAVE button  
+        crlLoad.Click += OnLoadClick; // LOAD button
+        crlMainMenu.Click += OnMainMenuClick; // MAIN MENU button
     }
 
     private void ShowError(string message)

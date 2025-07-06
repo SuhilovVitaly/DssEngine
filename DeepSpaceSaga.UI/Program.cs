@@ -1,3 +1,5 @@
+using DeepSpaceSaga.UI.Tools;
+
 namespace DeepSpaceSaga.UI;
 
 internal static class Program
@@ -38,6 +40,9 @@ internal static class Program
         log4net.Config.XmlConfigurator.Configure(serverRepository, serverConfigFile);
 
         Logger.Info("Start 'Deep Space Saga' game desktop client.");
+
+        // Initialize custom cursors
+        CursorManager.Initialize();
 
         ServiceProvider = CreateHostBuilder().Build().Services;
 

@@ -38,7 +38,9 @@ public partial class ScreenTacticalMap : Form
         KeyDown += OnKeyDown;
         MouseWheel += Window_MouseWheel;
 
-        GameTacticalMapControl.Dock = DockStyle.Fill;        
+        GameTacticalMapControl.Dock = DockStyle.Fill;
+
+        Cursor = CursorManager.DefaultCursor;
     }
 
     private void OnKeyDown(object sender, KeyEventArgs e)

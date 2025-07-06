@@ -21,6 +21,8 @@ public partial class ScreenBackground : Form
 
         // Subscribe to the Shown event
         Shown += BackgroundScreen_Shown;
+
+        Cursor = CursorManager.DefaultCursor;
     }
 
     private void BackgroundScreen_Shown(object sender, EventArgs e)
@@ -117,6 +119,8 @@ public partial class ScreenBackground : Form
                 Size = this.Size,
                 Location = new Point(0, 0)
             };
+
+            overlayPanel.Cursor = CursorManager.DefaultCursor;
 
             Controls.Add(overlayPanel);
             overlayPanel.BringToFront();

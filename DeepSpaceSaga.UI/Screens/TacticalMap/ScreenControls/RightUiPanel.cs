@@ -6,6 +6,7 @@ public partial class RightUiPanel : UserControl
         {
             InitializeComponent();
             LoadImages();
+            Cursor = CursorManager.DefaultCursor;
         }
 
         private void LoadImages()

@@ -28,86 +28,90 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            crlExit = new Button();
+            crlNewGame = new Button();
+            crlLoadGame = new Button();
             SuspendLayout();
             // 
-            // button1
+            // crlExit
             // 
-            button1.BackColor = Color.FromArgb(18, 18, 18);
-            button1.Cursor = Cursors.Hand;
-            button1.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button1.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Gainsboro;
-            button1.Location = new Point(325, 452);
-            button1.Name = "button1";
-            button1.Size = new Size(150, 46);
-            button1.TabIndex = 0;
-            button1.Text = "EXIT";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += Event_ApplicationExit;
+            crlExit.BackColor = Color.FromArgb(18, 18, 18);
+            crlExit.Cursor = Cursors.Hand;
+            crlExit.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+            crlExit.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+            crlExit.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+            crlExit.FlatStyle = FlatStyle.Flat;
+            crlExit.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            crlExit.ForeColor = Color.Gainsboro;
+            crlExit.Location = new Point(406, 565);
+            crlExit.Margin = new Padding(4);
+            crlExit.Name = "crlExit";
+            crlExit.Size = new Size(188, 58);
+            crlExit.TabIndex = 0;
+            crlExit.Text = "EXIT";
+            crlExit.UseVisualStyleBackColor = false;
+            crlExit.Click += Event_ApplicationExit;
             // 
-            // button2
+            // crlNewGame
             // 
-            button2.BackColor = Color.FromArgb(18, 18, 18);
-            button2.Cursor = Cursors.Hand;
-            button2.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button2.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.Gainsboro;
-            button2.Location = new Point(325, 140);
-            button2.Name = "button2";
-            button2.Size = new Size(150, 46);
-            button2.TabIndex = 0;
-            button2.Text = "NEW GAME";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += Event_StartNewGameSession;
+            crlNewGame.BackColor = Color.FromArgb(18, 18, 18);
+            crlNewGame.Cursor = Cursors.Hand;
+            crlNewGame.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+            crlNewGame.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+            crlNewGame.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+            crlNewGame.FlatStyle = FlatStyle.Flat;
+            crlNewGame.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            crlNewGame.ForeColor = Color.Gainsboro;
+            crlNewGame.Location = new Point(406, 175);
+            crlNewGame.Margin = new Padding(4);
+            crlNewGame.Name = "crlNewGame";
+            crlNewGame.Size = new Size(188, 58);
+            crlNewGame.TabIndex = 0;
+            crlNewGame.Text = "NEW GAME";
+            crlNewGame.UseVisualStyleBackColor = false;
+            crlNewGame.Click += Event_StartNewGameSession;
             // 
-            // button3
+            // crlLoadGame
             // 
-            button3.BackColor = Color.FromArgb(18, 18, 18);
-            button3.Cursor = Cursors.Hand;
-            button3.Enabled = false;
-            button3.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-            button3.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-            button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
-            button3.FlatStyle = FlatStyle.Flat;
-            button3.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.Gainsboro;
-            button3.Location = new Point(325, 203);
-            button3.Name = "button3";
-            button3.Size = new Size(150, 46);
-            button3.TabIndex = 0;
-            button3.Text = "LOAD";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += Event_LoadGame;
+            crlLoadGame.BackColor = Color.FromArgb(18, 18, 18);
+            crlLoadGame.Cursor = Cursors.Hand;
+            crlLoadGame.Enabled = false;
+            crlLoadGame.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+            crlLoadGame.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+            crlLoadGame.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+            crlLoadGame.FlatStyle = FlatStyle.Flat;
+            crlLoadGame.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            crlLoadGame.ForeColor = Color.Gainsboro;
+            crlLoadGame.Location = new Point(406, 254);
+            crlLoadGame.Margin = new Padding(4);
+            crlLoadGame.Name = "crlLoadGame";
+            crlLoadGame.Size = new Size(188, 58);
+            crlLoadGame.TabIndex = 0;
+            crlLoadGame.Text = "LOAD";
+            crlLoadGame.UseVisualStyleBackColor = false;
+            crlLoadGame.Click += Event_LoadGame;
             // 
-            // MainMenuScreen
+            // ScreenMainMenu
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(800, 619);
-            Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            ClientSize = new Size(1000, 774);
+            Controls.Add(crlLoadGame);
+            Controls.Add(crlNewGame);
+            Controls.Add(crlExit);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "MainMenuScreen";
+            Margin = new Padding(4);
+            Name = "ScreenMainMenu";
             Text = "MainMenuScreen";
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Button button1;
-        private Button button2;
-        private Button button3;
+        private Button crlExit;
+        private Button crlNewGame;
+        private Button crlLoadGame;
     }
 }

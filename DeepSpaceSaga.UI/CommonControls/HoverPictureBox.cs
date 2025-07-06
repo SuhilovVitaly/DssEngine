@@ -28,6 +28,8 @@ public class HoverPictureBox : PictureBox
     {
         SetupEventHandlers();
         SizeMode = PictureBoxSizeMode.StretchImage;
+        // Set default cursor from CursorManager
+        Cursor = CursorManager.DefaultCursor;
     }
 
     private void SetupEventHandlers()
@@ -42,6 +44,8 @@ public class HoverPictureBox : PictureBox
         {
             Image = _selectedImage;
         }
+        
+        Cursor = CursorManager.SelectedCursor;
     }
 
     private void HoverPictureBox_MouseLeave(object sender, EventArgs e)
@@ -50,5 +54,7 @@ public class HoverPictureBox : PictureBox
         {
             Image = _normalImage;
         }
+        
+        Cursor = CursorManager.DefaultCursor;
     }
 } 

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            crlCloseRightPanel = new PictureBox();
+            crlCloseRightPanel = new CommonControls.HoverPictureBox();
             ((ISupportInitialize)crlCloseRightPanel).BeginInit();
             SuspendLayout();
             // 
@@ -59,6 +59,6 @@
 
         #endregion
 
-        private PictureBox crlCloseRightPanel;
+        private CommonControls.HoverPictureBox crlCloseRightPanel;
     }
 }

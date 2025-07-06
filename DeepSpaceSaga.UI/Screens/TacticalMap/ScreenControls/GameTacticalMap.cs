@@ -3,6 +3,7 @@ using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.Common.Extensions;
 using DeepSpaceSaga.UI.Controller.Services;
 using DeepSpaceSaga.UI.Rendering.Tools;
+using DeepSpaceSaga.UI.Tools;
 using SkiaSharp.Views.Desktop;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
@@ -50,7 +51,7 @@ public partial class GameTacticalMap : UserControl
 
     private void InitializeGameManager()
     {
-        if (_isInitialized || DesignMode) return;
+        if (_isInitialized || DesignModeChecker.IsInDesignMode()) return;
 
         try
         {
@@ -64,7 +65,7 @@ public partial class GameTacticalMap : UserControl
         catch
         {
             // Ignore exceptions in design mode
-            if (!DesignMode) throw;
+            if (!DesignModeChecker.IsInDesignMode()) throw;
         }
     }
 

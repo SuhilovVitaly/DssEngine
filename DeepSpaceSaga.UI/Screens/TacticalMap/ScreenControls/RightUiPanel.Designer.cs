@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            crlCloseRightPanel = new CommonControls.HoverPictureBox();
+            crlCloseRightPanel = new HoverPictureBox();
             ((ISupportInitialize)crlCloseRightPanel).BeginInit();
             SuspendLayout();
             // 
@@ -36,9 +36,13 @@
             // 
             crlCloseRightPanel.BackColor = Color.Black;
             crlCloseRightPanel.Cursor = Cursors.Hand;
+            crlCloseRightPanel.Image = Properties.Resources.close;
             crlCloseRightPanel.Location = new Point(745, 3);
             crlCloseRightPanel.Name = "crlCloseRightPanel";
+            crlCloseRightPanel.NormalImage = Properties.Resources.close;
+            crlCloseRightPanel.SelectedImage = Properties.Resources.close_selected;
             crlCloseRightPanel.Size = new Size(32, 32);
+            crlCloseRightPanel.SizeMode = PictureBoxSizeMode.StretchImage;
             crlCloseRightPanel.TabIndex = 0;
             crlCloseRightPanel.TabStop = false;
             crlCloseRightPanel.Click += pictureBox1_Click;

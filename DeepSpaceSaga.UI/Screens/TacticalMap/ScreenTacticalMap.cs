@@ -41,6 +41,8 @@ public partial class ScreenTacticalMap : Form
         GameTacticalMapControl.Dock = DockStyle.Fill;
 
         Cursor = CursorManager.DefaultCursor;
+
+        crlRightToolbar.OnShowRightPanel += crlRightPanel.ShowPanel;
     }
 
     private void OnKeyDown(object sender, KeyEventArgs e)

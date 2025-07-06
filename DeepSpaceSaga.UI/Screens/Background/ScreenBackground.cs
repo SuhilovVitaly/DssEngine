@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.Background;
+﻿using DeepSpaceSaga.UI.Tools;
+
+namespace DeepSpaceSaga.UI.Screens.Background;
 
 public partial class ScreenBackground : Form
 {
@@ -38,14 +40,18 @@ public partial class ScreenBackground : Form
     {
         base.OnPaint(e);
 
-        // Draw background image centered
-        string backgroundPath = Path.Combine("Images", "MainMenuBackground.jpg");
-        if (File.Exists(backgroundPath))
+        // Skip drawing background image in design mode
+        if (!DesignModeChecker.IsInDesignMode())
         {
-            using var backgroundImage = Image.FromFile(backgroundPath);
-            int x = Width - backgroundImage.Width; // Right align image
-            int y = (Height - backgroundImage.Height) / 2; // Keep vertical centering
-            e.Graphics.DrawImage(backgroundImage, x, y);
+            // Draw background image centered
+            string backgroundPath = Path.Combine(Application.StartupPath, "Images", "MainMenuBackground.jpg");
+            if (File.Exists(backgroundPath))
+            {
+                using var backgroundImage = Image.FromFile(backgroundPath);
+                int x = Width - backgroundImage.Width; // Right align image
+                int y = (Height - backgroundImage.Height) / 2; // Keep vertical centering
+                e.Graphics.DrawImage(backgroundImage, x, y);
+            }
         }
 
         // Draw border

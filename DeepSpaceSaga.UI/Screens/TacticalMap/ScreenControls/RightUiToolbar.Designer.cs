@@ -29,33 +29,20 @@
         private void InitializeComponent()
         {
             crlTargetSystem = new HoverPictureBox();
-            hoverPictureBox1 = new HoverPictureBox();
             ((ISupportInitialize)crlTargetSystem).BeginInit();
-            ((ISupportInitialize)hoverPictureBox1).BeginInit();
             SuspendLayout();
             // 
             // crlTargetSystem
             // 
             crlTargetSystem.Location = new Point(22, 18);
             crlTargetSystem.Name = "crlTargetSystem";
-            crlTargetSystem.NormalImage = null;
-            crlTargetSystem.SelectedImage = null;
+            crlTargetSystem.NormalImage = Properties.Resources.right_toolbar;
+            crlTargetSystem.SelectedImage = Properties.Resources.right_toolbar_selected;
             crlTargetSystem.Size = new Size(36, 36);
             crlTargetSystem.SizeMode = PictureBoxSizeMode.StretchImage;
             crlTargetSystem.TabIndex = 0;
             crlTargetSystem.TabStop = false;
-            // 
-            // hoverPictureBox1
-            // 
-            hoverPictureBox1.Image = Properties.Resources.close;
-            hoverPictureBox1.Location = new Point(22, 60);
-            hoverPictureBox1.Name = "hoverPictureBox1";
-            hoverPictureBox1.NormalImage = Properties.Resources.close;
-            hoverPictureBox1.SelectedImage = Properties.Resources.close_selected;
-            hoverPictureBox1.Size = new Size(36, 36);
-            hoverPictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            hoverPictureBox1.TabIndex = 1;
-            hoverPictureBox1.TabStop = false;
+            crlTargetSystem.Click += crlTargetSystem_Click;
             // 
             // RightUiToolbar
             // 
@@ -63,19 +50,16 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(hoverPictureBox1);
             Controls.Add(crlTargetSystem);
             DoubleBuffered = true;
             Name = "RightUiToolbar";
             Size = new Size(80, 974);
             ((ISupportInitialize)crlTargetSystem).EndInit();
-            ((ISupportInitialize)hoverPictureBox1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private CommonControls.HoverPictureBox crlTargetSystem;
-        private HoverPictureBox hoverPictureBox1;
     }
 }

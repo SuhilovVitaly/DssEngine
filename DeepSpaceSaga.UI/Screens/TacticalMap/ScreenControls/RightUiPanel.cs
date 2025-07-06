@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
+﻿using DeepSpaceSaga.UI.Tools;
+
+namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class RightUiPanel : UserControl
     {
@@ -11,10 +13,16 @@ public partial class RightUiPanel : UserControl
 
         private void LoadImages()
         {
-            try
+        // Skip loading images in design mode
+        if (DesignModeChecker.IsInDesignMode()) return;
+
+        try
             {
-                crlCloseRightPanel.NormalImage = Image.FromFile(@"Images/Window/close.png");
-                crlCloseRightPanel.SelectedImage = Image.FromFile(@"Images/Window/close-selected.png");
+                var closeImagePath = Path.Combine(Application.StartupPath, "Images", "Window", "close.png");
+                var closeSelectedImagePath = Path.Combine(Application.StartupPath, "Images", "Window", "close-selected.png");
+                
+                crlCloseRightPanel.NormalImage = Image.FromFile(closeImagePath);
+                crlCloseRightPanel.SelectedImage = Image.FromFile(closeSelectedImagePath);
             }
             catch (Exception ex)
             {
@@ -27,4 +35,9 @@ public partial class RightUiPanel : UserControl
         {
             Hide();
         }
-    }
+
+    public void ShowPanel(RightPanelContentType contentType)
+    {
+        Show();
+    }        
+}

@@ -1,3 +1,5 @@
+using DeepSpaceSaga.UI.Tools;
+
 namespace DeepSpaceSaga.UI.CommonControls;
 
 public class HoverPictureBox : PictureBox
@@ -28,8 +30,12 @@ public class HoverPictureBox : PictureBox
     {
         SetupEventHandlers();
         SizeMode = PictureBoxSizeMode.StretchImage;
-        // Set default cursor from CursorManager
-        Cursor = CursorManager.DefaultCursor;
+        
+        // Set default cursor from CursorManager only in runtime
+        if (!DesignModeChecker.IsInDesignMode())
+        {
+            Cursor = CursorManager.DefaultCursor;
+        }
     }
 
     private void SetupEventHandlers()
@@ -45,7 +51,11 @@ public class HoverPictureBox : PictureBox
             Image = _selectedImage;
         }
         
-        Cursor = CursorManager.SelectedCursor;
+        // Skip cursor change in design mode
+        if (!DesignModeChecker.IsInDesignMode())
+        {
+            Cursor = CursorManager.SelectedCursor;
+        }
     }
 
     private void HoverPictureBox_MouseLeave(object sender, EventArgs e)
@@ -55,6 +65,10 @@ public class HoverPictureBox : PictureBox
             Image = _normalImage;
         }
         
-        Cursor = CursorManager.DefaultCursor;
+        // Skip cursor change in design mode
+        if (!DesignModeChecker.IsInDesignMode())
+        {
+            Cursor = CursorManager.DefaultCursor;
+        }
     }
 } 

@@ -1,5 +1,6 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.UI.Controller.Services;
+using DeepSpaceSaga.UI.Tools;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
@@ -24,7 +25,7 @@ public partial class GameSessionInformation : ControlWindow
             
             _gameManager = value;
             
-            if (_gameManager != null && !DesignMode)
+            if (_gameManager != null && !DesignModeChecker.IsInDesignMode())
             {
                 _gameManager.OnUpdateGameData += UpdateGameData;
 

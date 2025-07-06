@@ -7,6 +7,9 @@ public static class CursorManager
 
     public static void Initialize()
     {
+        // Skip loading cursors in design mode
+        if (DesignModeChecker.IsInDesignMode()) return;
+        
         LoadDefaultCursor();
         LoadSelectedCursor();
         

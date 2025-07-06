@@ -31,8 +31,8 @@
             ControlGameSpeed = new MainGameScreen.GameSpeedControl();
             sessionInformationControl = new GameSessionInformation();
             GameTacticalMapControl = new GameTacticalMap();
-            rightUiToolbar1 = new RightUiToolbar();
-            rightUiPanel1 = new RightUiPanel();
+            crlRightToolbar = new RightUiToolbar();
+            crlRightPanel = new RightUiPanel();
             SuspendLayout();
             // 
             // ControlGameSpeed
@@ -67,25 +67,25 @@
             GameTacticalMapControl.Size = new Size(1018, 833);
             GameTacticalMapControl.TabIndex = 2;
             // 
-            // rightUiToolbar1
+            // crlRightToolbar
             // 
-            rightUiToolbar1.BackColor = Color.FromArgb(14, 14, 14);
-            rightUiToolbar1.BorderStyle = BorderStyle.FixedSingle;
-            rightUiToolbar1.Dock = DockStyle.Right;
-            rightUiToolbar1.Location = new Point(2151, 0);
-            rightUiToolbar1.Name = "rightUiToolbar1";
-            rightUiToolbar1.Size = new Size(80, 1035);
-            rightUiToolbar1.TabIndex = 3;
+            crlRightToolbar.BackColor = Color.Black;
+            crlRightToolbar.BorderStyle = BorderStyle.FixedSingle;
+            crlRightToolbar.Dock = DockStyle.Right;
+            crlRightToolbar.Location = new Point(2151, 0);
+            crlRightToolbar.Name = "crlRightToolbar";
+            crlRightToolbar.Size = new Size(80, 1035);
+            crlRightToolbar.TabIndex = 3;
             // 
-            // rightUiPanel1
+            // crlRightPanel
             // 
-            rightUiPanel1.BackColor = Color.FromArgb(6, 6, 6);
-            rightUiPanel1.BorderStyle = BorderStyle.FixedSingle;
-            rightUiPanel1.Dock = DockStyle.Right;
-            rightUiPanel1.Location = new Point(1371, 0);
-            rightUiPanel1.Name = "rightUiPanel1";
-            rightUiPanel1.Size = new Size(780, 1035);
-            rightUiPanel1.TabIndex = 4;
+            crlRightPanel.BackColor = Color.Black;
+            crlRightPanel.BorderStyle = BorderStyle.FixedSingle;
+            crlRightPanel.Dock = DockStyle.Right;
+            crlRightPanel.Location = new Point(1371, 0);
+            crlRightPanel.Name = "crlRightPanel";
+            crlRightPanel.Size = new Size(780, 1035);
+            crlRightPanel.TabIndex = 4;
             // 
             // ScreenTacticalMap
             // 
@@ -93,8 +93,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(2231, 1035);
-            Controls.Add(rightUiPanel1);
-            Controls.Add(rightUiToolbar1);
+            Controls.Add(crlRightPanel);
+            Controls.Add(crlRightToolbar);
             Controls.Add(sessionInformationControl);
             Controls.Add(ControlGameSpeed);
             Controls.Add(GameTacticalMapControl);
@@ -113,6 +113,7 @@
         private ScreenControls.GameSessionInformation sessionInformationControl;
         private GameTacticalMap GameTacticalMapControl;
         private RightUiToolbar rightUiToolbar1;
-        private RightUiPanel rightUiPanel1;
+        private RightUiToolbar crlRightToolbar;
+        private RightUiPanel crlRightPanel;
     }
 }

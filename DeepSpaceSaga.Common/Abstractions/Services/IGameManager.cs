@@ -34,11 +34,6 @@ public interface IGameManager
     IOuterSpaceService OuterSpace { get; set; }
 
     /// <summary>
-    /// Current mouse position on tactical map
-    /// </summary>
-    SpaceMapPoint TacticalMapMousePosition { get; }
-
-    /// <summary>
     /// Sets the game speed
     /// </summary>
     /// <param name="speed">Game speed value</param>

@@ -1,9 +1,4 @@
-﻿using System.Drawing;
-using DeepSpaceSaga.UI.Rendering.Tools;
-using log4net;
-using SkiaSharp;
-
-namespace DeepSpaceSaga.UI.Controller.Services;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class ScreenParameters : IScreenInfo
 {
@@ -16,8 +11,9 @@ public class ScreenParameters : IScreenInfo
     public SKCanvas GraphicSurface { get; set; }
     public IZoomScreen Zoom { get; private set; } = new ZoomScreen();
     public int MonitorId { get; set; }
-    public SpaceMapPoint MousePosition { get; private set; }
-    public SpaceMapPoint RelativeMousePosition { get; private set; }
+    public SpaceMapPoint MouseCelestialCoordinates { get; private set; }
+    public SpaceMapPoint MouseCelestialRelativeCoordinates { get; private set; }
+    public SpaceMapPoint MouseScreenCoordinates { get; private set; }
 
     public ScreenParameters(IScreenResolution screenResolution)
     {
@@ -39,11 +35,13 @@ public class ScreenParameters : IScreenInfo
         Height = screen.Height;
     }
 
-    public void SetMousePosition(SpaceMapPoint mousePosition)
+    public void SetMousePosition(SpaceMapPoint celestialCoordinates, SpaceMapPoint screenCoordinates)
     {
-        MousePosition = mousePosition;
+        MouseCelestialCoordinates = celestialCoordinates;
 
-        RelativeMousePosition = UiTools.ToRelativeCoordinates(this, mousePosition, Center);
+        MouseCelestialRelativeCoordinates = UiTools.ToRelativeCoordinates(this, celestialCoordinates, Center);
+
+        MouseScreenCoordinates = screenCoordinates;
     }
 }
 

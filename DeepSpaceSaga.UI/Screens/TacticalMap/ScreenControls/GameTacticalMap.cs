@@ -123,13 +123,15 @@ public partial class GameTacticalMap : UserControl
     {
         if(_sessionDto == null) { return; }
 
-        var location = e.Location.ToSpaceMapCoordinates();
+        var screenCoordinates = e.Location.ToSpaceMapCoordinates();
 
-        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(_gameManager.ScreenInfo, location, _gameManager.ScreenInfo.Center);
+        var mouseScreenCoordinates = UiTools.ToRelativeCoordinates(_gameManager.ScreenInfo, screenCoordinates, _gameManager.ScreenInfo.Center);
 
-        var mouseLocation = UiTools.ToTacticalMapCoordinates(_gameManager.ScreenInfo, mouseScreenCoordinates, _gameManager.ScreenInfo.CenterScreenOnMap);
+        var celestialCoordinates = UiTools.ToTacticalMapCoordinates(_gameManager.ScreenInfo, mouseScreenCoordinates, _gameManager.ScreenInfo.CenterScreenOnMap);
 
-        _gameManager.OuterSpace.HandleMouseMove(_sessionDto, mouseLocation);
+        _gameManager.OuterSpace.HandleMouseMove(_sessionDto, celestialCoordinates, screenCoordinates);
+
+        _gameManager.ScreenInfo.SetMousePosition(celestialCoordinates, screenCoordinates);
     }
 
     private void MapClick(object sender, MouseEventArgs e)

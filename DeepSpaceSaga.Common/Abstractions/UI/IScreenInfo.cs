@@ -10,7 +10,8 @@ public interface IScreenInfo
     IZoomScreen Zoom { get; }
     SKCanvas GraphicSurface { get; set; }
     int MonitorId { get; set; }
-    SpaceMapPoint RelativeMousePosition { get; }
-    SpaceMapPoint MousePosition { get; }
-    void SetMousePosition(SpaceMapPoint mousePosition);
+    SpaceMapPoint MouseCelestialRelativeCoordinates { get; }
+    SpaceMapPoint MouseCelestialCoordinates { get; }
+    SpaceMapPoint MouseScreenCoordinates { get; }
+    void SetMousePosition(SpaceMapPoint celestialCoordinates, SpaceMapPoint screenCoordinates);
 }

@@ -19,9 +19,9 @@ public class OuterSpaceService : IOuterSpaceService
         SelectedObjectId = 0;
     }
 
-    public void HandleMouseMove(GameSessionDto gameSession, SpaceMapPoint coordinates)
+    public void HandleMouseMove(GameSessionDto gameSession, SpaceMapPoint celestialCoordinates, SpaceMapPoint screenCoordinates)
     {
-        var objectsInRange = gameSession.GetCelestialObjectsByDistance(coordinates, 20).Where(celestialObject =>
+        var objectsInRange = gameSession.GetCelestialObjectsByDistance(celestialCoordinates, 20).Where(celestialObject =>
                 celestialObject.Id != gameSession.GetPlayerSpaceShip().Id);
 
         if (objectsInRange.Count() == 0)

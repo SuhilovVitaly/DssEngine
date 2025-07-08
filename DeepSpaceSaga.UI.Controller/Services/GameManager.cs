@@ -9,7 +9,6 @@ public class GameManager : IGameManager
     public IScreensService Screens { get; set; }
     public IScreenInfo ScreenInfo { get; set; }
     public IOuterSpaceService OuterSpace { get; set; }
-    public SpaceMapPoint TacticalMapMousePosition { get; private set; }
 
     private GameSessionDto _gameSessionDto;
     private readonly IGameServer _gameServer;

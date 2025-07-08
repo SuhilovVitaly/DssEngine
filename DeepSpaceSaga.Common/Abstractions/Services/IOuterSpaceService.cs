@@ -17,7 +17,7 @@ public interface IOuterSpaceService
     /// </summary>
     /// <param name="coordinatesGame">Game coordinates</param>
     /// <param name="coordinatesScreen">Screen coordinates</param>
-    void HandleMouseMove(GameSessionDto gameSession, SpaceMapPoint coordinates);
+    void HandleMouseMove(GameSessionDto gameSession, SpaceMapPoint celestialCoordinates, SpaceMapPoint screenCoordinates);
 
     /// <summary>
     /// Handles mouse click on tactical map

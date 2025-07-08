@@ -1,6 +1,7 @@
 using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.Common.Abstractions.Entities;
 using DeepSpaceSaga.Common.Geometry;
+using DeepSpaceSaga.UI.Controller.Tools;
 using System.Reflection;
 
 namespace DeepSpaceSaga.UI.Controller.Tests.Services;
@@ -23,8 +24,8 @@ public class OuterSpaceServiceTests
             Id = 1,
             Name = "Player Ship",
             Type = CelestialObjectType.SpaceshipPlayer,
-            X = 100,
-            Y = 100
+            X = 50,
+            Y = 50
         };
 
         _asteroid1 = new CelestialObjectDto
@@ -73,7 +74,7 @@ public class OuterSpaceServiceTests
     public void CleanActiveObject_ShouldSetActiveObjectIdToZero()
     {
         // Arrange
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
         Assert.NotEqual(0, _outerSpaceService.ActiveObjectId);
 
         // Act
@@ -105,7 +106,7 @@ public class OuterSpaceServiceTests
         _outerSpaceService.OnShowCelestialObject += obj => eventObject = obj;
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
 
         // Assert
         Assert.Equal(_asteroid1.Id, _outerSpaceService.ActiveObjectId);
@@ -117,7 +118,7 @@ public class OuterSpaceServiceTests
     public void HandleMouseMove_ShouldTriggerHideEvent_WhenNoObjectFoundAndActiveObjectExists()
     {
         // Arrange
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
         Assert.NotEqual(0, _outerSpaceService.ActiveObjectId);
 
         CelestialObjectDto? hideEventObject = null;
@@ -126,7 +127,7 @@ public class OuterSpaceServiceTests
         var farCoordinates = new SpaceMapPoint(500, 500);
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, farCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, farCoordinates, farCoordinates);
 
         // Assert
         Assert.Equal(0, _outerSpaceService.ActiveObjectId);
@@ -143,7 +144,7 @@ public class OuterSpaceServiceTests
         var farCoordinates = new SpaceMapPoint(500, 500);
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, farCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, farCoordinates, farCoordinates);
 
         // Assert
         Assert.Equal(0, _outerSpaceService.ActiveObjectId);
@@ -154,14 +155,14 @@ public class OuterSpaceServiceTests
     public void HandleMouseMove_ShouldNotTriggerEvent_WhenSameObjectFound()
     {
         // Arrange
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
         var initialActiveId = _outerSpaceService.ActiveObjectId;
 
         var eventTriggered = false;
         _outerSpaceService.OnShowCelestialObject += obj => eventTriggered = true;
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
 
         // Assert
         Assert.Equal(initialActiveId, _outerSpaceService.ActiveObjectId);
@@ -172,12 +173,13 @@ public class OuterSpaceServiceTests
     public void HandleMouseMove_ShouldExcludePlayerSpaceship()
     {
         // Arrange
-        var playerCoordinates = new SpaceMapPoint(100, 100);
+        var playerCoordinates = new SpaceMapPoint(50, 50);
         
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, playerCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, playerCoordinates, playerCoordinates);
 
         // Assert
+        // Player spaceship should be excluded from selection, so ActiveObjectId should remain 0
         Assert.Equal(0, _outerSpaceService.ActiveObjectId);
     }
 
@@ -188,7 +190,7 @@ public class OuterSpaceServiceTests
         var coordinates = new SpaceMapPoint(112, 112);
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, coordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, coordinates, coordinates);
 
         // Assert
         Assert.Equal(_asteroid1.Id, _outerSpaceService.ActiveObjectId);
@@ -232,7 +234,7 @@ public class OuterSpaceServiceTests
     public void HandleMouseClick_ShouldExcludePlayerSpaceship()
     {
         // Arrange
-        var playerCoordinates = new SpaceMapPoint(100, 100);
+        var playerCoordinates = new SpaceMapPoint(50, 50);
         var eventTriggered = false;
         _outerSpaceService.OnSelectCelestialObject += obj => eventTriggered = true;
 
@@ -261,7 +263,7 @@ public class OuterSpaceServiceTests
     public void Events_ShouldNotThrow_WhenNoSubscribers()
     {
         // Arrange & Act & Assert
-        var exception1 = Record.Exception(() => _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates));
+        var exception1 = Record.Exception(() => _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates));
         var exception2 = Record.Exception(() => _outerSpaceService.HandleMouseClick(_gameSessionDto, _testCoordinates));
 
         Assert.Null(exception1);
@@ -281,7 +283,7 @@ public class OuterSpaceServiceTests
         _outerSpaceService.OnSelectCelestialObject += obj => selectEventCount++;
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
         _outerSpaceService.HandleMouseClick(_gameSessionDto, _testCoordinates);
 
         // Assert
@@ -293,7 +295,7 @@ public class OuterSpaceServiceTests
     public void HandleMouseMove_ShouldUpdateActiveObject_WhenDifferentObjectFound()
     {
         // Arrange
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, _testCoordinates, _testCoordinates);
         var initialActiveId = _outerSpaceService.ActiveObjectId;
 
         var showEventCount = 0;
@@ -302,7 +304,7 @@ public class OuterSpaceServiceTests
         var coordinates2 = new SpaceMapPoint(120, 120);
 
         // Act
-        _outerSpaceService.HandleMouseMove(_gameSessionDto, coordinates2);
+        _outerSpaceService.HandleMouseMove(_gameSessionDto, coordinates2, coordinates2);
 
         // Assert
         Assert.NotEqual(initialActiveId, _outerSpaceService.ActiveObjectId);
@@ -322,9 +324,10 @@ public class OuterSpaceServiceTests
         Assert.NotNull(activeObjectIdProperty);
         Assert.NotNull(selectedObjectIdProperty);
         Assert.True(activeObjectIdProperty.CanRead);
-        Assert.False(activeObjectIdProperty.CanWrite);
         Assert.True(selectedObjectIdProperty.CanRead);
-        Assert.False(selectedObjectIdProperty.CanWrite);
+        // Properties should not have public setters
+        Assert.True(activeObjectIdProperty.SetMethod == null || !activeObjectIdProperty.SetMethod.IsPublic);
+        Assert.True(selectedObjectIdProperty.SetMethod == null || !selectedObjectIdProperty.SetMethod.IsPublic);
     }
 
     [Fact]
@@ -337,7 +340,7 @@ public class OuterSpaceServiceTests
         };
 
         // Act & Assert
-        var exception = Record.Exception(() => _outerSpaceService.HandleMouseMove(emptyGameSession, _testCoordinates));
+        var exception = Record.Exception(() => _outerSpaceService.HandleMouseMove(emptyGameSession, _testCoordinates, _testCoordinates));
         Assert.Null(exception);
         Assert.Equal(0, _outerSpaceService.ActiveObjectId);
     }

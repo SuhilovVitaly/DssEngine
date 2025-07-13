@@ -29,23 +29,35 @@
         private void InitializeComponent()
         {
             crlGameObjectWeaponInfo = new Label();
+            controlBaseCelestialObjectInformation1 = new ControlBaseCelestialObjectInformation();
             SuspendLayout();
             // 
             // crlGameObjectWeaponInfo
             // 
+            crlGameObjectWeaponInfo.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             crlGameObjectWeaponInfo.AutoSize = true;
             crlGameObjectWeaponInfo.ForeColor = Color.WhiteSmoke;
-            crlGameObjectWeaponInfo.Location = new Point(0, 0);
+            crlGameObjectWeaponInfo.Location = new Point(569, 409);
             crlGameObjectWeaponInfo.Name = "crlGameObjectWeaponInfo";
             crlGameObjectWeaponInfo.Size = new Size(208, 25);
             crlGameObjectWeaponInfo.TabIndex = 1;
             crlGameObjectWeaponInfo.Text = "GameObjectWeaponInfo";
+            // 
+            // controlBaseCelestialObjectInformation1
+            // 
+            controlBaseCelestialObjectInformation1.BackColor = Color.Black;
+            controlBaseCelestialObjectInformation1.Dock = DockStyle.Top;
+            controlBaseCelestialObjectInformation1.Location = new Point(0, 0);
+            controlBaseCelestialObjectInformation1.Name = "controlBaseCelestialObjectInformation1";
+            controlBaseCelestialObjectInformation1.Size = new Size(780, 150);
+            controlBaseCelestialObjectInformation1.TabIndex = 2;
             // 
             // GameObjectWeaponInfo
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
+            Controls.Add(controlBaseCelestialObjectInformation1);
             Controls.Add(crlGameObjectWeaponInfo);
             Name = "GameObjectWeaponInfo";
             Size = new Size(780, 434);
@@ -56,5 +68,6 @@
         #endregion
 
         private Label crlGameObjectWeaponInfo;
+        private ControlBaseCelestialObjectInformation controlBaseCelestialObjectInformation1;
     }
 }

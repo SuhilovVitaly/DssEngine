@@ -8,6 +8,7 @@ namespace DeepSpaceSaga.Common.Abstractions.UI.Screens
 {
     public enum RightPanelContentType
     {
-        SelectedObjectInformation
+        SelectedObjectInformation,
+        SelectedWeaponInformation
     }
 }

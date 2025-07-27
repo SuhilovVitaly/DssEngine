@@ -18,7 +18,8 @@ public static class UiControllerStartupExtensions
         // Register Controllers (business logic layer)
         services.AddScoped<IMainMenuController, MainMenuController>();
         services.AddScoped<IGameMenuController, GameMenuController>();
-            
+        services.AddScoped<IScreenTacticalMapController, ScreenTacticalMapController>();
+
         // Register Presenters (UI coordination layer)
         services.AddScoped<IGameMenuPresenter, GameMenuPresenter>();
     }

@@ -51,7 +51,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Black;
+            BackColor = Color.IndianRed;
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(crlCloseRightPanel);
             DoubleBuffered = true;

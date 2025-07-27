@@ -3,8 +3,10 @@
 public class ScreensService : IScreensService
 {
     private readonly ScreenBackground _screenBackground;
+    public IScreenTacticalMap TacticalMap { get; set; }
+    public IScreenTacticalMapController TacticalMapController { get; set; }
 
-    public ScreensService(ScreenBackground screenBackground)
+    public ScreensService(ScreenBackground screenBackground, IScreenTacticalMapController tacticalMapController)
     {
         _screenBackground = screenBackground;
 
@@ -13,6 +15,8 @@ public class ScreensService : IScreensService
             Console.WriteLine("[ScreensService] Background screen shown, showing main menu");
             ShowGameMenuScreen();
         };
+
+        TacticalMapController = tacticalMapController;
     }
 
     public void ShowGameMenuScreen()
@@ -42,10 +46,10 @@ public class ScreensService : IScreensService
         try
         {
             Console.WriteLine("[ScreensService] Showing tactical map screen");
-            var screen = Program.ServiceProvider.GetService<ScreenTacticalMap>();
+            var screen = Program.ServiceProvider.GetService<IScreenTacticalMap>();
             if (screen != null)
             {
-                _screenBackground.ShowChildForm(screen);
+                _screenBackground.ShowChildForm(screen as Form);
                 Console.WriteLine("[ScreensService] Tactical map screen displayed successfully");
             }
             else

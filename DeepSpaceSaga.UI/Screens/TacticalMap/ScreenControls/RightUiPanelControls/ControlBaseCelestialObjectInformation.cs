@@ -10,6 +10,7 @@ public partial class ControlBaseCelestialObjectInformation : UserControl
     private GameSessionDto _sessionDto;
     private int _selectedObjectId;
     private int _shownObjectId;
+    private int _lastUpdateObjectId;
 
     public ControlBaseCelestialObjectInformation()
     {
@@ -68,9 +69,14 @@ public partial class ControlBaseCelestialObjectInformation : UserControl
 
     private void RefreshControls(GameSessionDto session)
     {
-        if (IsDisposed) return;
+        if (IsDisposed) return;                
 
-        crlCelestialObjectId.Text = _shownObjectId == 0 ? _selectedObjectId.ToString() : _shownObjectId.ToString();
+        var idForShow = _shownObjectId == 0 ? _selectedObjectId : _shownObjectId;
+
+        if(_lastUpdateObjectId != idForShow)
+        {
+            _lastUpdateObjectId = idForShow;
+            crlCelestialObjectId.Text = idForShow.ToString();
+        }        
     }
-
 }

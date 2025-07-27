@@ -30,6 +30,8 @@
         {
             crlGameObjectWeaponInfo = new Label();
             controlBaseCelestialObjectInformation1 = new ControlBaseCelestialObjectInformation();
+            crlCloseRightPanel = new HoverPictureBox();
+            ((ISupportInitialize)crlCloseRightPanel).BeginInit();
             SuspendLayout();
             // 
             // crlGameObjectWeaponInfo
@@ -52,15 +54,32 @@
             controlBaseCelestialObjectInformation1.Size = new Size(780, 150);
             controlBaseCelestialObjectInformation1.TabIndex = 2;
             // 
+            // crlCloseRightPanel
+            // 
+            crlCloseRightPanel.BackColor = Color.Black;
+            crlCloseRightPanel.Cursor = Cursors.Hand;
+            crlCloseRightPanel.Image = Properties.Resources.close;
+            crlCloseRightPanel.Location = new Point(745, 3);
+            crlCloseRightPanel.Name = "crlCloseRightPanel";
+            crlCloseRightPanel.NormalImage = Properties.Resources.close;
+            crlCloseRightPanel.SelectedImage = Properties.Resources.close_selected;
+            crlCloseRightPanel.Size = new Size(32, 32);
+            crlCloseRightPanel.SizeMode = PictureBoxSizeMode.StretchImage;
+            crlCloseRightPanel.TabIndex = 3;
+            crlCloseRightPanel.TabStop = false;
+            crlCloseRightPanel.Click += Closepanel_Event;
+            // 
             // GameObjectWeaponInfo
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
+            Controls.Add(crlCloseRightPanel);
             Controls.Add(controlBaseCelestialObjectInformation1);
             Controls.Add(crlGameObjectWeaponInfo);
             Name = "GameObjectWeaponInfo";
             Size = new Size(780, 434);
+            ((ISupportInitialize)crlCloseRightPanel).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -69,5 +88,6 @@
 
         private Label crlGameObjectWeaponInfo;
         private ControlBaseCelestialObjectInformation controlBaseCelestialObjectInformation1;
+        private HoverPictureBox crlCloseRightPanel;
     }
 }

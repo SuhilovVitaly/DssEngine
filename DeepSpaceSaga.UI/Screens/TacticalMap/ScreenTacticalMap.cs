@@ -1,27 +1,30 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.UI.Controller.Services;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 
-public partial class ScreenTacticalMap : Form
+public partial class ScreenTacticalMap : Form, IScreenTacticalMap
 {
     private readonly SKControl _skControl;
     private IGameManager _gameManager;
     private readonly IScreensService _screensService;
+    private readonly IScreenTacticalMapController _controller;
     private bool isDrawInProcess = false;
     private GameSessionDto _gameSessionDto;
 
-    public ScreenTacticalMap(IGameManager gameManager, IScreensService screensService)
+    public ScreenTacticalMap(IGameManager gameManager, IScreensService screensService, IScreenTacticalMapController controller)
     {
         _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
         _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+        _controller = controller;
 
         InitializeComponent();
 
         // Initialize dependencies for child controls
         sessionInformationControl.GameManager = _gameManager;
 
-
+        _gameManager.Screens.TacticalMap = this;
         _gameManager.OnUpdateGameData += UpdateGameData;
         _gameManager.OnUpdateGameData += ControlGameSpeed.UpdateGameData;
 
@@ -95,5 +98,10 @@ public partial class ScreenTacticalMap : Form
             _gameManager.ScreenInfo.Zoom.Out();
         }
         Refresh();
+    }
+
+    public void CloseRightPanel()
+    {
+        crlRightPanel.Hide();
     }
 }

@@ -24,7 +24,7 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
         // Initialize dependencies for child controls
         sessionInformationControl.GameManager = _gameManager;
 
-        _gameManager.Screens.TacticalMap = this;
+        //_gameManager.Screens.TacticalMap = this;
         _gameManager.OnUpdateGameData += UpdateGameData;
         _gameManager.OnUpdateGameData += ControlGameSpeed.UpdateGameData;
 

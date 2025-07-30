@@ -48,7 +48,7 @@ namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls.RightUiPanelContro
 
         private void Closepanel_Event(object sender, EventArgs e)
         {
-            _gameManager.Screens.TacticalMap.CloseRightPanel();
+            //_gameManager.Screens.TacticalMap.CloseRightPanel();
         }
     }
 }

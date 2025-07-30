@@ -4,9 +4,9 @@ public class ScreensService : IScreensService
 {
     private readonly ScreenBackground _screenBackground;
     public IScreenTacticalMap TacticalMap { get; set; }
-    public IScreenTacticalMapController TacticalMapController { get; set; }
+    //public IScreenTacticalMapController TacticalMapController { get; set; }
 
-    public ScreensService(ScreenBackground screenBackground, IScreenTacticalMapController tacticalMapController)
+    public ScreensService(ScreenBackground screenBackground)
     {
         _screenBackground = screenBackground;
 
@@ -16,7 +16,7 @@ public class ScreensService : IScreensService
             ShowGameMenuScreen();
         };
 
-        TacticalMapController = tacticalMapController;
+        //TacticalMapController = tacticalMapController;
     }
 
     public void ShowGameMenuScreen()

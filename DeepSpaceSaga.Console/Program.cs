@@ -4,6 +4,7 @@ using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.Common.Generation;
 using DeepSpaceSaga.Common.Tools;
 using DeepSpaceSaga.Server;
+using DeepSpaceSaga.UI.Controller;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -51,6 +52,11 @@ class Program
 
        ServiceProvider = CreateHostBuilder().Build().Services;
        
+       
+       var gameManager = ServiceProvider.GetService<IGameManager>();     
+       
+       
+       
        var _worker = ServiceProvider.GetService<IGameServer>();        
               
        _worker.SessionStart(ScenarioGenerator.DefaultScenario(new GenerationTool()));
@@ -76,8 +82,11 @@ class Program
    static IHostBuilder CreateHostBuilder()
    {
        return Host.CreateDefaultBuilder()
-           .ConfigureServices((_, services) => {
+           .ConfigureServices((_, services) =>
+           {
+               services.AddConsoleServices();
                services.AddCommonServices();
+               services.AddUiControllerServices();
                services.AddServerServices();
            });
    }

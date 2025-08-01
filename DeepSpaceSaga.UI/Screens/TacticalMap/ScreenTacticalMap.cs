@@ -102,6 +102,6 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
 
     public void CloseRightPanel()
     {
-        crlRightPanel.Hide();
+        crlRightPanel.Visible = false;
     }
 }

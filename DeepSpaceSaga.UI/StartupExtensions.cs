@@ -16,7 +16,7 @@ public static class StartupExtensions
     public static void AddClientScreens(this IServiceCollection services)
     {
         // Register ScreenTacticalMap as transient to create new instance each time
-        services.AddTransient<IScreenTacticalMap, ScreenTacticalMap>();
+        services.AddSingleton<IScreenTacticalMap, ScreenTacticalMap>();
         
         // Register other screens as scoped to maintain state within a scope 
         services.AddScoped<ScreenMainMenu>();

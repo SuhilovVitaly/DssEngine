@@ -67,7 +67,7 @@
             crlCloseRightPanel.SizeMode = PictureBoxSizeMode.StretchImage;
             crlCloseRightPanel.TabIndex = 3;
             crlCloseRightPanel.TabStop = false;
-            crlCloseRightPanel.Click += Closepanel_Event;
+            crlCloseRightPanel.Click += ClosePanel_Event;
             // 
             // GameObjectWeaponInfo
             // 

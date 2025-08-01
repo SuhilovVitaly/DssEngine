@@ -6,8 +6,6 @@ public interface IScreensService
 {
     IScreenTacticalMap TacticalMap { get; set; }
 
-    //IScreenTacticalMapController TacticalMapController { get; set; }
-
     void ShowGameMenuScreen();
 
     void ShowTacticalMapScreen();

@@ -1,0 +1,69 @@
+[
+  {
+    "Key": "introductory.scene.01",
+    "Title": "Navigation Assistance System",
+    "Message": "introductory.scene.01",
+    "Type": 2,
+    "Trigger": 0,
+    "TriggerValue": "1",
+    "Reporter": {
+      "FirstName": "Vitold",
+      "LastName": "Suni",
+      "Rank": "Captain Rank",
+      "Portrait": "Vitold_Suni.png"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "introductory.scene.02",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  },
+  {
+    "Key": "introductory.scene.02",
+    "Title": "Navigation Assistance System",
+    "Message": "introductory.scene.02",
+    "ChainPart": true,
+    "UiScreenType": 1,
+    "Type": 2,
+    "Trigger": 0,
+    "TriggerValue": "1",
+    "Reporter": {
+      "FirstName": "Lada",
+      "LastName": "Kappl",
+      "Rank": "Navigation Assistance System Reporter Rank",
+      "Portrait": "Lada_Kappl.png"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "introductory.scene.03",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  },
+  {
+    "Key": "introductory.scene.03",
+    "Title": "Navigation Assistance System",
+    "Message": "introductory.scene.03",
+    "ChainPart": true,
+    "UiScreenType": 1,
+    "Type": 2,
+    "Trigger": 0,
+    "TriggerValue": "1",
+    "Reporter": {
+      "FirstName": "Vitold",
+      "LastName": "Suni",
+      "Rank": "Captain Rank",
+      "Portrait": "Vitold_Suni.png"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "-1",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  }
+] 

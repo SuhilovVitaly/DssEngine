@@ -38,3 +38,8 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Mining;
 global using DeepSpaceSaga.Common.Implementation.Entities.Equipment.Mining;
 global using DeepSpaceSaga.Server.Services.Scenario;
+global using DeepSpaceSaga.Common.Generation;
+global using System.Linq;
+global using System.Text;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
+global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;

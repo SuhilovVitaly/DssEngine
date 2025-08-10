@@ -1,0 +1,84 @@
+[
+  {
+    "Key": "tutorial.first.station.click",
+    "Title": "Navigation Assistance System",
+    "Message": "Navigation Assistance System Message",
+    "Type": 1,
+    "Trigger": 1,
+    "Reporter": {
+      "FirstName": "Tara",
+      "LastName": "Foxx",
+      "Rank": "Navigation Assistance System Reporter Rank",
+      "Portrait": "Tara.png"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "-1",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  },
+  {
+    "Key": "tutorial.first.asteroid.click",
+    "Title": "Navigation Assistance System",
+    "Message": "Navigation Assistance System Message - First click asteroid",
+    "Type": 1,
+    "Trigger": 2,
+    "Reporter": {
+      "FirstName": "Navigation Assistance System Reporter Name",
+      "LastName": "Navigation Assistance System Reporter Family",
+      "Rank": "Navigation Assistance System Reporter Rank",
+      "Portrait": "TaraFox.jpg"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "tutorial.first.asteroid.click.2",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  },
+  {
+    "Key": "tutorial.first.asteroid.click.2",
+    "Title": "Navigation Assistance System",
+    "Message": "Navigation Assistance System Message - Second click asteroid",
+    "ChainPart": true,
+    "Type": 1,
+    "Trigger": 2,
+    "Reporter": {
+      "FirstName": "Navigation Assistance System Reporter Name",
+      "LastName": "Navigation Assistance System Reporter Family",
+      "Rank": "Navigation Assistance System Reporter Rank",
+      "Portrait": "TaraFox.jpg"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "tutorial.first.asteroid.click.3",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  },
+  {
+    "Key": "tutorial.first.asteroid.click.3",
+    "Title": "Navigation Assistance System",
+    "Message": "Navigation Assistance System Message - Third click asteroid",
+    "ChainPart": true,
+    "Type": 1,
+    "Trigger": 2,
+    "Reporter": {
+      "FirstName": "Navigation Assistance System Reporter Name",
+      "LastName": "Navigation Assistance System Reporter Family",
+      "Rank": "Navigation Assistance System Reporter Rank",
+      "Portrait": "TaraFox.jpg"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "-1",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  }
+] 

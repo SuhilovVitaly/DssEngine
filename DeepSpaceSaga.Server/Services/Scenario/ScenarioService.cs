@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DeepSpaceSaga.Server.Services.Scenario;
 
-namespace DeepSpaceSaga.Server.Services.Scenario
+public class ScenarioService : IScenarioService
 {
-    public class ScenarioService : IScenarioService
+    private readonly IGenerationTool _generationTool;
+    public ScenarioService(IGenerationTool generationTool) 
     {
-        private readonly IGenerationTool _generationTool;
-        public ScenarioService(IGenerationTool generationTool) 
-        {
-            _generationTool = generationTool;
-        }
+        _generationTool = generationTool;
+    }
 
-        public GameSession GetScenario()
-        {
-            throw new NotImplementedException();
-        }
+    public GameSession GetScenario()
+    {
+        // TODO: Load celestial objects and player spacecraft from scenario file
+        var session = ScenarioGenerator.DefaultScenario(_generationTool);
+
+        session.Dialogs = new DialogsService("Default");
+
+        return session;
     }
 }

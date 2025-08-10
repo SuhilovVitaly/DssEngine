@@ -58,7 +58,6 @@ public class GameManager : IGameManager
 
     public void SessionStart()
     {
-        //_gameServer.SessionStart(ScenarioGenerator.DefaultScenario(GenerationTool));
         _gameServer.SessionStart(_scenarioService.GetScenario());
         OuterSpace = new OuterSpaceService();
         Screens.ShowTacticalMapScreen();

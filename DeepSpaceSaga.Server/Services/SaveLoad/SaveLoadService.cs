@@ -25,7 +25,7 @@ public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
         var filePath = Path.Combine(_savesDirectory, $"{saveFileName}.json");
 
         var savedFileContent = File.ReadAllText(filePath);
-        var snapshotAfterLoad = JsonSerializer.Deserialize<GameSnapshot>(savedFileContent, jsonOptions);
+        var snapshotAfterLoad = System.Text.Json.JsonSerializer.Deserialize<GameSnapshot>(savedFileContent, jsonOptions);
 
         ISessionContextService loadedSessionContext = new SessionContextService(
             new SessionInfoService(
@@ -57,7 +57,7 @@ public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
 
         try
         {
-            var jsonString = JsonSerializer.Serialize(snapshot, jsonOptions);
+            var jsonString = System.Text.Json.JsonSerializer.Serialize(snapshot, jsonOptions);
 
             // Write to file
             File.WriteAllText(filePath, jsonString);

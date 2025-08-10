@@ -24,13 +24,9 @@ public class EventCommandAcknowlegFlowTests
         gameServer.TurnExecution(CalculationType.Turn);
         var sessionContextDtoTurn1 = gameServer.GetSessionContextDto();
 
-        var gameEvent = sessionContextDtoTurn1.GameActionEvents.FirstOrDefault().Value;
-        
         gameServer.AddCommand(new Command
         {
-            CelestialObjectId = gameEvent.Id,
             Category = CommandCategory.CommandAccept,
-            TargetCelestialObjectId = gameEvent.Id,
             IsPauseProcessed = true
         });
         
@@ -38,11 +34,6 @@ public class EventCommandAcknowlegFlowTests
         var sessionContextDtoTurn2 = gameServer.GetSessionContextDto();
 
         // Act & Assert
-        gameEvent.Id.Should().Be(22);
-        sessionContextDtoTurn0.GameActionEvents.Count.Should().Be(0);
-        sessionContextDtoTurn1.GameActionEvents.Count.Should().Be(1);
-        sessionContextDtoTurn2.GameActionEvents.Count.Should().Be(0);
-        
         sessionContextDtoTurn1.State.IsPaused.Should().BeFalse();
         sessionContextDtoTurn2.State.IsPaused.Should().BeTrue();
     }

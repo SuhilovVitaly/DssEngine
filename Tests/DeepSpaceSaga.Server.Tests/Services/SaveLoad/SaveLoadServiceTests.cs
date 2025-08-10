@@ -39,8 +39,8 @@ public class SaveLoadServiceTests : IDisposable
             Id = Guid.NewGuid(),
             CelestialObjects = new ConcurrentDictionary<int, ICelestialObject>(),
             Commands = new ConcurrentDictionary<Guid, ICommand>(),
-            ActiveEvents = new ConcurrentDictionary<long, IGameActionEvent>(),
-            FinishedEvents = new ConcurrentDictionary<long, long>()
+            ActiveEvents = new ConcurrentDictionary<string, IGameActionEvent>(),
+            FinishedEvents = new ConcurrentDictionary<string, string>()
         };
 
         // Add test asteroid to game session
@@ -394,8 +394,8 @@ public class SaveLoadServiceTests : IDisposable
             Id = Guid.NewGuid(),
             CelestialObjects = new ConcurrentDictionary<int, ICelestialObject>(),
             Commands = new ConcurrentDictionary<Guid, ICommand>(),
-            ActiveEvents = new ConcurrentDictionary<long, IGameActionEvent>(),
-            FinishedEvents = new ConcurrentDictionary<long, long>()
+            ActiveEvents = new ConcurrentDictionary<string, IGameActionEvent>(),
+            FinishedEvents = new ConcurrentDictionary<string, string>()
         };
 
         _mockSessionContext.Setup(x => x.GameSession).Returns(emptySession);

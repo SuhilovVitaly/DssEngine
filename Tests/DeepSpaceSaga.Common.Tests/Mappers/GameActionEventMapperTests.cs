@@ -8,7 +8,7 @@ public class GameActionEventMapperTests
         // Arrange
         var gameEvent = new BaseGameEvent
         {
-            Id = 123L,
+            Key = "123",
             CalculationTurnId = 456L,
             CelestialObjectId = 789L,
             ModuleId = 101L,
@@ -27,7 +27,7 @@ public class GameActionEventMapperTests
 
         // Assert
         result.Should().NotBeNull();
-        result.Id.Should().Be(123L);
+        result.Key.Should().Be("123");
         result.CalculationTurnId.Should().Be(456L);
         result.CelestialObjectId.Should().Be(789L);
         result.ModuleId.Should().Be(101L);
@@ -46,7 +46,7 @@ public class GameActionEventMapperTests
         // Arrange
         var gameEvent = new BaseGameEvent
         {
-            Id = 123L,
+            Key = "123",
             CalculationTurnId = 456L,
             EventType = GameActionEventTypes.None,
             Dialog = CreateTestDialog("main"),
@@ -68,7 +68,7 @@ public class GameActionEventMapperTests
         // Arrange
         var gameEvent = new BaseGameEvent
         {
-            Id = 123L,
+            Key = "123",
             CalculationTurnId = 456L,
             CelestialObjectId = null,
             ModuleId = null,
@@ -94,7 +94,7 @@ public class GameActionEventMapperTests
         // Arrange
         var gameEventNone = new BaseGameEvent
         {
-            Id = 1L,
+            Key = "1",
             EventType = GameActionEventTypes.None,
             Dialog = CreateTestDialog("dialog_none"),
             ConnectedDialogs = new List<IDialog>()
@@ -102,7 +102,7 @@ public class GameActionEventMapperTests
 
         var gameEventHelp = new BaseGameEvent
         {
-            Id = 2L,
+            Key = "2",
             EventType = GameActionEventTypes.HelpSystem,
             Dialog = CreateTestDialog("dialog_help"),
             ConnectedDialogs = new List<IDialog>()
@@ -129,7 +129,7 @@ public class GameActionEventMapperTests
 
         var gameEvent = new BaseGameEvent
         {
-            Id = 123L,
+            Key = "123",
             Dialog = CreateTestDialog("main_dialog"),
             ConnectedDialogs = dialogList
         };
@@ -170,7 +170,7 @@ public class GameActionEventMapperTests
         // Arrange
         var gameEvent = new BaseGameEvent
         {
-            Id = long.MaxValue,
+            Key = "max",
             CalculationTurnId = long.MaxValue - 1,
             CelestialObjectId = long.MaxValue - 2,
             ModuleId = long.MaxValue - 3,
@@ -185,7 +185,7 @@ public class GameActionEventMapperTests
 
         // Assert
         result.Should().NotBeNull();
-        result.Id.Should().Be(long.MaxValue);
+        result.Key.Should().Be("max");
         result.CalculationTurnId.Should().Be(long.MaxValue - 1);
         result.CelestialObjectId.Should().Be(long.MaxValue - 2);
         result.ModuleId.Should().Be(long.MaxValue - 3);
@@ -198,7 +198,7 @@ public class GameActionEventMapperTests
         // Arrange
         var gameEvent = new BaseGameEvent
         {
-            Id = 0L,
+            Key = "0",
             CalculationTurnId = -1L,
             CelestialObjectId = -100L,
             ModuleId = -200L,
@@ -213,7 +213,7 @@ public class GameActionEventMapperTests
 
         // Assert
         result.Should().NotBeNull();
-        result.Id.Should().Be(0L);
+        result.Key.Should().Be("0");
         result.CalculationTurnId.Should().Be(-1L);
         result.CelestialObjectId.Should().Be(-100L);
         result.ModuleId.Should().Be(-200L);
@@ -232,7 +232,7 @@ public class GameActionEventMapperTests
 
         var gameEvent = new BaseGameEvent
         {
-            Id = 123L,
+            Key = "123",
             Dialog = CreateTestDialog("main_dialog"),
             ConnectedDialogs = dialogs
         };
@@ -255,7 +255,7 @@ public class GameActionEventMapperTests
         var testDialog = CreateTestDialog("test_key");
         var gameEvent = new BaseGameEvent
         {
-            Id = 123L,
+            Key = "123",
             Dialog = testDialog,
             ConnectedDialogs = new List<IDialog>()
         };

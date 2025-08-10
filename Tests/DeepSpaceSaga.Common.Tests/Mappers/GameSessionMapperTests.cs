@@ -21,8 +21,8 @@ public class GameSessionMapperTests
             Id = Guid.NewGuid(),
             CelestialObjects = new ConcurrentDictionary<int, ICelestialObject>(),
             Commands = new ConcurrentDictionary<Guid, ICommand>(),
-            ActiveEvents = new ConcurrentDictionary<long, IGameActionEvent>(),
-            FinishedEvents = new ConcurrentDictionary<long, long>()
+            ActiveEvents = new ConcurrentDictionary<string, IGameActionEvent>(),
+            FinishedEvents = new ConcurrentDictionary<string, string>()
         };
 
         _mockSessionContext.Setup(x => x.SessionInfo).Returns(_mockSessionInfo.Object);
@@ -402,8 +402,8 @@ public class GameSessionMapperTests
                 }
             },
             Commands = new Dictionary<Guid, CommandDto>(),
-            GameActionEvents = new Dictionary<long, GameActionEventDto>(),
-            FinishedEvents = new Dictionary<long, long>()
+            GameActionEvents = new Dictionary<string, GameActionEventDto>(),
+            FinishedEvents = new Dictionary<string, string>()
         };
 
         // Act
@@ -434,8 +434,8 @@ public class GameSessionMapperTests
             State = new GameStateDto(),
             CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>(),
             Commands = new Dictionary<Guid, CommandDto>(),
-            GameActionEvents = new Dictionary<long, GameActionEventDto>(),
-            FinishedEvents = new Dictionary<long, long>()
+            GameActionEvents = new Dictionary<string, GameActionEventDto>(),
+            FinishedEvents = new Dictionary<string, string>()
         };
 
         // Act

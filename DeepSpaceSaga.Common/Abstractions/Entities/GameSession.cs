@@ -5,8 +5,8 @@ public class GameSession
     public Guid Id { get; init; } = Guid.NewGuid();
     public ConcurrentDictionary<int, ICelestialObject> CelestialObjects { get; set; } = new();
     public ConcurrentDictionary<Guid, ICommand> Commands { get; set; } = new();
-    public ConcurrentDictionary<long, IGameActionEvent> ActiveEvents { get; set; } = new();
-    public ConcurrentDictionary<long, long> FinishedEvents { get; set; } = new();
+    public ConcurrentDictionary<string, IGameActionEvent> ActiveEvents { get; set; } = new();
+    public ConcurrentDictionary<string, string> FinishedEvents { get; set; } = new();
 
     public IDialogsService Dialogs { get; set; }
 

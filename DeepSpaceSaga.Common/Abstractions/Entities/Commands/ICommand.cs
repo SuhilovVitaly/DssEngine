@@ -7,9 +7,9 @@ public interface ICommand
     CommandTypes Type { get; set; }
     CommandStatus Status { get; set; }
     ICommand? TriggerCommand { get; set; }
-    long CelestialObjectId { get; set; }
+    long? CelestialObjectId { get; set; }
     int MemberId { get; set; }
-    long TargetCelestialObjectId { get; set; }
+    long? TargetCelestialObjectId { get; set; }
     int ModuleId { get; set; }
     bool IsOneTimeCommand { get; set; }
     bool IsUnique { get; set; }

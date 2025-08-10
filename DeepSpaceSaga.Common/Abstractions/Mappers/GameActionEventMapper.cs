@@ -19,7 +19,7 @@ public class GameActionEventMapper
 
         return new GameActionEventDto
         {
-           Id = gameEvent.Id,
+           Key = gameEvent.Key,
            CalculationTurnId = gameEvent.CalculationTurnId,
            CelestialObjectId = gameEvent.CelestialObjectId,
            ConnectedDialogs = dialogsCopy,

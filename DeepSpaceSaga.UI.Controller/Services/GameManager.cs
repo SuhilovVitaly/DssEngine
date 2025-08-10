@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Generation;
-
-namespace DeepSpaceSaga.UI.Controller.Services;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {

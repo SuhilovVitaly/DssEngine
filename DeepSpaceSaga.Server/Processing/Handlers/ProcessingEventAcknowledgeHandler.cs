@@ -6,13 +6,13 @@ public class ProcessingEventAcknowledgeHandler
 {
     public void Execute(ISessionContextService sessionContext)
     {
-        var acknowledgedEvents = new ConcurrentDictionary<long, ICommand>();
+        var acknowledgedEvents = new ConcurrentDictionary<string, ICommand>();
 
         foreach (var command in sessionContext.GameSession.Commands.Values)
         {
             if(command.Category == Common.Abstractions.Entities.Commands.CommandCategory.CommandAccept)
             {
-                acknowledgedEvents.TryAdd(command.CelestialObjectId, command);
+                acknowledgedEvents.TryAdd(command.Id.ToString(), command);
             }            
         }
 

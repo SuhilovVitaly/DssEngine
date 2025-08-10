@@ -24,9 +24,9 @@ public class GameEventsService : IGameEventsService
                 _gameManager.CommandExecute(new Command
                 {
                     Category = Common.Abstractions.Entities.Commands.CommandCategory.CommandAccept,
-                    CelestialObjectId = gameEvent.Id,
+                    CelestialObjectId = gameEvent.CelestialObjectId,
                     IsOneTimeCommand = true,
-                    TargetCelestialObjectId = gameEvent.Id,
+                    TargetCelestialObjectId = gameEvent.TargetObjectId,
                 });
 
                 _gameManager.GameEventInvoke(gameEvent); 

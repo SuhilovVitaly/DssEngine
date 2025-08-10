@@ -7,9 +7,9 @@ public class CommandDto
     public CommandTypes Type { get; set; }
     public CommandStatus Status { get; set; }
     public ICommand? TriggerCommand { get; set; }
-    public long CelestialObjectId { get; set; }
+    public long? CelestialObjectId { get; set; }
     public int MemberId { get; set; }
-    public long TargetCelestialObjectId { get; set; }
+    public long? TargetCelestialObjectId { get; set; }
     public int ModuleId { get; set; }
     public bool IsOneTimeCommand { get; set; }
     public bool IsUnique { get; set; }

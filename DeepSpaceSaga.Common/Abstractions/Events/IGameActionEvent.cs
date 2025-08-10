@@ -7,7 +7,7 @@ public interface IGameActionEvent
     long? CelestialObjectId { get; set; }
     long? TargetObjectId { get; set; }
     long? ModuleId { get; set; }
-    long Id { get; set; }
+    string Key { get; set; }
     long CalculationTurnId { get; set; }
     IDialog? Dialog { get; set; }
     List<IDialog> ConnectedDialogs { get; set; }

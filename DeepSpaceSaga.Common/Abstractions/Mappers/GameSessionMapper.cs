@@ -28,8 +28,8 @@ public static class GameSessionMapper
     {
         Dictionary<int, CelestialObjectDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
-        Dictionary<long, GameActionEventDto> gameActionEventsCopy;
-        Dictionary<long, long> finishedEventsCopy;
+        Dictionary<string, GameActionEventDto> gameActionEventsCopy;
+        Dictionary<string, string> finishedEventsCopy;
 
         lock (gameSessionContext)
         {
@@ -69,8 +69,8 @@ public static class GameSessionMapper
     {
         Dictionary<int, CelestialObjectSaveFormatDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
-        Dictionary<long, GameActionEventDto> gameActionEventsCopy;
-        Dictionary<long, long> finishedEventsCopy;
+        Dictionary<string, GameActionEventDto> gameActionEventsCopy;
+        Dictionary<string, string> finishedEventsCopy;
 
         lock (gameSessionContext)
         {

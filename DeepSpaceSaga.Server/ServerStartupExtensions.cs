@@ -12,6 +12,7 @@ public static class ServerStartupExtensions
         services.AddSingleton<ISessionContextService, SessionContextService>();
         services.AddSingleton<ISessionInfoService, SessionInfoService>();
         services.AddSingleton<ISaveLoadService, SaveLoadService>();
+        services.AddSingleton<IScenarioService, ScenarioService>();
 
         return services;
     }

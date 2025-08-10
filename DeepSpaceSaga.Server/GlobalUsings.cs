@@ -37,3 +37,4 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecr
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Equipment.Mining;
 global using DeepSpaceSaga.Common.Implementation.Entities.Equipment.Mining;
+global using DeepSpaceSaga.Server.Services.Scenario;

@@ -11,14 +11,15 @@ public class GameManager : IGameManager
     public IOuterSpaceService OuterSpace { get; set; }
 
     private GameSessionDto _gameSessionDto;
+    private readonly IScenarioService _scenarioService;
     private readonly IGameServer _gameServer;
 
     public GameManager(IGameServer gameServer, IScreensService screenManager, IGenerationTool generationTool, 
-        IOuterSpaceService outerSpace, IScreenResolution screenResolution) 
+        IOuterSpaceService outerSpace, IScreenResolution screenResolution, IScenarioService scenarioService) 
     {
         _gameServer = gameServer;
-
-        _gameServer.OnTurnExecute += UpdateGameData;
+        _scenarioService = scenarioService;
+        _gameServer.OnTurnExecute += UpdateGameData;        
 
         Screens = screenManager;
         ScreenInfo = new ScreenParameters(screenResolution);
@@ -57,7 +58,8 @@ public class GameManager : IGameManager
 
     public void SessionStart()
     {
-        _gameServer.SessionStart(ScenarioGenerator.DefaultScenario(GenerationTool));
+        //_gameServer.SessionStart(ScenarioGenerator.DefaultScenario(GenerationTool));
+        _gameServer.SessionStart(_scenarioService.GetScenario());
         OuterSpace = new OuterSpaceService();
         Screens.ShowTacticalMapScreen();
     }

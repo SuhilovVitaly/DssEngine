@@ -1,0 +1,91 @@
+{
+  "reportDate": "2025-05-26",
+  "totalTests": 121,
+  "overall": {
+    "lineRate": 0.7283,
+    "branchRate": 0.573,
+    "linesCovered": 472,
+    "linesValid": 648,
+    "branchesCovered": 51,
+    "branchesValid": 89
+  },
+  "projects": {
+    "DeepSpaceSaga.Server": {
+      "lineRate": 0.8707,
+      "branchRate": 0.8571,
+      "complexity": 105,
+      "status": "excellent",
+      "fileCount": 17,
+      "wellCovered": [
+        "LocalGameServer",
+        "SessionInfoService", 
+        "SchedulerService",
+        "ProcessingService",
+        "ScenarioGenerator"
+      ],
+      "needsAttention": [
+        "Settings.ConfigureLogging",
+        "TurnProcessing.Process",
+        "ProcessingLocationsHandler"
+      ]
+    },
+    "DeepSpaceSaga.Common": {
+      "lineRate": 0.5851,
+      "branchRate": 0.0909,
+      "complexity": 131,
+      "status": "needs_improvement",
+      "fileCount": 43,
+      "wellCovered": [
+        "GameSessionMapper",
+        "CelestialObjectMapper",
+        "CommandMapper",
+        "GameStateMapper",
+        "All DTO classes",
+        "Geometry base classes",
+        "BaseCelestialObject",
+        "GenerationTool"
+      ],
+      "needsAttention": [
+        "GeometryTools",
+        "GeometryExtensions",
+        "CelestialObjectExtensions",
+        "SpaceMapColorHelper",
+        "GameState",
+        "AbstractItem",
+        "IdGenerator",
+        "BaseAsteroid.Drill"
+      ]
+    }
+  },
+  "recommendations": {
+    "highPriority": [
+      "Create tests for GeometryTools",
+      "Test Extensions methods",
+      "Add tests for GameState",
+      "Test BaseAsteroid.Drill mechanics"
+    ],
+    "mediumPriority": [
+      "Tests for TurnProcessing",
+      "Tests for ProcessingLocationsHandler",
+      "Tests for IdGenerator",
+      "Tests for AbstractItem"
+    ],
+    "lowPriority": [
+      "Settings.ConfigureLogging",
+      "SpaceMapColorHelper"
+    ]
+  },
+  "goals": {
+    "shortTerm": {
+      "timeframe": "1-2 weeks",
+      "commonTarget": 0.75,
+      "overallTarget": 0.80
+    },
+    "longTerm": {
+      "timeframe": "1 month",
+      "commonTarget": 0.85,
+      "serverTarget": 0.90,
+      "overallTarget": 0.85
+    }
+  }
+} 

@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Events;
 using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.UI.Controller.Services;
 
@@ -103,5 +104,36 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
     public void CloseRightPanel()
     {
         crlRightPanel.Visible = false;
+    }
+
+    public void StartDialog(GameActionEventDto gameActionEvent)
+    {
+        try
+        {
+            CrossThreadExtensions.PerformSafely(this, OpenModalDialogWindow, gameActionEvent);
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+    }
+
+    private void OpenModalDialogWindow(GameActionEventDto gameActionEvent)
+    {
+        //Global.GameManager.Events.Pause();
+
+        //var screenDialog = new DialogBasicScreen(gameActionEvent, _gameManager)
+        //{
+        //    FormBorderStyle = FormBorderStyle.None,
+        //    Size = new Size(1100, 700),
+        //    StartPosition = FormStartPosition.Manual
+        //};
+
+        //var x = Location.X + (Width - screenDialog.Width) / 2;
+        //var y = Location.Y + (Height - screenDialog.Height) / 2;
+        //screenDialog.Location = new Point(x, y);
+
+        //screenDialog.ShowDialog(this);
     }
 }

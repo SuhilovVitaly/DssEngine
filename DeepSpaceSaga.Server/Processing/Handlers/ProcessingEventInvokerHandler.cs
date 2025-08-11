@@ -17,6 +17,7 @@ public class ProcessingEventInvokerHandler
         {
             var gameActionEvent = new GameActionEvent
             {
+                Key = dialog.Key,
                 Dialog = dialog,
                 ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog)
             };

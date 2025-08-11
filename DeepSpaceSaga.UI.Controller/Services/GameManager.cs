@@ -89,6 +89,8 @@ public class GameManager : IGameManager
 
     public void GameEventInvoke(GameActionEventDto gameEvent)
     {
-        
+        SessionPause();
+
+        Screens.TacticalMap.StartDialog(gameEvent);
     }
 }

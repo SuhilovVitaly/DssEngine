@@ -3,4 +3,6 @@
 public interface IScreenTacticalMap
 {
     void CloseRightPanel();
+
+    void StartDialog(GameActionEventDto gameActionEvent);
 }

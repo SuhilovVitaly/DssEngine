@@ -18,9 +18,13 @@ public static class GeometryExtensions
 
     public static float To360Degrees(this float angle)
     {
-        if (angle > 360) angle = angle - 360;
-        if (angle < 0) angle = 360 + angle;
-
+        // Приводим к диапазону [0, 360) используя остаток от деления
+        angle = angle % 360f;
+        
+        // Если отрицательный, прибавляем 360
+        if (angle < 0)
+            angle += 360f;
+        
         return angle;
     }
 
@@ -31,9 +35,13 @@ public static class GeometryExtensions
     
     public static double To360Degrees(this double angle)
     {
-        if (angle > 360) angle = angle - 360;
-        if (angle < 0) angle = 360 + angle;
-
+        // Приводим к диапазону [0, 360) используя остаток от деления
+        angle = angle % 360.0;
+        
+        // Если отрицательный, прибавляем 360
+        if (angle < 0)
+            angle += 360.0;
+        
         return angle;
     }
 

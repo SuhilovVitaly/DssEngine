@@ -1,0 +1,65 @@
+{
+  "LanguageId": 2,
+  "texts": [
+    {
+      "Key": "screen.space.station.shipyard.description",
+      "Text": "Верфь — это модуль для проектирования, сборки и технического обслуживания космических кораблей, оснащенный передовым оборудованием и обеспечивающий высокую эффективность работ."
+    },
+    {
+      "Key": "screen.space.station.shipyard.label",
+      "Text": "Верфь"
+    },
+    {
+      "Key": "screen.space.station.storages.description",
+      "Text": "Склады - обеспечивает хранение ресурсов и материалов различных типов, поддерживая оптимальные условия, полную безопасность и быстрый доступ к запасам."
+    },
+    {
+      "Key": "screen.space.station.storages.label",
+      "Text": "Склады"
+    },
+    {
+      "Key": "screen.space.station.stock.exchange.description",
+      "Text": "Биржа - централизованно управляет торговлей и обменом ресурсами между станциями и фракциями, эффективно обеспечивая стабильный экономический рост и гибкое ценообразование."
+    },
+    {
+      "Key": "screen.space.station.stock.exchange.label",
+      "Text": "Торговая зона"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.description",
+      "Text": "Рекрутинговый центр - способствует найму и распределению персонала, позволяя станциям оперативно формировать квалифицированные команды."
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.label",
+      "Text": "Рекрутинговый центр"
+    },
+    {
+      "Key": "screen.space.station.access.level",
+      "Text": "Общий допуск"
+    },
+    {
+      "Key": "screen.space.station.description",
+      "Text": "Описание"
+    },
+    {
+      "Key": "screen.space.station.corporation",
+      "Text": "Корпорация"
+    },
+    {
+      "Key": "screen.space.station.wing",
+      "Text": "Крыло"
+    },
+    {
+      "Key": "screen.space.station.global.access.level",
+      "Text": "Глобальный допуск"
+    },
+    {
+      "Key": "screen.space.station.owner",
+      "Text": "Владелец"
+    },
+    {
+      "Key": "screen.space.station.starbase.core",
+      "Text": "Центральный Хаб"
+    }
+  ]
+}

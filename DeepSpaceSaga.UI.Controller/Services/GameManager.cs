@@ -7,17 +7,21 @@ public class GameManager : IGameManager
     public IScreensService Screens { get; set; }
     public IScreenInfo ScreenInfo { get; set; }
     public IOuterSpaceService OuterSpace { get; set; }
+    public ILocalizationService Localization { get; private set; }
 
     private GameSessionDto _gameSessionDto;
     private readonly IScenarioService _scenarioService;
     private readonly IGameServer _gameServer;
 
     public GameManager(IGameServer gameServer, IScreensService screenManager, IGenerationTool generationTool, 
-        IOuterSpaceService outerSpace, IScreenResolution screenResolution, IScenarioService scenarioService) 
+        IOuterSpaceService outerSpace, IScreenResolution screenResolution, IScenarioService scenarioService,
+        ILocalizationService localizationService) 
     {
         _gameServer = gameServer;
         _scenarioService = scenarioService;
-        _gameServer.OnTurnExecute += UpdateGameData;        
+        _gameServer.OnTurnExecute += UpdateGameData;
+
+        Localization = localizationService;
 
         Screens = screenManager;
         ScreenInfo = new ScreenParameters(screenResolution);

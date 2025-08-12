@@ -1,0 +1,53 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "screen.space.station.recruitment.hub.label",
+      "Text": "Recruitment Hub"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.name.label",
+      "Text": "Name"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.salary.label",
+      "Text": "Salary"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.gender.label",
+      "Text": "Gender"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.age.label",
+      "Text": "Age"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.male.label",
+      "Text": "Male"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.female.label",
+      "Text": "Female"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.skill.talant.label",
+      "Text": "Training Efficiency"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.skill.max.level.label",
+      "Text": "Max Level"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.skill.level.label",
+      "Text": "Level"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.hire.label",
+      "Text": "Hire"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.dismiss.label",
+      "Text": "Dismiss"
+    }
+  ]
+}

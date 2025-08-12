@@ -1,0 +1,9 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "Navigation Assistance System Message - First click asteroid",
+      "Text": "Captain, if you plan to visit this space station, there are a few things you should know:{Environment.NewLine}{Environment.NewLine}1. It’s essential to check the station owners' attitude toward us. Otherwise, their turrets will tear our ship to pieces.{Environment.NewLine}{Environment.NewLine}2. To dock with the station, you must be within 10 kilometers. Your speed and direction must be synchronized with the station.{Environment.NewLine}{Environment.NewLine}3. The commands for synchronizing speed and direction with the target are located on the navigation panel among the commands."
+    }
+  ]
+}

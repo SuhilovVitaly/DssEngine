@@ -1,0 +1,17 @@
+{
+  "LanguageId": 2,
+  "texts": [
+    {
+      "Key": "Navigation Assistance System Message - First click asteroid",
+      "Text": "Капитан. Для разработки астероида нам нужно находится на расстоянии не более 5 километров. Скорость и направление движения нашего корабля должны совпадать со скоростью и направлением движения астероида.{Environment.NewLine}{Environment.NewLine} Команды по синхронизации скорости и направления движения находятся на панели команд внизу экрана."
+    },
+    {
+      "Key": "Navigation Assistance System Message - Second click asteroid",
+      "Text": "... PART II"
+    },
+    {
+      "Key": "Navigation Assistance System Message - Third click asteroid",
+      "Text": "... PART III"
+    }
+  ]
+}

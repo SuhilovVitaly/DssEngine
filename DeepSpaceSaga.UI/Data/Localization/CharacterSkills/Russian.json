@@ -1,0 +1,29 @@
+{
+  "LanguageId": 2,
+  "texts": [
+    {
+      "Key": "skills.navigation.label",
+      "Text": "Навигация"
+    },
+    {
+      "Key": "skills.cargo.label",
+      "Text": "Торговые операции"
+    },
+    {
+      "Key": "skills.engineering.label",
+      "Text": "Инженерные системы"
+    },
+    {
+      "Key": "skills.weapons.label",
+      "Text": "Орудийные системы"
+    },
+    {
+      "Key": "skills.electronic.systems.label",
+      "Text": "Электронные системы"
+    },
+    {
+      "Key": "skills.leadersip.label",
+      "Text": "Командование"
+    }
+  ]
+}

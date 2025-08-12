@@ -1,0 +1,13 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "dialog.exit.continue",
+      "Text": "CLOSE"
+    },
+    {
+      "Key": "dialog.exit.I.understand",
+      "Text": "I understand"
+    }
+  ]
+}

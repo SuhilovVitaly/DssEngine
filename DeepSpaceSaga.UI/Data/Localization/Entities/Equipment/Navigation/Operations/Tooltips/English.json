@@ -1,0 +1,22 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "toolip-operation-sync-speed",
+      "Text": "Operation to synchronise the speed with the target. If the operation button is not active, you have not selected a target. You can select a target on the map with the left mouse click."
+    },
+    {
+      "Key": "toolip-operation-sync-direction",
+      "Text": "Operation to synchronise the direction of movement with the target. If the operation button is not active, then you have not selected a target. You can select a target on the map with the left mouse click."
+    },
+    {
+      "Key": "toolip-operation-rotate-to-target",
+      "Text": "Операция поворота к цели. Если кнопка операции не активна значит вы не выбрали цель. Выбрать цель можно на карте левым кликом мыши."
+    },
+    {
+      "Key": "toolip-operation-dock",
+      "Text": "Вход в док. Если кнопка операции не активна значит вы не выбрали цель. Выбрать цель можно на карте левым кликом мыши."
+    }
+  ]
+}
+

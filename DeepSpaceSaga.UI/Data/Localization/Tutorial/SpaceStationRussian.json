@@ -1,0 +1,42 @@
+{
+  "LanguageId": 2,
+  "texts": [
+    {
+      "Key": "Navigation Assistance System",
+      "Text": "Система навигационного сопровождения"
+    },
+
+    {
+      "Key": "Navigation Assistance System Message",
+      "Text": "Вы серьезно, капитан? - Влада смотрит на вас немного удивленно, чуть склонив голову в сторону. - Снять шлем? Кабасита? Танго? В мои обязанности это не входит, капитан. И вообще, я на вас не смотрела!"
+    },
+    {
+      "Key": "Navigation Assistance System MessageXXX",
+      "Text": "Капитан, если вы планируете посетить эту станцию вам необходимо знать некоторые вещи:{Environment.NewLine}{Environment.NewLine}1. Нужно определить отношение владельцев станции к нам. В том случае если они враждебны мы рискуем попасть под огонь защитных турелей.{Environment.NewLine}{Environment.NewLine}2. Для стыковки с доками нам нужно находится на расстоянии не более 10 километров. Скорость и направление движения нашего корабля должны совпадать со скоростью и направлением движения станции.{Environment.NewLine}{Environment.NewLine}3. Команды по синхронизации скорости и направления движения находятся на панели команд внизу экрана."
+    },
+    {
+      "Key": "Navigation Assistance System Reporter Name",
+      "Text": "Тара"
+    },
+    {
+      "Key": "Navigation Assistance System Reporter Family",
+      "Text": "Фокс"
+    },
+    {
+      "Key": "Navigation Assistance System Reporter Rank",
+      "Text": "Штурман"
+    },
+    {
+      "Key": "Lada",
+      "Text": "Лада"
+    },
+    {
+      "Key": "Kappl",
+      "Text": "Каппл"
+    },
+    {
+      "Key": "Captain Rank",
+      "Text": "Капитан"
+    }
+  ]
+}

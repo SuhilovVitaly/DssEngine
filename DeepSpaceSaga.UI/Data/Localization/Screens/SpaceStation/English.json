@@ -1,0 +1,65 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "screen.space.station.shipyard.description",
+      "Text": "The Shipyard module in a space station oversees design, construction, and maintenance of vessels, featuring cutting-edge technology for efficient operations."
+    },
+    {
+      "Key": "screen.space.station.shipyard.label",
+      "Text": "Shipyard"
+    },
+    {
+      "Key": "screen.space.station.storages.description",
+      "Text": "Storages - reliably preserves critical resources and materials, continuously maintaining optimal environmental conditions, full security, and quick access to supplies."
+    },
+    {
+      "Key": "screen.space.station.storages.label",
+      "Text": "Storages"
+    },
+    {
+      "Key": "screen.space.station.stock.exchange.description",
+      "Text": "The Stock Exchange - manages trading and resource exchange among stations and factions, ensuring stable economic growth and flexible pricing"
+    },
+    {
+      "Key": "screen.space.station.stock.exchange.label",
+      "Text": "Stock Exchange"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.description",
+      "Text": "The Recruitment Hub facilitates hiring and personnel allocation, enabling stations to swiftly form skilled teams and significantly enhance overall operations."
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.label",
+      "Text": "Stock Exchange"
+    },
+    {
+      "Key": "screen.space.station.access.level",
+      "Text": "Access Level"
+    },
+    {
+      "Key": "screen.space.station.description",
+      "Text": "Description"
+    },
+    {
+      "Key": "screen.space.station.corporation",
+      "Text": "Corporation"
+    },
+    {
+      "Key": "screen.space.station.wing",
+      "Text": "Wing"
+    },
+    {
+      "Key": "screen.space.station.global.access.level",
+      "Text": "Global Access Level"
+    },
+    {
+      "Key": "screen.space.station.owner",
+      "Text": "Owner"
+    },
+    {
+      "Key": "screen.space.station.starbase.core",
+      "Text": "Starbase Core"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "introductory.scene.01",
+      "Text": "Test message with ID = 100"
+    },
+    {
+      "Key": "introductory.scene.02",
+      "Text": "Test message with ID = 100"
+    }
+  ]
+}

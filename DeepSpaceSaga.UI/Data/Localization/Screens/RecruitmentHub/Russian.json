@@ -1,0 +1,53 @@
+{
+  "LanguageId": 2,
+  "texts": [
+    {
+      "Key": "screen.space.station.recruitment.hub.label",
+      "Text": "Рекрутинговый центр"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.name.label",
+      "Text": "Имя"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.salary.label",
+      "Text": "Жалование"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.gender.label",
+      "Text": "Пол"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.age.label",
+      "Text": "Возраст"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.male.label",
+      "Text": "Мужской"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.female.label",
+      "Text": "Женский"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.skill.talant.label",
+      "Text": "Эффективность обучения"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.skill.max.level.label",
+      "Text": "Максимальный уровень"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.skill.level.label",
+      "Text": "Уровень"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.hire.label",
+      "Text": "Нанять"
+    },
+    {
+      "Key": "screen.space.station.recruitment.hub.recrut.dismiss.label",
+      "Text": "Выгнать"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "100",
+      "Text": "Test message with ID = 100"
+    },
+    {
+      "Key": "101",
+      "Text": "Test message with ID = 101"
+    },
+    {
+      "Key": "102",
+      "Text": "Test message with ID = 102"
+    }
+  ]
+}

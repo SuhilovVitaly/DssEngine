@@ -33,6 +33,8 @@ public interface IGameManager
     /// </summary>
     IOuterSpaceService OuterSpace { get; set; }
 
+    ILocalizationService Localization { get; }
+
     /// <summary>
     /// Sets the game speed
     /// </summary>

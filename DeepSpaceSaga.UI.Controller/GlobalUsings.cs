@@ -21,3 +21,6 @@ global using System.Drawing;
 global using DeepSpaceSaga.UI.Rendering.Tools;
 global using log4net;
 global using SkiaSharp;
+global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
+global using System.Text.Json.Serialization;
+global using System.Text.Json;

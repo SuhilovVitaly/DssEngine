@@ -1,0 +1,13 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "screen.bills.label",
+      "Text": "Finance"
+    },
+    {
+      "Key": "screen.crew.label",
+      "Text": "Crew"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "skills.navigation.label",
+      "Text": "Navigation"
+    },
+    {
+      "Key": "skills.cargo.label",
+      "Text": "Cargo"
+    },
+    {
+      "Key": "skills.engineering.label",
+      "Text": "Engineering"
+    },
+    {
+      "Key": "skills.weapons.label",
+      "Text": "Weapons"
+    },
+    {
+      "Key": "skills.electronic.systems.label",
+      "Text": "ElectronicSystems"
+    },
+    {
+      "Key": "skills.leadersip.label",
+      "Text": "Leadersip"
+    }
+  ]
+}

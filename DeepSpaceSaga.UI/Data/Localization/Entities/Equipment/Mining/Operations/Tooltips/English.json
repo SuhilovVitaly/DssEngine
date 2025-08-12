@@ -1,0 +1,9 @@
+{
+  "LanguageId": 1,
+  "texts": [
+    {
+      "Key": "toolip-operation-mining-harvest",
+      "Text": "Drilling an asteroid. If the operation button is not active, it means that you have not selected a target, or the target is located outside the module's range. You can select a target on the map with the left mouse click."
+    }
+  ]
+}s

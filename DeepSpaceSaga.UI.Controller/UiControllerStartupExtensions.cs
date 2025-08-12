@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Controller;
+﻿using DeepSpaceSaga.UI.Controller.Services.Localization;
+
+namespace DeepSpaceSaga.UI.Controller;
 
 [ExcludeFromCodeCoverage]
 public static class UiControllerStartupExtensions
@@ -8,8 +10,10 @@ public static class UiControllerStartupExtensions
         services.AddSingleton<IOuterSpaceService, OuterSpaceService>();        
         services.AddSingleton<IGameManager, GameManager>();
         services.AddSingleton<IGameEventsService, GameEventsService>();
+        services.AddSingleton<ISettings, Settings>();
+        services.AddSingleton<ILocalizationService, LocalizationService>();
 
-        // Register MVP components
+        // Register MVP components ILocalizationService
         services.AddMvpComponents();
     }
 

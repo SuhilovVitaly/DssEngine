@@ -1,5 +1,6 @@
 ﻿namespace DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 
+[ExcludeFromCodeCoverage]
 [DebuggerDisplay("{Key} {Title}")]
 public class BaseDialog : IDialog
 {

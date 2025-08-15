@@ -37,6 +37,9 @@ public partial class HelpSystemControl : UserControl
         {
             crlMessageTitle.Text = gameManager.Localization.GetText(dialog.Title);
             
+            // Subscribe to text output completion event
+            crlMessage.TextOutputCompleted += () => AddDialogButtons(dialog, gameManager);
+            
             // Use RPG text output control
             crlMessage.Text = gameManager.Localization.GetText(dialog.Message);
 
@@ -44,20 +47,6 @@ public partial class HelpSystemControl : UserControl
             crlRank.Text = gameManager.Localization.GetText(dialog.Reporter.Rank);
 
             crlPortrait.Image = ImageLoader.LoadCharacterImage(dialog.Reporter.Portrait);
-
-            int currentExit = 0;
-
-            foreach (var exit in dialog.Exits.OrderBy(x => x.NextKey))
-            {
-                AddExitDialogButton(exit, dialog, gameManager, currentExit);
-
-                currentExit++;
-            }
-
-            if (currentExit == 0)
-            {
-                AddDefaultExitDialogButton(dialog, gameManager);
-            }
 
             Visible = true;
         }
@@ -112,5 +101,22 @@ public partial class HelpSystemControl : UserControl
         button.Tag = exit;
 
         Controls.Add(button);
+    }
+
+    private void AddDialogButtons(DialogDto dialog, IGameManager gameManager)
+    {
+        int currentExit = 0;
+
+        foreach (var exit in dialog.Exits.OrderBy(x => x.NextKey))
+        {
+            AddExitDialogButton(exit, dialog, gameManager, currentExit);
+
+            currentExit++;
+        }
+
+        if (currentExit == 0)
+        {
+            AddDefaultExitDialogButton(dialog, gameManager);
+        }
     }
 }

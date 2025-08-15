@@ -1,10 +1,14 @@
 using System.ComponentModel;
 using System.Text;
+using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
 public partial class RpgTextOutputControl : UserControl
 {
+    // Event that fires when text output is completed
+    public event Action? TextOutputCompleted;
+
     private string fullText = string.Empty;
     private bool isOutputting = false;
     private string[] words = Array.Empty<string>();
@@ -75,6 +79,7 @@ public partial class RpgTextOutputControl : UserControl
             {
                 outputTimer.Stop();
                 isOutputting = false;
+                TextOutputCompleted?.Invoke();
             }
         }
     }

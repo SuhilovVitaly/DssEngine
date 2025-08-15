@@ -40,6 +40,9 @@ public partial class HelpSystemTwoPersonesControl : UserControl
             // Previous message shows immediately
             crlMessagePrevious.Text = gameManager.Localization.GetText(previousDialog.Message);
             
+            // Subscribe to text output completion event
+            crlMessage.TextOutputCompleted += () => AddDialogButtons(currentDialog, gameManager);
+            
             // Current message shows in RPG style using the control
             crlMessage.Text = gameManager.Localization.GetText(currentDialog.Message);
 
@@ -51,20 +54,6 @@ public partial class HelpSystemTwoPersonesControl : UserControl
 
             crlPortraitPrevious.Image = ImageLoader.LoadCharacterImage(previousDialog.Reporter.Portrait);
             crlPortrait.Image = ImageLoader.LoadCharacterImage(currentDialog.Reporter.Portrait);
-
-            int currentExit = 0;
-
-            foreach (var exit in currentDialog.Exits.OrderBy(x => x.NextKey))
-            {
-                AddExitDialogButton(exit, currentDialog, gameManager, currentExit);
-
-                currentExit++;
-            }
-
-            if (currentExit == 0)
-            {
-                AddDefaultExitDialogButton(currentDialog, gameManager);
-            }
 
             Visible = true;
         }
@@ -119,5 +108,22 @@ public partial class HelpSystemTwoPersonesControl : UserControl
         button.Tag = exit;
 
         Controls.Add(button);
+    }
+
+    private void AddDialogButtons(DialogDto dialog, IGameManager gameManager)
+    {
+        int currentExit = 0;
+
+        foreach (var exit in dialog.Exits.OrderBy(x => x.NextKey))
+        {
+            AddExitDialogButton(exit, dialog, gameManager, currentExit);
+
+            currentExit++;
+        }
+
+        if (currentExit == 0)
+        {
+            AddDefaultExitDialogButton(dialog, gameManager);
+        }
     }
 }

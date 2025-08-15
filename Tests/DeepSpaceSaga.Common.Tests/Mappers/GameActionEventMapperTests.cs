@@ -285,7 +285,18 @@ public class GameActionEventMapperTests
             Trigger = DialogTrigger.None,
             UiScreenType = DialogUiScreenType.OnePerson,
             TriggerValue = "test_value",
-            Reporter = new Mock<ICharacter>().Object,
+            Reporter = new CrewMember
+            {
+                Id = 1,
+                FirstName = "Test",
+                LastName = "Character",
+                Age = 25,
+                Gender = Gender.Male,
+                Rank = "Test Rank",
+                Portrait = "test_portrait.png",
+                Salary = 1000,
+                Skills = new Dictionary<CharacterSkillType, ICharacterSkill>()
+            },
             Exits = new List<DialogExit>()
         };
     }

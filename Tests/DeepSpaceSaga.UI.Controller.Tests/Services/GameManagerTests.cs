@@ -176,8 +176,10 @@ public class GameManagerTests
             out var localization);
 
         var scenario = new GameSession();
+        var sessionDto = new GameSessionDto();
         scenarioService.Setup(s => s.GetScenario()).Returns(scenario);
         gameServer.Setup(s => s.SessionStart(scenario));
+        gameServer.Setup(s => s.GetSessionContextDto()).Returns(sessionDto);
         screens.Setup(s => s.ShowTacticalMapScreen());
 
         var initialOuterSpace = manager.OuterSpace;

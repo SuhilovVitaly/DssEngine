@@ -4,6 +4,11 @@ public class ImageLoader
 {
     public static Image LoadLayersTacticalImage(string filename)
     {
+        if (string.IsNullOrWhiteSpace(filename))
+        {
+            throw new ArgumentException("Filename cannot be null, empty, or whitespace.", nameof(filename));
+        }
+
         // Путь к файлу относительно корня проекта
         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "Images", "Layers", "Tactical", filename + ".png");
 
@@ -19,6 +24,11 @@ public class ImageLoader
 
     public static Image LoadCharacterImage(string filename)
     {
+        if (string.IsNullOrWhiteSpace(filename))
+        {
+            throw new ArgumentException("Filename cannot be null, empty, or whitespace.", nameof(filename));
+        }
+
         // Путь к файлу относительно корня проекта
         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Characters", filename);
 
@@ -34,6 +44,11 @@ public class ImageLoader
 
     public static Image LoadItemImage(string filename)
     {
+        if (string.IsNullOrWhiteSpace(filename))
+        {
+            throw new ArgumentException("Filename cannot be null, empty, or whitespace.", nameof(filename));
+        }
+
         filename = filename.Replace(".", "/");
         filename = filename + ".png";
         // Путь к файлу относительно корня проекта

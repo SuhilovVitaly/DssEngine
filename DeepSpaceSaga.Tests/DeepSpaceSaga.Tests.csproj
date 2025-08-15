@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -21,6 +21,7 @@
       CompilerGenerated,
       ExcludeFromCodeCoverage
     </ExcludeByAttribute>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,13 +42,14 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="8.2.0" />
-    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="log4net" Version="3.0.4" />
     <PackageReference Include="Moq" Version="4.20.72" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DeepSpaceSaga.Common\DeepSpaceSaga.Common.csproj" />
     <ProjectReference Include="..\DeepSpaceSaga.Server\DeepSpaceSaga.Server.csproj" />
+    <ProjectReference Include="..\DeepSpaceSaga.UI\DeepSpaceSaga.UI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

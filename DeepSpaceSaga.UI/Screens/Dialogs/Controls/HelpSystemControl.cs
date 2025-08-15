@@ -86,6 +86,9 @@ public partial class HelpSystemControl : UserControl
             // Subscribe to text output completion event
             crlMessage.TextOutputCompleted += () => AddDialogButtons(dialog, gameManager);
             
+            // Subscribe to space pressed after completion event
+            crlMessage.SpacePressedAfterCompletion += () => SimulateFirstButtonClick(dialog, gameManager);
+            
             // Use RPG text output control
             crlMessage.Text = gameManager.Localization.GetText(dialog.Message);
 
@@ -101,6 +104,32 @@ public partial class HelpSystemControl : UserControl
 
             throw;
         }        
+    }
+
+    private void SimulateFirstButtonClick(DialogDto dialog, IGameManager gameManager)
+    {
+        // Find the first available exit
+        var firstExit = dialog.Exits.OrderBy(x => x.NextKey).FirstOrDefault();
+        
+        if (firstExit != null)
+        {
+            // Simulate click on first button
+            if (firstExit.NextKey != "-1")
+            {
+                OnNextDialog?.Invoke(firstExit);
+            }
+            else
+            {
+                OnClose?.Invoke();
+            }
+            Visible = false;
+        }
+        else
+        {
+            // No exits available, just close
+            OnClose?.Invoke();
+            Visible = false;
+        }
     }
 
     private void AddDefaultExitDialogButton(DialogDto dialog, IGameManager gameManager)

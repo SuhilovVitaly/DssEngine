@@ -80,6 +80,7 @@
             crlMessage.Name = "crlMessage";
             crlMessage.Size = new Size(1031, 554);
             crlMessage.TabIndex = 4;
+            crlMessage.TextOutputSpeedMs = 50;
             // 
             // crlMessageTitle
             // 

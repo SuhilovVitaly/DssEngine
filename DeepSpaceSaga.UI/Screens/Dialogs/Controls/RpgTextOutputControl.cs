@@ -8,6 +8,9 @@ public partial class RpgTextOutputControl : UserControl
 {
     // Event that fires when text output is completed
     public event Action? TextOutputCompleted;
+    
+    // Event that fires when user presses space after text is completed
+    public event Action? SpacePressedAfterCompletion;
 
     private string fullText = string.Empty;
     private bool isOutputting = false;
@@ -56,11 +59,20 @@ public partial class RpgTextOutputControl : UserControl
 
     private void RpgTextOutputControl_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == Keys.Space && isOutputting)
+        if (e.KeyCode == Keys.Space)
         {
-            // User pressed space - skip text output
-            SkipTextOutput();
-            e.Handled = true;
+            if (isOutputting)
+            {
+                // User pressed space while text is still outputting - skip to end
+                SkipTextOutput();
+                e.Handled = true;
+            }
+            else
+            {
+                // User pressed space after text is completed - simulate first button click
+                SpacePressedAfterCompletion?.Invoke();
+                e.Handled = true;
+            }
         }
     }
 

@@ -89,6 +89,9 @@ public partial class HelpSystemTwoPersonesControl : UserControl
             // Subscribe to text output completion event
             crlMessage.TextOutputCompleted += () => AddDialogButtons(currentDialog, gameManager);
             
+            // Subscribe to space pressed after completion event
+            crlMessage.SpacePressedAfterCompletion += () => SimulateFirstButtonClick(currentDialog, gameManager);
+            
             // Current message shows in RPG style using the control
             crlMessage.Text = gameManager.Localization.GetText(currentDialog.Message);
 
@@ -108,6 +111,32 @@ public partial class HelpSystemTwoPersonesControl : UserControl
 
             throw;
         }        
+    }
+
+    private void SimulateFirstButtonClick(DialogDto dialog, IGameManager gameManager)
+    {
+        // Find the first available exit
+        var firstExit = dialog.Exits.OrderBy(x => x.NextKey).FirstOrDefault();
+        
+        if (firstExit != null)
+        {
+            // Simulate click on first button
+            if (firstExit.NextKey != "-1")
+            {
+                OnNextDialog?.Invoke(firstExit);
+            }
+            else
+            {
+                OnClose?.Invoke();
+            }
+            Visible = false;
+        }
+        else
+        {
+            // No exits available, just close
+            OnClose?.Invoke();
+            Visible = false;
+        }
     }
 
     private void AddDefaultExitDialogButton(DialogDto dialog, IGameManager gameManager)

@@ -8,6 +8,9 @@ public partial class HelpSystemTwoPersonesControl : UserControl
     public event Action? OnClose;
     public event Action<DialogExit> OnNextDialog;
 
+    // Speed of text output in milliseconds between words
+    public int TextOutputSpeedMs { get; set; } = 100;
+
     public HelpSystemTwoPersonesControl()
     {
         InitializeComponent();
@@ -36,17 +39,21 @@ public partial class HelpSystemTwoPersonesControl : UserControl
         try
         {
             crlMessageTitle.Text = gameManager.Localization.GetText(currentDialog.Title);
-            crlMessagePrevious.Text = gameManager.Localization.GetText(currentDialog.Message);
-            crlMessage.Text = gameManager.Localization.GetText(previousDialog.Message);
+            
+            // Previous message shows immediately
+            crlMessagePrevious.Text = gameManager.Localization.GetText(previousDialog.Message);
+            
+            // Current message shows in RPG style word by word
+            StartRpgTextOutput(gameManager.Localization.GetText(currentDialog.Message));
 
-            crlNamePrevious.Text = currentDialog.Reporter.FirstName + " " + currentDialog.Reporter.LastName;
-            crlRankPrevious.Text = gameManager.Localization.GetText(currentDialog.Reporter.Rank);
+            crlNamePrevious.Text = currentDialog.Reporter.FirstName + " " + previousDialog.Reporter.LastName;
+            crlRankPrevious.Text = gameManager.Localization.GetText(previousDialog.Reporter.Rank);
 
-            crlName.Text = previousDialog.Reporter.FirstName + " " + previousDialog.Reporter.LastName;
-            crlRank.Text = gameManager.Localization.GetText(previousDialog.Reporter.Rank);
+            crlName.Text = previousDialog.Reporter.FirstName + " " + currentDialog.Reporter.LastName;
+            crlRank.Text = gameManager.Localization.GetText(currentDialog.Reporter.Rank);
 
-            crlPortraitPrevious.Image = ImageLoader.LoadCharacterImage(currentDialog.Reporter.Portrait);
-            crlPortrait.Image = ImageLoader.LoadCharacterImage(previousDialog.Reporter.Portrait);
+            crlPortraitPrevious.Image = ImageLoader.LoadCharacterImage(previousDialog.Reporter.Portrait);
+            crlPortrait.Image = ImageLoader.LoadCharacterImage(currentDialog.Reporter.Portrait);
 
             int currentExit = 0;
 
@@ -69,6 +76,26 @@ public partial class HelpSystemTwoPersonesControl : UserControl
 
             throw;
         }        
+    }
+
+    private async void StartRpgTextOutput(string fullText)
+    {
+        try
+        {
+            crlMessage.Text = "";
+            var words = fullText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            
+            foreach (var word in words)
+            {
+                crlMessage.Text += word + " ";
+                await Task.Delay(TextOutputSpeedMs);
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     private void AddDefaultExitDialogButton(DialogDto dialog, IGameManager gameManager)

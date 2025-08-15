@@ -48,6 +48,20 @@ public partial class RpgTextOutputControl : UserControl
         // Initialize timer for smooth text output
         outputTimer = new System.Windows.Forms.Timer();
         outputTimer.Tick += OutputTimer_Tick;
+        
+        // Enable key handling for space key
+        this.TabStop = true;
+        this.KeyDown += RpgTextOutputControl_KeyDown;
+    }
+
+    private void RpgTextOutputControl_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Space && isOutputting)
+        {
+            // User pressed space - skip text output
+            SkipTextOutput();
+            e.Handled = true;
+        }
     }
 
     private void RpgTextOutputControl_Resize(object sender, EventArgs e)
@@ -117,6 +131,25 @@ public partial class RpgTextOutputControl : UserControl
         if (!isOutputting)
         {
             StartRpgTextOutput();
+        }
+    }
+
+    /// <summary>
+    /// Skips the text output and shows all text immediately
+    /// </summary>
+    public void SkipTextOutput()
+    {
+        if (isOutputting)
+        {
+            // Stop the timer
+            outputTimer.Stop();
+            isOutputting = false;
+            
+            // Show all text immediately
+            lblText.Text = fullText;
+            
+            // Fire completion event
+            TextOutputCompleted?.Invoke();
         }
     }
 }

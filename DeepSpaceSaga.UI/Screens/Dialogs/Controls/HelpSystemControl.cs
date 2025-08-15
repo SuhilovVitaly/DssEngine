@@ -11,6 +11,52 @@ public partial class HelpSystemControl : UserControl
     public HelpSystemControl()
     {
         InitializeComponent();
+        
+        // Enable key handling for space key
+        this.TabStop = true;
+        this.KeyDown += HelpSystemControl_KeyDown;
+        
+        // Also handle key events for child controls
+        this.PreviewKeyDown += HelpSystemControl_PreviewKeyDown;
+        
+        // Subscribe to key events of child controls
+        SubscribeToChildKeyEvents();
+    }
+
+    private void SubscribeToChildKeyEvents()
+    {
+        // Subscribe to key events of all child controls
+        foreach (Control control in this.Controls)
+        {
+            control.KeyDown += (sender, e) => 
+            {
+                if (e.KeyCode == Keys.Space)
+                {
+                    crlMessage?.SkipTextOutput();
+                    e.Handled = true;
+                }
+            };
+        }
+    }
+
+    private void HelpSystemControl_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Space)
+        {
+            // User pressed space - skip text output if it's still running
+            crlMessage?.SkipTextOutput();
+            e.Handled = true; // Prevent further processing
+        }
+    }
+
+    private void HelpSystemControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+    {
+        if (e.KeyCode == Keys.Space)
+        {
+            // User pressed space - skip text output if it's still running
+            crlMessage?.SkipTextOutput();
+            e.IsInputKey = true; // Mark as handled
+        }
     }
 
     private void Event_ExitScreen(object sender, EventArgs e)

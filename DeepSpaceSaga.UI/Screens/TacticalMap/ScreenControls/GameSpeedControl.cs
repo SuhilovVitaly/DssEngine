@@ -23,6 +23,16 @@ public partial class GameSpeedControl : UserControl
         CrossThreadExtensions.PerformSafely(this, RereshControls, session);
     }
 
+    private IGameManager GetGameManager()
+    {
+        if (_gameManager is null)
+        {
+            _gameManager = Program.ServiceProvider?.GetService<IGameManager>() ?? throw new InvalidOperationException("Failed to resolve GameManager");
+        }
+
+        return _gameManager;
+    }
+
     private void RereshControls(GameSessionDto session)
     {
         if (session.State.IsPaused)
@@ -73,36 +83,42 @@ public partial class GameSpeedControl : UserControl
 
     private void cmdPause_Click(object sender, EventArgs e)
     {
+        GetGameManager();
         _gameManager.SessionPause();
         crlEmpty.Select();
     }
 
     private void button1_Click(object sender, EventArgs e)
     {
+        GetGameManager();
         _gameManager.SetGameSpeed(1);
         crlEmpty.Select();
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
+        GetGameManager();
         _gameManager.SetGameSpeed(2);
         crlEmpty.Select();
     }
 
     private void button3_Click(object sender, EventArgs e)
     {
+        GetGameManager();
         _gameManager.SetGameSpeed(3);
         crlEmpty.Select();
     }
 
     private void button4_Click(object sender, EventArgs e)
     {
+        GetGameManager();
         _gameManager.SetGameSpeed(4);
         crlEmpty.Select();
     }
 
     private void button5_Click(object sender, EventArgs e)
     {
+        GetGameManager();
         _gameManager.SetGameSpeed(5);
         crlEmpty.Select();
     }

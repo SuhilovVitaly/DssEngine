@@ -31,7 +31,7 @@
             crlPortrait = new PictureBox();
             crlRank = new Label();
             crlName = new Label();
-            crlMessage = new Label();
+            crlMessage = new RpgTextOutputControl();
             crlMessageTitle = new Label();
             crlNamePrevious = new Label();
             crlRankPrevious = new Label();
@@ -43,10 +43,9 @@
             // 
             // crlPortrait
             // 
-            crlPortrait.Location = new Point(58, 64);
-            crlPortrait.Margin = new Padding(4, 4, 4, 4);
+            crlPortrait.Location = new Point(46, 51);
             crlPortrait.Name = "crlPortrait";
-            crlPortrait.Size = new Size(205, 205);
+            crlPortrait.Size = new Size(164, 164);
             crlPortrait.SizeMode = PictureBoxSizeMode.StretchImage;
             crlPortrait.TabIndex = 2;
             crlPortrait.TabStop = false;
@@ -56,10 +55,9 @@
             crlRank.BackColor = Color.FromArgb(12, 12, 12, 50);
             crlRank.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
             crlRank.ForeColor = Color.OrangeRed;
-            crlRank.Location = new Point(58, 272);
-            crlRank.Margin = new Padding(4, 0, 4, 0);
+            crlRank.Location = new Point(46, 218);
             crlRank.Name = "crlRank";
-            crlRank.Size = new Size(205, 31);
+            crlRank.Size = new Size(164, 25);
             crlRank.TabIndex = 3;
             crlRank.Text = "label1";
             crlRank.TextAlign = ContentAlignment.TopCenter;
@@ -69,10 +67,9 @@
             crlName.BackColor = Color.FromArgb(12, 12, 12, 50);
             crlName.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
             crlName.ForeColor = Color.WhiteSmoke;
-            crlName.Location = new Point(58, 304);
-            crlName.Margin = new Padding(4, 0, 4, 0);
+            crlName.Location = new Point(46, 243);
             crlName.Name = "crlName";
-            crlName.Size = new Size(205, 31);
+            crlName.Size = new Size(164, 25);
             crlName.TabIndex = 3;
             crlName.Text = "label1";
             crlName.TextAlign = ContentAlignment.TopCenter;
@@ -82,20 +79,18 @@
             crlMessage.BackColor = Color.Black;
             crlMessage.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             crlMessage.ForeColor = Color.WhiteSmoke;
-            crlMessage.Location = new Point(286, 64);
-            crlMessage.Margin = new Padding(4, 0, 4, 0);
+            crlMessage.Location = new Point(229, 51);
             crlMessage.Name = "crlMessage";
-            crlMessage.Size = new Size(1035, 315);
+            crlMessage.Size = new Size(828, 252);
             crlMessage.TabIndex = 4;
             // 
             // crlMessageTitle
             // 
             crlMessageTitle.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             crlMessageTitle.ForeColor = Color.DarkKhaki;
-            crlMessageTitle.Location = new Point(58, 12);
-            crlMessageTitle.Margin = new Padding(4, 0, 4, 0);
+            crlMessageTitle.Location = new Point(46, 10);
             crlMessageTitle.Name = "crlMessageTitle";
-            crlMessageTitle.Size = new Size(1264, 31);
+            crlMessageTitle.Size = new Size(1011, 25);
             crlMessageTitle.TabIndex = 5;
             crlMessageTitle.TextAlign = ContentAlignment.TopCenter;
             // 
@@ -104,10 +99,9 @@
             crlNamePrevious.BackColor = Color.FromArgb(12, 12, 12, 200);
             crlNamePrevious.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
             crlNamePrevious.ForeColor = Color.WhiteSmoke;
-            crlNamePrevious.Location = new Point(1116, 651);
-            crlNamePrevious.Margin = new Padding(4, 0, 4, 0);
+            crlNamePrevious.Location = new Point(893, 521);
             crlNamePrevious.Name = "crlNamePrevious";
-            crlNamePrevious.Size = new Size(205, 31);
+            crlNamePrevious.Size = new Size(164, 25);
             crlNamePrevious.TabIndex = 8;
             crlNamePrevious.Text = "label1";
             crlNamePrevious.TextAlign = ContentAlignment.TopCenter;
@@ -117,20 +111,18 @@
             crlRankPrevious.BackColor = Color.FromArgb(12, 12, 12, 200);
             crlRankPrevious.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
             crlRankPrevious.ForeColor = Color.OrangeRed;
-            crlRankPrevious.Location = new Point(1116, 620);
-            crlRankPrevious.Margin = new Padding(4, 0, 4, 0);
+            crlRankPrevious.Location = new Point(893, 496);
             crlRankPrevious.Name = "crlRankPrevious";
-            crlRankPrevious.Size = new Size(205, 31);
+            crlRankPrevious.Size = new Size(164, 25);
             crlRankPrevious.TabIndex = 7;
             crlRankPrevious.Text = "label1";
             crlRankPrevious.TextAlign = ContentAlignment.TopCenter;
             // 
             // crlPortraitPrevious
             // 
-            crlPortraitPrevious.Location = new Point(1116, 410);
-            crlPortraitPrevious.Margin = new Padding(4, 4, 4, 4);
+            crlPortraitPrevious.Location = new Point(893, 328);
             crlPortraitPrevious.Name = "crlPortraitPrevious";
-            crlPortraitPrevious.Size = new Size(205, 205);
+            crlPortraitPrevious.Size = new Size(164, 164);
             crlPortraitPrevious.SizeMode = PictureBoxSizeMode.StretchImage;
             crlPortraitPrevious.TabIndex = 6;
             crlPortraitPrevious.TabStop = false;
@@ -139,16 +131,15 @@
             // 
             crlMessagePrevious.BackColor = Color.Black;
             crlMessagePrevious.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            crlMessagePrevious.ForeColor = Color.DarkGray;
-            crlMessagePrevious.Location = new Point(58, 410);
-            crlMessagePrevious.Margin = new Padding(4, 0, 4, 0);
+            crlMessagePrevious.ForeColor = Color.WhiteSmoke;
+            crlMessagePrevious.Location = new Point(46, 328);
             crlMessagePrevious.Name = "crlMessagePrevious";
-            crlMessagePrevious.Size = new Size(1038, 298);
+            crlMessagePrevious.Size = new Size(830, 238);
             crlMessagePrevious.TabIndex = 9;
             // 
             // HelpSystemTwoPersonesControl
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             BorderStyle = BorderStyle.FixedSingle;
@@ -162,9 +153,8 @@
             Controls.Add(crlRank);
             Controls.Add(crlPortrait);
             DoubleBuffered = true;
-            Margin = new Padding(4, 4, 4, 4);
             Name = "HelpSystemTwoPersonesControl";
-            Size = new Size(1375, 875);
+            Size = new Size(1100, 700);
             ((ISupportInitialize)crlPortrait).EndInit();
             ((ISupportInitialize)crlPortraitPrevious).EndInit();
             ResumeLayout(false);
@@ -174,7 +164,7 @@
         private PictureBox crlPortrait;
         private Label crlRank;
         private Label crlName;
-        private Label crlMessage;
+        private RpgTextOutputControl crlMessage;
         private Label crlMessageTitle;
         private Label crlNamePrevious;
         private Label crlRankPrevious;

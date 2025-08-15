@@ -31,7 +31,7 @@
             crlPortrait = new PictureBox();
             crlRank = new Label();
             crlName = new Label();
-            crlMessage = new Label();
+            crlMessage = new RpgTextOutputControl();
             crlMessageTitle = new Label();
             ((ISupportInitialize)crlPortrait).BeginInit();
             SuspendLayout();
@@ -115,7 +115,7 @@
         private PictureBox crlPortrait;
         private Label crlRank;
         private Label crlName;
-        private Label crlMessage;
+        private RpgTextOutputControl crlMessage;
         private Label crlMessageTitle;
     }
 }

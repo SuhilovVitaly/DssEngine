@@ -8,6 +8,9 @@ public partial class HelpSystemControl : UserControl
     public event Action? OnClose;
     public event Action<DialogExit> OnNextDialog;
 
+    // Speed of text output in milliseconds between words
+    public int TextOutputSpeedMs { get; set; } = 100;
+
     public HelpSystemControl()
     {
         InitializeComponent();
@@ -36,7 +39,9 @@ public partial class HelpSystemControl : UserControl
         try
         {
             crlMessageTitle.Text = gameManager.Localization.GetText(dialog.Title);
-            crlMessage.Text = gameManager.Localization.GetText(dialog.Message);
+            
+            // Start RPG-style text output instead of setting text immediately
+            StartRpgTextOutput(gameManager.Localization.GetText(dialog.Message));
 
             crlName.Text = dialog.Reporter.FirstName + " " + dialog.Reporter.LastName;
             crlRank.Text = gameManager.Localization.GetText(dialog.Reporter.Rank);
@@ -64,6 +69,27 @@ public partial class HelpSystemControl : UserControl
 
             throw;
         }        
+    }
+
+    private async void StartRpgTextOutput(string fullText)
+    {
+        try
+        {
+            crlMessage.Text = "";
+            var words = fullText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var word in words)
+            {
+                crlMessage.Text += word + " ";
+                await Task.Delay(TextOutputSpeedMs);
+            }
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
+        
     }
 
     private void AddDefaultExitDialogButton(DialogDto dialog, IGameManager gameManager)

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {
@@ -63,6 +65,9 @@ public class GameManager : IGameManager
         _gameServer.SessionStart(_scenarioService.GetScenario());
         OuterSpace = new OuterSpaceService();
         Screens.ShowTacticalMapScreen();
+        _gameSessionDto = _gameServer.GetSessionContextDto();
+        _gameSessionDto.State = new GameStateDto();
+        OnUpdateGameData?.Invoke(_gameSessionDto);
     }
 
     public void SessionPause() => _gameServer.SessionPause();
@@ -88,7 +93,7 @@ public class GameManager : IGameManager
     private void UpdateGameData(GameSessionDto session)
     {
         _gameSessionDto = session;
-        OnUpdateGameData?.Invoke(session);
+        OnUpdateGameData?.Invoke(_gameSessionDto);
     }
 
     public void GameEventInvoke(GameActionEventDto gameEvent)

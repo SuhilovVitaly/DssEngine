@@ -1,12 +1,4 @@
-﻿using System.Windows.Forms;
-using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-using DeepSpaceSaga.Common.Extensions;
-using DeepSpaceSaga.UI.Controller.Services;
-using DeepSpaceSaga.UI.Rendering.Tools;
-using DeepSpaceSaga.UI.Tools;
-using SkiaSharp.Views.Desktop;
-
-namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
+﻿namespace DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 
 public partial class GameTacticalMap : UserControl
 {
@@ -60,6 +52,10 @@ public partial class GameTacticalMap : UserControl
             {
                 _gameManager.OnUpdateGameData += UpdateGameData;
                 _isInitialized = true;
+            }
+            else
+            {
+                var x = "Problem. Add it to log.";
             }
         }
         catch

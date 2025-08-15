@@ -24,3 +24,6 @@ global using SkiaSharp;
 global using DeepSpaceSaga.Common.Abstractions.Session.Entities;
 global using System.Text.Json.Serialization;
 global using System.Text.Json;
+global using DeepSpaceSaga.Common.Abstractions.Entities;
+global using System.Collections.Concurrent;
+global using System.Collections.Generic;

@@ -15,7 +15,9 @@ public class ProcessingEventInvokerHandler
             Type = CommandTypes.DialogInitiationByTurn
         };
 
-        foreach (var dialog in sessionContext.GameSession.Dialogs.DialogsActivation(turnCommand, sessionContext))
+        var dialogs = sessionContext.GameSession.Dialogs.DialogsActivation(turnCommand, sessionContext);
+
+        foreach (var dialog in dialogs)
         {
             var gameActionEvent = new GameActionEvent
             {
@@ -26,7 +28,6 @@ public class ProcessingEventInvokerHandler
 
             if (IsNewEvent(sessionContext.GameSession, gameActionEvent.Key) )
             {
-                //sessionContext.GameSession.StartedEvents.TryAdd(gameActionEvent.Key, gameActionEvent.Key);
                 sessionContext.GameSession.ActiveEvents.TryAdd(gameActionEvent.Key, gameActionEvent);
             }
         }
@@ -43,12 +44,6 @@ public class ProcessingEventInvokerHandler
         {
             return false;
         }
-
-        //if (gameSession.StartedEvents.Keys.Contains(eventKey))
-        //{
-        //    return false;
-        //}
-
 
         return true;
     }

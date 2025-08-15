@@ -79,6 +79,8 @@ public partial class GameSessionInformation : ControlWindow
     private void RereshControls(GameSessionDto session)
     {
         if (IsDisposed) return;
+        if(session.State is null) return;
+
         txtTurn.Text = $"{session.State.Cycle:D3}:{session.State.Turn:D3}:{session.State.Tick:D3} [{session.State.ProcessedTurns:D5}]";
         txtSpeed.Text = session.State.IsPaused ? "Pause" : session.State.Speed + "";
         txtCelestialObjects.Text = session.CelestialObjects.Count() + "";

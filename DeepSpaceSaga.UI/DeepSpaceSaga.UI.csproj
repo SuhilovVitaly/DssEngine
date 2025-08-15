@@ -40,9 +40,6 @@
     <None Update="Data\Scenarios\Default\Dialogs\BaseDialogsPack.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Scenarios\Default\Dialogs\IntroductoryScene.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

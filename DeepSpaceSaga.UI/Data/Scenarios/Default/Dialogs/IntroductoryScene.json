@@ -4,7 +4,7 @@
     "Title": "Navigation Assistance System",
     "Message": "introductory.scene.01",
     "Type": 2,
-    "Trigger": 0,
+    "Trigger": 1,
     "TriggerValue": "1",
     "Reporter": {
       "FirstName": "Vitold",
@@ -27,7 +27,7 @@
     "ChainPart": true,
     "UiScreenType": 1,
     "Type": 2,
-    "Trigger": 0,
+    "Trigger": 1,
     "TriggerValue": "1",
     "Reporter": {
       "FirstName": "Lada",
@@ -50,7 +50,7 @@
     "ChainPart": true,
     "UiScreenType": 1,
     "Type": 2,
-    "Trigger": 0,
+    "Trigger": 1,
     "TriggerValue": "1",
     "Reporter": {
       "FirstName": "Vitold",

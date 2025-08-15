@@ -39,4 +39,9 @@ global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 global using DeepSpaceSaga.UI.Controller.Screens;
 global using DeepSpaceSaga.UI.Screens.MainMenu;
 global using DeepSpaceSaga.UI.Screens.GameMenu;
+global using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+global using DeepSpaceSaga.Common.Extensions;
+global using DeepSpaceSaga.UI.Controller.Services;
+global using DeepSpaceSaga.UI.Rendering.Tools;
+
 

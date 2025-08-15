@@ -7,7 +7,6 @@ public class GameSession
     public ConcurrentDictionary<Guid, ICommand> Commands { get; set; } = new();
     public ConcurrentDictionary<string, IGameActionEvent> ActiveEvents { get; set; } = new();
     public ConcurrentDictionary<string, string> FinishedEvents { get; set; } = new();
-    public ConcurrentDictionary<string, string> StartedEvents { get; set; } = new();
     public IDialogsService Dialogs { get; set; }
 
     public event EventHandler? Changed;

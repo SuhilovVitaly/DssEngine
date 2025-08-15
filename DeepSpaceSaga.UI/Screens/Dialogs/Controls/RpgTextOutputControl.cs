@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Text;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
@@ -6,6 +7,9 @@ public partial class RpgTextOutputControl : UserControl
 {
     private string fullText = string.Empty;
     private bool isOutputting = false;
+    private string[] words = Array.Empty<string>();
+    private int currentWordIndex = 0;
+    private System.Windows.Forms.Timer outputTimer;
 
     [Category("RPG Text Output")]
     [Description("Speed of text output in milliseconds between words")]
@@ -30,6 +34,16 @@ public partial class RpgTextOutputControl : UserControl
     {
         InitializeComponent();
         this.Resize += RpgTextOutputControl_Resize;
+        
+        // Enable double buffering to reduce flickering
+        SetStyle(ControlStyles.DoubleBuffer | 
+                ControlStyles.AllPaintingInWmPaint | 
+                ControlStyles.UserPaint | 
+                ControlStyles.ResizeRedraw, true);
+        
+        // Initialize timer for smooth text output
+        outputTimer = new System.Windows.Forms.Timer();
+        outputTimer.Tick += OutputTimer_Tick;
     }
 
     private void RpgTextOutputControl_Resize(object sender, EventArgs e)
@@ -40,33 +54,56 @@ public partial class RpgTextOutputControl : UserControl
         }
     }
 
-    private async void StartRpgTextOutput()
+    private void OutputTimer_Tick(object sender, EventArgs e)
+    {
+        if (currentWordIndex < words.Length)
+        {
+            // Add next word
+            if (currentWordIndex > 0)
+            {
+                lblText.Text += " " + words[currentWordIndex];
+            }
+            else
+            {
+                lblText.Text = words[currentWordIndex];
+            }
+            
+            currentWordIndex++;
+            
+            // Check if we're done
+            if (currentWordIndex >= words.Length)
+            {
+                outputTimer.Stop();
+                isOutputting = false;
+            }
+        }
+    }
+
+    private void StartRpgTextOutput()
     {
         if (string.IsNullOrEmpty(fullText) || isOutputting)
             return;
 
         isOutputting = true;
+        currentWordIndex = 0;
         lblText.Text = "";
         
-        try
-        {
-            var words = fullText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            
-            foreach (var word in words)
-            {
-                lblText.Text += word + " ";
-                await Task.Delay(TextOutputSpeedMs);
-            }
-        }
-        catch (Exception ex)
-        {
-            // Log error if needed
-            lblText.Text = fullText; // Fallback to immediate display
-        }
-        finally
-        {
-            isOutputting = false;
-        }
+        // Split text into words
+        words = fullText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        // Configure and start timer
+        outputTimer.Interval = TextOutputSpeedMs;
+        outputTimer.Start();
+    }
+
+    public void Clear()
+    {
+        fullText = string.Empty;
+        words = Array.Empty<string>();
+        currentWordIndex = 0;
+        lblText.Text = string.Empty;
+        isOutputting = false;
+        outputTimer.Stop();
     }
 
     public void SetText(string text)
@@ -76,12 +113,5 @@ public partial class RpgTextOutputControl : UserControl
         {
             StartRpgTextOutput();
         }
-    }
-
-    public void Clear()
-    {
-        fullText = string.Empty;
-        lblText.Text = string.Empty;
-        isOutputting = false;
     }
 }

@@ -4,7 +4,7 @@
     "Title": "Navigation Assistance System",
     "Message": "introductory.scene.01",
     "Type": 2,
-    "Trigger": 1,
+    "Trigger": 0,
     "TriggerValue": "1",
     "Reporter": {
       "FirstName": "Vitold",

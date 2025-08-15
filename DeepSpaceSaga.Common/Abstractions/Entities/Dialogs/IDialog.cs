@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Characters;
+
+namespace DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 
 public interface IDialog
 {
@@ -10,6 +12,6 @@ public interface IDialog
     DialogTrigger Trigger { get; }
     DialogUiScreenType UiScreenType { get; set; }
     string TriggerValue { get; }
-    ICharacter Reporter { get; }
+    CrewMember Reporter { get; }
     List<DialogExit> Exits { get; set; }
 }

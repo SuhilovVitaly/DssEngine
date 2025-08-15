@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Characters;
+
+namespace DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 
 [ExcludeFromCodeCoverage]
 [DebuggerDisplay("{Key} {Title}")]
@@ -20,8 +22,7 @@ public class BaseDialog : IDialog
 
     public string TriggerValue { get; set; }
 
-    [JsonIgnore] // Do not deserialize interface property from JSON
-    public ICharacter Reporter { get; set; }
+    public CrewMember Reporter { get; set; }
 
     public List<DialogExit> Exits { get; set; } = new List<DialogExit>();
 }

@@ -2,6 +2,7 @@
 using DeepSpaceSaga.Common.Abstractions.Events;
 using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.UI.Controller.Services;
+using DeepSpaceSaga.UI.Screens.Dialogs;
 
 namespace DeepSpaceSaga.UI.Screens.TacticalMap;
 
@@ -121,19 +122,17 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
 
     private void OpenModalDialogWindow(GameActionEventDto gameActionEvent)
     {
-        //Global.GameManager.Events.Pause();
+        var screenDialog = new DialogBasicScreen(gameActionEvent, _gameManager)
+        {
+            FormBorderStyle = FormBorderStyle.None,
+            Size = new Size(1100, 700),
+            StartPosition = FormStartPosition.Manual
+        };
 
-        //var screenDialog = new DialogBasicScreen(gameActionEvent, _gameManager)
-        //{
-        //    FormBorderStyle = FormBorderStyle.None,
-        //    Size = new Size(1100, 700),
-        //    StartPosition = FormStartPosition.Manual
-        //};
+        var x = Location.X + (Width - screenDialog.Width) / 2;
+        var y = Location.Y + (Height - screenDialog.Height) / 2;
+        screenDialog.Location = new Point(x, y);
 
-        //var x = Location.X + (Width - screenDialog.Width) / 2;
-        //var y = Location.Y + (Height - screenDialog.Height) / 2;
-        //screenDialog.Location = new Point(x, y);
-
-        //screenDialog.ShowDialog(this);
+        screenDialog.ShowDialog(this);
     }
 }

@@ -82,8 +82,8 @@ public partial class HelpSystemControl : UserControl
     {
         var button = new Button
         {
-            Size = new Size(1000, 46),
-            Location = new Point(46, 620 - currentExit * 50),
+            Size = new Size(1300, 46),
+            Location = new Point(46, 760 - currentExit * 50),
             BackColor = Color.FromArgb(18, 18, 18),
             Cursor = Cursors.Hand
         };

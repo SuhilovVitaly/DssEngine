@@ -125,7 +125,7 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
         var screenDialog = new DialogBasicScreen(gameActionEvent, _gameManager)
         {
             FormBorderStyle = FormBorderStyle.None,
-            Size = new Size(1100, 700),
+            Size = new Size(1375, 875),
             StartPosition = FormStartPosition.Manual
         };
 

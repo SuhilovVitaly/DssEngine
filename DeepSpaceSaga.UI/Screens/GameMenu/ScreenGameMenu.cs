@@ -4,7 +4,7 @@ namespace DeepSpaceSaga.UI.Screens.GameMenu;
 
 public partial class ScreenGameMenu : Form
 {
-    private readonly IGameMenuPresenter _presenter;
+    private readonly IGameMenuPresenter _presenter;    
 
     public ScreenGameMenu(IGameMenuPresenter presenter)
     {
@@ -25,8 +25,8 @@ public partial class ScreenGameMenu : Form
 
     protected override async void OnLoad(EventArgs e)
     {
-        base.OnLoad(e);
-        
+        base.OnLoad(e);        
+
         try
         {
             await _presenter.InitializeAsync();

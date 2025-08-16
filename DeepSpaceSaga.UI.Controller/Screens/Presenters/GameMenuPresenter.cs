@@ -46,6 +46,7 @@ public class GameMenuPresenter : IGameMenuPresenter
         try
         {
             Logger.Info("Initializing Game Menu presenter");
+            await _controller.LoadAsync();
             await Task.CompletedTask;
             Logger.Debug("Game Menu presenter initialized successfully");
         }

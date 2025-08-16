@@ -5,11 +5,27 @@ namespace DeepSpaceSaga.UI.Controller.Screens;
 /// </summary>
 public class GameMenuController(IGameManager gameManager) : IGameMenuController
 {
+    private bool _isSessionOnPause = false;
     private readonly IGameManager _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
+    public async Task LoadAsync()
+    {
+        _isSessionOnPause = _gameManager.GameSession().State.IsPaused;
+
+        if (_isSessionOnPause == false)
+        {
+            _gameManager.SessionPause();
+        }
+
+        await Task.CompletedTask;
+    }
 
     public async Task ResumeGameAsync()
     {
-        _gameManager.SessionResume();
+        if (_isSessionOnPause == false)
+        {
+            _gameManager.SessionResume();
+        }
+        
         await Task.CompletedTask;
     }
 

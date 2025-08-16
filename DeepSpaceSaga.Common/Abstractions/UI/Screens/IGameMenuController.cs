@@ -5,6 +5,7 @@ namespace DeepSpaceSaga.Common.Abstractions.UI.Screens;
 /// </summary>
 public interface IGameMenuController
 {
+    Task LoadAsync();
     /// <summary>
     /// Resumes the current game
     /// </summary>

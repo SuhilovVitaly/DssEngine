@@ -25,12 +25,13 @@ public class GameEventsService : IGameEventsService
                 if (_receivedEvents.Keys.Contains(gameEvent.Key))
                 {
                     continue;
-                }
+                }                
 
                 _gameManager.CommandExecute(new GameEventReceivedCommand
                 {
                     Category = Common.Abstractions.Entities.Commands.CommandCategory.CommandAccept,
                     CelestialObjectId = gameEvent.CelestialObjectId,
+                    IsPauseProcessed = true,
                     IsOneTimeCommand = true,
                     TargetCelestialObjectId = gameEvent.TargetObjectId,
                     DialogKey = gameEvent.Key,

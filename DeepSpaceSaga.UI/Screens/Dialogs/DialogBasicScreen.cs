@@ -47,6 +47,7 @@ public partial class DialogBasicScreen : Form
         _gameManager.CommandExecute(new DialogExitCommand
         {
             Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+            IsPauseProcessed = true,
             IsOneTimeCommand = true,
             DialogExitKey = exit.Key,
             DialogKey = _currentDialog.Key,

@@ -27,12 +27,14 @@ public class LocalGameServer(
     }
 
     public async Task AddCommand(ICommand command)
-    {
+    {        
+        await _sessionContext.GameSession.AddCommand(command);
+
         if (command.IsPauseProcessed)
         {
-            SessionPause();
+            _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo, _processingService.PauseProcess(_sessionContext));
+
         }
-        await _sessionContext.GameSession.AddCommand(command);
     }
     
     public void SetGameSpeed(int speed)

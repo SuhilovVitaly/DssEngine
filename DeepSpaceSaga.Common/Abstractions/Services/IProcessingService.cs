@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
 
-namespace DeepSpaceSaga.Common.Abstractions.Services
+public interface IProcessingService
 {
-    public interface IProcessingService
-    {
-        GameSessionDto Process(ISessionContextService sessionContext);
-    }
+    GameSessionDto Process(ISessionContextService sessionContext);
+
+    GameSessionDto PauseProcess(ISessionContextService sessionContext);
 }

@@ -12,5 +12,6 @@ public enum CommandCategory
     EventAcknowledgement,
     TrackActivity,
     CrewInteraction,
-    CommandAccept
+    CommandAccept,
+    DialogExit
 }

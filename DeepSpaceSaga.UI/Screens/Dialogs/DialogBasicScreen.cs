@@ -1,5 +1,7 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
+using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 using DeepSpaceSaga.Common.Abstractions.Events;
+using DeepSpaceSaga.Common.Implementation.Entities.Commands;
 using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 using DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
@@ -42,6 +44,14 @@ public partial class DialogBasicScreen : Form
 
     private void Even_NextDialog(DialogExit exit)
     {
+        _gameManager.CommandExecute(new DialogExitCommand
+        {
+            Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+            IsOneTimeCommand = true,
+            DialogExitKey = exit.Key,
+            DialogKey = _currentDialog.Key,
+        } );
+
         foreach (var dialog in _gameActionEvent.ConnectedDialogs)
         {
             if(dialog.Key == exit.NextKey)

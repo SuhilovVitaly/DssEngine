@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Commands;
+
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameEventsService : IGameEventsService
 {
@@ -25,12 +27,13 @@ public class GameEventsService : IGameEventsService
                     continue;
                 }
 
-                _gameManager.CommandExecute(new Command
+                _gameManager.CommandExecute(new GameEventReceivedCommand
                 {
                     Category = Common.Abstractions.Entities.Commands.CommandCategory.CommandAccept,
                     CelestialObjectId = gameEvent.CelestialObjectId,
                     IsOneTimeCommand = true,
                     TargetCelestialObjectId = gameEvent.TargetObjectId,
+                    DialogKey = gameEvent.Key,
                 });
 
                 _receivedEvents.TryAdd(gameEvent.Key, gameEvent.Key);

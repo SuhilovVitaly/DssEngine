@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
-using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
-
-namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
+﻿namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
 public partial class HelpSystemControl : UserControl
 {
@@ -14,10 +11,6 @@ public partial class HelpSystemControl : UserControl
         
         // Enable key handling for space key
         this.TabStop = true;
-        this.KeyDown += HelpSystemControl_KeyDown;
-        
-        // Also handle key events for child controls
-        this.PreviewKeyDown += HelpSystemControl_PreviewKeyDown;
         
         // Subscribe to key events of child controls
         SubscribeToChildKeyEvents();
@@ -36,26 +29,6 @@ public partial class HelpSystemControl : UserControl
                     e.Handled = true;
                 }
             };
-        }
-    }
-
-    private void HelpSystemControl_KeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.KeyCode == Keys.Space)
-        {
-            // User pressed space - skip text output if it's still running
-            crlMessage?.SkipTextOutput();
-            e.Handled = true; // Prevent further processing
-        }
-    }
-
-    private void HelpSystemControl_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-    {
-        if (e.KeyCode == Keys.Space)
-        {
-            // User pressed space - skip text output if it's still running
-            crlMessage?.SkipTextOutput();
-            e.IsInputKey = true; // Mark as handled
         }
     }
 

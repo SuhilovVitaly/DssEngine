@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DeepSpaceSaga.Server.Processing.Handlers;
 
-namespace DeepSpaceSaga.Server.Processing.Handlers
+public class ProcessingDialogHandler
 {
-    public class ProcessingDialogHandler
+    public void Execute(ISessionContextService sessionContext)
     {
-        public void Execute(ISessionContextService sessionContext)
+        var removeCommands = new ConcurrentDictionary<string, Guid>();
+
+        foreach (var command in sessionContext.GameSession.Commands.Values)
         {
-            var dialogExitData = new ConcurrentDictionary<string, ICommand>();
-
-            foreach (var command in sessionContext.GameSession.Commands.Values)
+            if (command.Category == Common.Abstractions.Entities.Commands.CommandCategory.DialogExit)
             {
-                if (command.Category == Common.Abstractions.Entities.Commands.CommandCategory.DialogExit)
-                {
-                    dialogExitData.TryAdd(command.Id.ToString(), command);
-                }
+                var dialogCommand = command as DialogExitCommand;
+
+                if (dialogCommand == null) continue;
+
+                removeCommands.TryAdd(command.Id.ToString(), command.Id);
+                sessionContext.GameSession.DialogsExits.TryAdd(dialogCommand.DialogKey, dialogCommand.DialogExitKey);
             }
+        }
 
-            lock (sessionContext)
+        lock (sessionContext)
+        {
+            foreach (var commands in removeCommands)
             {
-                foreach (var acknowledgedEvent in dialogExitData)
-                {
-                    sessionContext.GameSession.DialogsExits.TryAdd(acknowledgedEvent.Key, acknowledgedEvent.Key);
-                }
+                sessionContext.GameSession.Commands.TryRemove(commands.Value, out _);
             }
         }
     }

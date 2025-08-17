@@ -44,7 +44,14 @@ public partial class DialogBasicScreen : Form
 
     private void Even_NextDialog(DialogExit exit)
     {
-         
+        _gameManager.CommandExecute(new DialogExitCommand
+        {
+            Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+            IsPauseProcessed = true,
+            IsOneTimeCommand = true,
+            DialogExitKey = exit.Key,
+            DialogKey = _currentDialog.Key,
+        } );
 
         foreach (var dialog in _gameActionEvent.ConnectedDialogs)
         {
@@ -111,8 +118,7 @@ public partial class DialogBasicScreen : Form
 
     private void Even_ScreenClose()
     {
-        // TODO: Last  exit key
-
+        // TODO: Add close exit dialog key
         Close();
     }
 }

@@ -43,3 +43,4 @@ global using System.Linq;
 global using System.Text;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+global using DeepSpaceSaga.Common.Implementation.Entities.Commands;

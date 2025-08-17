@@ -33,7 +33,6 @@ public class LocalGameServer(
         if (command.IsPauseProcessed)
         {
             _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo, _processingService.PauseProcess(_sessionContext));
-
         }
     }
     

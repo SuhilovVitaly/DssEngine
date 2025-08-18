@@ -21,7 +21,8 @@ public class LocalGameServer(
     {
         Logger?.Debug($"GameSessionMap {_sessionContext.SessionInfo.ToString()}");
 
-        _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo, _processingService.Process(_sessionContext));
+        _processingService.Process(_sessionContext);
+        _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
         
         OnTurnExecute?.Invoke(_gameSessionDto);
     }
@@ -34,7 +35,8 @@ public class LocalGameServer(
 
         if (command.IsPauseProcessed)
         {
-            _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo, _processingService.PauseProcess(_sessionContext));
+            _processingService.PauseProcess(_sessionContext);
+            _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
         }
     }
     
@@ -50,11 +52,11 @@ public class LocalGameServer(
         return _gameSessionDto;
     }
 
-    private GameSessionDto SessionTurnFinalization(ISessionInfoService sessionInfo, GameSessionDto sessionDto)
+    private GameSessionDto SessionTurnFinalization(ISessionInfoService sessionInfo)
     {
         sessionInfo.IncrementTurn(); 
         Logger?.Debug($"GameSessionMap {sessionInfo.Turn}");
-        Console.WriteLine($"[SessionTurnFinalization] Finish turn processing for session {sessionDto.Id} Turn: {sessionDto.State.Turn}");
+        Console.WriteLine($"[SessionTurnFinalization] Finish turn processing for session {sessionInfo.Id} Turn: {sessionInfo.Turn}");
 
         return GameSessionMapper.ToDto(_sessionContext);
     }

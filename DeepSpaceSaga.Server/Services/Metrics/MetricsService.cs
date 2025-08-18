@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-
-namespace DeepSpaceSaga.Server.Services.Metrics;
+﻿namespace DeepSpaceSaga.Server.Services.Metrics;
 
 public class MetricsService : IMetricsService
 {

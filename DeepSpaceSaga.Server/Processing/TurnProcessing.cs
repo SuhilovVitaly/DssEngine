@@ -6,6 +6,8 @@ public class TurnProcessing : IProcessingService
 {
     public GameSessionDto PauseProcess(ISessionContextService sessionContext)
     {
+        sessionContext.Metrics.Add(MetricsServer.ServerTurnPauseProcessing);
+        
         try
         {
             new ProcessingEventAcknowledgeHandler().Execute(sessionContext);
@@ -23,6 +25,8 @@ public class TurnProcessing : IProcessingService
 
     public GameSessionDto Process(ISessionContextService sessionContext)
     {
+        sessionContext.Metrics.Add(MetricsServer.ServerTurnRealTimeProcessing);
+        
         try
         {
             new ProcessingEventAcknowledgeHandler().Execute(sessionContext);

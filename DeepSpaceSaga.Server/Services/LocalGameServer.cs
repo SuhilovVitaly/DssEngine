@@ -27,7 +27,9 @@ public class LocalGameServer(
     }
 
     public async Task AddCommand(ICommand command)
-    {        
+    {     
+        _sessionContext.Metrics.Add(MetricsServer.ServerCommandReceived);
+            
         await _sessionContext.GameSession.AddCommand(command);
 
         if (command.IsPauseProcessed)

@@ -31,7 +31,9 @@ public static class GameSessionMapper
         Dictionary<string, GameActionEventDto> gameActionEventsCopy;
         Dictionary<string, string> finishedEventsCopy;
 
-        lock (gameSessionContext)
+        // Use read lock for better performance when multiple threads are reading
+        gameSessionContext.EnterReadLock();
+        try
         {
             celestialObjectsCopy = gameSessionContext.GameSession.CelestialObjects
                 .ToDictionary(
@@ -53,6 +55,10 @@ public static class GameSessionMapper
                     kvp => kvp.Key,
                     kvp => kvp.Value);
         }
+        finally
+        {
+            gameSessionContext.ExitReadLock();
+        }
 
         return new GameSessionDto
         {
@@ -72,7 +78,9 @@ public static class GameSessionMapper
         Dictionary<string, GameActionEventDto> gameActionEventsCopy;
         Dictionary<string, string> finishedEventsCopy;
 
-        lock (gameSessionContext)
+        // Use read lock for better performance when multiple threads are reading
+        gameSessionContext.EnterReadLock();
+        try
         {
             celestialObjectsCopy = gameSessionContext.GameSession.CelestialObjects
                 .ToDictionary(
@@ -93,6 +101,10 @@ public static class GameSessionMapper
                 .ToDictionary(
                     kvp => kvp.Key,
                     kvp => kvp.Value);
+        }
+        finally
+        {
+            gameSessionContext.ExitReadLock();
         }
 
         return new GameSessionSaveFormatDto

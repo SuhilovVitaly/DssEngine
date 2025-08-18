@@ -18,7 +18,9 @@ public class ProcessingEventAcknowledgeHandler
             }            
         }
 
-        lock(sessionContext)
+        // Use write lock for modifying session data
+        sessionContext.EnterWriteLock();
+        try
         {
             foreach (var acknowledgedEvent in acknowledgedEvents)
             {
@@ -30,6 +32,10 @@ public class ProcessingEventAcknowledgeHandler
                 
                 sessionContext.Metrics.Add(MetricsServer.ProcessingEventAcknowledgeRemoved);
             }
-        }        
+        }
+        finally
+        {
+            sessionContext.ExitWriteLock();
+        }
     }
 }

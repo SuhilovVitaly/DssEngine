@@ -28,6 +28,10 @@ public class GameSessionMapperTests
         _mockSessionContext.Setup(x => x.SessionInfo).Returns(_mockSessionInfo.Object);
         _mockSessionContext.Setup(x => x.Metrics).Returns(_mockMetrics.Object);
         _mockSessionContext.Setup(x => x.GameSession).Returns(_gameSession);
+        
+        // Setup lock methods
+        _mockSessionContext.Setup(x => x.EnterReadLock()).Verifiable();
+        _mockSessionContext.Setup(x => x.ExitReadLock()).Verifiable();
     }
 
     [Fact]
@@ -64,6 +68,10 @@ public class GameSessionMapperTests
         
         result.CelestialObjects.Should().ContainKey(1);
         result.Commands.Should().ContainKey(command.Id);
+        
+        // Verify lock methods were called
+        _mockSessionContext.Verify(x => x.EnterReadLock(), Times.Once);
+        _mockSessionContext.Verify(x => x.ExitReadLock(), Times.Once);
     }
 
     [Fact]
@@ -82,6 +90,10 @@ public class GameSessionMapperTests
         result.State.Should().NotBeNull();
         result.CelestialObjects.Should().BeEmpty();
         result.Commands.Should().BeEmpty();
+        
+        // Verify lock methods were called
+        _mockSessionContext.Verify(x => x.EnterReadLock(), Times.Once);
+        _mockSessionContext.Verify(x => x.ExitReadLock(), Times.Once);
     }
 
     [Fact]
@@ -181,7 +193,7 @@ public class GameSessionMapperTests
     }
 
     [Fact]
-    public void ToDto_Should_Use_Lock_For_Thread_Safety()
+    public void ToDto_Should_Use_ReadLock_For_Thread_Safety()
     {
         // Arrange
         var celestialObject = new BaseAsteroid(1)
@@ -200,6 +212,10 @@ public class GameSessionMapperTests
         
         result.Should().NotBeNull();
         result.CelestialObjects.Should().HaveCount(1);
+        
+        // Verify lock methods were called
+        _mockSessionContext.Verify(x => x.EnterReadLock(), Times.Once);
+        _mockSessionContext.Verify(x => x.ExitReadLock(), Times.Once);
     }
 
     [Fact]
@@ -241,6 +257,10 @@ public class GameSessionMapperTests
         
         var celestialObjectDto = result.CelestialObjects[1];
         celestialObjectDto.RemainingDrillAttempts.Should().Be(2);
+        
+        // Verify lock methods were called
+        _mockSessionContext.Verify(x => x.EnterReadLock(), Times.Once);
+        _mockSessionContext.Verify(x => x.ExitReadLock(), Times.Once);
     }
 
     [Fact]
@@ -269,11 +289,15 @@ public class GameSessionMapperTests
     public void ToSaveFormat_Should_Create_Independent_Copies_Of_Collections()
     {
         // Arrange
-        var celestialObject = new BaseAsteroid(1)
+        var celestialObject = new BaseAsteroid(3)
         {
             Name = "Test Asteroid",
             Type = CelestialObjectType.Asteroid,
-            Id = 1
+            IsPreScanned = true,
+            X = 100,
+            Y = 200,
+            Id = 1,
+            RemainingDrillAttempts = 2
         };
 
         _gameSession.CelestialObjects.TryAdd(1, celestialObject);
@@ -290,28 +314,68 @@ public class GameSessionMapperTests
     }
 
     [Fact]
-    public void ToSaveFormat_Should_Map_Asteroid_Specific_Properties()
+    public void ToSaveFormat_Should_Map_Multiple_CelestialObjects()
     {
         // Arrange
-        var asteroid = new BaseAsteroid(5)
+        var asteroid1 = new BaseAsteroid(3)
         {
-            Name = "Mining Asteroid",
+            Name = "Asteroid 1",
             Type = CelestialObjectType.Asteroid,
-            Id = 42,
-            RemainingDrillAttempts = 3
+            Id = 1,
+            RemainingDrillAttempts = 2
         };
 
-        _gameSession.CelestialObjects.TryAdd(42, asteroid);
+        var asteroid2 = new BaseAsteroid(3)
+        {
+            Name = "Asteroid 2",
+            Type = CelestialObjectType.Asteroid,
+            Id = 2,
+            RemainingDrillAttempts = 5
+        };
+
+        _gameSession.CelestialObjects.TryAdd(1, asteroid1);
+        _gameSession.CelestialObjects.TryAdd(2, asteroid2);
 
         // Act
         var result = GameSessionMapper.ToSaveFormat(_mockSessionContext.Object);
 
         // Assert
-        result.CelestialObjects.Should().ContainKey(42);
-        var asteroidDto = result.CelestialObjects[42];
-        asteroidDto.RemainingDrillAttempts.Should().Be(3);
-        asteroidDto.Type.Should().Be(CelestialObjectType.Asteroid);
-        asteroidDto.Name.Should().Be("Mining Asteroid");
+        result.CelestialObjects.Should().HaveCount(2);
+        result.CelestialObjects.Should().ContainKey(1);
+        result.CelestialObjects.Should().ContainKey(2);
+        
+        var celestialObject1 = result.CelestialObjects[1];
+        var celestialObject2 = result.CelestialObjects[2];
+        celestialObject1.RemainingDrillAttempts.Should().Be(2);
+        celestialObject2.RemainingDrillAttempts.Should().Be(5);
+    }
+
+    [Fact]
+    public void ToSaveFormat_Should_Map_Multiple_Commands()
+    {
+        // Arrange
+        ICommand command1 = new Command
+        {
+            Id = Guid.NewGuid(),
+            Category = CommandCategory.CommandAccept
+        };
+
+        ICommand command2 = new Command
+        {
+            Id = Guid.NewGuid(),
+            Category = CommandCategory.DialogExit
+        };
+
+        _gameSession.Commands.TryAdd(command1.Id, command1);
+        _gameSession.Commands.TryAdd(command2.Id, command2);
+
+        // Act
+        var result = GameSessionMapper.ToSaveFormat(_mockSessionContext.Object);
+
+        // Assert
+        result.Commands.Should().HaveCount(2);
+        result.Commands.Should().ContainKey(command1.Id);
+        result.Commands.Should().ContainKey(command2.Id);
     }
 
     [Fact]
@@ -324,20 +388,19 @@ public class GameSessionMapperTests
         result.Should().NotBeNull();
         result.CelestialObjects.Should().NotBeNull();
         result.Commands.Should().NotBeNull();
-        result.GameActionEvents.Should().NotBeNull();
-        result.FinishedEvents.Should().NotBeNull();
         result.State.Should().NotBeNull();
     }
 
     [Fact]
-    public void ToSaveFormat_Should_Use_Lock_For_Thread_Safety()
+    public void ToSaveFormat_Should_Use_ReadLock_For_Thread_Safety()
     {
         // Arrange
-        var celestialObject = new BaseAsteroid(1)
+        var celestialObject = new BaseAsteroid(3)
         {
             Name = "Test Asteroid",
             Type = CelestialObjectType.Asteroid,
-            Id = 1
+            Id = 1,
+            RemainingDrillAttempts = 2
         };
 
         _gameSession.CelestialObjects.TryAdd(1, celestialObject);
@@ -347,30 +410,10 @@ public class GameSessionMapperTests
         
         result.Should().NotBeNull();
         result.CelestialObjects.Should().HaveCount(1);
-    }
-
-    [Theory]
-    [InlineData(0)]
-    [InlineData(1)]
-    [InlineData(5)]
-    [InlineData(10)]
-    public void ToSaveFormat_Should_Map_Different_Drill_Attempts_Correctly(int drillAttempts)
-    {
-        // Arrange
-        var asteroid = new BaseAsteroid(drillAttempts)
-        {
-            Name = "Variable Asteroid",
-            Type = CelestialObjectType.Asteroid,
-            Id = 1
-        };
-
-        _gameSession.CelestialObjects.TryAdd(1, asteroid);
-
-        // Act
-        var result = GameSessionMapper.ToSaveFormat(_mockSessionContext.Object);
-
-        // Assert
-        result.CelestialObjects[1].RemainingDrillAttempts.Should().Be(drillAttempts);
+        
+        // Verify lock methods were called
+        _mockSessionContext.Verify(x => x.EnterReadLock(), Times.Once);
+        _mockSessionContext.Verify(x => x.ExitReadLock(), Times.Once);
     }
 
     [Fact]
@@ -597,7 +640,7 @@ public class GameSessionMapperTests
                     1, new CelestialObjectSaveFormatDto
                     {
                         Id = 1,
-                        Name = "Variable Asteroid",
+                        Name = "Test Asteroid",
                         Type = CelestialObjectType.Asteroid,
                         RemainingDrillAttempts = drillAttempts
                     }

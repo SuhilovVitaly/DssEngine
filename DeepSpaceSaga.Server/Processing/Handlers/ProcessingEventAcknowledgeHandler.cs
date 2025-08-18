@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
-
-namespace DeepSpaceSaga.Server.Processing.Handlers;
+﻿namespace DeepSpaceSaga.Server.Processing.Handlers;
 
 public class ProcessingEventAcknowledgeHandler
 {
@@ -10,9 +8,13 @@ public class ProcessingEventAcknowledgeHandler
 
         foreach (var command in sessionContext.GameSession.Commands.Values)
         {
-            if(command.Category == Common.Abstractions.Entities.Commands.CommandCategory.CommandAccept)
+            if(command.Category == CommandCategory.CommandAccept)
             {
+                sessionContext.Metrics.Add(MetricsServer.ProcessingEventAcknowledgeReceived);
+                
                 acknowledgedEvents.TryAdd(command.Id.ToString(), command);
+                
+                sessionContext.Metrics.Add(MetricsServer.ProcessingEventAcknowledgeProcessed);
             }            
         }
 
@@ -25,6 +27,8 @@ public class ProcessingEventAcknowledgeHandler
                 sessionContext.GameSession.ActiveEvents.TryRemove(acknowledgedEvent.Key, out _);
 
                 sessionContext.GameSession.Commands.TryRemove(acknowledgedEvent.Value.Id, out _);
+                
+                sessionContext.Metrics.Add(MetricsServer.ProcessingEventAcknowledgeRemoved);
             }
         }        
     }

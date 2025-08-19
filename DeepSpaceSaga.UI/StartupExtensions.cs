@@ -20,7 +20,6 @@ public static class StartupExtensions
         
         // Register other screens as scoped to maintain state within a scope 
         services.AddScoped<ScreenMainMenu>();
-        services.AddScoped<ScreenTacticGame>();
         services.AddScoped<ScreenGameMenu>();
 
         // Register main background screen last to avoid circular dependency

@@ -20,7 +20,6 @@ global using DeepSpaceSaga.Controller;
 global using DeepSpaceSaga.Server;
 global using DeepSpaceSaga.UI.Controller;
 global using DeepSpaceSaga.UI.Screens.TacticalMap;
-global using DeepSpaceSaga.UI.Screens.TacticGame;
 global using DeepSpaceSaga.UI.Screens.Background;
 global using DeepSpaceSaga.UI.Screens.TacticalMap.ScreenControls;
 global using DeepSpaceSaga.UI.Services.Screens;

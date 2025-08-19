@@ -11,6 +11,11 @@ public class DialogsService : IDialogsService
         DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
     };
 
+    public DialogsService()
+    {
+
+    }
+
     public DialogsService(string scenarioName)
     {
         LoadDialogs(scenarioName);

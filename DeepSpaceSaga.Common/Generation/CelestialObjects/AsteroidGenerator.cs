@@ -32,8 +32,10 @@ public class AsteroidGenerator
 
     public static ICelestialObject CreateAsteroid(IGenerationTool generationTool, double direction, double x, double y, double speed, string name, bool isPreScanned = false)
     {
+        var id = generationTool.GetId();
+
         return BuildAsteroid(
-                generationTool.GetId(),
+                id,
                 generationTool.GetInteger(2, 4),
                 generationTool.GetFloat(350),
                 direction,

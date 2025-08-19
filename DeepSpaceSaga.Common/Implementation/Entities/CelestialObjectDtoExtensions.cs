@@ -10,4 +10,11 @@ public static class CelestialObjectDtoExtensions
     {
         return new SpaceMapPoint((float)celestialObject.X, (float)celestialObject.Y);
     }
+
+    public static ISpacecraft ToSpaceship(this CelestialObjectDto celestialObject)
+    {
+        var spacecraft = celestialObject as ISpacecraft;
+
+        return spacecraft;
+    }
 }

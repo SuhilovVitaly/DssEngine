@@ -9,7 +9,7 @@ namespace DeepSpaceSaga.Common.Generation.CelestialObjects
         {
             var randomizer = new GenerationTool();
 
-            var spacecraft = new BaseSpaceship
+            ISpacecraft spacecraft = new BaseSpaceship
             {
                 Id = id,
                 Agility = 0,

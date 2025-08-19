@@ -11,3 +11,4 @@ global using DeepSpaceSaga.Server.Services.Scheduler;
 global using DeepSpaceSaga.Server.Services.SessionContext;
 global using DeepSpaceSaga.Server.Services.SessionInfo;
 global using FluentAssertions;
+global using DeepSpaceSaga.Server.Services.Metrics;

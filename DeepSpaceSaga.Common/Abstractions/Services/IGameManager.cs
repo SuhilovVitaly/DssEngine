@@ -76,4 +76,6 @@ public interface IGameManager
     Task<int> SaveGame(string savename);
     Task<int> LoadGame(string savename);
     void GameEventInvoke(GameActionEventDto gameEvent);
+
+    void Navigation(CommandTypes command);
 } 

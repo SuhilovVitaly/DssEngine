@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
 using DeepSpaceSaga.Common.Abstractions.Events;
 using DeepSpaceSaga.Common.Abstractions.Services;
 using DeepSpaceSaga.UI.Controller.Services;
@@ -52,10 +53,29 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
 
     private void OnKeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == Keys.Escape)
+        switch (e.KeyCode)
         {
-            _screensService.ShowGameMenuModal();
+            case Keys.Escape:
+                _screensService.ShowGameMenuModal();
+                break;
+
+            case Keys.A: 
+                _gameManager.Navigation(CommandTypes.TurnLeft);
+                break;
+
+            case Keys.D: 
+                _gameManager.Navigation(CommandTypes.TurnRight);
+                break;
+
+            case Keys.W: 
+                _gameManager.Navigation(CommandTypes.IncreaseShipSpeed);
+                break;
+
+            case Keys.S: 
+                _gameManager.Navigation(CommandTypes.DecreaseShipSpeed);
+                break;
         }
+
     }
 
     private void UpdateGameData(GameSessionDto sessionDto)

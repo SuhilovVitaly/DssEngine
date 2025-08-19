@@ -19,12 +19,18 @@ public class ProcessingDialogHandler
             }
         }
 
-        lock (sessionContext)
+        // Use write lock for modifying session data
+        sessionContext.EnterWriteLock();
+        try
         {
             foreach (var commands in removeCommands)
             {
                 sessionContext.GameSession.Commands.TryRemove(commands.Value, out _);
             }
+        }
+        finally
+        {
+            sessionContext.ExitWriteLock();
         }
     }
 }

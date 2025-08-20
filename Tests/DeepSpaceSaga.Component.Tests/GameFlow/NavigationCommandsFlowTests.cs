@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.Common.Extensions;
+using DeepSpaceSaga.Server;
 
 namespace DeepSpaceSaga.Component.Tests.GameFlow;
 
@@ -21,6 +22,8 @@ public class NavigationCommandsFlowTests
 
         gameServer.TurnExecution(CalculationType.Turn);
         var sessionContextDtoTurn0 = gameServer.GetSessionContextDto();
+        
+        var spacecraft_turn_000 = sessionContextDtoTurn0.GetPlayerSpaceShip();
 
         await gameServer.AddCommand(new Command
         {
@@ -33,6 +36,8 @@ public class NavigationCommandsFlowTests
 
         var spacecraft_turn_001 = sessionContextDtoTurn1.GetPlayerSpaceShip();
 
-        var x = "";
+        metricsService.Get(MetricsServer.ProcessingCommandNavigationReceived).Should().Be(1);
+        spacecraft_turn_000.Direction.Should().Equals(spacecraft_turn_001.Direction);
+        //Assert.NotEqual(spacecraft_turn_000.Direction, spacecraft_turn_001.Direction);
     }
 }

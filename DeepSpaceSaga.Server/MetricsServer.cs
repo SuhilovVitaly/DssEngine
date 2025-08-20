@@ -15,4 +15,6 @@ public static class MetricsServer
     public const string ProcessingEventAcknowledgeReceived = "Server.Processing.EventAcknowledge.Received";
     public const string ProcessingEventAcknowledgeProcessed = "Server.Processing.EventAcknowledge.Processed";
     public const string ProcessingEventAcknowledgeRemoved = "Server.Processing.EventAcknowledge.Removed";
+    
+    public const string ProcessingCommandNavigationReceived = "Server.Processing.Command.Navigation.Received";
 }

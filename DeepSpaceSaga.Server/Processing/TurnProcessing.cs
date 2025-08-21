@@ -30,6 +30,7 @@ public class TurnProcessing : IProcessingService
         try
         {
             new ProcessingEventAcknowledgeHandler().Execute(sessionContext);
+            new ProcessingNavigationHandler().Execute(sessionContext);
             new ProcessingLocationsHandler().Execute(sessionContext);     
             new ProcessingEventInvokerHandler().Execute(sessionContext);
         }

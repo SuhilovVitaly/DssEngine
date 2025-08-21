@@ -6,12 +6,12 @@ namespace DeepSpaceSaga.Common.Extensions.Entities.CelestialObjects;
 
 public static class CelestialObjectDtoExtensions
 {
-    public static SpaceMapPoint GetLocation(this CelestialObjectDto celestialObject)
+    public static SpaceMapPoint GetLocation(this CelestialObjectSaveFormatDto celestialObject)
     {
         return new SpaceMapPoint((float)celestialObject.X, (float)celestialObject.Y);
     }
 
-    public static ISpacecraft ToSpaceship(this CelestialObjectDto celestialObject)
+    public static ISpacecraft ToSpaceship(this CelestialObjectSaveFormatDto celestialObject)
     {
         var spacecraft = celestialObject as ISpacecraft;
 

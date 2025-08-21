@@ -10,12 +10,12 @@ namespace DeepSpaceSaga.UI.Controller.Tools;
 
 public static class GameSessionDtoExtensions
 {
-    public static List<CelestialObjectDto> GetCelestialObjects(this GameSessionDto session)
+    public static List<CelestialObjectSaveFormatDto> GetCelestialObjects(this GameSessionDto session)
     {
         return session.CelestialObjects.Values.ToList();
     }
 
-    public static SpaceMapColor GetColor(this CelestialObjectDto celestialObject)
+    public static SpaceMapColor GetColor(this CelestialObjectSaveFormatDto celestialObject)
     {
         switch (celestialObject.Type)
         {
@@ -42,31 +42,28 @@ public static class GameSessionDtoExtensions
         return new SpaceMapColor(Color.FromArgb(30, 45, 65));
     }    
 
-    public static List<CelestialObjectDto> GetCelestialObjectsByDistance(this GameSessionDto gameSession, SpaceMapPoint coordinates, int range)
+    public static List<CelestialObjectSaveFormatDto> GetCelestialObjectsByDistance(this GameSessionDto gameSession, SpaceMapPoint coordinates, int range)
     {
 
         var resultObjects = gameSession.CelestialObjects.Values.Select(celestialObject => (celestialObject,
-                    GeometryTools.Distance(
-                        coordinates,
-                        celestialObject.GetLocation())
-                )).
-            Where(e => e.Item2 < range).
-            OrderBy(e => e.Item2).
-            Select(e => e.celestialObject).
-            ToList();
+                    Distance: CalculateDistance(coordinates, celestialObject.X, celestialObject.Y)))
+                .Where(x => x.Distance <= range)
+                .OrderBy(x => x.Distance)
+                .Select(x => x.celestialObject)
+                .ToList();
 
         return resultObjects;
     }
 
-    public static CelestialObjectDto GetPlayerSpaceShip(this GameSessionDto gameSession)
+    public static CelestialObjectSaveFormatDto GetPlayerSpaceShip(this GameSessionDto gameSession)
     {
-        foreach (var celestialObject in from celestialObject in gameSession.CelestialObjects.Values
-                                        where celestialObject.Type == CelestialObjectType.SpaceshipPlayer
-                                        select celestialObject)
-        {
-            return celestialObject;
-        }
+        return gameSession.CelestialObjects.Values.FirstOrDefault(x => x.Type == CelestialObjectType.SpaceshipPlayer);
+    }
 
-        throw new InvalidOperationException("Player spaceship not found in the game session");
+    private static double CalculateDistance(SpaceMapPoint point1, double x2, double y2)
+    {
+        var dx = point1.X - x2;
+        var dy = point1.Y - y2;
+        return Math.Sqrt(dx * dx + dy * dy);
     }
 }

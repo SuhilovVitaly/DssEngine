@@ -1,10 +1,15 @@
-﻿namespace DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Services;
+using DeepSpaceSaga.Common.Geometry;
+using DeepSpaceSaga.UI.Controller.Tools;
+
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class OuterSpaceService : IOuterSpaceService
 {
-    public event Action<CelestialObjectDto>? OnHideCelestialObject;
-    public event Action<CelestialObjectDto>? OnShowCelestialObject;
-    public event Action<CelestialObjectDto>? OnSelectCelestialObject;
+    public event Action<CelestialObjectSaveFormatDto>? OnHideCelestialObject;
+    public event Action<CelestialObjectSaveFormatDto>? OnShowCelestialObject;
+    public event Action<CelestialObjectSaveFormatDto>? OnSelectCelestialObject;
 
     public int ActiveObjectId { get; private set; }
     public int SelectedObjectId { get; private set; }
@@ -55,6 +60,21 @@ public class OuterSpaceService : IOuterSpaceService
 
         SelectedObjectId = celestialObject.Id;
 
+        OnSelectCelestialObject?.Invoke(celestialObject);
+    }
+
+    public void HideCelestialObject(CelestialObjectSaveFormatDto celestialObject)
+    {
+        OnHideCelestialObject?.Invoke(celestialObject);
+    }
+
+    public void ShowCelestialObject(CelestialObjectSaveFormatDto celestialObject)
+    {
+        OnShowCelestialObject?.Invoke(celestialObject);
+    }
+
+    public void SelectCelestialObject(CelestialObjectSaveFormatDto celestialObject)
+    {
         OnSelectCelestialObject?.Invoke(celestialObject);
     }
 }

@@ -49,24 +49,7 @@ public static class CelestialObjectMapper
         return celestialObject;
     }
 
-    public static CelestialObjectDto ToDto(ICelestialObject celestialObject)
-    {
-        return new CelestialObjectDto
-        {
-            Type = celestialObject.Type,
-            IsPreScanned = celestialObject.IsPreScanned,
-            X = celestialObject.X,
-            Y = celestialObject.Y,
-            Id = celestialObject.Id,
-            Name = celestialObject.Name,
-            Direction = celestialObject.Direction,
-            OwnerId = celestialObject.OwnerId,  
-            Size = celestialObject.Size,
-            Speed = celestialObject.Speed
-        };
-    }
-
-    public static CelestialObjectSaveFormatDto ToSaveFormat(ICelestialObject celestialObject)
+    public static CelestialObjectSaveFormatDto ToDto(ICelestialObject celestialObject)
     {
         var baseCelestialObject = new CelestialObjectSaveFormatDto
         {

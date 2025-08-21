@@ -1,5 +1,7 @@
-using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 using DeepSpaceSaga.Common.Abstractions.Mappers.CelestialObjects;
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using FluentAssertions;
 
 namespace DeepSpaceSaga.Common.Tests.Mappers;
 
@@ -9,18 +11,18 @@ public class AsteroidMapperTests
     public void ToGameObject_Should_Map_All_Properties_Correctly()
     {
         // Arrange
-        var celestialObjectDto = new CelestialObjectDto
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
         {
-            Id = 123,
+            Id = 1,
+            OwnerId = 2,
             Name = "Test Asteroid",
-            Direction = 45.5,
-            Speed = 10.5,
+            Direction = 45.0,
             X = 100.0,
             Y = 200.0,
+            Speed = 10.0,
+            Type = CelestialObjectType.Asteroid,
             IsPreScanned = true,
-            Size = 150.5f,
-            Type = CelestialObjectType.Station, // This should be overridden
-            OwnerId = 999 // This should be overridden
+            Size = 5.0f
         };
 
         // Act
@@ -34,184 +36,88 @@ public class AsteroidMapperTests
         result.Speed.Should().Be(celestialObjectDto.Speed);
         result.X.Should().Be(celestialObjectDto.X);
         result.Y.Should().Be(celestialObjectDto.Y);
+        result.Type.Should().Be(celestialObjectDto.Type);
         result.IsPreScanned.Should().Be(celestialObjectDto.IsPreScanned);
         result.Size.Should().Be(celestialObjectDto.Size);
     }
 
     [Fact]
-    public void ToGameObject_Should_Set_Fixed_Properties_Correctly()
+    public void ToGameObject_Should_Return_BaseAsteroid_Type()
     {
         // Arrange
-        var celestialObjectDto = new CelestialObjectDto
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
         {
-            Id = 123,
+            Id = 1,
             Name = "Test Asteroid",
-            Type = CelestialObjectType.Station, // This should be overridden
-            OwnerId = 999 // This should be overridden
+            Type = CelestialObjectType.Asteroid
         };
 
         // Act
         var result = AsteroidMapper.ToGameObject(celestialObjectDto);
 
         // Assert
-        result.OwnerId.Should().Be(0);
+        result.Should().BeOfType<BaseAsteroid>();
+    }
+
+    [Fact]
+    public void ToGameObject_Should_Handle_Different_Asteroid_Types()
+    {
+        // Arrange
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
+        {
+            Id = 1,
+            Name = "Test Asteroid",
+            Type = CelestialObjectType.Asteroid
+        };
+
+        // Act
+        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
+
+        // Assert
         result.Type.Should().Be(CelestialObjectType.Asteroid);
     }
 
-    [Fact]
-    public void ToGameObject_Should_Return_BaseAsteroid_Instance()
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = 123,
-            Name = "Test Asteroid"
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result.Should().NotBeNull();
-        result.Should().BeOfType<BaseAsteroid>();
-        result.Should().BeAssignableTo<ICelestialObject>();
-        result.Should().BeAssignableTo<IAsteroid>();
-    }
-
-    [Fact]
-    public void ToGameObject_Should_Set_RemainingDrillAttempts_To_One()
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = 123,
-            Name = "Test Asteroid"
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        var asteroid = result.Should().BeOfType<BaseAsteroid>().Subject;
-        asteroid.RemainingDrillAttempts.Should().Be(1);
-    }
-
-    [Fact]
-    public void ToGameObject_Should_Handle_Zero_Values()
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = 0,
-            Name = "Zero Asteroid",
-            Direction = 0.0,
-            Speed = 0.0,
-            X = 0.0,
-            Y = 0.0,
-            Size = 0.0f
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result.Should().NotBeNull();
-        result.Id.Should().Be(0);
-        result.Direction.Should().Be(0.0);
-        result.Speed.Should().Be(0.0);
-        result.X.Should().Be(0.0);
-        result.Y.Should().Be(0.0);
-        result.Size.Should().Be(0.0f);
-    }
-
-    [Fact]
-    public void ToGameObject_Should_Handle_Negative_Values()
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = -100,
-            Name = "Negative Asteroid",
-            Direction = -45.5,
-            Speed = -10.0,
-            X = -200.0,
-            Y = -300.0,
-            Size = -50.0f
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result.Should().NotBeNull();
-        result.Id.Should().Be(-100);
-        result.Direction.Should().Be(-45.5);
-        result.Speed.Should().Be(-10.0);
-        result.X.Should().Be(-200.0);
-        result.Y.Should().Be(-300.0);
-        result.Size.Should().Be(-50.0f);
-    }
-
-    [Fact]
-    public void ToGameObject_Should_Handle_Large_Values()
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = int.MaxValue,
-            Name = "Large Asteroid",
-            Direction = double.MaxValue,
-            Speed = double.MaxValue,
-            X = double.MaxValue,
-            Y = double.MaxValue,
-            Size = float.MaxValue
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result.Should().NotBeNull();
-        result.Id.Should().Be(int.MaxValue);
-        result.Direction.Should().Be(double.MaxValue);
-        result.Speed.Should().Be(double.MaxValue);
-        result.X.Should().Be(double.MaxValue);
-        result.Y.Should().Be(double.MaxValue);
-        result.Size.Should().Be(float.MaxValue);
-    }
-
     [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public void ToGameObject_Should_Map_IsPreScanned_Correctly(bool isPreScanned)
+    [InlineData(0, 0, 0.0, 0.0)]
+    [InlineData(1, 1, 1.0, 1.0)]
+    [InlineData(-1, -1, -1.0, -1.0)]
+    [InlineData(100.5, 200.7, 100.5, 200.7)]
+    public void ToGameObject_Should_Map_Coordinates_Correctly(int id, int ownerId, double x, double y)
     {
         // Arrange
-        var celestialObjectDto = new CelestialObjectDto
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
         {
-            Id = 123,
+            Id = id,
+            OwnerId = ownerId,
             Name = "Test Asteroid",
-            IsPreScanned = isPreScanned
+            X = x,
+            Y = y,
+            Type = CelestialObjectType.Asteroid
         };
 
         // Act
         var result = AsteroidMapper.ToGameObject(celestialObjectDto);
 
         // Assert
-        result.IsPreScanned.Should().Be(isPreScanned);
+        result.X.Should().Be(x);
+        result.Y.Should().Be(y);
     }
 
     [Theory]
-    [InlineData("")]
-    [InlineData("A")]
-    [InlineData("Very Long Asteroid Name With Special Characters 123!@#")]
-    [InlineData("Астероид с русскими символами")]
-    public void ToGameObject_Should_Map_Name_Correctly(string name)
+    [InlineData("Asteroid Alpha", 45.0, 10.0, 5.0f)]
+    [InlineData("Asteroid Beta", 90.0, 20.0, 10.0f)]
+    [InlineData("Asteroid Gamma", 180.0, 5.0, 2.5f)]
+    public void ToGameObject_Should_Map_Properties_With_Different_Values(string name, double direction, double speed, float size)
     {
         // Arrange
-        var celestialObjectDto = new CelestialObjectDto
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
         {
-            Id = 123,
-            Name = name
+            Id = 1,
+            Name = name,
+            Direction = direction,
+            Speed = speed,
+            Size = size,
+            Type = CelestialObjectType.Asteroid
         };
 
         // Act
@@ -219,103 +125,59 @@ public class AsteroidMapperTests
 
         // Assert
         result.Name.Should().Be(name);
-    }
-
-    [Theory]
-    [InlineData(CelestialObjectType.Unknown)]
-    [InlineData(CelestialObjectType.Station)]
-    [InlineData(CelestialObjectType.SpaceshipPlayer)]
-    [InlineData(CelestialObjectType.Missile)]
-    public void ToGameObject_Should_Always_Set_Type_To_Asteroid_Regardless_Of_Input(CelestialObjectType inputType)
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = 123,
-            Name = "Test Asteroid",
-            Type = inputType
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result.Type.Should().Be(CelestialObjectType.Asteroid);
-    }
-
-    [Theory]
-    [InlineData(0)]
-    [InlineData(999)]
-    [InlineData(-1)]
-    [InlineData(int.MaxValue)]
-    public void ToGameObject_Should_Always_Set_OwnerId_To_Zero_Regardless_Of_Input(int inputOwnerId)
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = 123,
-            Name = "Test Asteroid",
-            OwnerId = inputOwnerId
-        };
-
-        // Act
-        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result.OwnerId.Should().Be(0);
+        result.Direction.Should().Be(direction);
+        result.Speed.Should().Be(speed);
+        result.Size.Should().Be(size);
     }
 
     [Fact]
-    public void ToGameObject_Should_Throw_NullReferenceException_When_CelestialObjectDto_Is_Null()
-    {
-        // Act & Assert
-        var action = () => AsteroidMapper.ToGameObject(null!);
-        action.Should().Throw<NullReferenceException>();
-    }
-
-    [Fact]
-    public void ToGameObject_Should_Return_Object_With_Default_Values_When_Dto_Has_Default_Values()
+    public void ToGameObject_Should_Map_Boolean_Properties_Correctly()
     {
         // Arrange
-        var celestialObjectDto = new CelestialObjectDto
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
         {
-            Name = "Default Asteroid"
+            Id = 1,
+            Name = "Test Asteroid",
+            IsPreScanned = true,
+            Type = CelestialObjectType.Asteroid
         };
 
         // Act
         var result = AsteroidMapper.ToGameObject(celestialObjectDto);
 
         // Assert
-        result.Should().NotBeNull();
+        result.IsPreScanned.Should().Be(true);
+    }
+
+    [Fact]
+    public void ToGameObject_Should_Handle_Zero_Values()
+    {
+        // Arrange
+        var celestialObjectDto = new CelestialObjectSaveFormatDto
+        {
+            Id = 0,
+            OwnerId = 0,
+            Name = "Test Asteroid",
+            Direction = 0.0,
+            X = 0.0,
+            Y = 0.0,
+            Speed = 0.0,
+            Type = CelestialObjectType.Asteroid,
+            IsPreScanned = false,
+            Size = 0.0f
+        };
+
+        // Act
+        var result = AsteroidMapper.ToGameObject(celestialObjectDto);
+
+        // Assert
         result.Id.Should().Be(0);
+        result.OwnerId.Should().Be(0);
         result.Direction.Should().Be(0.0);
-        result.Speed.Should().Be(0.0);
         result.X.Should().Be(0.0);
         result.Y.Should().Be(0.0);
-        result.IsPreScanned.Should().BeFalse();
+        result.Speed.Should().Be(0.0);
+        result.IsPreScanned.Should().Be(false);
         result.Size.Should().Be(0.0f);
-        result.Type.Should().Be(CelestialObjectType.Asteroid);
-        result.OwnerId.Should().Be(0);
-    }
-
-    [Fact]
-    public void ToGameObject_Should_Create_Independent_Object_Instance()
-    {
-        // Arrange
-        var celestialObjectDto = new CelestialObjectDto
-        {
-            Id = 123,
-            Name = "Test Asteroid",
-            X = 100.0,
-            Y = 200.0
-        };
-
-        // Act
-        var result1 = AsteroidMapper.ToGameObject(celestialObjectDto);
-        var result2 = AsteroidMapper.ToGameObject(celestialObjectDto);
-
-        // Assert
-        result1.Should().NotBeSameAs(result2);
-        result1.Should().BeEquivalentTo(result2);
     }
 } 

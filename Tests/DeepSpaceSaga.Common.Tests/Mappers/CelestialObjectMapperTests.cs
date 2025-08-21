@@ -1,3 +1,8 @@
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+using DeepSpaceSaga.Common.Abstractions.Mappers;
+using DeepSpaceSaga.Common.Generation;
+using FluentAssertions;
+
 namespace DeepSpaceSaga.Common.Tests.Mappers;
 
 public class CelestialObjectMapperTests

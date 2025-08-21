@@ -45,122 +45,62 @@ public class DrawCelestialObjects
                     break;
                 case CelestialObjectType.Explosion:
                     break;
+                default:
+                    break;
             }
         }
     }
 
-    private static void DrawPlayerSpaceship(IScreenInfo screenInfo, CelestialObjectDto spaceShip, GameSessionDto session)
+    private static void DrawPlayerSpaceship(IScreenInfo screenInfo, CelestialObjectSaveFormatDto spaceShip, GameSessionDto session)
     {
-        var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, spaceShip.GetLocation(), true);
         var color = spaceShip.GetColor();
-
-        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
-        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
-        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 8, color);
         DrawCelestialObjectInfo(screenInfo, spaceShip, color, session);
     }
 
-    private static void DrawStation(IScreenInfo screenInfo, CelestialObjectDto spaceStation, GameSessionDto session)
+    private static void DrawStation(IScreenInfo screenInfo, CelestialObjectSaveFormatDto spaceStation, GameSessionDto session)
     {
-        var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, spaceStation.GetLocation(), true);
         var color = spaceStation.GetColor();
-
-        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 8, color);
-        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 8, color);
-        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 12, color);
-
-        if (spaceStation.IsPreScanned)
-        {
-            DrawCelestialObjectInfo(screenInfo, spaceStation, color, session);
-        }
+        DrawCelestialObjectInfo(screenInfo, spaceStation, color, session);
     }
 
-    private static void DrawCelestialObject(IScreenInfo screenInfo, CelestialObjectDto celestialObject, GameSessionDto session)
+    private static void DrawCelestialObject(IScreenInfo screenInfo, CelestialObjectSaveFormatDto celestialObject, GameSessionDto session)
     {
-        // TODO: Optimization by zoom
-        if(ScaleSpaceMapFilters.IsHideCelestialObject(celestialObject, screenInfo))
-        {
-            // No need draw asteroid - scale too big
+        var color = celestialObject.GetColor();
+        DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
+    }
+
+    private static void DrawContainerObject(IScreenInfo screenInfo, CelestialObjectSaveFormatDto celestialObject, GameSessionDto session)
+    {
+        var color = celestialObject.GetColor();
+        DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
+    }
+
+    private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, CelestialObjectSaveFormatDto celestialObject, SpaceMapColor color, GameSessionDto session)
+    {
+        var x = (int)(celestialObject.X * screenInfo.Zoom.Scale);
+        var y = (int)(celestialObject.Y * screenInfo.Zoom.Scale);
+
+        if (ScaleSpaceMapFilters.IsHideCelestialObject(celestialObject, screenInfo))
             return;
-        }
 
-        var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation(), true);
-        var color = celestialObject.GetColor();
+        var size = (int)(celestialObject.Size * screenInfo.Zoom.Scale);
+        if (size < 1) size = 1;
 
-        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
-        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
-
-        if (celestialObject.IsPreScanned && screenInfo.Zoom.Scale < 180)
-        {
-            DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
-        }
-
-    }
-
-    private static void DrawContainerObject(IScreenInfo screenInfo, CelestialObjectDto celestialObject, GameSessionDto session)
-    {
-        var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation(), true);
-        var color = celestialObject.GetColor();
-
-        DrawTools.FillEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
-        DrawTools.DrawEllipse(screenInfo, screenCoordinates.X, screenCoordinates.Y, 4, color);
+        DrawTools.FillEllipse(screenInfo, x, y, size, color);
 
         if (celestialObject.IsPreScanned)
         {
-            DrawCelestialObjectInfo(screenInfo, celestialObject, color, session);
+            var labelDirection = LabelDirection(celestialObject);
+            var font = new Font("Arial", 12);
+            var nameRect = new RectangleF(x - 50, y - size - 20, 100, 20);
+            var directionRect = new RectangleF(x - 50, y + size + 5, 100, 20);
+            DrawTools.DrawString(screenInfo, celestialObject.Name, font, color, nameRect);
+            DrawTools.DrawString(screenInfo, $"Dir: {labelDirection}°", font, color, directionRect);
         }
     }
 
-    private static void DrawCelestialObjectInfo(IScreenInfo screenInfo, CelestialObjectDto celestialObject, SpaceMapColor color, GameSessionDto session)
+    private static int LabelDirection(CelestialObjectSaveFormatDto celestialObject)
     {
-        var screenCoordinates = UiTools.ToScreenCoordinates(screenInfo, celestialObject.GetLocation(), true);
-
-        var startLabel = GeometryTools.Move(screenCoordinates, 45, LabelDirection(celestialObject));
-
-        DrawTools.DrawLine(screenInfo, new SpaceMapColor(32, 32, 32), screenCoordinates, new SpaceMapPoint(startLabel.X, startLabel.Y + 15));
-
-        DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(22, 22, 22)), startLabel, 120, 18);
-        DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(52, 52, 52)), startLabel.X, startLabel.Y + 15, 120, 4);
-
-        if (session.State.ProcessedTurns % 2 == 0)
-        {
-            DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.FromArgb(160, 90, 0)), startLabel.X, startLabel.Y + 3, 8, 8);
-        }
-        else
-        {
-            DrawTools.FillRectangle(screenInfo, new SpaceMapColor(Color.WhiteSmoke), startLabel.X, startLabel.Y + 3, 8, 8);
-        }
-
-        var label = celestialObject.IsPreScanned ? celestialObject.Name : "Unknown Celestial Object";
-
-        DrawTools.DrawString(screenInfo, label, new Font("Tahoma", 12), color, new RectangleF(startLabel.X + 15, startLabel.Y + 12, 190, 50));
-    }
-
-    private static int LabelDirection(CelestialObjectDto celestialObject)
-    {
-        var direction = 0;
-
-        if(celestialObject.Direction > 0 && celestialObject.Direction < 90)
-        {
-            return 270 + 90 / 2;
-        }
-
-        if (celestialObject.Direction > 90 && celestialObject.Direction < 180)
-        {
-            return 270 + 90 / 2;
-        }
-
-        if (celestialObject.Direction > 180 && celestialObject.Direction < 270)
-        {
-            return 45;
-        }
-
-        if (celestialObject.Direction > 270 && celestialObject.Direction < 360)
-        {
-            return 135;
-        }
-
-
-        return direction;
+        return (int)celestialObject.Direction;
     }
 }

@@ -1,5 +1,6 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-using DeepSpaceSaga.Common.Abstractions.Entities;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,22 +11,19 @@ namespace DeepSpaceSaga.Common.Extensions
 {
     public static class GameSessionExtensions
     {
-        public static ISpacecraft GetPlayerSpaceShip(Dictionary<int, CelestialObjectDto> spaceMap)
+        public static ISpacecraft GetPlayerSpaceShip(Dictionary<int, CelestialObjectSaveFormatDto> spaceMap)
         {
-            foreach (var celestialObject in from celestialObject in spaceMap
-                                            where celestialObject.Value.Type == CelestialObjectType.SpaceshipPlayer
-                                            select celestialObject)
-            {
-                var spacecraft = celestialObject.Value.ToSpaceship();
+            var playerSpaceShip = spaceMap.Values.FirstOrDefault(x => x.Type == CelestialObjectType.SpaceshipPlayer);
+            if (playerSpaceShip == null)
+                return null;
 
-                return spacecraft;
-            }
-
-            throw new InvalidOperationException("Player spaceship not found in the game session");
+            return new BaseSpaceship(playerSpaceShip);
         }
 
         public static ISpacecraft GetPlayerSpaceShip(this GameSessionDto session)
         {
+            // TOODO: Cust to ICelestialObject and map to ISpacecraft dto?
+
             var spacecraft = GetPlayerSpaceShip(session.CelestialObjects);
 
             return spacecraft;

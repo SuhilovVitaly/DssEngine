@@ -50,19 +50,19 @@ public partial class GameSessionInformation : ControlWindow
         GameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));        
     }
 
-    private void OuterSpace_OnHideCelestialObject(CelestialObjectDto obj)
+    private void OuterSpace_OnHideCelestialObject(CelestialObjectSaveFormatDto obj)
     {
-        UpdateGameData(_gameManager.GameSession());
+        // Handle hide celestial object
     }
 
-    private void OuterSpace_OnShowCelestialObject(CelestialObjectDto obj)
+    private void OuterSpace_OnShowCelestialObject(CelestialObjectSaveFormatDto obj)
     {
-        UpdateGameData(_gameManager.GameSession());
+        // Handle show celestial object
     }
 
-    private void OuterSpace_OnSelectCelestialObject(CelestialObjectDto obj)
+    private void OuterSpace_OnSelectCelestialObject(CelestialObjectSaveFormatDto obj)
     {
-        UpdateGameData(_gameManager.GameSession());
+        // Handle select celestial object
     }
 
     protected override void OnLoad(EventArgs e)

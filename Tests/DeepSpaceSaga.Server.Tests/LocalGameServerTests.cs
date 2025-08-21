@@ -1,4 +1,5 @@
 using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
+using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects;
 
 namespace DeepSpaceSaga.Server.Tests;
 
@@ -37,7 +38,7 @@ public class LocalGameServerTests
             { 
                 Id = Guid.NewGuid(),
                 State = new GameStateDto(),
-                CelestialObjects = new Dictionary<int, CelestialObjectDto>(),
+                CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>(),
                 Commands = new Dictionary<Guid, CommandDto>()
             });
         

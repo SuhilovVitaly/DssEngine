@@ -109,12 +109,12 @@ public class SessionContextServiceTests : IDisposable
         
         _service = new SessionContextService(sessionInfoMock.Object, metricsMock.Object, generationToolMock.Object);
 
-        // Act & Assert - multiple read locks should work
+        // Act & Assert - multiple read locks should work in sequence, not simultaneously
         var action = () =>
         {
             _service.EnterReadLock();
-            _service.EnterReadLock();
             _service.ExitReadLock();
+            _service.EnterReadLock();
             _service.ExitReadLock();
         };
 

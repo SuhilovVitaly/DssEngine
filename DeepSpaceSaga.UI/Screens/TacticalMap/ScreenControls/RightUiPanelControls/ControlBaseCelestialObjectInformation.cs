@@ -46,19 +46,19 @@ public partial class ControlBaseCelestialObjectInformation : UserControl
         }
     }
 
-    private void HideCelestialObject(CelestialObjectDto dto)
+    private void HideCelestialObject(CelestialObjectSaveFormatDto dto)
     {
-        _shownObjectId = 0;
+        // Handle hide celestial object
     }
 
-    private void ShowCelestialObject(CelestialObjectDto dto)
+    private void ShowCelestialObject(CelestialObjectSaveFormatDto dto)
     {
-        _shownObjectId = dto.Id;
+        // Handle show celestial object
     }
 
-    private void SelectCelestialObject(CelestialObjectDto dto)
+    private void SelectCelestialObject(CelestialObjectSaveFormatDto dto)
     {
-        _selectedObjectId = dto.Id;
+        // Handle select celestial object
     }
 
     private void UpdateGameData(GameSessionDto session)

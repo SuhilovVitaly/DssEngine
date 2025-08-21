@@ -60,8 +60,9 @@ public class ProcessingEventAcknowledgeHandlerTests
 
         _gameSession.Commands.TryAdd(command1.Id, command1);
         _gameSession.Commands.TryAdd(command2.Id, command2);
-        _gameSession.ActiveEvents.TryAdd("event1", activeEvent1);
-        _gameSession.ActiveEvents.TryAdd("event2", activeEvent2);
+        // Use command IDs as keys for ActiveEvents since the handler removes by command ID
+        _gameSession.ActiveEvents.TryAdd(command1.Id.ToString(), activeEvent1);
+        _gameSession.ActiveEvents.TryAdd(command2.Id.ToString(), activeEvent2);
 
         // Act
         _handler.Execute(_mockSessionContext.Object);
@@ -70,8 +71,8 @@ public class ProcessingEventAcknowledgeHandlerTests
         _gameSession.Commands.Should().BeEmpty();
         _gameSession.ActiveEvents.Should().BeEmpty();
         _gameSession.FinishedEvents.Should().HaveCount(2);
-        _gameSession.FinishedEvents.Should().ContainKey("event1");
-        _gameSession.FinishedEvents.Should().ContainKey("event2");
+        _gameSession.FinishedEvents.Should().ContainKey(command1.Id.ToString());
+        _gameSession.FinishedEvents.Should().ContainKey(command2.Id.ToString());
         
         // Verify metrics were called
         _mockMetrics.Verify(x => x.Add(MetricsServer.ProcessingEventAcknowledgeReceived, 1), Times.Exactly(2));
@@ -162,7 +163,8 @@ public class ProcessingEventAcknowledgeHandlerTests
 
         _gameSession.Commands.TryAdd(acceptCommand.Id, acceptCommand);
         _gameSession.Commands.TryAdd(otherCommand.Id, otherCommand);
-        _gameSession.ActiveEvents.TryAdd("event1", activeEvent);
+        // Use command ID as key for ActiveEvents since the handler removes by command ID
+        _gameSession.ActiveEvents.TryAdd(acceptCommand.Id.ToString(), activeEvent);
 
         // Act
         _handler.Execute(_mockSessionContext.Object);
@@ -171,7 +173,7 @@ public class ProcessingEventAcknowledgeHandlerTests
         _gameSession.Commands.Should().HaveCount(1);
         _gameSession.Commands.Should().ContainKey(otherCommand.Id);
         _gameSession.FinishedEvents.Should().HaveCount(1);
-        _gameSession.FinishedEvents.Should().ContainKey("event1");
+        _gameSession.FinishedEvents.Should().ContainKey(acceptCommand.Id.ToString());
         
         // Verify metrics were called only once
         _mockMetrics.Verify(x => x.Add(MetricsServer.ProcessingEventAcknowledgeReceived, 1), Times.Exactly(1));

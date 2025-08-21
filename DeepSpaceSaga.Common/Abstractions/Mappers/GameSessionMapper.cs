@@ -26,7 +26,7 @@ public static class GameSessionMapper
 
     public static GameSessionDto ToDto(ISessionContextService gameSessionContext)
     {
-        Dictionary<int, CelestialObjectDto> celestialObjectsCopy;
+        Dictionary<int, CelestialObjectSaveFormatDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
         Dictionary<string, GameActionEventDto> gameActionEventsCopy;
         Dictionary<string, string> finishedEventsCopy;
@@ -73,6 +73,9 @@ public static class GameSessionMapper
 
     public static GameSessionSaveFormatDto ToSaveFormat(ISessionContextService gameSessionContext)
     {
+        if (gameSessionContext == null)
+            throw new ArgumentNullException(nameof(gameSessionContext));
+
         Dictionary<int, CelestialObjectSaveFormatDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
         Dictionary<string, GameActionEventDto> gameActionEventsCopy;
@@ -85,7 +88,7 @@ public static class GameSessionMapper
             celestialObjectsCopy = gameSessionContext.GameSession.CelestialObjects
                 .ToDictionary(
                     kvp => kvp.Key,
-                    kvp => CelestialObjectMapper.ToSaveFormat(kvp.Value));
+                    kvp => CelestialObjectMapper.ToDto(kvp.Value));
 
             commandsCopy = gameSessionContext.GameSession.Commands
                 .ToDictionary(

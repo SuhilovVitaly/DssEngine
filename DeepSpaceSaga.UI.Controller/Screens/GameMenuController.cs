@@ -38,6 +38,11 @@ public class GameMenuController(IGameManager gameManager) : IGameMenuController
     {
         // Load game logic here
         await _gameManager.LoadGame("quick.save");
+
+        if (_isSessionOnPause == false)
+        {
+            _gameManager.SessionResume();
+        }
     }
 
     public async Task GoToMainMenuAsync()

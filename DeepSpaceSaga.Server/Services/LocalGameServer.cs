@@ -122,6 +122,10 @@ public class LocalGameServer(
     {
         _sessionContext = _saveLoadService.Load(saveName);
 
+        _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
+
+        OnTurnExecute?.Invoke(_gameSessionDto);
+
         return Task.CompletedTask;
     }
 }

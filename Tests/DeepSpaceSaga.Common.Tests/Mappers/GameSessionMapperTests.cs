@@ -281,7 +281,6 @@ public class GameSessionMapperTests
         result.State.Should().NotBeNull();
         result.CelestialObjects.Should().BeEmpty();
         result.Commands.Should().BeEmpty();
-        result.GameActionEvents.Should().BeEmpty();
         result.FinishedEvents.Should().BeEmpty();
     }
 
@@ -445,7 +444,6 @@ public class GameSessionMapperTests
                 }
             },
             Commands = new Dictionary<Guid, CommandDto>(),
-            GameActionEvents = new Dictionary<string, GameActionEventDto>(),
             FinishedEvents = new Dictionary<string, string>()
         };
 
@@ -477,7 +475,6 @@ public class GameSessionMapperTests
             State = new GameStateDto(),
             CelestialObjects = new Dictionary<int, CelestialObjectDto>(),
             Commands = new Dictionary<Guid, CommandDto>(),
-            GameActionEvents = new Dictionary<string, GameActionEventDto>(),
             FinishedEvents = new Dictionary<string, string>()
         };
 

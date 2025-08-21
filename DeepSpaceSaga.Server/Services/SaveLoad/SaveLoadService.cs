@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.Services.SaveLoad;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
+
+namespace DeepSpaceSaga.Server.Services.SaveLoad;
 
 public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
 {
@@ -35,9 +37,11 @@ public class SaveLoadService(string savesDirectory = "Saves") : ISaveLoadService
                 snapshotAfterLoad.Session.State.ProcessedTurns),
             new MetricsService(),
             new GenerationTool()
-            );
+            );        
 
         loadedSessionContext.GameSession = GameSessionMapper.ToGameObject(snapshotAfterLoad.Session);
+
+        loadedSessionContext.GameSession.Dialogs = new DialogsService("Default");
 
         return loadedSessionContext;
     }

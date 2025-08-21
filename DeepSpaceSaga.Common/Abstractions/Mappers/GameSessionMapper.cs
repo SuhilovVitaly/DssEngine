@@ -112,7 +112,6 @@ public static class GameSessionMapper
             Id = gameSessionContext.GameSession.Id,
             State = GameStateMapper.ToDto(gameSessionContext),
             CelestialObjects = celestialObjectsCopy,
-            GameActionEvents = gameActionEventsCopy,
             FinishedEvents = finishedEventsCopy,
             Commands = commandsCopy
         };

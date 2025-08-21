@@ -26,7 +26,7 @@ public class BaseSpaceshipTests
     public void Constructor_With_Dto_Should_Load_Object_Properties()
     {
         // Arrange
-        var dto = new CelestialObjectSaveFormatDto
+        var dto = new CelestialObjectDto
         {
             Id = 123,
             OwnerId = 456,

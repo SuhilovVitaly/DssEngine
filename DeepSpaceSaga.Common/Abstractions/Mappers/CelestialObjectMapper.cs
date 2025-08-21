@@ -2,7 +2,7 @@ namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public static class CelestialObjectMapper
 {
-    public static ICelestialObject ToGameObject(CelestialObjectSaveFormatDto celestialObjectDto)
+    public static ICelestialObject ToGameObject(CelestialObjectDto celestialObjectDto)
     {
         var modules = celestialObjectDto.Modules.Select(module => ModuleMapper.ToGameObject(module)).ToList();
         ICelestialObject celestialObject = null;
@@ -66,9 +66,9 @@ public static class CelestialObjectMapper
         };
     }
 
-    public static CelestialObjectSaveFormatDto ToSaveFormat(ICelestialObject celestialObject)
+    public static CelestialObjectDto ToSaveFormat(ICelestialObject celestialObject)
     {
-        var baseCelestialObject = new CelestialObjectSaveFormatDto
+        var baseCelestialObject = new CelestialObjectDto
         {
             Type = celestialObject.Type,
             IsPreScanned = celestialObject.IsPreScanned,

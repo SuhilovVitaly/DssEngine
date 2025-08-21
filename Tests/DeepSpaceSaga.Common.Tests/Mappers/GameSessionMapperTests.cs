@@ -430,10 +430,10 @@ public class GameSessionMapperTests
                 Tick = 50,
                 ProcessedTurns = 99
             },
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>
             {
                 {
-                    1, new CelestialObjectSaveFormatDto
+                    1, new CelestialObjectDto
                     {
                         Id = 1,
                         Name = "Test Asteroid",
@@ -475,7 +475,7 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>(),
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>(),
             Commands = new Dictionary<Guid, CommandDto>(),
             GameActionEvents = new Dictionary<string, GameActionEventDto>(),
             FinishedEvents = new Dictionary<string, string>()
@@ -497,10 +497,10 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>
             {
                 {
-                    1, new CelestialObjectSaveFormatDto
+                    1, new CelestialObjectDto
                     {
                         Id = 1,
                         Name = "Test Asteroid",
@@ -529,10 +529,10 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>
             {
                 {
-                    1, new CelestialObjectSaveFormatDto
+                    1, new CelestialObjectDto
                     {
                         Id = 1,
                         Name = "Asteroid 1",
@@ -541,7 +541,7 @@ public class GameSessionMapperTests
                     }
                 },
                 {
-                    2, new CelestialObjectSaveFormatDto
+                    2, new CelestialObjectDto
                     {
                         Id = 2,
                         Name = "Asteroid 2",
@@ -575,7 +575,7 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>()
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>()
         };
 
         // Act
@@ -594,10 +594,10 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>
             {
                 {
-                    1, new CelestialObjectSaveFormatDto
+                    1, new CelestialObjectDto
                     {
                         Id = 1,
                         Name = "Test Asteroid",
@@ -634,10 +634,10 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>
             {
                 {
-                    1, new CelestialObjectSaveFormatDto
+                    1, new CelestialObjectDto
                     {
                         Id = 1,
                         Name = "Test Asteroid",
@@ -664,10 +664,10 @@ public class GameSessionMapperTests
         {
             Id = Guid.NewGuid(),
             State = new GameStateDto(),
-            CelestialObjects = new Dictionary<int, CelestialObjectSaveFormatDto>
+            CelestialObjects = new Dictionary<int, CelestialObjectDto>
             {
                 {
-                    1, new CelestialObjectSaveFormatDto
+                    1, new CelestialObjectDto
                     {
                         Id = 1,
                         Name = "Test Asteroid",

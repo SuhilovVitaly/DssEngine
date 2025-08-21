@@ -73,7 +73,7 @@ public static class GameSessionMapper
 
     public static GameSessionSaveFormatDto ToSaveFormat(ISessionContextService gameSessionContext)
     {
-        Dictionary<int, CelestialObjectSaveFormatDto> celestialObjectsCopy;
+        Dictionary<int, CelestialObjectDto> celestialObjectsCopy;
         Dictionary<Guid, CommandDto> commandsCopy;
         Dictionary<string, GameActionEventDto> gameActionEventsCopy;
         Dictionary<string, string> finishedEventsCopy;

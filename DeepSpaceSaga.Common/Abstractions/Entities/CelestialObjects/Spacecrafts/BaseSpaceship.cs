@@ -12,7 +12,7 @@ public class BaseSpaceship : BaseCelestialObject, ISpacecraft
         Crew = new();
     }
 
-    public BaseSpaceship(CelestialObjectSaveFormatDto celestialObjectDto) : this()
+    public BaseSpaceship(CelestialObjectDto celestialObjectDto) : this()
     {
         LoadObject(celestialObjectDto);
     }

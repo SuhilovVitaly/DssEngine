@@ -39,7 +39,7 @@ public class BaseAsteroidTests
     public void Constructor_With_Dto_Should_Load_Object_Properties()
     {
         // Arrange
-        var dto = new CelestialObjectSaveFormatDto
+        var dto = new CelestialObjectDto
         {
             Id = 456,
             OwnerId = 0,
@@ -75,7 +75,7 @@ public class BaseAsteroidTests
     public void Constructor_With_Dto_Should_Handle_Zero_RemainingDrillAttempts()
     {
         // Arrange
-        var dto = new CelestialObjectSaveFormatDto
+        var dto = new CelestialObjectDto
         {
             Name = "Zero Drill Asteroid",
             RemainingDrillAttempts = 0
@@ -92,7 +92,7 @@ public class BaseAsteroidTests
     public void Constructor_With_Dto_Should_Handle_Negative_RemainingDrillAttempts()
     {
         // Arrange
-        var dto = new CelestialObjectSaveFormatDto
+        var dto = new CelestialObjectDto
         {
             Name = "Negative Drill Asteroid",
             RemainingDrillAttempts = -5

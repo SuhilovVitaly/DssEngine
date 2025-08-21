@@ -6,7 +6,7 @@ public class BaseAsteroid : BaseCelestialObject, IAsteroid
 
     public BaseAsteroid(int maxDrillAttempts) => RemainingDrillAttempts = maxDrillAttempts;
 
-    public BaseAsteroid(CelestialObjectSaveFormatDto celestialObjectDto)
+    public BaseAsteroid(CelestialObjectDto celestialObjectDto)
     {
         LoadObject(celestialObjectDto);
 

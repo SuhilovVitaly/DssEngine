@@ -15,7 +15,7 @@ public class BaseCelestialObject : ICelestialObject
 
     public IModularSystem ModulesS { get; set; } = new ModularSystem();
 
-    public void LoadObject(CelestialObjectSaveFormatDto celestialObjectDto)
+    public void LoadObject(CelestialObjectDto celestialObjectDto)
     {
         Id = celestialObjectDto.Id;
         OwnerId = celestialObjectDto.OwnerId;

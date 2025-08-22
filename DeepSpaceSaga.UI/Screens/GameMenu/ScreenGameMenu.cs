@@ -132,6 +132,7 @@ public partial class ScreenGameMenu : Form
         try
         {
             await _presenter.HandleLoadGameAsync();
+            Close();
         }
         catch (Exception ex)
         {

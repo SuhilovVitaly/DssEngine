@@ -24,7 +24,7 @@ public partial class RpgTextOutputControl : UserControl
 
     [Category("RPG Text Output")]
     [Description("Full text to display")]
-    public string Text
+    public new string Text
     {
         get => fullText;
         set
@@ -57,7 +57,7 @@ public partial class RpgTextOutputControl : UserControl
         this.KeyDown += RpgTextOutputControl_KeyDown;
     }
 
-    private void RpgTextOutputControl_KeyDown(object sender, KeyEventArgs e)
+    private void RpgTextOutputControl_KeyDown(object? sender, KeyEventArgs e)
     {
         if (e.KeyCode == Keys.Space)
         {
@@ -76,7 +76,7 @@ public partial class RpgTextOutputControl : UserControl
         }
     }
 
-    private void RpgTextOutputControl_Resize(object sender, EventArgs e)
+    private void RpgTextOutputControl_Resize(object? sender, EventArgs e)
     {
         if (lblText != null)
         {
@@ -84,7 +84,7 @@ public partial class RpgTextOutputControl : UserControl
         }
     }
 
-    private void OutputTimer_Tick(object sender, EventArgs e)
+    private void OutputTimer_Tick(object? sender, EventArgs e)
     {
         if (currentWordIndex < words.Length)
         {
@@ -98,6 +98,8 @@ public partial class RpgTextOutputControl : UserControl
                 lblText.Text = words[currentWordIndex];
             }
             
+            System.Diagnostics.Debug.WriteLine($"RpgTextOutputControl: Added word {currentWordIndex + 1}/{words.Length}: '{words[currentWordIndex]}'");
+            
             currentWordIndex++;
             
             // Check if we're done
@@ -105,6 +107,7 @@ public partial class RpgTextOutputControl : UserControl
             {
                 outputTimer.Stop();
                 isOutputting = false;
+                System.Diagnostics.Debug.WriteLine("RpgTextOutputControl: Text output completed");
                 TextOutputCompleted?.Invoke();
             }
         }
@@ -113,7 +116,10 @@ public partial class RpgTextOutputControl : UserControl
     private void StartRpgTextOutput()
     {
         if (string.IsNullOrEmpty(fullText) || isOutputting)
+        {
+            System.Diagnostics.Debug.WriteLine($"RpgTextOutputControl: Not starting output - fullText: '{fullText}', isOutputting: {isOutputting}");
             return;
+        }
 
         isOutputting = true;
         currentWordIndex = 0;
@@ -121,6 +127,8 @@ public partial class RpgTextOutputControl : UserControl
         
         // Split text into words
         words = fullText.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        System.Diagnostics.Debug.WriteLine($"RpgTextOutputControl: Starting output with {words.Length} words, interval: {TextOutputSpeedMs}ms");
         
         // Configure and start timer
         outputTimer.Interval = TextOutputSpeedMs;

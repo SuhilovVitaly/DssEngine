@@ -3,7 +3,11 @@
 public partial class HelpSystemControl : UserControl
 {
     public event Action? OnClose;
-    public event Action<DialogExit> OnNextDialog;
+    public event Action<DialogExit>? OnNextDialog;
+    
+    private DialogDto? _currentDialog;
+    private IGameManager? _currentGameManager;
+    private string? _pendingMessageText;
 
     public HelpSystemControl()
     {
@@ -11,9 +15,48 @@ public partial class HelpSystemControl : UserControl
         
         // Enable key handling for space key
         this.TabStop = true;
+        this.KeyDown += HelpSystemControl_KeyDown;
+        
+        // Also handle key events for child controls
+        this.PreviewKeyDown += HelpSystemControl_PreviewKeyDown;
         
         // Subscribe to key events of child controls
         SubscribeToChildKeyEvents();
+        
+        // Subscribe to Load event to ensure proper initialization
+        this.Load += HelpSystemControl_Load;
+    }
+
+    private void HelpSystemControl_KeyDown(object? sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Space)
+        {
+            // User pressed space - skip text output if it's still running
+            crlMessage?.SkipTextOutput();
+            e.Handled = true; // Prevent further processing
+        }
+    }
+
+    private void HelpSystemControl_PreviewKeyDown(object? sender, PreviewKeyDownEventArgs e)
+    {
+        if (e.KeyCode == Keys.Space)
+        {
+            // User pressed space - skip text output if it's still running
+            crlMessage?.SkipTextOutput();
+            e.IsInputKey = true; // Mark as handled
+        }
+    }
+
+    private void HelpSystemControl_Load(object? sender, EventArgs e)
+    {
+        // If there's pending message text, set it now that the control is fully loaded
+        if (!string.IsNullOrEmpty(_pendingMessageText))
+        {
+            System.Diagnostics.Debug.WriteLine($"HelpSystemControl_Load: Setting pending text '{_pendingMessageText}'");
+            crlMessage.Clear();
+            crlMessage.Text = _pendingMessageText;
+            _pendingMessageText = null;
+        }
     }
 
     private void SubscribeToChildKeyEvents()
@@ -32,15 +75,15 @@ public partial class HelpSystemControl : UserControl
         }
     }
 
-    private void Event_ExitScreen(object sender, EventArgs e)
+    private void Event_ExitScreen(object? sender, EventArgs e)
     {
         OnClose?.Invoke();
         Visible = false;
     }
 
-    private void Event_ToNextDialog(object sender, EventArgs e)
+    private void Event_ToNextDialog(object? sender, EventArgs e)
     {
-        var evnt = (sender as Button).Tag as DialogExit;
+        var evnt = (sender as Button)?.Tag as DialogExit;
 
         if(evnt != null)
         {
@@ -54,29 +97,84 @@ public partial class HelpSystemControl : UserControl
     {
         try
         {
+            // Clear any existing buttons first
+            ClearDialogButtons();
+            
             crlMessageTitle.Text = gameManager.Localization.GetText(dialog.Title);
             
+            // Unsubscribe from previous events to avoid multiple subscriptions
+            crlMessage.TextOutputCompleted -= OnTextOutputCompleted;
+            crlMessage.SpacePressedAfterCompletion -= OnSpacePressedAfterCompletion;
+            
             // Subscribe to text output completion event
-            crlMessage.TextOutputCompleted += () => AddDialogButtons(dialog, gameManager);
+            crlMessage.TextOutputCompleted += OnTextOutputCompleted;
             
             // Subscribe to space pressed after completion event
-            crlMessage.SpacePressedAfterCompletion += () => SimulateFirstButtonClick(dialog, gameManager);
+            crlMessage.SpacePressedAfterCompletion += OnSpacePressedAfterCompletion;
             
-            // Use RPG text output control
-            crlMessage.Text = gameManager.Localization.GetText(dialog.Message);
-
+            // Store dialog and gameManager for use in event handlers
+            _currentDialog = dialog;
+            _currentGameManager = gameManager;
+            
             crlName.Text = dialog.Reporter.FirstName + " " + dialog.Reporter.LastName;
             crlRank.Text = gameManager.Localization.GetText(dialog.Reporter.Rank);
 
             crlPortrait.Image = ImageLoader.LoadCharacterImage(dialog.Reporter.Portrait);
 
             Visible = true;
+            
+            // Use RPG text output control - set text after making visible
+            var messageText = gameManager.Localization.GetText(dialog.Message);
+            
+            // Debug: Check if text output is working
+            System.Diagnostics.Debug.WriteLine($"HelpSystemControl: Setting text '{messageText}' with speed {crlMessage.TextOutputSpeedMs}ms");
+            
+            // Check if control is fully loaded
+            if (IsHandleCreated)
+            {
+                // Control is ready, set text immediately
+                crlMessage.Clear();
+                crlMessage.Text = messageText;
+            }
+            else
+            {
+                // Control not ready, store text for later
+                _pendingMessageText = messageText;
+                System.Diagnostics.Debug.WriteLine("HelpSystemControl: Control not ready, storing text for later");
+            }
         }
         catch (Exception)
         {
 
             throw;
         }        
+    }
+
+    private void OnTextOutputCompleted()
+    {
+        if (_currentDialog != null && _currentGameManager != null)
+        {
+            AddDialogButtons(_currentDialog, _currentGameManager);
+        }
+    }
+    
+    private void OnSpacePressedAfterCompletion()
+    {
+        if (_currentDialog != null && _currentGameManager != null)
+        {
+            SimulateFirstButtonClick(_currentDialog, _currentGameManager);
+        }
+    }
+    
+    private void ClearDialogButtons()
+    {
+        // Remove all buttons that were added dynamically
+        var buttonsToRemove = Controls.OfType<Button>().Where(b => b.Name == "crlExitScreenButton").ToList();
+        foreach (var button in buttonsToRemove)
+        {
+            Controls.Remove(button);
+            button.Dispose();
+        }
     }
 
     private void SimulateFirstButtonClick(DialogDto dialog, IGameManager gameManager)

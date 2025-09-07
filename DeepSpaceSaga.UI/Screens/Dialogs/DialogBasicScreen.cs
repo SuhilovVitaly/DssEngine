@@ -10,9 +10,9 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
 public partial class DialogBasicScreen : Form
 {
-    private GameActionEventDto _gameActionEvent;
-    private IGameManager _gameManager;
-    private DialogDto _currentDialog;
+    private GameActionEventDto? _gameActionEvent;
+    private IGameManager? _gameManager;
+    private DialogDto? _currentDialog;
 
     public DialogBasicScreen()
     {
@@ -35,49 +35,51 @@ public partial class DialogBasicScreen : Form
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
 
-        var helpSystemControl = new HelpSystemControl
+        if (_currentDialog != null)
         {
-            Dock = DockStyle.Fill
-        };
-
-        helpSystemControl.OnClose += Even_ScreenClose;
-        helpSystemControl.OnNextDialog += Even_NextDialog;
-
-        helpSystemControl.ShowGameScreen(gameActionEvent.Dialog, _gameManager);
-
-        Controls.Add(helpSystemControl);
+            AddHelpSystemControl(_currentDialog);
+        }
     }    
 
     private void Even_NextDialog(DialogExit exit)
     {
-        _gameManager.CommandExecute(new DialogExitCommand
+        if (_gameManager != null && _currentDialog != null)
         {
-            Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
-            IsPauseProcessed = true,
-            IsOneTimeCommand = true,
-            DialogExitKey = exit.Key,
-            DialogKey = _currentDialog.Key,
-        } );
-
-        foreach (var dialog in _gameActionEvent.ConnectedDialogs)
-        {
-            if(dialog.Key == exit.NextKey)
+            _gameManager.CommandExecute(new DialogExitCommand
             {
-                switch (dialog.UiScreenType)
+                Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+                IsPauseProcessed = true,
+                IsOneTimeCommand = true,
+                DialogExitKey = exit.Key,
+                DialogKey = _currentDialog.Key,
+            } );
+        }
+
+        if (_gameActionEvent != null)
+        {
+            foreach (var dialog in _gameActionEvent.ConnectedDialogs)
+            {
+                if(dialog.Key == exit.NextKey)
                 {
-                    case DialogUiScreenType.OnePerson:
-                        AddHelpSystemControl(dialog);
-                        break;
-                    case DialogUiScreenType.TwoPerson:
-                        AddTwoPersonControl(dialog, _currentDialog);
-                        break;
-                    default:
-                        break;
+                    switch (dialog.UiScreenType)
+                    {
+                        case DialogUiScreenType.OnePerson:
+                            AddHelpSystemControl(dialog);
+                            break;
+                        case DialogUiScreenType.TwoPerson:
+                            if (_currentDialog != null)
+                            {
+                                AddTwoPersonControl(dialog, _currentDialog);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    _currentDialog = dialog;
+
+                    return;
                 }
-
-                _currentDialog = dialog;
-
-                return;
             }
         }
     }
@@ -92,7 +94,10 @@ public partial class DialogBasicScreen : Form
         helpSystemControl.OnClose += Even_ScreenClose;
         helpSystemControl.OnNextDialog += Even_NextDialog;
 
-        helpSystemControl.ShowGameScreen(currentDialog, previousDialog, _gameManager);
+        if (_gameManager != null)
+        {
+            helpSystemControl.ShowGameScreen(currentDialog, previousDialog, _gameManager);
+        }
 
         Controls.Add(helpSystemControl);
 
@@ -112,7 +117,10 @@ public partial class DialogBasicScreen : Form
         helpSystemControl.OnClose += Even_ScreenClose;
         helpSystemControl.OnNextDialog += Even_NextDialog;
 
-        helpSystemControl.ShowGameScreen(dialog, _gameManager);
+        if (_gameManager != null)
+        {
+            helpSystemControl.ShowGameScreen(dialog, _gameManager);
+        }
 
         Controls.Add(helpSystemControl);
 
@@ -120,6 +128,9 @@ public partial class DialogBasicScreen : Form
         {
             Controls.Remove(Controls[0]);
         }
+
+        // Set focus to the new control to enable keyboard handling
+        helpSystemControl.Focus();
     }
 
     private void Even_ScreenClose()

@@ -131,6 +131,8 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
 
     public void StartDialog(GameActionEventDto gameActionEvent)
     {
+        _screensService.ShowDialogScreen(gameActionEvent);
+        return;
         try
         {
             CrossThreadExtensions.PerformSafely(this, OpenModalDialogWindow, gameActionEvent);
@@ -147,27 +149,19 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
         switch (gameActionEvent.Dialog?.UiScreenType)
         {
             case DialogUiScreenType.Info:
-                var screenDialogInfo = new DialogBasicInfoScreen(gameActionEvent, _gameManager)
+                var screenDialogInfo = new Form1()
                 {
                     FormBorderStyle = FormBorderStyle.None,
                     Size = new Size(1375, 875),
                     ShowInTaskbar = false,
                     StartPosition = FormStartPosition.Manual,
-                    
+
                 };
 
-                screenDialogInfo.Location = new Point(Location.X + (Width - screenDialogInfo.Width) / 2, Location.Y + (Height - screenDialogInfo.Height) / 2);
+                Location = new Point(Location.X + (Width - screenDialogInfo.Width) / 2, Location.Y + (Height - screenDialogInfo.Height) / 2);
 
-                // Check if handle is created before using BeginInvoke
-                if (this.IsHandleCreated)
-                {
-                    this.BeginInvoke(new Action(() => screenDialogInfo.ShowDialog()));
-                }
-                else
-                {
-                    // If handle not created, use ShowDialog directly
-                    screenDialogInfo.ShowDialog();
-                }
+                screenDialogInfo.ShowDialog(this);
+
                 return;
         }
 

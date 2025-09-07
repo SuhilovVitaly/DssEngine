@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Services.Screens;
+﻿using DeepSpaceSaga.UI.Screens.Dialogs;
+
+namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreensService : IScreensService
 {
@@ -34,6 +36,38 @@ public class ScreensService : IScreensService
         {
             Console.WriteLine("[ScreensService] Showing main menu screen");
             var screen = Program.ServiceProvider.GetService<ScreenMainMenu>();
+            if (screen != null)
+            {
+                _screenBackground.ShowChildForm(screen);
+                Console.WriteLine("[ScreensService] Main menu screen displayed successfully");
+            }
+            else
+            {
+                Console.WriteLine("[ScreensService] ERROR: Failed to get ScreenMainMenu from service provider");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ScreensService] ERROR showing main menu: {ex.Message}");
+        }
+    }
+
+    public void ShowDialogScreen(GameActionEventDto gameActionEvent)
+    {
+        try
+        {
+            Console.WriteLine("[ScreensService] Showing main menu screen");
+            //var screen = Program.ServiceProvider.GetService<DialogBasicInfoScreen>();
+
+            var screen = new ScreenMainMenu(new MainMenuController(Program.ServiceProvider.GetService<IGameServer>(), Program.ServiceProvider.GetService<IGameManager>()))
+            {
+                FormBorderStyle = FormBorderStyle.None,
+                Size = new Size(1375, 875),
+                ShowInTaskbar = false,
+                StartPosition = FormStartPosition.CenterParent,
+
+            };
+
             if (screen != null)
             {
                 _screenBackground.ShowChildForm(screen);

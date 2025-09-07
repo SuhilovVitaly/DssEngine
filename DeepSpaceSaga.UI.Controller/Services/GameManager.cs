@@ -98,6 +98,7 @@ public class GameManager : IGameManager
     {
         SessionPause();
 
+        //Screens.ShowDialogScreen(gameEvent);
         Screens.TacticalMap.StartDialog(gameEvent);
     }
 

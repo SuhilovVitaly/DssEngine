@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI;
+﻿using DeepSpaceSaga.UI.Screens.Dialogs;
+
+namespace DeepSpaceSaga.UI;
 
 [ExcludeFromCodeCoverage]
 public static class StartupExtensions
@@ -21,6 +23,8 @@ public static class StartupExtensions
         // Register other screens as scoped to maintain state within a scope 
         services.AddScoped<ScreenMainMenu>();
         services.AddScoped<ScreenGameMenu>();
+
+        services.AddScoped<DialogBasicInfoScreen>();
 
         // Register main background screen last to avoid circular dependency
         services.AddScoped<ScreenBackground>();

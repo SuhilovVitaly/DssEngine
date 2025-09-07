@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.UI.Screens.Dialogs
 {
-    partial class DialogBasicInfoScreen
+    partial class Form1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,24 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
+            crlExit = new Button();
             SuspendLayout();
             // 
-            // DialogBasicInfoScreen
+            // crlExit
+            // 
+            crlExit.BackColor = Color.FromArgb(18, 18, 18);
+            crlExit.Cursor = Cursors.Hand;
+            crlExit.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+            crlExit.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+            crlExit.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+            crlExit.FlatStyle = FlatStyle.Flat;
+            crlExit.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            crlExit.ForeColor = Color.Gainsboro;
+            crlExit.Location = new Point(273, 334);
+            crlExit.Margin = new Padding(4);
+            crlExit.Name = "crlExit";
+            crlExit.Size = new Size(188, 58);
+            crlExit.TabIndex = 1;
+            crlExit.Text = "EXIT";
+            crlExit.UseVisualStyleBackColor = false;
+            // 
+            // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Black;
-            ClientSize = new Size(1375, 875);
+            ClientSize = new Size(800, 450);
+            Controls.Add(crlExit);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(4, 4, 4, 4);
-            Name = "DialogBasicInfoScreen";
+            KeyPreview = true;
+            Name = "Form1";
             ShowIcon = false;
             ShowInTaskbar = false;
-            Text = "DialogBasicScreen";
+            StartPosition = FormStartPosition.Manual;
+            Text = "Form1";
             ResumeLayout(false);
         }
 
         #endregion
+
+        private Button crlExit;
     }
 }

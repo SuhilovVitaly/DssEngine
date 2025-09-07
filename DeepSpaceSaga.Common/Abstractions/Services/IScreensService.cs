@@ -13,4 +13,6 @@ public interface IScreensService
     void ShowGameMenuModal();
 
     void CloseTacticalMapScreen();
+
+    void ShowDialogScreen(GameActionEventDto gameActionEvent);
 }

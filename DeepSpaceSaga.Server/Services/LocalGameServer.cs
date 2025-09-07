@@ -67,7 +67,13 @@ public class LocalGameServer(
         _sessionContext.GameSession.Changed += GameSession_Changed;
         _sessionContext.SessionInfo.Reset();
         _sessionContext.Metrics.Reset();
+
+        _processingService.ScenarioStartProcess(_sessionContext);
+        _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
+
         _flowManager.SessionStart(TurnExecution);
+
+        _gameSessionDto = GameSessionMapper.ToDto(_sessionContext);
     }
 
     private void GameSession_Changed(object? sender, EventArgs e)

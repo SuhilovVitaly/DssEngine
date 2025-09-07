@@ -92,11 +92,6 @@ public class DialogsService : IDialogsService
             {
                 var turn = int.Parse(dialog.TriggerValue);
 
-                if(turn == 0)
-                {
-                    continue;
-                }
-
                 if(turn > context.SessionInfo.Turn)
                 {
                     continue;

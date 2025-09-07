@@ -4,6 +4,24 @@ namespace DeepSpaceSaga.Server.Processing;
 
 public class TurnProcessing : IProcessingService
 {
+    public GameSessionDto ScenarioStartProcess(ISessionContextService sessionContext)
+    {
+        sessionContext.Metrics.Add(MetricsServer.ServerTurnPauseProcessing);
+
+        try
+        {
+            new ProcessingEventInvokerHandler().Execute(sessionContext);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        var turnResult = GameSessionMapper.ToDto(sessionContext);
+
+        return turnResult;
+    }
+
     public GameSessionDto PauseProcess(ISessionContextService sessionContext)
     {
         sessionContext.Metrics.Add(MetricsServer.ServerTurnPauseProcessing);

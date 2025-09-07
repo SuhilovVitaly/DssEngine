@@ -27,6 +27,7 @@ public class GameActionEventMapper
            ModuleId = gameEvent.ModuleId,
            TargetObjectId = gameEvent.TargetObjectId,
            Dialog = gameEvent.Dialog != null ? DialogMapper.ToDto(gameEvent.Dialog) : null,
+           Type = gameEvent.Type,
         };
     }
 }

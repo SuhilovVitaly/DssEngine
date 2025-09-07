@@ -141,6 +141,21 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
 
     private void OpenModalDialogWindow(GameActionEventDto gameActionEvent)
     {
+        //switch(gameActionEvent.Dialog?.UiScreenType)
+        //{
+        //    case DialogUiScreenType.Info:
+        //        var screenDialogInfo = new DialogInfoScreen(gameActionEvent, _gameManager)
+        //        {
+        //            FormBorderStyle = FormBorderStyle.None,
+        //            Size = new Size(1375, 875),
+        //            StartPosition = FormStartPosition.Manual
+        //        };
+        //        screenDialogInfo.Location = new Point(Location.X + (Width - screenDialogInfo.Width) / 2, Location.Y + (Height - screenDialogInfo.Height) / 2);
+        //        screenDialogInfo.ShowDialog();
+        //        return;
+        //}
+
+
         var screenDialog = new DialogBasicScreen(gameActionEvent, _gameManager)
         {
             FormBorderStyle = FormBorderStyle.None,

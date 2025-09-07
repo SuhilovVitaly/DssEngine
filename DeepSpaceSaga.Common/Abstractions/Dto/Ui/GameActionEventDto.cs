@@ -10,4 +10,5 @@ public class GameActionEventDto
     public GameActionEventTypes EventType { get; set; } = GameActionEventTypes.None;
     public DialogDto? Dialog { get; set; }
     public List<DialogDto> ConnectedDialogs { get; set; }
+    public DialogTypes Type { get; set; }
 }

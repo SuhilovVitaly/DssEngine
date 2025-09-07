@@ -11,4 +11,5 @@ public interface IGameActionEvent
     long CalculationTurnId { get; set; }
     IDialog? Dialog { get; set; }
     List<IDialog> ConnectedDialogs { get; set; }
+    DialogTypes Type { get; set; }
 }

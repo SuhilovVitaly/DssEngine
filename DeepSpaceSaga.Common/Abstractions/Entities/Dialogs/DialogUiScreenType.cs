@@ -3,5 +3,6 @@
 public enum DialogUiScreenType
 {
     OnePerson = 0,
-    TwoPerson = 1
+    TwoPerson = 1,
+    Info = 3,
 }

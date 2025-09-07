@@ -5,6 +5,7 @@
     "Message": "introductory.scene.01",
     "Type": 2,
     "Trigger": 0,
+    "UiScreenType": 3,
     "TriggerValue": "0",
     "Reporter": {
       "FirstName": "Vitold",

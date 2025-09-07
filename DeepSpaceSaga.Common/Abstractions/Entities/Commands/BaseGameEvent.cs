@@ -6,6 +6,7 @@ public class BaseGameEvent : IGameActionEvent
     public long? CelestialObjectId { get; set; }
     public long? TargetObjectId { get; set; }
     public long? ModuleId { get; set; }
+    public DialogTypes Type { get; set; }
     public string Key { get; set; }
     public long CalculationTurnId { get; set; }
     public GameActionEventTypes EventType { get; set; } = GameActionEventTypes.None;

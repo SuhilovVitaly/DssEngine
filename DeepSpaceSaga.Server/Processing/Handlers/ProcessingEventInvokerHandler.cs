@@ -23,7 +23,8 @@ public class ProcessingEventInvokerHandler
             {
                 Key = dialog.Key,
                 Dialog = dialog,
-                ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog)
+                Type = dialog.Type,
+                ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog),
             };
 
             if (IsNewEvent(sessionContext.GameSession, gameActionEvent.Key) )

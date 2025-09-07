@@ -1,6 +1,6 @@
 ﻿namespace DeepSpaceSaga.UI.Screens.Dialogs
 {
-    partial class DialogInfoScreen
+    partial class DialogBasicInfoScreen
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,19 @@
         {
             SuspendLayout();
             // 
-            // DialogInfoScreen
+            // DialogBasicScreen
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.DimGray;
-            ClientSize = new Size(1375, 875);
+            BackColor = Color.Black;
+            ClientSize = new Size(1100, 700);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "DialogInfoScreen";
-            Text = "DialogInfoScreen";
+            Name = "DialogBasicScreen";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "DialogBasicScreen";
             ResumeLayout(false);
         }
 

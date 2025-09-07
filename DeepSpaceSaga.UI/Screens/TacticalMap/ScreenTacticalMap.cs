@@ -152,6 +152,6 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
         var y = Location.Y + (Height - screenDialog.Height) / 2;
         screenDialog.Location = new Point(x, y);
 
-        screenDialog.ShowDialog(this);
+        screenDialog.ShowDialog();
     }
 }

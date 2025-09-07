@@ -1,10 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
-using DeepSpaceSaga.Common.Abstractions.Entities.Equipment;
-using DeepSpaceSaga.Common.Abstractions.Services;
-using DeepSpaceSaga.Common.Implementation.Entities.Commands;
-
-namespace DeepSpaceSaga.UI.Controller.Services;
+﻿namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {

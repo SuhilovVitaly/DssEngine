@@ -1,0 +1,23 @@
+[
+  {
+    "Key": "start.scenario.scene.01",
+    "Title": "Navigation Assistance System",
+    "Message": "introductory.scene.01",
+    "Type": 2,
+    "Trigger": 0,
+    "TriggerValue": "0",
+    "Reporter": {
+      "FirstName": "Vitold",
+      "LastName": "Suni",
+      "Rank": "Captain Rank",
+      "Portrait": "Vitold_Suni.png"
+    },
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "-1",
+        "TextKey": "dialog.exit.continue"
+      }
+    ]
+  }
+] 

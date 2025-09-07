@@ -1,3 +1,4 @@
+using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 
 namespace DeepSpaceSaga.Console.Services.Screens;
@@ -29,5 +30,10 @@ public class ConsoleScreensService :IScreensService
     public void CloseTacticalMapScreen()
     {
         
+    }
+
+    public void ShowDialogScreen(GameActionEventDto gameActionEvent)
+    {
+        throw new NotImplementedException();
     }
 }

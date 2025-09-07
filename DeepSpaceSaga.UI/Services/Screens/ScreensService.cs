@@ -56,31 +56,22 @@ public class ScreensService : IScreensService
     {
         try
         {
-            Console.WriteLine("[ScreensService] Showing main menu screen");
-            //var screen = Program.ServiceProvider.GetService<DialogBasicInfoScreen>();
-
-            var screen = new ScreenMainMenu(new MainMenuController(Program.ServiceProvider.GetService<IGameServer>(), Program.ServiceProvider.GetService<IGameManager>()))
-            {
-                FormBorderStyle = FormBorderStyle.None,
-                Size = new Size(1375, 875),
-                ShowInTaskbar = false,
-                StartPosition = FormStartPosition.CenterParent,
-
-            };
+            Console.WriteLine("[ScreensService] Showing dialog screen");
+            var screen = Program.ServiceProvider.GetService<DialogBasicInfoScreen>();
 
             if (screen != null)
             {
-                _screenBackground.ShowChildForm(screen);
-                Console.WriteLine("[ScreensService] Main menu screen displayed successfully");
+                _screenBackground.OpenWindow(screen);
+                Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
             }
             else
             {
-                Console.WriteLine("[ScreensService] ERROR: Failed to get ScreenMainMenu from service provider");
+                Console.WriteLine("[ScreensService] ERROR: Failed to get DialogBasicInfoScreen from service provider");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[ScreensService] ERROR showing main menu: {ex.Message}");
+            Console.WriteLine($"[ScreensService] ERROR showing dialog: {ex.Message}");
         }
     }
 

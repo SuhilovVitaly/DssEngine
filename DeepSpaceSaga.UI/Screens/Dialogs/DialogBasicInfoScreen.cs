@@ -1,9 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
-using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
-using DeepSpaceSaga.Common.Abstractions.Events;
-using DeepSpaceSaga.Common.Implementation.Entities.Commands;
-using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
-using DeepSpaceSaga.UI.Screens.Dialogs.Controls;
+﻿using DeepSpaceSaga.UI.Controller.Services;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
@@ -20,20 +15,23 @@ public partial class DialogBasicInfoScreen : Form
 
     public DialogBasicInfoScreen(IGameManager gameManager)
     {
-        BackColor = Color.Black;
+        InitializeComponent();
+
+        _gameManager = gameManager;
+
+        FormBorderStyle = FormBorderStyle.None;
+        Size = new Size(1375, 875);
+        ShowInTaskbar = false;
     }
 
-    public DialogBasicInfoScreen(GameActionEventDto gameActionEvent, IGameManager gameManager)
+    public void Show(GameActionEventDto gameActionEvent)
     {
-        if(gameActionEvent.Dialog is null)
-        {
-            return;
-        }
-
         _gameActionEvent = gameActionEvent;
-        _gameManager = gameManager;
         _currentDialog = gameActionEvent.Dialog;
+    }
 
-        //BackColor = Color.Black;
+    private void crlMainMenu_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }

@@ -6,7 +6,7 @@
     "Type": 2,
     "Trigger": 0,
     "UiScreenType": 3,
-    "TriggerValue": "0",
+    "TriggerValue": "60",
     "Reporter": {
       "FirstName": "Vitold",
       "LastName": "Suni",

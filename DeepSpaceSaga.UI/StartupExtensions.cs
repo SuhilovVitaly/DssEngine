@@ -24,7 +24,8 @@ public static class StartupExtensions
         services.AddScoped<ScreenMainMenu>();
         services.AddScoped<ScreenGameMenu>();
 
-        services.AddScoped<DialogBasicInfoScreen>();
+        services.AddScoped<DialogBasicInfoScreen>(); 
+        services.AddScoped<DialogBasicScreen>();
 
         // Register main background screen last to avoid circular dependency
         services.AddScoped<ScreenBackground>();

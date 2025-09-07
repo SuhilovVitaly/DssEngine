@@ -54,10 +54,51 @@ public class ScreensService : IScreensService
 
     public void ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
+        switch (gameActionEvent.Dialog?.UiScreenType)
+        {
+            case DialogUiScreenType.Info:
+                ShowDialogBasicInfo(gameActionEvent);
+                break;
+            case DialogUiScreenType.OnePerson:
+                ShowDialogPersons(gameActionEvent);
+                break;
+            case DialogUiScreenType.TwoPerson:
+                ShowDialogPersons(gameActionEvent);
+                break;
+        }
+    }
+
+    private void ShowDialogPersons(GameActionEventDto gameActionEvent)
+    {
+        try
+        {
+            Console.WriteLine("[ScreensService] Showing dialog screen");
+            var screen = Program.ServiceProvider.GetService<DialogBasicScreen>();
+            screen.ShowDialogEvent(gameActionEvent);
+
+            if (screen != null)
+            {
+                _screenBackground.OpenWindow(screen);
+                Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
+            }
+            else
+            {
+                Console.WriteLine("[ScreensService] ERROR: Failed to get DialogBasicInfoScreen from service provider");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ScreensService] ERROR showing dialog: {ex.Message}");
+        }
+    }
+
+    private void ShowDialogBasicInfo(GameActionEventDto gameActionEvent)
+    {
         try
         {
             Console.WriteLine("[ScreensService] Showing dialog screen");
             var screen = Program.ServiceProvider.GetService<DialogBasicInfoScreen>();
+            screen.ShowDialogEvent(gameActionEvent);
 
             if (screen != null)
             {

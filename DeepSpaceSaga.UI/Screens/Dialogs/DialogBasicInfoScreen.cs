@@ -24,7 +24,7 @@ public partial class DialogBasicInfoScreen : Form
         ShowInTaskbar = false;
     }
 
-    public void Show(GameActionEventDto gameActionEvent)
+    public void ShowDialogEvent(GameActionEventDto gameActionEvent)
     {
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;

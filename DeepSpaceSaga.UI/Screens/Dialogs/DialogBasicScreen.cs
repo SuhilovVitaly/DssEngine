@@ -3,6 +3,7 @@ using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 using DeepSpaceSaga.Common.Abstractions.Events;
 using DeepSpaceSaga.Common.Implementation.Entities.Commands;
 using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+using DeepSpaceSaga.UI.Controller.Services;
 using DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs;
@@ -18,15 +19,20 @@ public partial class DialogBasicScreen : Form
         InitializeComponent();
     }
 
-    public DialogBasicScreen(GameActionEventDto gameActionEvent, IGameManager gameManager)
+    public DialogBasicScreen(IGameManager gameManager)
     {
-        if(gameActionEvent.Dialog is null)
-        {
-            return;
-        }
+        InitializeComponent();
 
-        _gameActionEvent = gameActionEvent;
         _gameManager = gameManager;
+
+        FormBorderStyle = FormBorderStyle.None;
+        Size = new Size(1375, 875);
+        ShowInTaskbar = false;
+    }
+
+    public void ShowDialogEvent(GameActionEventDto gameActionEvent)
+    {
+        _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
 
         var helpSystemControl = new HelpSystemControl
@@ -37,10 +43,10 @@ public partial class DialogBasicScreen : Form
         helpSystemControl.OnClose += Even_ScreenClose;
         helpSystemControl.OnNextDialog += Even_NextDialog;
 
-        helpSystemControl.ShowGameScreen(gameActionEvent.Dialog, gameManager);
+        helpSystemControl.ShowGameScreen(gameActionEvent.Dialog, _gameManager);
 
-        Controls.Add(helpSystemControl);        
-    }
+        Controls.Add(helpSystemControl);
+    }    
 
     private void Even_NextDialog(DialogExit exit)
     {

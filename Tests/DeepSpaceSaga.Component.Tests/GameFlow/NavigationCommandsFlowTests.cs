@@ -16,7 +16,7 @@ public class NavigationCommandsFlowTests
 
         ISessionContextService sessionContext = new SessionContextService(sessionInfo, metricsService, generationTool);
 
-        sessionContext.GameSession.Dialogs = new DialogsService();
+        sessionContext.GameSession.Dialogs = new DialogsService("Default");
 
         var gameServer = new LocalGameServer(new SchedulerService(sessionContext), sessionContext, new TurnProcessing(), saveLoadServiceMock.Object);
 

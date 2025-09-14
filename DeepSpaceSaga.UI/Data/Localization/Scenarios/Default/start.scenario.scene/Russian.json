@@ -1,0 +1,29 @@
+{
+  "LanguageId": 2,
+  "texts": [
+    {
+      "Key": "start.scenario.scene.01.title",
+      "Text": "start.scenario.scene.01.title"
+    },
+    {
+      "Key": "start.scenario.scene.01.message",
+      "Text": "start.scenario.scene.01.message"
+    },
+    {
+      "Key": "start.scenario.scene.01.exit.1",
+      "Text": "start.scenario.scene.01.exit.1"
+    },
+    {
+      "Key": "start.scenario.scene.01.episode.01",
+      "Text": "start.scenario.scene.01.episode.01"
+    },
+    {
+      "Key": "start.scenario.scene.01.exit.2",
+      "Text": "start.scenario.scene.01.exit.2"
+    },
+    {
+      "Key": "start.scenario.scene.01.episode.02",
+      "Text": "start.scenario.scene.01.episode.02"
+    }
+  ]
+}

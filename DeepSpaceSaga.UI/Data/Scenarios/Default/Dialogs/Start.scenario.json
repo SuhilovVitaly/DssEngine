@@ -1,23 +1,22 @@
 [
   {
     "Key": "start.scenario.scene.01",
-    "Title": "Navigation Assistance System",
-    "Message": "introductory.scene.01",
+    "Title": "start.scenario.scene.01.title",
+    "Message": "start.scenario.scene.01.message",
     "Type": 2,
     "Trigger": 0,
     "UiScreenType": 3,
-    "TriggerValue": "60",
-    "Reporter": {
-      "FirstName": "Vitold",
-      "LastName": "Suni",
-      "Rank": "Captain Rank",
-      "Portrait": "Vitold_Suni.png"
-    },
+    "TriggerValue": "0",
     "Exits": [
       {
         "Key": "exit",
-        "NextKey": "-1",
-        "TextKey": "dialog.exit.continue"
+        "NextKey": "start.scenario.scene.01.exit.1",
+        "TextKey": "start.scenario.scene.01.episode.01"
+      },
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.2",
+        "TextKey": "start.scenario.scene.01.episode.02"
       }
     ]
   }

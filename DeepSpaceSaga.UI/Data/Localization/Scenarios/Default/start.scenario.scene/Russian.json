@@ -3,27 +3,27 @@
   "texts": [
     {
       "Key": "start.scenario.scene.01.title",
-      "Text": "start.scenario.scene.01.title"
+      "Text": "Освобождение"
     },
     {
       "Key": "start.scenario.scene.01.message",
-      "Text": "start scenario scene 01 message start scenario scene 01 message start scenario scene 01 message start scenario scene 01 message"
+      "Text": "Вы провели в четырех стенах этой камеры пятьсот одиннадцать дней. Пятьсот одиннадцать ночей. Пятьсот одиннадцать завтраков. Пятьсот одиннадцать  ужинов. Вы помните каждый из этих дней и вместе с тем все они слились для вас в один длинный, бесконечный путь угасания надежды. <BR> Ничто не предвещало того, что сегодняшний день будет особенным. И тем не менее это так. Вы проснулись от звуков тревоги. Видимо корабль, все это время служивший вам тюрьмой, готовился к бою. Завывание сирены сменилось взрывами. Корпус корабля содрогался. А потом все стихло. <BR> И эта тишина казалась такой долгой, что вместила в себя все пятьсот одиннадцать дней и ночей."
     },
     {
       "Key": "start.scenario.scene.01.exit.1",
-      "Text": "start.scenario.scene.01.exit.1"
+      "Text": "Позвать на помощь"
     },
     {
       "Key": "start.scenario.scene.01.episode.01",
-      "Text": "start.scenario.scene.01.episode.01"
+      "Text": "Позвать на помощь"
     },
     {
       "Key": "start.scenario.scene.01.exit.2",
-      "Text": "start.scenario.scene.01.exit.2"
+      "Text": "Попробовать выломать дверь камеры"
     },
     {
       "Key": "start.scenario.scene.01.episode.02",
-      "Text": "start.scenario.scene.01.episode.02"
+      "Text": "Попробовать выломать дверь камеры"
     }
   ]
 }

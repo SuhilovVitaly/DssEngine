@@ -41,14 +41,14 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs
             // crlTitle
             // 
             crlTitle.BackColor = Color.Transparent;
-            crlTitle.Dock = DockStyle.Top;
             crlTitle.Font = new Font("Courier New", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             crlTitle.ForeColor = Color.OrangeRed;
-            crlTitle.Location = new Point(0, 0);
+            crlTitle.Location = new Point(27, 8);
             crlTitle.Name = "crlTitle";
-            crlTitle.Size = new Size(1406, 40);
+            crlTitle.Size = new Size(1363, 40);
             crlTitle.TabIndex = 0;
             crlTitle.Text = "label1";
+            crlTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // crlMessageStatic
             // 

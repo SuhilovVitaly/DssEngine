@@ -67,7 +67,7 @@ public partial class DialogBasicInfoScreen : Form
         crlTitle.Text = _gameManager?.Localization.GetText(_currentDialog?.Title ?? "") ?? _currentDialog?.Message ?? "";
         
         // Store text for later - it will be set when form becomes visible
-        _pendingMessageText = messageText;
+        _pendingMessageText = messageText.Replace("<BR>", Environment.NewLine + Environment.NewLine);
 
         panel1.BackgroundImage = CreateCompositeBackgroundImage(panel1.Size, _currentDialog?.Image);
 
@@ -101,11 +101,15 @@ public partial class DialogBasicInfoScreen : Form
     private void AddExitDialogButton(DialogExit exit, int currentExit)
     {
         var height = this.Height - bottomMargin - (currentExit + 1) * (buttonHeight + spacingBetweenButtons);
+        
+        // Calculate button width and position for centering
+        int buttonWidth = this.Width - (buttonHeight * 2); // Full width minus margins
+        int buttonX = buttonHeight; // Left margin
 
         var button = new Button
         {
-            Size = new Size(1300, buttonHeight),
-            Location = new Point(buttonHeight, height),
+            Size = new Size(buttonWidth, buttonHeight),
+            Location = new Point(buttonX, height),
             BackColor = Color.FromArgb(18, 18, 18),
             Cursor = Cursors.Hand,
             TabStop = false

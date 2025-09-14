@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            crlMainMenu = new Button();
             ExitButtonsContainer = new Panel();
+            crlMainMenu = new Button();
+            crlMessage = new Controls.RpgTextOutputControl();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -38,6 +39,7 @@
             // 
             panel1.BackColor = Color.Black;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(crlMessage);
             panel1.Controls.Add(ExitButtonsContainer);
             panel1.Controls.Add(crlMainMenu);
             panel1.Dock = DockStyle.Fill;
@@ -45,6 +47,15 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1375, 875);
             panel1.TabIndex = 0;
+            // 
+            // ExitButtonsContainer
+            // 
+            ExitButtonsContainer.BackColor = Color.Transparent;
+            ExitButtonsContainer.Dock = DockStyle.Bottom;
+            ExitButtonsContainer.Location = new Point(0, 600);
+            ExitButtonsContainer.Name = "ExitButtonsContainer";
+            ExitButtonsContainer.Size = new Size(1373, 273);
+            ExitButtonsContainer.TabIndex = 2;
             // 
             // crlMainMenu
             // 
@@ -65,14 +76,18 @@
             crlMainMenu.UseVisualStyleBackColor = false;
             crlMainMenu.Click += crlMainMenu_Click;
             // 
-            // ExitButtonsContainer
+            // crlMessage
             // 
-            ExitButtonsContainer.BackColor = Color.Transparent;
-            ExitButtonsContainer.Dock = DockStyle.Bottom;
-            ExitButtonsContainer.Location = new Point(0, 600);
-            ExitButtonsContainer.Name = "ExitButtonsContainer";
-            ExitButtonsContainer.Size = new Size(1373, 273);
-            ExitButtonsContainer.TabIndex = 2;
+            crlMessage.BackColor = Color.Black;
+            crlMessage.Dock = DockStyle.Left;
+            crlMessage.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            crlMessage.ForeColor = Color.WhiteSmoke;
+            crlMessage.Location = new Point(0, 0);
+            crlMessage.Margin = new Padding(4, 0, 4, 0);
+            crlMessage.Name = "crlMessage";
+            crlMessage.Size = new Size(793, 600);
+            crlMessage.TabIndex = 5;
+            crlMessage.TextOutputSpeedMs = 50;
             // 
             // DialogBasicInfoScreen
             // 
@@ -97,5 +112,6 @@
         private Panel panel1;
         private Button crlMainMenu;
         private Panel ExitButtonsContainer;
+        private Controls.RpgTextOutputControl crlMessage;
     }
 }

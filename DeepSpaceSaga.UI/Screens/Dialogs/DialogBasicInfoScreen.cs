@@ -1,10 +1,14 @@
-﻿namespace DeepSpaceSaga.UI.Screens.Dialogs;
+﻿using DeepSpaceSaga.UI.Controller.Services;
+using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+
+namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
 public partial class DialogBasicInfoScreen : Form
 {
     private GameActionEventDto? _gameActionEvent;
     private IGameManager? _gameManager;
     private DialogDto? _currentDialog;
+    private string? _pendingMessageText;
 
     public event Action? OnClose;
     public event Action<DialogExit>? OnNextDialog;
@@ -17,11 +21,13 @@ public partial class DialogBasicInfoScreen : Form
     public DialogBasicInfoScreen()
     {
         InitializeComponent();
+        InitializeTextOutput();
     }
 
     public DialogBasicInfoScreen(IGameManager gameManager)
     {
         InitializeComponent();
+        InitializeTextOutput();
 
         _gameManager = gameManager;
 
@@ -30,13 +36,73 @@ public partial class DialogBasicInfoScreen : Form
         ShowInTaskbar = false;
     }
 
+    private void InitializeTextOutput()
+    {
+        // Subscribe to text output completion event
+        crlMessage.TextOutputCompleted += OnTextOutputCompleted;
+        
+        // Subscribe to space pressed after completion event
+        crlMessage.SpacePressedAfterCompletion += OnSpacePressedAfterCompletion;
+        
+        // Subscribe to Load event to ensure proper initialization
+        this.Load += DialogBasicInfoScreen_Load;
+    }
+
+    private void DialogBasicInfoScreen_Load(object? sender, EventArgs e)
+    {
+        // If there's pending message text, set it now that the control is fully loaded
+        if (!string.IsNullOrEmpty(_pendingMessageText))
+        {
+            System.Diagnostics.Debug.WriteLine($"DialogBasicInfoScreen_Load: Setting pending text '{_pendingMessageText}'");
+            crlMessage.Clear();
+            crlMessage.Text = _pendingMessageText;
+            _pendingMessageText = null;
+        }
+    }
+
     public void ShowDialogEvent(GameActionEventDto gameActionEvent)
     {
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
         
-        // Add dialog buttons to ExitButtonsContainer
-        AddDialogButtons();
+        // Clear any existing buttons first
+        ClearDialogButtons();
+        
+        // Unsubscribe from previous events to avoid multiple subscriptions
+        crlMessage.TextOutputCompleted -= OnTextOutputCompleted;
+        crlMessage.SpacePressedAfterCompletion -= OnSpacePressedAfterCompletion;
+        
+        // Subscribe to text output completion event
+        crlMessage.TextOutputCompleted += OnTextOutputCompleted;
+        
+        // Subscribe to space pressed after completion event
+        crlMessage.SpacePressedAfterCompletion += OnSpacePressedAfterCompletion;
+        
+        // Use RPG text output control - set text after making visible
+        var messageText = _gameManager?.Localization.GetText(_currentDialog?.Message ?? "") ?? _currentDialog?.Message ?? "";
+        
+        // Debug: Check if text output is working
+        System.Diagnostics.Debug.WriteLine($"DialogBasicInfoScreen: Setting text '{messageText}' with speed {crlMessage.TextOutputSpeedMs}ms");
+        
+        // Store text for later - it will be set when form becomes visible
+        _pendingMessageText = messageText;
+        System.Diagnostics.Debug.WriteLine("DialogBasicInfoScreen: Storing text for later display");
+    }
+
+    private void OnTextOutputCompleted()
+    {
+        if (_currentDialog != null && _gameManager != null)
+        {
+            AddDialogButtons();
+        }
+    }
+    
+    private void OnSpacePressedAfterCompletion()
+    {
+        if (_currentDialog != null && _gameManager != null)
+        {
+            SimulateFirstButtonClick();
+        }
     }
 
     private void AddDialogButtons()
@@ -124,6 +190,20 @@ public partial class DialogBasicInfoScreen : Form
         };
 
         AddExitDialogButton(exit, 0);
+    }
+
+    private void SimulateFirstButtonClick()
+    {
+        if (_currentDialog == null || _currentDialog.Exits.Count == 0)
+        {
+            // No exits available, create default exit
+            AddDefaultExitDialogButton();
+            return;
+        }
+
+        // Get the first exit (ordered by NextKey)
+        var firstExit = _currentDialog.Exits.OrderBy(x => x.NextKey).First();
+        AddExitDialogButton(firstExit, 0);
     }
 
     private void UpdateExitButtonsContainerHeight(int buttonCount)

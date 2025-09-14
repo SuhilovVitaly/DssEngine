@@ -12,6 +12,7 @@ public interface IDialog
     DialogTrigger Trigger { get; }
     DialogUiScreenType UiScreenType { get; set; }
     string TriggerValue { get; }
-    CrewMember Reporter { get; }
+    string Image { get; set; }
+    CrewMember? Reporter { get; }
     List<DialogExit> Exits { get; set; }
 }

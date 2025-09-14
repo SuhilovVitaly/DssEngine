@@ -20,9 +20,11 @@ public class BaseDialog : IDialog
 
     public DialogUiScreenType UiScreenType { get; set; }
 
-    public string TriggerValue { get; set; }
+    public string TriggerValue { get; set; } = "";
 
-    public CrewMember Reporter { get; set; }
+    public string Image { get; set; } = "";
+
+    public CrewMember? Reporter { get; set; }
 
     public List<DialogExit> Exits { get; set; } = new List<DialogExit>();
 }

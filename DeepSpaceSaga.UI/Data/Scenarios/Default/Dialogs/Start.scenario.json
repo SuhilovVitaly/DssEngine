@@ -5,6 +5,7 @@
     "Message": "start.scenario.scene.01.message",
     "Type": 2,
     "Trigger": 0,
+    "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
     "UiScreenType": 3,
     "TriggerValue": "0",
     "Exits": [

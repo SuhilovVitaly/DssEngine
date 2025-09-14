@@ -89,6 +89,8 @@ public partial class DialogBasicInfoScreen : Form
         // Store text for later - it will be set when form becomes visible
         _pendingMessageText = messageText;
 
+        //this.BackgroundImage = ImageLoader.LoadImageByName(_currentDialog?.Image);
+
         pictureBox1.Image = ImageLoader.LoadImageByName(_currentDialog?.Image);
 
         System.Diagnostics.Debug.WriteLine("DialogBasicInfoScreen: Storing text for later display");

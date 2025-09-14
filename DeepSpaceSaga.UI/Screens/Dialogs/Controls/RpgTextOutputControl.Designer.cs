@@ -30,26 +30,28 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls
         {
             lblText = new Label();
             SuspendLayout();
-
+            // 
             // lblText
-            lblText.BackColor = Color.Black;
+            // 
+            lblText.BackColor = Color.Transparent;
+            lblText.Dock = DockStyle.Fill;
             lblText.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblText.ForeColor = Color.WhiteSmoke;
             lblText.Location = new Point(0, 0);
+            lblText.Margin = new Padding(4, 0, 4, 0);
             lblText.Name = "lblText";
-            lblText.Size = new Size(100, 100);
+            lblText.Size = new Size(125, 125);
             lblText.TabIndex = 0;
-            lblText.AutoSize = false;
-            lblText.TextAlign = ContentAlignment.TopLeft;
-            lblText.Dock = DockStyle.Fill;
-
+            // 
             // RpgTextOutputControl
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            // 
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             Controls.Add(lblText);
+            Margin = new Padding(4, 4, 4, 4);
             Name = "RpgTextOutputControl";
-            Size = new Size(100, 100);
+            Size = new Size(125, 125);
             ResumeLayout(false);
         }
 

@@ -29,30 +29,54 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            crlMessage = new Controls.RpgTextOutputControl();
+            pictureBox1 = new UI.Controls.BlurredPictureBox();
             panel3 = new Panel();
             panel2 = new Panel();
-            pictureBox1 = new UI.Controls.BlurredPictureBox();
             crlTitle = new Label();
             ExitButtonsContainer = new Panel();
-            crlMessage = new Controls.RpgTextOutputControl();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
             ((ISupportInitialize)pictureBox1).BeginInit();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.BackColor = Color.Black;
+            panel1.BackColor = Color.Transparent;
             panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(crlMessage);
             panel1.Controls.Add(panel3);
-            panel1.Controls.Add(panel2);
             panel1.Controls.Add(ExitButtonsContainer);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Controls.Add(panel2);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(1375, 875);
             panel1.TabIndex = 0;
+            // 
+            // crlMessage
+            // 
+            crlMessage.BackColor = Color.Transparent;
+            crlMessage.Dock = DockStyle.Left;
+            crlMessage.Location = new Point(32, 79);
+            crlMessage.Margin = new Padding(4, 4, 4, 4);
+            crlMessage.Name = "crlMessage";
+            crlMessage.Size = new Size(397, 521);
+            crlMessage.TabIndex = 8;
+            crlMessage.TextOutputSpeedMs = 100;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.RosyBrown;
+            pictureBox1.BlurIntensity = 0.8F;
+            pictureBox1.BlurSteps = 20;
+            pictureBox1.BlurWidth = 100;
+            pictureBox1.Location = new Point(319, -1);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1054, 874);
+            pictureBox1.TabIndex = 9;
+            pictureBox1.TabStop = false;
             // 
             // panel3
             // 
@@ -66,25 +90,12 @@
             // panel2
             // 
             panel2.BackColor = Color.Transparent;
-            panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(crlTitle);
             panel2.Dock = DockStyle.Top;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(1373, 79);
             panel2.TabIndex = 6;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.Black;
-            pictureBox1.BlurIntensity = 0.8F;
-            pictureBox1.BlurSteps = 20;
-            pictureBox1.BlurWidth = 100;
-            pictureBox1.Location = new Point(316, -1);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1054, 874);
-            pictureBox1.TabIndex = 9;
-            pictureBox1.TabStop = false;
             // 
             // crlTitle
             // 
@@ -105,16 +116,6 @@
             ExitButtonsContainer.Size = new Size(1373, 273);
             ExitButtonsContainer.TabIndex = 2;
             // 
-            // crlMessage
-            // 
-            crlMessage.BackColor = Color.Black;
-            crlMessage.Location = new Point(392, 250);
-            crlMessage.Margin = new Padding(4, 4, 4, 4);
-            crlMessage.Name = "crlMessage";
-            crlMessage.Size = new Size(188, 188);
-            crlMessage.TabIndex = 8;
-            crlMessage.TextOutputSpeedMs = 100;
-            // 
             // DialogBasicInfoScreen
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -130,8 +131,8 @@
             ShowInTaskbar = false;
             Text = "DialogBasicScreen";
             panel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
             ((ISupportInitialize)pictureBox1).EndInit();
+            panel2.ResumeLayout(false);
             ResumeLayout(false);
         }
 

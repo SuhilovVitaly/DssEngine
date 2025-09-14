@@ -140,8 +140,6 @@ public partial class DialogBasicInfoScreen : Form
     {
         var evnt = (sender as Button)?.Tag as DialogExit;
 
-        var isNextEventFound = false;
-
         if (evnt != null && _gameActionEvent != null && _gameManager != null)
         {
             OnNextDialog?.Invoke(evnt);
@@ -156,20 +154,18 @@ public partial class DialogBasicInfoScreen : Form
                     this.DialogResult = DialogResult.OK;
                     this.Close();
 
+                    // Use Application.DoEvents() to ensure the form is fully closed
+                    Application.DoEvents();
+                    
+                    // Open new dialog
                     _screensService.ShowDialogScreen(gameEvent);
-
-                    // Use BeginInvoke to ensure the current dialog is fully closed before showing new one
-                    //this.BeginInvoke(new Action(() => {
-                    //    _screensService.ShowDialogScreen(gameEvent);
-                    //}));
+                    return; // Exit the method after opening new dialog
                 }
             }
         }
 
-        if(isNextEventFound == false)
-        {
-            this.Close();
-        }
+        // If no next dialog found, just close current dialog
+        this.Close();
     }
 
     /// <summary>

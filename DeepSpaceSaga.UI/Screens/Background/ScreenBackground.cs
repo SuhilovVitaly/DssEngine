@@ -89,8 +89,12 @@ public partial class ScreenBackground : Form
             childForm.Hide();
             childForm.Close();
             
+            // Force garbage collection to ensure form is fully disposed
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            
             // Wait a moment for the form to be fully closed
-            System.Threading.Thread.Sleep(100);
+            System.Threading.Thread.Sleep(200);
         }
         
         childForm.ShowDialog(this);

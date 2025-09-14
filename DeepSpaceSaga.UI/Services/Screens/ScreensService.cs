@@ -97,7 +97,13 @@ public class ScreensService : IScreensService
         try
         {
             Console.WriteLine("[ScreensService] Showing dialog screen");
-            var screen = Program.ServiceProvider.GetService<DialogBasicInfoScreen>();
+            
+            // Create a new instance each time to avoid modal dialog conflicts
+            var screen = new DialogBasicInfoScreen(
+                Program.ServiceProvider.GetService<IGameManager>(),
+                Program.ServiceProvider.GetService<IScreensService>()
+            );
+            
             screen.ShowDialogEvent(gameActionEvent);
 
             if (screen != null)
@@ -107,7 +113,7 @@ public class ScreensService : IScreensService
             }
             else
             {
-                Console.WriteLine("[ScreensService] ERROR: Failed to get DialogBasicInfoScreen from service provider");
+                Console.WriteLine("[ScreensService] ERROR: Failed to create DialogBasicInfoScreen");
             }
         }
         catch (Exception ex)

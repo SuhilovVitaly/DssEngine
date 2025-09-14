@@ -236,5 +236,5 @@ public partial class DialogBasicInfoScreen : Form
         }
         
         return compositeImage;
-    }
+    }    
 }

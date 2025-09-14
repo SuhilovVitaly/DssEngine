@@ -47,7 +47,7 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Black;
+            BackColor = Color.Transparent;
             Controls.Add(lblText);
             Margin = new Padding(4, 4, 4, 4);
             Name = "RpgTextOutputControl";

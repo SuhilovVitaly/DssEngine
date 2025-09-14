@@ -34,6 +34,36 @@ public partial class DialogBasicInfoScreen : Form
         FormBorderStyle = FormBorderStyle.None;
         Size = new Size(1375, 875);
         ShowInTaskbar = false;
+    }   
+
+    // Custom transparent panel class
+    private class TransparentPanelCustom : Panel
+    {
+        public TransparentPanelCustom()
+        {
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.Opaque, false);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.ResizeRedraw, true);
+            BackColor = Color.Transparent;
+        }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x20;  // WS_EX_TRANSPARENT
+                return cp;
+            }
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // Do not paint background to maintain transparency
+        }
     }
 
     private void InitializeTextOutput()

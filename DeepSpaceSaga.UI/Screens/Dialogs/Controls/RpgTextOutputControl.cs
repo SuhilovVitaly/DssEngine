@@ -42,11 +42,16 @@ public partial class RpgTextOutputControl : UserControl
         InitializeComponent();
         this.Resize += RpgTextOutputControl_Resize;
         
-        // Enable double buffering to reduce flickering
-        SetStyle(ControlStyles.DoubleBuffer | 
-                ControlStyles.AllPaintingInWmPaint | 
-                ControlStyles.UserPaint | 
-                ControlStyles.ResizeRedraw, true);
+        // Enable transparency support
+        SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+        SetStyle(ControlStyles.Opaque, false);
+        SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+        SetStyle(ControlStyles.UserPaint, true);
+        SetStyle(ControlStyles.DoubleBuffer, true);
+        SetStyle(ControlStyles.ResizeRedraw, true);
+        
+        // Set transparent background
+        BackColor = Color.Transparent;
         
         // Initialize timer for smooth text output
         outputTimer = new System.Windows.Forms.Timer();
@@ -171,5 +176,10 @@ public partial class RpgTextOutputControl : UserControl
             // Fire completion event
             TextOutputCompleted?.Invoke();
         }
+    }
+
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
+        // Do not paint background to maintain transparency
     }
 }

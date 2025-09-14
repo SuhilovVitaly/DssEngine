@@ -30,33 +30,11 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs
         /// </summary>
         private void InitializeComponent()
         {
-            crlMessage = new RpgTextOutputControl();
-            pictureBox1 = new BlurredPictureBox();
             crlTitle = new Label();
-            ((ISupportInitialize)pictureBox1).BeginInit();
+            crlMessageStatic = new Label();
+            panel1 = new Panel();
+            panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // crlMessage
-            // 
-            crlMessage.BackColor = Color.Transparent;
-            crlMessage.Location = new Point(159, 109);
-            crlMessage.Margin = new Padding(4);
-            crlMessage.Name = "crlMessage";
-            crlMessage.Size = new Size(694, 521);
-            crlMessage.TabIndex = 8;
-            crlMessage.TextOutputSpeedMs = 100;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.BackColor = Color.DarkBlue;
-            pictureBox1.BlurIntensity = 0.8F;
-            pictureBox1.BlurSteps = 20;
-            pictureBox1.BlurWidth = 100;
-            pictureBox1.Location = new Point(434, 32);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1054, 874);
-            pictureBox1.TabIndex = 9;
-            pictureBox1.TabStop = false;
             // 
             // crlTitle
             // 
@@ -71,6 +49,24 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs
             crlTitle.TabIndex = 0;
             crlTitle.Text = "label1";
             // 
+            // crlMessageStatic
+            // 
+            crlMessageStatic.BackColor = Color.Transparent;
+            crlMessageStatic.ForeColor = Color.Gainsboro;
+            crlMessageStatic.Location = new Point(337, 94);
+            crlMessageStatic.Name = "crlMessageStatic";
+            crlMessageStatic.Size = new Size(808, 564);
+            crlMessageStatic.TabIndex = 10;
+            crlMessageStatic.Text = "label1";
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(crlMessageStatic);
+            panel1.Location = new Point(0, 43);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1375, 830);
+            panel1.TabIndex = 11;
+            // 
             // DialogBasicInfoScreen
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -78,9 +74,8 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs
             BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1375, 875);
+            Controls.Add(panel1);
             Controls.Add(crlTitle);
-            Controls.Add(crlMessage);
-            Controls.Add(pictureBox1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(4);
@@ -88,13 +83,13 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs
             ShowIcon = false;
             ShowInTaskbar = false;
             Text = "DialogBasicScreen";
-            ((ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
         private Label crlTitle;
-        private BlurredPictureBox pictureBox1;
-        private Controls.RpgTextOutputControl crlMessage;
+        private Label crlMessageStatic;
+        private Panel panel1;
     }
 }

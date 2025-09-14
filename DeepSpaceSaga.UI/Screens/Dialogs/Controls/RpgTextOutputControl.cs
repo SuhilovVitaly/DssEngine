@@ -43,12 +43,12 @@ public partial class RpgTextOutputControl : UserControl
         this.Resize += RpgTextOutputControl_Resize;
         
         // Enable transparency support
-        SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-        SetStyle(ControlStyles.Opaque, false);
-        SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-        SetStyle(ControlStyles.UserPaint, true);
-        SetStyle(ControlStyles.DoubleBuffer, true);
-        SetStyle(ControlStyles.ResizeRedraw, true);
+        //SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+        //SetStyle(ControlStyles.Opaque, false);
+        //SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+        //SetStyle(ControlStyles.UserPaint, true);
+        //SetStyle(ControlStyles.DoubleBuffer, true);
+        //SetStyle(ControlStyles.ResizeRedraw, true);
         
         // Set transparent background
         BackColor = Color.Transparent;

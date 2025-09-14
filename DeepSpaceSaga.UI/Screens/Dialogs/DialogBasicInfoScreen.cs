@@ -34,15 +34,12 @@ public partial class DialogBasicInfoScreen : Form
         FormBorderStyle = FormBorderStyle.None;
         Size = new Size(1375, 875);
         ShowInTaskbar = false;
+
+        
     }   
 
     private void InitializeTextOutput()
     {
-        // Subscribe to text output completion event
-        //crlMessage.TextOutputCompleted += OnTextOutputCompleted;
-        
-        // Subscribe to space pressed after completion event
-        crlMessage.SpacePressedAfterCompletion += OnSpacePressedAfterCompletion;
         
         // Subscribe to Load event to ensure proper initialization
         this.Load += DialogBasicInfoScreen_Load;
@@ -54,8 +51,7 @@ public partial class DialogBasicInfoScreen : Form
         if (!string.IsNullOrEmpty(_pendingMessageText))
         {
             System.Diagnostics.Debug.WriteLine($"DialogBasicInfoScreen_Load: Setting pending text '{_pendingMessageText}'");
-            crlMessage.Clear();
-            crlMessage.Text = _pendingMessageText;
+            crlMessageStatic.Text = _pendingMessageText;
             _pendingMessageText = null;
         }
     }
@@ -65,51 +61,21 @@ public partial class DialogBasicInfoScreen : Form
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
         
-        // Unsubscribe from previous events to avoid multiple subscriptions
-        crlMessage.TextOutputCompleted -= OnTextOutputCompleted;
-        crlMessage.SpacePressedAfterCompletion -= OnSpacePressedAfterCompletion;
-        
-        // Subscribe to text output completion event
-        crlMessage.TextOutputCompleted += OnTextOutputCompleted;
-        
-        // Subscribe to space pressed after completion event
-        crlMessage.SpacePressedAfterCompletion += OnSpacePressedAfterCompletion;
-        
         // Use RPG text output control - set text after making visible
         var messageText = _gameManager?.Localization.GetText(_currentDialog?.Message ?? "") ?? _currentDialog?.Message ?? "";
 
         crlTitle.Text = _gameManager?.Localization.GetText(_currentDialog?.Title ?? "") ?? _currentDialog?.Message ?? "";
-
-        // Debug: Check if text output is working
-        System.Diagnostics.Debug.WriteLine($"DialogBasicInfoScreen: Setting text '{messageText}' with speed {crlMessage.TextOutputSpeedMs}ms");
         
         // Store text for later - it will be set when form becomes visible
         _pendingMessageText = messageText;
 
-        //this.BackgroundImage = ImageLoader.LoadImageByName(_currentDialog?.Image);
+        panel1.BackgroundImage = ImageLoader.LoadImageByName(_currentDialog?.Image);
 
-        pictureBox1.Image = ImageLoader.LoadImageByName(_currentDialog?.Image);
+        AddDialogButtons();
 
         System.Diagnostics.Debug.WriteLine("DialogBasicInfoScreen: Storing text for later display");
     }
 
-    private void OnTextOutputCompleted()
-    {
-        if (_currentDialog != null && _gameManager != null)
-        {
-            AddDialogButtons();
-        }
-
-        this.Focus();
-    }
-    
-    private void OnSpacePressedAfterCompletion()
-    {
-        if (_currentDialog != null && _gameManager != null)
-        {
-            SimulateFirstButtonClick();
-        }
-    }
 
     private void AddDialogButtons()
     {

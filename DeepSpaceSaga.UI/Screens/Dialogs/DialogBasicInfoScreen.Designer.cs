@@ -51,7 +51,7 @@
             // ExitButtonsContainer
             // 
             ExitButtonsContainer.BackColor = Color.Transparent;
-            ExitButtonsContainer.Location = new Point(307, 700);
+            ExitButtonsContainer.Location = new Point(503, 684);
             ExitButtonsContainer.Name = "ExitButtonsContainer";
             ExitButtonsContainer.Size = new Size(887, 163);
             ExitButtonsContainer.TabIndex = 2;

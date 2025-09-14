@@ -80,12 +80,17 @@ public partial class DialogBasicInfoScreen : Form
         
         // Use RPG text output control - set text after making visible
         var messageText = _gameManager?.Localization.GetText(_currentDialog?.Message ?? "") ?? _currentDialog?.Message ?? "";
-        
+
+        crlTitle.Text = _gameManager?.Localization.GetText(_currentDialog?.Title ?? "") ?? _currentDialog?.Message ?? "";
+
         // Debug: Check if text output is working
         System.Diagnostics.Debug.WriteLine($"DialogBasicInfoScreen: Setting text '{messageText}' with speed {crlMessage.TextOutputSpeedMs}ms");
         
         // Store text for later - it will be set when form becomes visible
         _pendingMessageText = messageText;
+
+        //pictureBox1.Image = ImageLoader.LoadItemImage();
+
         System.Diagnostics.Debug.WriteLine("DialogBasicInfoScreen: Storing text for later display");
     }
 

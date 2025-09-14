@@ -1,4 +1,4 @@
-namespace DeepSpaceSaga.UI.Controls;
+namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
 public class TransparentTextControl : UserControl
 {
@@ -64,7 +64,7 @@ public class TransparentTextControl : UserControl
         SetStyle(ControlStyles.UserPaint, true);
         SetStyle(ControlStyles.DoubleBuffer, true);
         SetStyle(ControlStyles.ResizeRedraw, true);
-        
+
         BackColor = Color.Transparent;
     }
 
@@ -76,7 +76,7 @@ public class TransparentTextControl : UserControl
             using var brush = new SolidBrush(_foreColor);
             var rect = new Rectangle(0, 0, Width, Height);
             var format = new StringFormat();
-            
+
             switch (_textAlign)
             {
                 case ContentAlignment.TopLeft:
@@ -116,7 +116,7 @@ public class TransparentTextControl : UserControl
                     format.LineAlignment = StringAlignment.Far;
                     break;
             }
-            
+
             e.Graphics.DrawString(_text, _font, brush, rect, format);
         }
     }

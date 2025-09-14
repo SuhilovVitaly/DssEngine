@@ -1,7 +1,7 @@
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
-namespace DeepSpaceSaga.UI.Controls;
+namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
 
 public class BlurredPictureBox : PictureBox
 {
@@ -42,11 +42,11 @@ public class BlurredPictureBox : PictureBox
     public BlurredPictureBox()
     {
         // Enable double buffering
-        SetStyle(ControlStyles.DoubleBuffer | 
-                ControlStyles.AllPaintingInWmPaint | 
-                ControlStyles.UserPaint | 
+        SetStyle(ControlStyles.DoubleBuffer |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.UserPaint |
                 ControlStyles.ResizeRedraw, true);
-        
+
         // Set background to black for better image display
         BackColor = Color.Black;
     }
@@ -60,7 +60,7 @@ public class BlurredPictureBox : PictureBox
         }
 
         var rect = new Rectangle(0, 0, Width, Height);
-        
+
         // Draw the original image with proper scaling
         e.Graphics.DrawImage(Image, rect);
 
@@ -75,7 +75,7 @@ public class BlurredPictureBox : PictureBox
         {
             float progress = (float)i / (_blurSteps - 1);
             int currentWidth = (int)(_blurWidth * progress);
-            
+
             if (currentWidth <= 0) continue;
 
             // Calculate alpha based on position and intensity
@@ -91,7 +91,7 @@ public class BlurredPictureBox : PictureBox
 
             // Create rectangle for this blur layer
             var blurRect = new Rectangle(0, 0, currentWidth, rect.Height);
-            
+
             // Apply the blur layer
             g.FillRectangle(brush, blurRect);
         }

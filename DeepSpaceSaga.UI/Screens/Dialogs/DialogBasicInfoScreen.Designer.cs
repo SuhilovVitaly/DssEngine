@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Screens.Dialogs
+﻿using DeepSpaceSaga.UI.Screens.Dialogs.Controls;
+
+namespace DeepSpaceSaga.UI.Screens.Dialogs
 {
     partial class DialogBasicInfoScreen
     {
@@ -28,20 +30,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            crlMessage = new Controls.RpgTextOutputControl();
-            pictureBox1 = new UI.Controls.BlurredPictureBox();
+            crlMessage = new RpgTextOutputControl();
+            pictureBox1 = new BlurredPictureBox();
             crlTitle = new Label();
-            transparentPanel1 = new Controls.TransparentPanel();
-            button1 = new Button();
-            ExitButtonsContainer = new Controls.TransparentPanel();
             ((ISupportInitialize)pictureBox1).BeginInit();
-            transparentPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // crlMessage
             // 
             crlMessage.BackColor = Color.Transparent;
-            crlMessage.Location = new Point(67, 156);
+            crlMessage.Location = new Point(159, 109);
             crlMessage.Margin = new Padding(4);
             crlMessage.Name = "crlMessage";
             crlMessage.Size = new Size(694, 521);
@@ -63,40 +61,15 @@
             // crlTitle
             // 
             crlTitle.BackColor = Color.Transparent;
+            crlTitle.BorderStyle = BorderStyle.FixedSingle;
+            crlTitle.Dock = DockStyle.Top;
             crlTitle.Font = new Font("Courier New", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
             crlTitle.ForeColor = Color.OrangeRed;
-            crlTitle.Location = new Point(141, 112);
+            crlTitle.Location = new Point(0, 0);
             crlTitle.Name = "crlTitle";
-            crlTitle.Size = new Size(1319, 40);
+            crlTitle.Size = new Size(1375, 40);
             crlTitle.TabIndex = 0;
             crlTitle.Text = "label1";
-            // 
-            // transparentPanel1
-            // 
-            transparentPanel1.BackColor = Color.Transparent;
-            transparentPanel1.Controls.Add(button1);
-            transparentPanel1.Location = new Point(913, 7);
-            transparentPanel1.Name = "transparentPanel1";
-            transparentPanel1.Size = new Size(354, 405);
-            transparentPanel1.TabIndex = 0;
-            // 
-            // button1
-            // 
-            button1.Location = new Point(12, 17);
-            button1.Name = "button1";
-            button1.Size = new Size(112, 34);
-            button1.TabIndex = 0;
-            button1.TabStop = false;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // ExitButtonsContainer
-            // 
-            ExitButtonsContainer.BackColor = Color.Transparent;
-            ExitButtonsContainer.Location = new Point(285, 589);
-            ExitButtonsContainer.Name = "ExitButtonsContainer";
-            ExitButtonsContainer.Size = new Size(1038, 267);
-            ExitButtonsContainer.TabIndex = 10;
             // 
             // DialogBasicInfoScreen
             // 
@@ -105,8 +78,6 @@
             BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1375, 875);
-            Controls.Add(ExitButtonsContainer);
-            Controls.Add(transparentPanel1);
             Controls.Add(crlTitle);
             Controls.Add(crlMessage);
             Controls.Add(pictureBox1);
@@ -118,16 +89,12 @@
             ShowInTaskbar = false;
             Text = "DialogBasicScreen";
             ((ISupportInitialize)pictureBox1).EndInit();
-            transparentPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
         private Label crlTitle;
-        private UI.Controls.BlurredPictureBox pictureBox1;
+        private BlurredPictureBox pictureBox1;
         private Controls.RpgTextOutputControl crlMessage;
-        private Controls.TransparentPanel transparentPanel1;
-        private Button button1;
-        private Controls.TransparentPanel ExitButtonsContainer;
     }
 }

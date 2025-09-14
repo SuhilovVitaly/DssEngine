@@ -118,7 +118,7 @@ public partial class DialogBasicInfoScreen : Form
 
         int currentExit = 0;
 
-        foreach (var exit in _currentDialog.Exits.OrderBy(x => x.NextKey))
+        foreach (var exit in _currentDialog.Exits.OrderByDescending(x => x.NextKey))
         {
             AddExitDialogButton(exit, currentExit);
             currentExit++;
@@ -129,18 +129,17 @@ public partial class DialogBasicInfoScreen : Form
             AddDefaultExitDialogButton();
             currentExit = 1;
         }
-
-        // Calculate and set dynamic height for ExitButtonsContainer
-        //UpdateExitButtonsContainerHeight(currentExit);
     }
 
 
     private void AddExitDialogButton(DialogExit exit, int currentExit)
     {
+        var height = this.Height - bottomMargin - (currentExit + 1) * (buttonHeight + spacingBetweenButtons);
+
         var button = new Button
         {
             Size = new Size(1300, buttonHeight),
-            Location = new Point(buttonHeight, 20 + currentExit * (buttonHeight + spacingBetweenButtons)),
+            Location = new Point(buttonHeight, height),
             BackColor = Color.FromArgb(18, 18, 18),
             Cursor = Cursors.Hand,
             TabStop = false
@@ -152,7 +151,7 @@ public partial class DialogBasicInfoScreen : Form
         button.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
         button.ForeColor = Color.Gainsboro;
         button.Name = "crlExitScreenButton";
-        button.TabIndex = 0;
+        button.TabIndex = 1000;
         button.Text = _gameManager?.Localization.GetText(exit.TextKey) ?? exit.TextKey;
         //button.UseVisualStyleBackColor = false;
 
@@ -167,7 +166,11 @@ public partial class DialogBasicInfoScreen : Form
 
         button.Tag = exit;
 
-        ExitButtonsContainer.Controls.Add(button);
+        
+
+        this.Controls.Add(button);
+
+        button.BringToFront();
     }
 
     private void AddDefaultExitDialogButton()
@@ -194,20 +197,6 @@ public partial class DialogBasicInfoScreen : Form
         // Get the first exit (ordered by NextKey)
         var firstExit = _currentDialog.Exits.OrderBy(x => x.NextKey).First();
         AddExitDialogButton(firstExit, 0);
-    }
-
-    private void UpdateExitButtonsContainerHeight(int buttonCount)
-    {
-        if (buttonCount <= 0)
-            return;
-        
-        int totalHeight = topMargin + (buttonCount * buttonHeight) + ((buttonCount - 1) * spacingBetweenButtons) + bottomMargin;
-        
-        // Update the height of ExitButtonsContainer
-        ExitButtonsContainer.Height = totalHeight;
-        
-        // Update the location to keep it at the bottom
-        ExitButtonsContainer.Location = new Point(ExitButtonsContainer.Location.X, this.Height - totalHeight);
     }
 
     private void Event_ExitScreen(object? sender, EventArgs e)

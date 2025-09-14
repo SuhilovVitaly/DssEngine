@@ -223,11 +223,15 @@ public partial class DialogBasicInfoScreen : Form
                         int xPosition = panelSize.Width - squareSize;
                         int yPosition = 0;
                         
-                        // Apply dark fade effect to the original image
-                        ApplyDarkFadeToImage(originalImage);
-                        
-                        // Draw the scaled square image on the right side
-                        graphics.DrawImage(originalImage, xPosition, yPosition, squareSize, squareSize);
+                        // Crop image with 10 pixel margin from each edge
+                        using (var croppedImage = CropImageWithMargin(originalImage, 10))
+                        {
+                            // Apply dark fade effect to the cropped image
+                            ApplyDarkFadeToImage(croppedImage);
+                            
+                            // Draw the scaled square image on the right side
+                            graphics.DrawImage(croppedImage, xPosition, yPosition, squareSize, squareSize);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -294,5 +298,41 @@ public partial class DialogBasicInfoScreen : Form
                 graphics.FillRectangle(rightBrush, centerX, 0, centerX, imageHeight);
             }
         }
+    }
+    
+    /// <summary>
+    /// Crops an image with specified margin from each edge
+    /// </summary>
+    /// <param name="originalImage">The original image to crop</param>
+    /// <param name="margin">Margin in pixels to remove from each edge</param>
+    /// <returns>Cropped image with margin removed</returns>
+    private Image CropImageWithMargin(Image originalImage, int margin)
+    {
+        // Calculate crop dimensions
+        int cropWidth = Math.Max(1, originalImage.Width - (margin * 2));
+        int cropHeight = Math.Max(1, originalImage.Height - (margin * 2));
+        
+        // Ensure we don't crop more than the image size
+        int actualMarginX = Math.Min(margin, originalImage.Width / 2);
+        int actualMarginY = Math.Min(margin, originalImage.Height / 2);
+        
+        // Create cropped image
+        var croppedImage = new Bitmap(cropWidth, cropHeight);
+        
+        using (var graphics = Graphics.FromImage(croppedImage))
+        {
+            // Set high quality rendering settings
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            
+            // Draw the cropped portion of the original image
+            var sourceRect = new Rectangle(actualMarginX, actualMarginY, cropWidth, cropHeight);
+            var destRect = new Rectangle(0, 0, cropWidth, cropHeight);
+            
+            graphics.DrawImage(originalImage, destRect, sourceRect, GraphicsUnit.Pixel);
+        }
+        
+        return croppedImage;
     }    
 }

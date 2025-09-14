@@ -30,6 +30,7 @@
         {
             panel1 = new Panel();
             crlMainMenu = new Button();
+            ExitButtonsContainer = new Panel();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -37,6 +38,7 @@
             // 
             panel1.BackColor = Color.Black;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(ExitButtonsContainer);
             panel1.Controls.Add(crlMainMenu);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
@@ -54,7 +56,7 @@
             crlMainMenu.FlatStyle = FlatStyle.Flat;
             crlMainMenu.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             crlMainMenu.ForeColor = Color.Gainsboro;
-            crlMainMenu.Location = new Point(1173, 803);
+            crlMainMenu.Location = new Point(1173, 12);
             crlMainMenu.Margin = new Padding(4);
             crlMainMenu.Name = "crlMainMenu";
             crlMainMenu.Size = new Size(188, 58);
@@ -62,6 +64,15 @@
             crlMainMenu.Text = "CLOSE";
             crlMainMenu.UseVisualStyleBackColor = false;
             crlMainMenu.Click += crlMainMenu_Click;
+            // 
+            // ExitButtonsContainer
+            // 
+            ExitButtonsContainer.BackColor = Color.Transparent;
+            ExitButtonsContainer.Dock = DockStyle.Bottom;
+            ExitButtonsContainer.Location = new Point(0, 600);
+            ExitButtonsContainer.Name = "ExitButtonsContainer";
+            ExitButtonsContainer.Size = new Size(1373, 273);
+            ExitButtonsContainer.TabIndex = 2;
             // 
             // DialogBasicInfoScreen
             // 
@@ -85,5 +96,6 @@
 
         private Panel panel1;
         private Button crlMainMenu;
+        private Panel ExitButtonsContainer;
     }
 }

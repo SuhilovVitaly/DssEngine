@@ -1,7 +1,4 @@
-﻿using DeepSpaceSaga.UI.Controller.Services;
-using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
-
-namespace DeepSpaceSaga.UI.Screens.Dialogs;
+﻿namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
 public partial class DialogBasicInfoScreen : Form
 {
@@ -11,6 +8,11 @@ public partial class DialogBasicInfoScreen : Form
 
     public event Action? OnClose;
     public event Action<DialogExit>? OnNextDialog;
+
+    const int buttonHeight = 46;
+    const int spacingBetweenButtons = 10;
+    const int topMargin = 20;
+    const int bottomMargin = 20;
 
     public DialogBasicInfoScreen()
     {
@@ -56,7 +58,11 @@ public partial class DialogBasicInfoScreen : Form
         if (currentExit == 0)
         {
             AddDefaultExitDialogButton();
+            currentExit = 1;
         }
+
+        // Calculate and set dynamic height for ExitButtonsContainer
+        UpdateExitButtonsContainerHeight(currentExit);
     }
 
     private void ClearDialogButtons()
@@ -68,14 +74,18 @@ public partial class DialogBasicInfoScreen : Form
             ExitButtonsContainer.Controls.Remove(button);
             button.Dispose();
         }
+        
+        // Reset panel height to default
+        ExitButtonsContainer.Height = 273; // Default height from designer
+        ExitButtonsContainer.Location = new Point(ExitButtonsContainer.Location.X, 600); // Default location from designer
     }
 
     private void AddExitDialogButton(DialogExit exit, int currentExit)
     {
         var button = new Button
         {
-            Size = new Size(1300, 46),
-            Location = new Point(46, 20 + currentExit * 50),
+            Size = new Size(1300, buttonHeight),
+            Location = new Point(buttonHeight, 20 + currentExit * (buttonHeight + spacingBetweenButtons)),
             BackColor = Color.FromArgb(18, 18, 18),
             Cursor = Cursors.Hand
         };
@@ -114,6 +124,20 @@ public partial class DialogBasicInfoScreen : Form
         };
 
         AddExitDialogButton(exit, 0);
+    }
+
+    private void UpdateExitButtonsContainerHeight(int buttonCount)
+    {
+        if (buttonCount <= 0)
+            return;
+        
+        int totalHeight = topMargin + (buttonCount * buttonHeight) + ((buttonCount - 1) * spacingBetweenButtons) + bottomMargin;
+        
+        // Update the height of ExitButtonsContainer
+        ExitButtonsContainer.Height = totalHeight;
+        
+        // Update the location to keep it at the bottom
+        ExitButtonsContainer.Location = new Point(ExitButtonsContainer.Location.X, this.Height - totalHeight);
     }
 
     private void Event_ExitScreen(object? sender, EventArgs e)

@@ -63,4 +63,45 @@ public class ImageLoader
         // Загружаем изображение
         return Image.FromFile(filePath);
     }
+
+    public static Image LoadImageByName(string imageName)
+    {
+        if (string.IsNullOrWhiteSpace(imageName))
+        {
+            throw new ArgumentException("Image name cannot be null, empty, or whitespace.", nameof(imageName));
+        }
+
+        // Добавляем расширение .png если его нет
+        if (!Path.HasExtension(imageName))
+        {
+            imageName += ".png";
+        }
+
+        // Путь к папке Images
+        string imagesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+
+        // Проверяем существование папки Images
+        if (!Directory.Exists(imagesDirectory))
+        {
+            throw new DirectoryNotFoundException($"Images directory not found: {imagesDirectory}");
+        }
+
+        // Ищем файл во всех подпапках папки Images
+        string[] foundFiles = Directory.GetFiles(imagesDirectory, imageName, SearchOption.AllDirectories);
+
+        if (foundFiles.Length == 0)
+        {
+            throw new FileNotFoundException($"Image file '{imageName}' not found in Images directory or its subdirectories.");
+        }
+
+        // Если найдено несколько файлов с одинаковым именем, берем первый
+        if (foundFiles.Length > 1)
+        {
+            // Сортируем по пути для предсказуемости результата
+            Array.Sort(foundFiles);
+        }
+
+        // Загружаем изображение
+        return Image.FromFile(foundFiles[0]);
+    }
 }

@@ -11,5 +11,5 @@ public class BaseGameEvent : IGameActionEvent
     public long CalculationTurnId { get; set; }
     public GameActionEventTypes EventType { get; set; } = GameActionEventTypes.None;
     public IDialog? Dialog { get; set; }
-    public List<IDialog> ConnectedDialogs { get; set; }
+    public List<IDialog> ConnectedDialogs { get; set; } = new();
 }

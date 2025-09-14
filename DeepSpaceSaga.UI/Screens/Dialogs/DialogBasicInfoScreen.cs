@@ -1,5 +1,6 @@
 ﻿using DeepSpaceSaga.UI.Controller.Services;
 using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+using DeepSpaceSaga.UI.Services.Screens;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
@@ -7,6 +8,7 @@ public partial class DialogBasicInfoScreen : Form
 {
     private GameActionEventDto? _gameActionEvent;
     private IGameManager? _gameManager;
+    private readonly IScreensService _screensService;
     private DialogDto? _currentDialog;
     private string? _pendingMessageText;
 
@@ -21,61 +23,35 @@ public partial class DialogBasicInfoScreen : Form
     public DialogBasicInfoScreen()
     {
         InitializeComponent();
-        InitializeTextOutput();
     }
 
-    public DialogBasicInfoScreen(IGameManager gameManager)
+    public DialogBasicInfoScreen(IGameManager gameManager, IScreensService screensService)
     {
         InitializeComponent();
-        InitializeTextOutput();
 
-        _gameManager = gameManager;
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
+        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
 
         FormBorderStyle = FormBorderStyle.None;
         Size = new Size(1375, 875);
-        ShowInTaskbar = false;
-
-        
+        ShowInTaskbar = false;        
     }   
-
-    private void InitializeTextOutput()
-    {
-        
-        // Subscribe to Load event to ensure proper initialization
-        this.Load += DialogBasicInfoScreen_Load;
-    }
-
-    private void DialogBasicInfoScreen_Load(object? sender, EventArgs e)
-    {
-        // If there's pending message text, set it now that the control is fully loaded
-        if (!string.IsNullOrEmpty(_pendingMessageText))
-        {
-            System.Diagnostics.Debug.WriteLine($"DialogBasicInfoScreen_Load: Setting pending text '{_pendingMessageText}'");
-            crlMessageStatic.Text = _pendingMessageText;
-            _pendingMessageText = null;
-        }
-    }
 
     public void ShowDialogEvent(GameActionEventDto gameActionEvent)
     {
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
-        
-        // Use RPG text output control - set text after making visible
+
         var messageText = _gameManager?.Localization.GetText(_currentDialog?.Message ?? "") ?? _currentDialog?.Message ?? "";
 
         crlTitle.Text = _gameManager?.Localization.GetText(_currentDialog?.Title ?? "") ?? _currentDialog?.Message ?? "";
-        
-        // Store text for later - it will be set when form becomes visible
-        _pendingMessageText = messageText.Replace("<BR>", Environment.NewLine + Environment.NewLine);
+
+        crlMessageStatic.Text = messageText.Replace("<BR>", Environment.NewLine + Environment.NewLine);
 
         panel1.BackgroundImage = CreateCompositeBackgroundImage(panel1.Size, _currentDialog?.Image);
 
         AddDialogButtons();
-
-        System.Diagnostics.Debug.WriteLine("DialogBasicInfoScreen: Storing text for later display");
     }
-
 
     private void AddDialogButtons()
     {
@@ -96,7 +72,6 @@ public partial class DialogBasicInfoScreen : Form
             currentExit = 1;
         }
     }
-
 
     private void AddExitDialogButton(DialogExit exit, int currentExit)
     {
@@ -155,20 +130,6 @@ public partial class DialogBasicInfoScreen : Form
         AddExitDialogButton(exit, 0);
     }
 
-    private void SimulateFirstButtonClick()
-    {
-        if (_currentDialog == null || _currentDialog.Exits.Count == 0)
-        {
-            // No exits available, create default exit
-            AddDefaultExitDialogButton();
-            return;
-        }
-
-        // Get the first exit (ordered by NextKey)
-        var firstExit = _currentDialog.Exits.OrderBy(x => x.NextKey).First();
-        AddExitDialogButton(firstExit, 0);
-    }
-
     private void Event_ExitScreen(object? sender, EventArgs e)
     {
         OnClose?.Invoke();
@@ -182,13 +143,20 @@ public partial class DialogBasicInfoScreen : Form
         if (evnt != null)
         {
             OnNextDialog?.Invoke(evnt);
+
+            foreach (var dialog in _gameActionEvent.ConnectedDialogs)
+            {
+                if(dialog.Key == evnt.NextKey)
+                {
+                    var x = "";
+                    //_screensService.ShowDialogScreen()
+                }
+            }
+
+
+            //var x = _gameActionEvent.ConnectedDialogs[evnt.NextKey];
         }
 
-        Close();
-    }
-
-    private void crlMainMenu_Click(object sender, EventArgs e)
-    {
         Close();
     }
 

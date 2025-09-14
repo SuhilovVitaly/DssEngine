@@ -7,15 +7,7 @@ public class GameActionEventMapper
 {
     public static GameActionEventDto ToDto(IGameActionEvent gameEvent)
     {
-        List<DialogDto> dialogsCopy = new();
-
-        if(gameEvent.ConnectedDialogs != null)
-        {
-            foreach (var dialog in gameEvent.ConnectedDialogs)
-            {
-                dialogsCopy.Add(DialogMapper.ToDto(dialog));
-            }
-        }        
+        var dialogsCopy = gameEvent.ConnectedDialogs?.Select(DialogMapper.ToDto).ToList() ?? new List<DialogDto>();
 
         return new GameActionEventDto
         {

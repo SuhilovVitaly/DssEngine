@@ -20,5 +20,71 @@
         "TextKey": "start.scenario.scene.01.episode.02"
       }
     ]
+  },
+  {
+    "Key": "start.scenario.scene.01.exit.1",
+    "Title": "start.scenario.scene.01.title",
+    "Message": "start.scenario.scene.01.message",
+    "Type": 2,
+    "Trigger": 0,
+    "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
+    "UiScreenType": 3,
+    "TriggerValue": "0",
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.121",
+        "TextKey": "start.scenario.scene.01.episode.01"
+      },
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.22",
+        "TextKey": "start.scenario.scene.01.episode.02"
+      }
+    ]
+  },
+  {
+    "Key": "start.scenario.scene.01.exit.2",
+    "Title": "start.scenario.scene.01.title",
+    "Message": "start.scenario.scene.01.message",
+    "Type": 2,
+    "Trigger": 0,
+    "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
+    "UiScreenType": 3,
+    "TriggerValue": "0",
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.12",
+        "TextKey": "start.scenario.scene.01.episode.01"
+      },
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.22",
+        "TextKey": "start.scenario.scene.01.episode.02"
+      }
+    ]
+  },
+  {
+    "Key": "start.scenario.scene.01.exit.121",
+    "Title": "start.scenario.scene.0121.title",
+    "Message": "start.scenario.scene.01.message",
+    "Type": 2,
+    "Trigger": 0,
+    "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
+    "UiScreenType": 3,
+    "TriggerValue": "0",
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.125",
+        "TextKey": "start.scenario.scene.01.episode.01"
+      },
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.exit.225",
+        "TextKey": "start.scenario.scene.01.episode.02"
+      }
+    ]
   }
 ] 

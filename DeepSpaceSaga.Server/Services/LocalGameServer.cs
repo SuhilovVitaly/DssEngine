@@ -134,4 +134,28 @@ public class LocalGameServer(
 
         return Task.CompletedTask;
     }
+
+    public GameActionEventDto GetGameActionEvent(string key)
+    {
+        foreach (var dialog in sessionContext.GameSession.ActiveEvents.Values)
+        {
+
+            if (dialog.Key == key)
+            {
+
+                var gameActionEvent = new GameActionEvent
+                {
+                    Key = dialog.Key,
+                    Dialog = dialog.Dialog,
+                    Type = dialog.Dialog.Type,
+                    ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog.Dialog),
+                };
+
+
+                return GameActionEventMapper.ToDto(gameActionEvent);
+            }
+        }
+
+        return null;
+    }
 }

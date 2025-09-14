@@ -102,6 +102,7 @@ public class GameManager : IGameManager
         Screens.TacticalMap.StartDialog(gameEvent);
     }
 
+
     public void Navigation(CommandTypes command)
     {
         if (_gameSessionDto.State.IsPaused) return;
@@ -114,5 +115,10 @@ public class GameManager : IGameManager
             Type = command,
             IsOneTimeCommand = false,
         });
+    }
+
+    public GameActionEventDto GetGameActionEvent(string key)
+    {
+        return _gameServer.GetGameActionEvent(key);
     }
 }

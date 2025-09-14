@@ -5,7 +5,7 @@ namespace DeepSpaceSaga.Common.Abstractions.Services;
 public interface IGameServer
 {
     event Action<GameSessionDto>? OnTurnExecute;
-    
+    GameActionEventDto GetGameActionEvent(string key);
     GameSessionDto GetSessionContextDto();
     void SessionStart(GameSession session);
     void SessionPause();

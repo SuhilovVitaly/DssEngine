@@ -78,4 +78,6 @@ public interface IGameManager
     void GameEventInvoke(GameActionEventDto gameEvent);
 
     void Navigation(CommandTypes command);
+
+    GameActionEventDto GetGameActionEvent(string key);
 } 

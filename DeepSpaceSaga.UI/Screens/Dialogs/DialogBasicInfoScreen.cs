@@ -148,16 +148,12 @@ public partial class DialogBasicInfoScreen : Form
             {
                 if(dialog.Key == evnt.NextKey)
                 {
-                    var x = "";
-                    //_screensService.ShowDialogScreen()
+                    var gameEvent = _gameManager.GetGameActionEvent(dialog.Key);
+                    Close();
+                    _screensService.ShowDialogScreen(gameEvent);
                 }
             }
-
-
-            //var x = _gameActionEvent.ConnectedDialogs[evnt.NextKey];
-        }
-
-        Close();
+        }        
     }
 
     /// <summary>

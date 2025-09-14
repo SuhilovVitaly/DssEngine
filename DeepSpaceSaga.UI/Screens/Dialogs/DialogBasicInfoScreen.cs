@@ -1,6 +1,7 @@
 ﻿using DeepSpaceSaga.UI.Controller.Services;
 using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 using DeepSpaceSaga.UI.Services.Screens;
+using DeepSpaceSaga.UI.Tools;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
@@ -34,7 +35,9 @@ public partial class DialogBasicInfoScreen : Form
 
         FormBorderStyle = FormBorderStyle.None;
         Size = new Size(1375, 875);
-        ShowInTaskbar = false;        
+        ShowInTaskbar = false;
+        
+        SetupCursors();
     }   
 
     public void ShowDialogEvent(GameActionEventDto gameActionEvent)
@@ -58,6 +61,9 @@ public partial class DialogBasicInfoScreen : Form
         if (_currentDialog == null || _gameManager == null)
             return;
 
+        // Clear existing buttons first
+        ClearDialogButtons();
+
         int currentExit = 0;
 
         foreach (var exit in _currentDialog.Exits.OrderByDescending(x => x.NextKey))
@@ -71,6 +77,9 @@ public partial class DialogBasicInfoScreen : Form
             AddDefaultExitDialogButton();
             currentExit = 1;
         }
+
+        // Apply cursors to all dynamically created buttons
+        ApplyCursorsToDynamicButtons();
     }
 
     private void AddExitDialogButton(DialogExit exit, int currentExit)
@@ -86,7 +95,7 @@ public partial class DialogBasicInfoScreen : Form
             Size = new Size(buttonWidth, buttonHeight),
             Location = new Point(buttonX, height),
             BackColor = Color.FromArgb(18, 18, 18),
-            Cursor = Cursors.Hand,
+            Cursor = CursorManager.SelectedCursor,
             TabStop = false
         };
         button.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
@@ -128,6 +137,20 @@ public partial class DialogBasicInfoScreen : Form
         };
 
         AddExitDialogButton(exit, 0);
+    }
+
+    private void ClearDialogButtons()
+    {
+        // Remove all buttons with the name "crlExitScreenButton"
+        var buttonsToRemove = Controls.OfType<Button>()
+            .Where(btn => btn.Name == "crlExitScreenButton")
+            .ToList();
+
+        foreach (var button in buttonsToRemove)
+        {
+            Controls.Remove(button);
+            button.Dispose();
+        }
     }
 
     private void Event_ExitScreen(object? sender, EventArgs e)
@@ -314,5 +337,37 @@ public partial class DialogBasicInfoScreen : Form
         }
         
         return croppedImage;
+    }
+
+    private void SetupCursors()
+    {
+        // Set default cursor for the form
+        Cursor = CursorManager.DefaultCursor;
+        
+        // Set selected cursor for interactive elements
+        if (crlTitle != null)
+        {
+            crlTitle.Cursor = CursorManager.SelectedCursor;
+        }
+        
+        if (crlMessageStatic != null)
+        {
+            crlMessageStatic.Cursor = CursorManager.SelectedCursor;
+        }
+        
+        // Apply cursors to all child controls recursively
+        CursorManager.SetDefaultCursorForControl(this);
+    }
+
+    private void ApplyCursorsToDynamicButtons()
+    {
+        // Apply selected cursor to all dynamically created buttons
+        var dynamicButtons = Controls.OfType<Button>()
+            .Where(btn => btn.Name == "crlExitScreenButton");
+
+        foreach (var button in dynamicButtons)
+        {
+            button.Cursor = CursorManager.SelectedCursor;
+        }
     }    
 }

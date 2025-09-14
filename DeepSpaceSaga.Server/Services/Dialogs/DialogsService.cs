@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
+
+namespace DeepSpaceSaga.Server.Services;
 
 public class DialogsService : IDialogsService
 {
@@ -170,5 +172,15 @@ public class DialogsService : IDialogsService
                 throw;
             }
         }
+    }
+
+    public IDialog? GetDialog(string key)
+    {
+        foreach (var dialog in _dialogsDictionary.Values.Where(x => x.Key == key))
+        {
+            return dialog;
+        }
+
+        return null;
     }
 }

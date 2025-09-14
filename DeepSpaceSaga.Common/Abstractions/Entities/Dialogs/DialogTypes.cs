@@ -3,5 +3,6 @@
 public enum DialogTypes
 {
     SelectCelestialObject = 1,
-    TurnFinished = 2
+    TurnFinished = 2,
+    DialogueChain = 3
 }

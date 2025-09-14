@@ -8,6 +8,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <BaseOutputPath>v100</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>

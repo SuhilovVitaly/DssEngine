@@ -82,6 +82,17 @@ public partial class ScreenBackground : Form
     {
         childForm.ShowInTaskbar = false;
         childForm.StartPosition = FormStartPosition.CenterParent;
+        
+        // Check if form is already visible or modal to avoid modal dialog error
+        if (childForm.Visible || childForm.Modal)
+        {
+            childForm.Hide();
+            childForm.Close();
+            
+            // Wait a moment for the form to be fully closed
+            System.Threading.Thread.Sleep(100);
+        }
+        
         childForm.ShowDialog(this);
     }
 

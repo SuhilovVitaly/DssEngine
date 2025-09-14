@@ -9,4 +9,6 @@ public interface IDialogsService
     IList<IDialog> DialogsActivation(ICommand command, ISessionContextService context);
 
     List<IDialog> GetConnectedDialogs(IDialog dialog);
+
+    IDialog? GetDialog(string key);
 }

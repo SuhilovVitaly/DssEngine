@@ -69,7 +69,7 @@ public partial class DialogBasicInfoScreen : Form
         // Store text for later - it will be set when form becomes visible
         _pendingMessageText = messageText;
 
-        panel1.BackgroundImage = ImageLoader.LoadImageByName(_currentDialog?.Image);
+        panel1.BackgroundImage = CreateCompositeBackgroundImage(panel1.Size, _currentDialog?.Image);
 
         AddDialogButtons();
 
@@ -186,5 +186,55 @@ public partial class DialogBasicInfoScreen : Form
     private void crlMainMenu_Click(object sender, EventArgs e)
     {
         Close();
+    }
+
+    /// <summary>
+    /// Creates a composite background image with black background and a square image on the right side
+    /// </summary>
+    /// <param name="panelSize">Size of the panel to create the image for</param>
+    /// <param name="imageName">Name of the image to load and place on the right side</param>
+    /// <returns>Composite image with black background and scaled square image on the right</returns>
+    private Image CreateCompositeBackgroundImage(Size panelSize, string? imageName)
+    {
+        // Create a black background image
+        var compositeImage = new Bitmap(panelSize.Width, panelSize.Height);
+        
+        using (var graphics = Graphics.FromImage(compositeImage))
+        {
+            // Set high quality rendering settings
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            
+            // Fill with black background
+            graphics.FillRectangle(Brushes.Black, 0, 0, panelSize.Width, panelSize.Height);
+            
+            // Load and draw the square image on the right side if imageName is provided
+            if (!string.IsNullOrEmpty(imageName))
+            {
+                try
+                {
+                    using (var originalImage = ImageLoader.LoadImageByName(imageName))
+                    {
+                        // Calculate the size for the square image to fit the panel height
+                        int squareSize = panelSize.Height;
+                        
+                        // Calculate position to place the image on the right side
+                        int xPosition = panelSize.Width - squareSize;
+                        int yPosition = 0;
+                        
+                        // Draw the scaled square image on the right side
+                        graphics.DrawImage(originalImage, xPosition, yPosition, squareSize, squareSize);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log the error but don't crash - just show black background
+                    System.Diagnostics.Debug.WriteLine($"Failed to load image '{imageName}': {ex.Message}");
+                }
+            }
+        }
+        
+        return compositeImage;
     }
 }

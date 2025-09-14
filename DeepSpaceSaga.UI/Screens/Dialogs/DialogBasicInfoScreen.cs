@@ -223,6 +223,9 @@ public partial class DialogBasicInfoScreen : Form
                         int xPosition = panelSize.Width - squareSize;
                         int yPosition = 0;
                         
+                        // Apply dark fade effect to the original image
+                        ApplyDarkFadeToImage(originalImage);
+                        
                         // Draw the scaled square image on the right side
                         graphics.DrawImage(originalImage, xPosition, yPosition, squareSize, squareSize);
                     }
@@ -233,58 +236,63 @@ public partial class DialogBasicInfoScreen : Form
                     System.Diagnostics.Debug.WriteLine($"Failed to load image '{imageName}': {ex.Message}");
                 }
             }
-            
-            // Apply vignette effect (dark blur at edges)
-            ApplyVignetteEffect(graphics, panelSize);
         }
         
         return compositeImage;
     }
     
     /// <summary>
-    /// Applies a simple dark fade effect from center to edges
+    /// Applies dark fade effect to the original image from center to edges
     /// </summary>
-    /// <param name="graphics">Graphics object to draw on</param>
-    /// <param name="panelSize">Size of the panel</param>
-    private void ApplyVignetteEffect(Graphics graphics, Size panelSize)
+    /// <param name="image">The image to apply dark fade effect to</param>
+    private void ApplyDarkFadeToImage(Image image)
     {
-        // Calculate center point
-        int centerX = panelSize.Width / 2;
-        int centerY = panelSize.Height / 2;
-        
-        // Create multiple gradient layers for radial effect
-        int maxRadius = Math.Max(panelSize.Width, panelSize.Height) / 2;
-        
-        // Top gradient
-        using (var topBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-            new Point(centerX, 0), new Point(centerX, centerY),
-            Color.Black, Color.Transparent))
+        using (var graphics = Graphics.FromImage(image))
         {
-            graphics.FillRectangle(topBrush, 0, 0, panelSize.Width, centerY);
-        }
-        
-        // Bottom gradient
-        using (var bottomBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-            new Point(centerX, centerY), new Point(centerX, panelSize.Height),
-            Color.Transparent, Color.Black))
-        {
-            graphics.FillRectangle(bottomBrush, 0, centerY, panelSize.Width, centerY);
-        }
-        
-        // Left gradient
-        using (var leftBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-            new Point(0, centerY), new Point(centerX, centerY),
-            Color.Black, Color.Transparent))
-        {
-            graphics.FillRectangle(leftBrush, 0, 0, centerX, panelSize.Height);
-        }
-        
-        // Right gradient
-        using (var rightBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-            new Point(centerX, centerY), new Point(panelSize.Width, centerY),
-            Color.Transparent, Color.Black))
-        {
-            graphics.FillRectangle(rightBrush, centerX, 0, centerX, panelSize.Height);
+            // Set high quality rendering settings
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            
+            // Use the actual image dimensions
+            int imageWidth = image.Width;
+            int imageHeight = image.Height;
+            
+            // Calculate center point based on actual image size
+            int centerX = imageWidth / 2;
+            int centerY = imageHeight / 2;
+            
+            // Top gradient
+            using (var topBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                new Point(centerX, 0), new Point(centerX, centerY),
+                Color.Black, Color.Transparent))
+            {
+                graphics.FillRectangle(topBrush, 0, 0, imageWidth, centerY);
+            }
+            
+            // Bottom gradient
+            using (var bottomBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                new Point(centerX, centerY), new Point(centerX, imageHeight),
+                Color.Transparent, Color.Black))
+            {
+                graphics.FillRectangle(bottomBrush, 0, centerY, imageWidth, centerY);
+            }
+            
+            // Left gradient
+            using (var leftBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                new Point(0, centerY), new Point(centerX, centerY),
+                Color.Black, Color.Transparent))
+            {
+                graphics.FillRectangle(leftBrush, 0, 0, centerX, imageHeight);
+            }
+            
+            // Right gradient
+            using (var rightBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+                new Point(centerX, centerY), new Point(imageWidth, centerY),
+                Color.Transparent, Color.Black))
+            {
+                graphics.FillRectangle(rightBrush, centerX, 0, centerX, imageHeight);
+            }
         }
     }    
 }

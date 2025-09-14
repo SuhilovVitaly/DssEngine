@@ -39,7 +39,7 @@ public partial class DialogBasicInfoScreen : Form
     private void InitializeTextOutput()
     {
         // Subscribe to text output completion event
-        crlMessage.TextOutputCompleted += OnTextOutputCompleted;
+        //crlMessage.TextOutputCompleted += OnTextOutputCompleted;
         
         // Subscribe to space pressed after completion event
         crlMessage.SpacePressedAfterCompletion += OnSpacePressedAfterCompletion;
@@ -64,9 +64,6 @@ public partial class DialogBasicInfoScreen : Form
     {
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
-        
-        // Clear any existing buttons first
-        ClearDialogButtons();
         
         // Unsubscribe from previous events to avoid multiple subscriptions
         crlMessage.TextOutputCompleted -= OnTextOutputCompleted;
@@ -102,6 +99,8 @@ public partial class DialogBasicInfoScreen : Form
         {
             AddDialogButtons();
         }
+
+        this.Focus();
     }
     
     private void OnSpacePressedAfterCompletion()
@@ -116,9 +115,6 @@ public partial class DialogBasicInfoScreen : Form
     {
         if (_currentDialog == null || _gameManager == null)
             return;
-
-        // Clear existing buttons
-        ClearDialogButtons();
 
         int currentExit = 0;
 
@@ -135,23 +131,9 @@ public partial class DialogBasicInfoScreen : Form
         }
 
         // Calculate and set dynamic height for ExitButtonsContainer
-        UpdateExitButtonsContainerHeight(currentExit);
+        //UpdateExitButtonsContainerHeight(currentExit);
     }
 
-    private void ClearDialogButtons()
-    {
-        // Remove all buttons that were added dynamically
-        var buttonsToRemove = ExitButtonsContainer.Controls.OfType<Button>().Where(b => b.Name == "crlExitScreenButton").ToList();
-        foreach (var button in buttonsToRemove)
-        {
-            ExitButtonsContainer.Controls.Remove(button);
-            button.Dispose();
-        }
-        
-        // Reset panel height to default
-        ExitButtonsContainer.Height = 273; // Default height from designer
-        ExitButtonsContainer.Location = new Point(ExitButtonsContainer.Location.X, 600); // Default location from designer
-    }
 
     private void AddExitDialogButton(DialogExit exit, int currentExit)
     {
@@ -160,7 +142,8 @@ public partial class DialogBasicInfoScreen : Form
             Size = new Size(1300, buttonHeight),
             Location = new Point(buttonHeight, 20 + currentExit * (buttonHeight + spacingBetweenButtons)),
             BackColor = Color.FromArgb(18, 18, 18),
-            Cursor = Cursors.Hand
+            Cursor = Cursors.Hand,
+            TabStop = false
         };
         button.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
         button.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
@@ -169,9 +152,9 @@ public partial class DialogBasicInfoScreen : Form
         button.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
         button.ForeColor = Color.Gainsboro;
         button.Name = "crlExitScreenButton";
-        button.TabIndex = 1;
+        button.TabIndex = 0;
         button.Text = _gameManager?.Localization.GetText(exit.TextKey) ?? exit.TextKey;
-        button.UseVisualStyleBackColor = false;
+        //button.UseVisualStyleBackColor = false;
 
         if (exit.NextKey != "-1")
         {

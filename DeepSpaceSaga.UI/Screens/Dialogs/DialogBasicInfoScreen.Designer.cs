@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             crlMessage = new Controls.RpgTextOutputControl();
-            ExitButtonsContainer = new Controls.TransparentPanel();
             pictureBox1 = new UI.Controls.BlurredPictureBox();
             crlTitle = new Label();
             transparentPanel1 = new Controls.TransparentPanel();
             button1 = new Button();
+            ExitButtonsContainer = new Controls.TransparentPanel();
             ((ISupportInitialize)pictureBox1).BeginInit();
             transparentPanel1.SuspendLayout();
             SuspendLayout();
@@ -48,17 +48,9 @@
             crlMessage.TabIndex = 8;
             crlMessage.TextOutputSpeedMs = 100;
             // 
-            // ExitButtonsContainer
-            // 
-            ExitButtonsContainer.BackColor = Color.Transparent;
-            ExitButtonsContainer.Location = new Point(503, 684);
-            ExitButtonsContainer.Name = "ExitButtonsContainer";
-            ExitButtonsContainer.Size = new Size(887, 163);
-            ExitButtonsContainer.TabIndex = 2;
-            // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = Color.RosyBrown;
+            pictureBox1.BackColor = Color.DarkBlue;
             pictureBox1.BlurIntensity = 0.8F;
             pictureBox1.BlurSteps = 20;
             pictureBox1.BlurWidth = 100;
@@ -83,19 +75,28 @@
             // 
             transparentPanel1.BackColor = Color.Transparent;
             transparentPanel1.Controls.Add(button1);
-            transparentPanel1.Location = new Point(846, 217);
+            transparentPanel1.Location = new Point(913, 7);
             transparentPanel1.Name = "transparentPanel1";
-            transparentPanel1.Size = new Size(388, 299);
-            transparentPanel1.TabIndex = 10;
+            transparentPanel1.Size = new Size(354, 405);
+            transparentPanel1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new Point(153, 197);
+            button1.Location = new Point(12, 17);
             button1.Name = "button1";
             button1.Size = new Size(112, 34);
             button1.TabIndex = 0;
+            button1.TabStop = false;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
+            // 
+            // ExitButtonsContainer
+            // 
+            ExitButtonsContainer.BackColor = Color.Transparent;
+            ExitButtonsContainer.Location = new Point(285, 589);
+            ExitButtonsContainer.Name = "ExitButtonsContainer";
+            ExitButtonsContainer.Size = new Size(1038, 267);
+            ExitButtonsContainer.TabIndex = 10;
             // 
             // DialogBasicInfoScreen
             // 
@@ -104,10 +105,10 @@
             BackColor = Color.Black;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1375, 875);
+            Controls.Add(ExitButtonsContainer);
             Controls.Add(transparentPanel1);
             Controls.Add(crlTitle);
             Controls.Add(crlMessage);
-            Controls.Add(ExitButtonsContainer);
             Controls.Add(pictureBox1);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -122,11 +123,11 @@
         }
 
         #endregion
-        private Controls.TransparentPanel ExitButtonsContainer;
         private Label crlTitle;
         private UI.Controls.BlurredPictureBox pictureBox1;
         private Controls.RpgTextOutputControl crlMessage;
         private Controls.TransparentPanel transparentPanel1;
         private Button button1;
+        private Controls.TransparentPanel ExitButtonsContainer;
     }
 }

@@ -7,9 +7,6 @@ namespace DeepSpaceSaga.UI.Screens.Dialogs.Controls;
     /// </summary>
     public class TransparentPanel : Panel
     {
-        /// <summary>
-        /// Initializes a new instance of TransparentPanel
-        /// </summary>
         public TransparentPanel()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor, true);

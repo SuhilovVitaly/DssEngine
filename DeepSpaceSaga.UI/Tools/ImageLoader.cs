@@ -9,16 +9,16 @@ public class ImageLoader
             throw new ArgumentException("Filename cannot be null, empty, or whitespace.", nameof(filename));
         }
 
-        // Путь к файлу относительно корня проекта
+        // Path to file relative to project root
         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,  "Images", "Layers", "Tactical", filename + ".png");
 
-        // Проверяем существование файла
+        // Check if file exists
         if (!File.Exists(filePath))
         {
             throw new FileNotFoundException("Blueprint image file not found.", filePath);
         }
 
-        // Загружаем изображение
+        // Load the image
         return Image.FromFile(filePath);
     }
 
@@ -29,16 +29,16 @@ public class ImageLoader
             throw new ArgumentException("Filename cannot be null, empty, or whitespace.", nameof(filename));
         }
 
-        // Путь к файлу относительно корня проекта
+        // Path to file relative to project root
         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", "Characters", filename);
 
-        // Проверяем существование файла
+        // Check if file exists
         if (!File.Exists(filePath))
         {
             throw new FileNotFoundException("Blueprint image file not found.", filePath);
         }
 
-        // Загружаем изображение
+        // Load the image
         return Image.FromFile(filePath);
     }
 
@@ -51,16 +51,16 @@ public class ImageLoader
 
         filename = filename.Replace(".", "/");
         filename = filename + ".png";
-        // Путь к файлу относительно корня проекта
+        // Path to file relative to project root
         string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", filename);
 
-        // Проверяем существование файла
+        // Check if file exists
         if (!File.Exists(filePath))
         {
             throw new FileNotFoundException("Blueprint image file not found.", filePath);
         }
 
-        // Загружаем изображение
+        // Load the image
         return Image.FromFile(filePath);
     }
 
@@ -71,22 +71,22 @@ public class ImageLoader
             throw new ArgumentException("Image name cannot be null, empty, or whitespace.", nameof(imageName));
         }
 
-        // Добавляем расширение .png если его нет
+        // Add .png extension if not present
         if (!Path.HasExtension(imageName))
         {
             imageName += ".png";
         }
 
-        // Путь к папке Images
+        // Path to Images directory
         string imagesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
 
-        // Проверяем существование папки Images
+        // Check if Images directory exists
         if (!Directory.Exists(imagesDirectory))
         {
             throw new DirectoryNotFoundException($"Images directory not found: {imagesDirectory}");
         }
 
-        // Ищем файл во всех подпапках папки Images
+        // Search for file in all subdirectories of Images folder
         string[] foundFiles = Directory.GetFiles(imagesDirectory, imageName, SearchOption.AllDirectories);
 
         if (foundFiles.Length == 0)
@@ -94,14 +94,14 @@ public class ImageLoader
             throw new FileNotFoundException($"Image file '{imageName}' not found in Images directory or its subdirectories.");
         }
 
-        // Если найдено несколько файлов с одинаковым именем, берем первый
+        // If multiple files with same name found, take the first one
         if (foundFiles.Length > 1)
         {
-            // Сортируем по пути для предсказуемости результата
+            // Sort by path for predictable result
             Array.Sort(foundFiles);
         }
 
-        // Загружаем изображение
+        // Load the image
         return Image.FromFile(foundFiles[0]);
     }
 }

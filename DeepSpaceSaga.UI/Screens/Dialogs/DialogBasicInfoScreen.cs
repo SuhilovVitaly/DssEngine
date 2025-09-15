@@ -5,21 +5,41 @@ using DeepSpaceSaga.UI.Tools;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
+/// <summary>
+/// Represents a modal dialog screen for displaying game action events with interactive buttons
+/// </summary>
 public partial class DialogBasicInfoScreen : Form
 {
+    #region Constants
+    
+    private const int ButtonHeight = 46;
+    private const int SpacingBetweenButtons = 10;
+    private const int TopMargin = 20;
+    private const int BottomMargin = 20;
+    private const int ImageMargin = 10;
+    private const string DynamicButtonName = "crlExitScreenButton";
+    private const string DefaultExitKey = "-1";
+    private const string DefaultTextKey = "CLOSE";
+    
+    #endregion
+
+    #region Fields
+
     private GameActionEventDto? _gameActionEvent;
     private IGameManager? _gameManager;
-    private readonly IScreensService _screensService;
+    private readonly IScreensService? _screensService;
     private DialogDto? _currentDialog;
-    private string? _pendingMessageText;
+
+    #endregion
+
+    #region Events
 
     public event Action? OnClose;
     public event Action<DialogExit>? OnNextDialog;
 
-    const int buttonHeight = 46;
-    const int spacingBetweenButtons = 10;
-    const int topMargin = 20;
-    const int bottomMargin = 20;
+    #endregion
+
+    #region Constructors
 
     public DialogBasicInfoScreen()
     {
@@ -33,83 +53,199 @@ public partial class DialogBasicInfoScreen : Form
         _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
         _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
 
-        FormBorderStyle = FormBorderStyle.None;
-        Size = new Size(1375, 875);
-        ShowInTaskbar = false;
-        
+        InitializeForm();
         SetupCursors();
-    }   
+    }
 
+    #endregion
+
+    #region Public Methods
+
+    /// <summary>
+    /// Displays the dialog with the specified game action event
+    /// </summary>
+    /// <param name="gameActionEvent">The game action event to display</param>
     public void ShowDialogEvent(GameActionEventDto gameActionEvent)
     {
+        if (gameActionEvent == null)
+            throw new ArgumentNullException(nameof(gameActionEvent));
+
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
 
-        var messageText = _gameManager?.Localization.GetText(_currentDialog?.Message ?? "") ?? _currentDialog?.Message ?? "";
-
-        crlTitle.Text = _gameManager?.Localization.GetText(_currentDialog?.Title ?? "") ?? _currentDialog?.Message ?? "";
-
-        crlMessageStatic.Text = messageText.Replace("<BR>", Environment.NewLine + Environment.NewLine);
-
-        panel1.BackgroundImage = CreateCompositeBackgroundImage(panel1.Size, _currentDialog?.Image);
-
+        UpdateDialogContent();
         AddDialogButtons();
     }
 
+    #endregion
+
+    #region Private Methods
+
+    /// <summary>
+    /// Initializes the form properties
+    /// </summary>
+    private void InitializeForm()
+    {
+        FormBorderStyle = FormBorderStyle.None;
+        Size = new Size(1375, 875);
+        ShowInTaskbar = false;
+    }
+
+    /// <summary>
+    /// Updates the dialog content with localized text and background image
+    /// </summary>
+    private void UpdateDialogContent()
+    {
+        if (_currentDialog == null || _gameManager == null)
+            return;
+
+        var messageText = GetLocalizedText(_currentDialog.Message);
+        var titleText = GetLocalizedText(_currentDialog.Title);
+
+        crlTitle.Text = titleText;
+        crlMessageStatic.Text = FormatMessageText(messageText);
+        panel1.BackgroundImage = CreateCompositeBackgroundImage(panel1.Size, _currentDialog.Image);
+    }
+
+    /// <summary>
+    /// Gets localized text using the game manager's localization service
+    /// </summary>
+    /// <param name="textKey">The text key to localize</param>
+    /// <returns>Localized text or the original key if localization fails</returns>
+    private string GetLocalizedText(string? textKey)
+    {
+        if (string.IsNullOrEmpty(textKey) || _gameManager == null)
+            return textKey ?? string.Empty;
+
+        return _gameManager.Localization.GetText(textKey) ?? textKey;
+    }
+
+    /// <summary>
+    /// Formats message text by replacing HTML line breaks with newlines
+    /// </summary>
+    /// <param name="messageText">The message text to format</param>
+    /// <returns>Formatted message text</returns>
+    private string FormatMessageText(string messageText)
+    {
+        return messageText.Replace("<BR>", Environment.NewLine + Environment.NewLine);
+    }
+
+    #endregion
+
+    #region Button Management
+
+    /// <summary>
+    /// Adds dialog buttons based on the current dialog's exits
+    /// </summary>
     private void AddDialogButtons()
     {
         if (_currentDialog == null || _gameManager == null)
             return;
 
-        // Clear existing buttons first
         ClearDialogButtons();
 
-        int currentExit = 0;
-
-        foreach (var exit in _currentDialog.Exits.OrderByDescending(x => x.NextKey))
+        var exits = _currentDialog.Exits.OrderByDescending(x => x.NextKey).ToList();
+        
+        for (int i = 0; i < exits.Count; i++)
         {
-            AddExitDialogButton(exit, currentExit);
-            currentExit++;
+            AddExitDialogButton(exits[i], i);
         }
 
-        if (currentExit == 0)
+        if (exits.Count == 0)
         {
             AddDefaultExitDialogButton();
-            currentExit = 1;
         }
 
-        // Apply cursors to all dynamically created buttons
         ApplyCursorsToDynamicButtons();
     }
 
-    private void AddExitDialogButton(DialogExit exit, int currentExit)
+    /// <summary>
+    /// Creates and adds an exit dialog button
+    /// </summary>
+    /// <param name="exit">The dialog exit configuration</param>
+    /// <param name="buttonIndex">The index of the button for positioning</param>
+    private void AddExitDialogButton(DialogExit exit, int buttonIndex)
     {
-        var height = this.Height - bottomMargin - (currentExit + 1) * (buttonHeight + spacingBetweenButtons);
+        var button = CreateDialogButton(exit, buttonIndex);
+        ConfigureButtonEvents(button, exit);
         
-        // Calculate button width and position for centering
-        int buttonWidth = this.Width - (buttonHeight * 2); // Full width minus margins
-        int buttonX = buttonHeight; // Left margin
+        Controls.Add(button);
+        button.BringToFront();
+    }
+
+    /// <summary>
+    /// Creates a dialog button with the specified configuration
+    /// </summary>
+    /// <param name="exit">The dialog exit configuration</param>
+    /// <param name="buttonIndex">The index of the button for positioning</param>
+    /// <returns>Configured button</returns>
+    private Button CreateDialogButton(DialogExit exit, int buttonIndex)
+    {
+        var position = CalculateButtonPosition(buttonIndex);
+        var size = CalculateButtonSize();
 
         var button = new Button
         {
-            Size = new Size(buttonWidth, buttonHeight),
-            Location = new Point(buttonX, height),
-            BackColor = Color.FromArgb(18, 18, 18),
-            Cursor = CursorManager.SelectedCursor,
+            Size = size,
+            Location = position,
+            Name = DynamicButtonName,
+            Text = GetLocalizedText(exit.TextKey),
+            Tag = exit,
+            TabIndex = 1000,
             TabStop = false
         };
-        button.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
-        button.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
-        button.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+
+        ApplyButtonStyling(button);
+        return button;
+    }
+
+    /// <summary>
+    /// Calculates the position for a button based on its index
+    /// </summary>
+    /// <param name="buttonIndex">The index of the button</param>
+    /// <returns>Button position</returns>
+    private Point CalculateButtonPosition(int buttonIndex)
+    {
+        var height = Height - BottomMargin - (buttonIndex + 1) * (ButtonHeight + SpacingBetweenButtons);
+        var x = ButtonHeight; // Left margin
+        return new Point(x, height);
+    }
+
+    /// <summary>
+    /// Calculates the size for dialog buttons
+    /// </summary>
+    /// <returns>Button size</returns>
+    private Size CalculateButtonSize()
+    {
+        var width = Width - (ButtonHeight * 2); // Full width minus margins
+        return new Size(width, ButtonHeight);
+    }
+
+    /// <summary>
+    /// Applies styling to a dialog button
+    /// </summary>
+    /// <param name="button">The button to style</param>
+    private void ApplyButtonStyling(Button button)
+    {
+        button.BackColor = Color.FromArgb(18, 18, 18);
+        button.Cursor = CursorManager.SelectedCursor;
         button.FlatStyle = FlatStyle.Flat;
         button.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
         button.ForeColor = Color.Gainsboro;
-        button.Name = "crlExitScreenButton";
-        button.TabIndex = 1000;
-        button.Text = _gameManager?.Localization.GetText(exit.TextKey) ?? exit.TextKey;
-        //button.UseVisualStyleBackColor = false;
 
-        if (exit.NextKey != "-1")
+        button.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
+        button.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
+        button.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
+    }
+
+    /// <summary>
+    /// Configures click events for a dialog button
+    /// </summary>
+    /// <param name="button">The button to configure</param>
+    /// <param name="exit">The dialog exit configuration</param>
+    private void ConfigureButtonEvents(Button button, DialogExit exit)
+    {
+        if (exit.NextKey != DefaultExitKey)
         {
             button.Click += Event_ToNextDialog;
         }
@@ -117,33 +253,30 @@ public partial class DialogBasicInfoScreen : Form
         {
             button.Click += Event_ExitScreen;
         }
-
-        button.Tag = exit;
-
-        
-
-        this.Controls.Add(button);
-
-        button.BringToFront();
     }
 
+    /// <summary>
+    /// Adds a default exit dialog button when no exits are available
+    /// </summary>
     private void AddDefaultExitDialogButton()
     {
-        var exit = new DialogExit
+        var defaultExit = new DialogExit
         {
             Key = "default",
-            NextKey = "-1",
-            TextKey = "CLOSE"
+            NextKey = DefaultExitKey,
+            TextKey = DefaultTextKey
         };
 
-        AddExitDialogButton(exit, 0);
+        AddExitDialogButton(defaultExit, 0);
     }
 
+    /// <summary>
+    /// Clears all dynamically created dialog buttons
+    /// </summary>
     private void ClearDialogButtons()
     {
-        // Remove all buttons with the name "crlExitScreenButton"
         var buttonsToRemove = Controls.OfType<Button>()
-            .Where(btn => btn.Name == "crlExitScreenButton")
+            .Where(btn => btn.Name == DynamicButtonName)
             .ToList();
 
         foreach (var button in buttonsToRemove)
@@ -153,43 +286,86 @@ public partial class DialogBasicInfoScreen : Form
         }
     }
 
+    #endregion
+
+    #region Event Handlers
+
+    /// <summary>
+    /// Handles the exit screen button click event
+    /// </summary>
+    /// <param name="sender">The event sender</param>
+    /// <param name="e">Event arguments</param>
     private void Event_ExitScreen(object? sender, EventArgs e)
     {
         OnClose?.Invoke();
         Close();
     }
 
+    /// <summary>
+    /// Handles the next dialog button click event
+    /// </summary>
+    /// <param name="sender">The event sender</param>
+    /// <param name="e">Event arguments</param>
     private void Event_ToNextDialog(object? sender, EventArgs e)
     {
-        var evnt = (sender as Button)?.Tag as DialogExit;
+        var exit = (sender as Button)?.Tag as DialogExit;
 
-        if (evnt != null && _gameActionEvent != null && _gameManager != null)
+        if (exit == null || _gameActionEvent == null || _gameManager == null)
         {
-            OnNextDialog?.Invoke(evnt);
-
-            foreach (var dialog in _gameActionEvent.ConnectedDialogs)
-            {
-                if(dialog.Key == evnt.NextKey)
-                {
-                    var gameEvent = _gameManager.GetGameActionEvent(dialog.Key);
-                    
-                    // Close current dialog and open new one
-                    this.DialogResult = DialogResult.OK;
-                    this.Close();
-
-                    // Use Application.DoEvents() to ensure the form is fully closed
-                    Application.DoEvents();
-                    
-                    // Open new dialog
-                    _screensService.ShowDialogScreen(gameEvent);
-                    return; // Exit the method after opening new dialog
-                }
-            }
+            Close();
+            return;
         }
 
-        // If no next dialog found, just close current dialog
-        this.Close();
+        OnNextDialog?.Invoke(exit);
+
+        var nextDialog = FindNextDialog(exit.NextKey);
+        if (nextDialog != null)
+        {
+            NavigateToNextDialog(nextDialog);
+        }
+        else
+        {
+            Close();
+        }
     }
+
+    /// <summary>
+    /// Finds the next dialog based on the exit key
+    /// </summary>
+    /// <param name="nextKey">The key of the next dialog</param>
+    /// <returns>The next dialog or null if not found</returns>
+    private DialogDto? FindNextDialog(string nextKey)
+    {
+        return _gameActionEvent?.ConnectedDialogs
+            .FirstOrDefault(dialog => dialog.Key == nextKey);
+    }
+
+    /// <summary>
+    /// Navigates to the next dialog
+    /// </summary>
+    /// <param name="nextDialog">The next dialog to navigate to</param>
+    private void NavigateToNextDialog(DialogDto nextDialog)
+    {
+        var gameEvent = _gameManager?.GetGameActionEvent(nextDialog.Key);
+        if (gameEvent == null)
+        {
+            Close();
+            return;
+        }
+
+        // Close current dialog and open new one
+        DialogResult = DialogResult.OK;
+        Close();
+
+        // Ensure the form is fully closed before opening new dialog
+        Application.DoEvents();
+        
+        _screensService?.ShowDialogScreen(gameEvent);
+    }
+
+    #endregion
+
+    #region Image Processing
 
     /// <summary>
     /// Creates a composite background image with black background and a square image on the right side
@@ -199,53 +375,93 @@ public partial class DialogBasicInfoScreen : Form
     /// <returns>Composite image with black background and scaled square image on the right</returns>
     private Image CreateCompositeBackgroundImage(Size panelSize, string? imageName)
     {
-        // Create a black background image
         var compositeImage = new Bitmap(panelSize.Width, panelSize.Height);
         
         using (var graphics = Graphics.FromImage(compositeImage))
         {
-            // Set high quality rendering settings
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            ConfigureGraphicsQuality(graphics);
+            DrawBlackBackground(graphics, panelSize);
             
-            // Fill with black background
-            graphics.FillRectangle(Brushes.Black, 0, 0, panelSize.Width, panelSize.Height);
-            
-            // Load and draw the square image on the right side if imageName is provided
             if (!string.IsNullOrEmpty(imageName))
             {
-                try
-                {
-                    using (var originalImage = ImageLoader.LoadImageByName(imageName))
-                    {
-                        // Calculate the size for the square image to fit the panel height
-                        int squareSize = panelSize.Height;
-                        
-                        // Calculate position to place the image on the right side
-                        int xPosition = panelSize.Width - squareSize;
-                        int yPosition = 0;
-                        
-                        // Crop image with 10 pixel margin from each edge
-                        using (var croppedImage = CropImageWithMargin(originalImage, 10))
-                        {
-                            // Apply dark fade effect to the cropped image
-                            ApplyDarkFadeToImage(croppedImage);
-                            
-                            // Draw the scaled square image on the right side
-                            graphics.DrawImage(croppedImage, xPosition, yPosition, squareSize, squareSize);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Log the error but don't crash - just show black background
-                    System.Diagnostics.Debug.WriteLine($"Failed to load image '{imageName}': {ex.Message}");
-                }
+                DrawBackgroundImage(graphics, panelSize, imageName);
             }
         }
         
         return compositeImage;
+    }
+
+    /// <summary>
+    /// Configures graphics for high quality rendering
+    /// </summary>
+    /// <param name="graphics">The graphics object to configure</param>
+    private void ConfigureGraphicsQuality(Graphics graphics)
+    {
+        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+        graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+        graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+    }
+
+    /// <summary>
+    /// Draws a black background
+    /// </summary>
+    /// <param name="graphics">The graphics object to draw on</param>
+    /// <param name="panelSize">The size of the panel</param>
+    private void DrawBlackBackground(Graphics graphics, Size panelSize)
+    {
+        graphics.FillRectangle(Brushes.Black, 0, 0, panelSize.Width, panelSize.Height);
+    }
+
+    /// <summary>
+    /// Draws the background image on the right side of the panel
+    /// </summary>
+    /// <param name="graphics">The graphics object to draw on</param>
+    /// <param name="panelSize">The size of the panel</param>
+    /// <param name="imageName">The name of the image to load</param>
+    private void DrawBackgroundImage(Graphics graphics, Size panelSize, string imageName)
+    {
+        try
+        {
+            using (var originalImage = ImageLoader.LoadImageByName(imageName))
+            {
+                var imagePosition = CalculateImagePosition(panelSize);
+                using (var processedImage = ProcessImageForBackground(originalImage))
+                {
+                    graphics.DrawImage(processedImage, imagePosition.X, imagePosition.Y, 
+                                     imagePosition.Width, imagePosition.Height);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"Failed to load image '{imageName}': {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Calculates the position and size for the background image
+    /// </summary>
+    /// <param name="panelSize">The size of the panel</param>
+    /// <returns>Rectangle with position and size for the image</returns>
+    private Rectangle CalculateImagePosition(Size panelSize)
+    {
+        int squareSize = panelSize.Height;
+        int xPosition = panelSize.Width - squareSize;
+        return new Rectangle(xPosition, 0, squareSize, squareSize);
+    }
+
+    /// <summary>
+    /// Processes an image for use as background (crops and applies fade effect)
+    /// </summary>
+    /// <param name="originalImage">The original image to process</param>
+    /// <returns>Processed image</returns>
+    private Image ProcessImageForBackground(Image originalImage)
+    {
+        using (var croppedImage = CropImageWithMargin(originalImage, ImageMargin))
+        {
+            ApplyDarkFadeToImage(croppedImage);
+            return new Bitmap(croppedImage);
+        }
     }
     
     /// <summary>
@@ -256,50 +472,53 @@ public partial class DialogBasicInfoScreen : Form
     {
         using (var graphics = Graphics.FromImage(image))
         {
-            // Set high quality rendering settings
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            ConfigureGraphicsQuality(graphics);
             
-            // Use the actual image dimensions
-            int imageWidth = image.Width;
-            int imageHeight = image.Height;
+            var imageSize = new Size(image.Width, image.Height);
+            var center = new Point(imageSize.Width / 2, imageSize.Height / 2);
             
-            // Calculate center point based on actual image size
-            int centerX = imageWidth / 2;
-            int centerY = imageHeight / 2;
-            
-            // Top gradient
-            using (var topBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-                new Point(centerX, 0), new Point(centerX, centerY),
-                Color.Black, Color.Transparent))
-            {
-                graphics.FillRectangle(topBrush, 0, 0, imageWidth, centerY);
-            }
-            
-            // Bottom gradient
-            using (var bottomBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-                new Point(centerX, centerY), new Point(centerX, imageHeight),
-                Color.Transparent, Color.Black))
-            {
-                graphics.FillRectangle(bottomBrush, 0, centerY, imageWidth, centerY);
-            }
-            
-            // Left gradient
-            using (var leftBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-                new Point(0, centerY), new Point(centerX, centerY),
-                Color.Black, Color.Transparent))
-            {
-                graphics.FillRectangle(leftBrush, 0, 0, centerX, imageHeight);
-            }
-            
-            // Right gradient
-            using (var rightBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
-                new Point(centerX, centerY), new Point(imageWidth, centerY),
-                Color.Transparent, Color.Black))
-            {
-                graphics.FillRectangle(rightBrush, centerX, 0, centerX, imageHeight);
-            }
+            ApplyGradientFade(graphics, imageSize, center);
+        }
+    }
+
+    /// <summary>
+    /// Applies gradient fade effects to all four sides of the image
+    /// </summary>
+    /// <param name="graphics">The graphics object to draw on</param>
+    /// <param name="imageSize">The size of the image</param>
+    /// <param name="center">The center point of the image</param>
+    private void ApplyGradientFade(Graphics graphics, Size imageSize, Point center)
+    {
+        // Top gradient
+        using (var topBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+            new Point(center.X, 0), new Point(center.X, center.Y),
+            Color.Black, Color.Transparent))
+        {
+            graphics.FillRectangle(topBrush, 0, 0, imageSize.Width, center.Y);
+        }
+        
+        // Bottom gradient
+        using (var bottomBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+            new Point(center.X, center.Y), new Point(center.X, imageSize.Height),
+            Color.Transparent, Color.Black))
+        {
+            graphics.FillRectangle(bottomBrush, 0, center.Y, imageSize.Width, center.Y);
+        }
+        
+        // Left gradient
+        using (var leftBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+            new Point(0, center.Y), new Point(center.X, center.Y),
+            Color.Black, Color.Transparent))
+        {
+            graphics.FillRectangle(leftBrush, 0, 0, center.X, imageSize.Height);
+        }
+        
+        // Right gradient
+        using (var rightBrush = new System.Drawing.Drawing2D.LinearGradientBrush(
+            new Point(center.X, center.Y), new Point(imageSize.Width, center.Y),
+            Color.Transparent, Color.Black))
+        {
+            graphics.FillRectangle(rightBrush, center.X, 0, center.X, imageSize.Height);
         }
     }
     
@@ -311,27 +530,16 @@ public partial class DialogBasicInfoScreen : Form
     /// <returns>Cropped image with margin removed</returns>
     private Image CropImageWithMargin(Image originalImage, int margin)
     {
-        // Calculate crop dimensions
-        int cropWidth = Math.Max(1, originalImage.Width - (margin * 2));
-        int cropHeight = Math.Max(1, originalImage.Height - (margin * 2));
-        
-        // Ensure we don't crop more than the image size
-        int actualMarginX = Math.Min(margin, originalImage.Width / 2);
-        int actualMarginY = Math.Min(margin, originalImage.Height / 2);
-        
-        // Create cropped image
-        var croppedImage = new Bitmap(cropWidth, cropHeight);
+        var cropDimensions = CalculateCropDimensions(originalImage, margin);
+        var croppedImage = new Bitmap(cropDimensions.Width, cropDimensions.Height);
         
         using (var graphics = Graphics.FromImage(croppedImage))
         {
-            // Set high quality rendering settings
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+            ConfigureGraphicsQuality(graphics);
             
-            // Draw the cropped portion of the original image
-            var sourceRect = new Rectangle(actualMarginX, actualMarginY, cropWidth, cropHeight);
-            var destRect = new Rectangle(0, 0, cropWidth, cropHeight);
+            var sourceRect = new Rectangle(cropDimensions.MarginX, cropDimensions.MarginY, 
+                                         cropDimensions.Width, cropDimensions.Height);
+            var destRect = new Rectangle(0, 0, cropDimensions.Width, cropDimensions.Height);
             
             graphics.DrawImage(originalImage, destRect, sourceRect, GraphicsUnit.Pixel);
         }
@@ -339,12 +547,42 @@ public partial class DialogBasicInfoScreen : Form
         return croppedImage;
     }
 
+    /// <summary>
+    /// Calculates crop dimensions for an image with margin
+    /// </summary>
+    /// <param name="originalImage">The original image</param>
+    /// <param name="margin">The margin to apply</param>
+    /// <returns>Crop dimensions</returns>
+    private (int Width, int Height, int MarginX, int MarginY) CalculateCropDimensions(Image originalImage, int margin)
+    {
+        int cropWidth = Math.Max(1, originalImage.Width - (margin * 2));
+        int cropHeight = Math.Max(1, originalImage.Height - (margin * 2));
+        int actualMarginX = Math.Min(margin, originalImage.Width / 2);
+        int actualMarginY = Math.Min(margin, originalImage.Height / 2);
+        
+        return (cropWidth, cropHeight, actualMarginX, actualMarginY);
+    }
+
+    #endregion
+
+    #region Cursor Management
+
+    /// <summary>
+    /// Sets up cursors for the form and its controls
+    /// </summary>
     private void SetupCursors()
     {
-        // Set default cursor for the form
         Cursor = CursorManager.DefaultCursor;
         
-        // Set selected cursor for interactive elements
+        SetControlCursors();
+        CursorManager.SetDefaultCursorForControl(this);
+    }
+
+    /// <summary>
+    /// Sets cursors for specific controls
+    /// </summary>
+    private void SetControlCursors()
+    {
         if (crlTitle != null)
         {
             crlTitle.Cursor = CursorManager.SelectedCursor;
@@ -354,20 +592,21 @@ public partial class DialogBasicInfoScreen : Form
         {
             crlMessageStatic.Cursor = CursorManager.SelectedCursor;
         }
-        
-        // Apply cursors to all child controls recursively
-        CursorManager.SetDefaultCursorForControl(this);
     }
 
+    /// <summary>
+    /// Applies cursors to all dynamically created buttons
+    /// </summary>
     private void ApplyCursorsToDynamicButtons()
     {
-        // Apply selected cursor to all dynamically created buttons
         var dynamicButtons = Controls.OfType<Button>()
-            .Where(btn => btn.Name == "crlExitScreenButton");
+            .Where(btn => btn.Name == DynamicButtonName);
 
         foreach (var button in dynamicButtons)
         {
             button.Cursor = CursorManager.SelectedCursor;
         }
-    }    
+    }
+
+    #endregion
 }

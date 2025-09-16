@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Server.Processing.Handlers;
+﻿using DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler;
+
+namespace DeepSpaceSaga.Server.Processing.Handlers;
 
 public class ProcessingDialogHandler
 {
@@ -13,6 +15,8 @@ public class ProcessingDialogHandler
                 var dialogCommand = command as DialogExitCommand;
 
                 if (dialogCommand == null) continue;
+
+                AssignmentDialogExitCommand.Execute(sessionContext, command);
 
                 removeCommands.TryAdd(command.Id.ToString(), command.Id);
                 sessionContext.GameSession.DialogsExits.TryAdd(dialogCommand.DialogKey, dialogCommand.DialogExitKey);

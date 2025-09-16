@@ -2,6 +2,7 @@
 using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 using DeepSpaceSaga.UI.Services.Screens;
 using DeepSpaceSaga.UI.Tools;
+using DeepSpaceSaga.Common.Implementation.Entities.Commands;
 
 namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
@@ -317,6 +318,19 @@ public partial class DialogBasicInfoScreen : Form
         }
 
         OnNextDialog?.Invoke(exit);
+
+        if (_gameManager != null && _currentDialog != null)
+        {
+            _gameManager.CommandExecute(new DialogExitCommand
+            {
+                Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+                IsPauseProcessed = true,
+                IsOneTimeCommand = true,
+                DialogExitKey = exit.Key,
+                DialogKey = _currentDialog.Key,
+                DialogCommand = exit.DialogCommand,
+            });
+        }
 
         var nextDialog = FindNextDialog(exit.NextKey);
         if (nextDialog != null)

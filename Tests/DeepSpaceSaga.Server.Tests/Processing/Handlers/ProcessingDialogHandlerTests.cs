@@ -48,7 +48,8 @@ public class ProcessingDialogHandlerTests
             Id = Guid.NewGuid(),
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog1",
-            DialogExitKey = "exit1"
+            DialogExitKey = "exit1",
+            DialogCommand = "command1"
         };
         
         var dialogExitCommand2 = new DialogExitCommand
@@ -56,7 +57,8 @@ public class ProcessingDialogHandlerTests
             Id = Guid.NewGuid(),
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog2",
-            DialogExitKey = "exit2"
+            DialogExitKey = "exit2",
+            DialogCommand = "command2"
         };
 
         _gameSession.Commands.TryAdd(dialogExitCommand1.Id, dialogExitCommand1);
@@ -136,7 +138,8 @@ public class ProcessingDialogHandlerTests
             Id = Guid.NewGuid(),
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog1",
-            DialogExitKey = "exit1"
+            DialogExitKey = "exit1",
+            DialogCommand = "command1"
         };
         
         var otherCommand = new Command
@@ -197,7 +200,8 @@ public class ProcessingDialogHandlerTests
             Id = Guid.NewGuid(),
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog1",
-            DialogExitKey = "exit1"
+            DialogExitKey = "exit1",
+            DialogCommand = "command1"
         };
 
         _gameSession.Commands.TryAdd(dialogExitCommand.Id, dialogExitCommand);

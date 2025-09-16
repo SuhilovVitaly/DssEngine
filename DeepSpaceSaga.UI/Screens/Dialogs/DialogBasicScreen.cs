@@ -52,6 +52,7 @@ public partial class DialogBasicScreen : Form
                 IsOneTimeCommand = true,
                 DialogExitKey = exit.Key,
                 DialogKey = _currentDialog.Key,
+                DialogCommand = exit.DialogCommand,
             } );
         }
 

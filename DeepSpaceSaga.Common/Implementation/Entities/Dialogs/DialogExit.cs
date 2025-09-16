@@ -8,4 +8,6 @@ public class DialogExit : IDialogExit
     public required string NextKey { get; set; }
 
     public required string TextKey { get; set; }
+
+    public string? DialogCommand { get; set; }
 }

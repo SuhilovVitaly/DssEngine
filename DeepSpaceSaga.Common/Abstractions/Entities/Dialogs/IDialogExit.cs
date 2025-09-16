@@ -7,4 +7,6 @@ public interface IDialogExit
     string NextKey { get; set; }
 
     string TextKey { get; set; }
+
+    string? DialogCommand { get; set; }
 }

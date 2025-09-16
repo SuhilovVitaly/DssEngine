@@ -35,7 +35,7 @@ public static class AssignmentDialogExitCommand
                 if (instance != null)
                 {
                     // Execute the command
-                    instance.Execute();
+                    instance.Execute(sessionContext, command);
                 }
             }
         }

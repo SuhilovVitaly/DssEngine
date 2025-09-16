@@ -8,9 +8,9 @@ namespace DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler.Cust
 {
     public class AddingExperienceDialogCommand : ICustomDialogCommand
     {
-        public void Execute()
+        public void Execute(ISessionContextService sessionContext, ICommand command)
         {
-            var x = "";
+            command.Status = CommandStatus.PostProcess;
         }
     }
 }

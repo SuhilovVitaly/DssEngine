@@ -10,7 +10,7 @@ namespace DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler.Cust
     {
         public void Execute(ISessionContextService sessionContext, ICommand command)
         {
-            command.Status = CommandStatus.PostProcess;
+            command.Status = CommandStatus.Finalizing;
         }
     }
 }

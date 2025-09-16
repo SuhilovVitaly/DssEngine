@@ -13,7 +13,7 @@
         "Key": "exit",
         "NextKey": "start.scenario.scene.01.ep.01",
         "TextKey": "start.scenario.scene.01.episode.01",
-        "DialogCommand": "AddingExperienceDialogCommand"
+        "DialogCommand": "AddingExperienceDialogCommandTest"
       }
     ]
   },

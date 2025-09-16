@@ -47,6 +47,9 @@
     <None Update="Logs\Information.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Mods\General\DialogCommands\Dummy.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\close-selected.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

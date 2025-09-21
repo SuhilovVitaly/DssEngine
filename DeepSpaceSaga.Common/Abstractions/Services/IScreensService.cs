@@ -10,9 +10,9 @@ public interface IScreensService
 
     void ShowTacticalMapScreen();
 
-    void ShowGameMenuModal();
+    Task ShowGameMenuModal();
 
     void CloseTacticalMapScreen();
 
-    void ShowDialogScreen(GameActionEventDto gameActionEvent);
+    Task ShowDialogScreen(GameActionEventDto gameActionEvent);
 }

@@ -65,11 +65,11 @@ public partial class ScreenBackground : Form
         e.Graphics.DrawRectangle(borderPen, borderRect);
     }
 
-    public void OpenWindow(Form childForm)
+    public async Task OpenWindow(Form childForm)
     {
         try
         {
-            CrossThreadExtensions.PerformSafely(this, OpenModalWindow, childForm);
+            await Task.Run(() => CrossThreadExtensions.PerformSafely(this, OpenModalWindow, childForm));
         }
         catch (Exception ex)
         {

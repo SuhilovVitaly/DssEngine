@@ -378,7 +378,7 @@ public partial class DialogBasicInfoScreen : Form
         // Ensure the form is fully closed before opening new dialog
         Application.DoEvents();
         
-        _screensService?.ShowDialogScreen(gameEvent);
+        _ = _screensService?.ShowDialogScreen(gameEvent);
     }
 
     #endregion

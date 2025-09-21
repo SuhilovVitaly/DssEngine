@@ -129,9 +129,9 @@ public partial class ScreenTacticalMap : Form, IScreenTacticalMap
         crlRightPanel.Visible = false;
     }
 
-    public void StartDialog(GameActionEventDto gameActionEvent)
+    public async void StartDialog(GameActionEventDto gameActionEvent)
     {
-        _screensService.ShowDialogScreen(gameActionEvent);
+        await _screensService.ShowDialogScreen(gameActionEvent);
         return;
         try
         {

@@ -59,7 +59,7 @@ public class ScreensService : IScreensService
 
     }
 
-    public void ShowDialogScreen(GameActionEventDto gameActionEvent)
+    public async Task ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
         if(_activeDialogScreen != null)
         {
@@ -72,18 +72,18 @@ public class ScreensService : IScreensService
         switch (gameActionEvent.Dialog?.UiScreenType)
         {
             case DialogUiScreenType.Info:
-                ShowDialogBasicInfo(gameActionEvent);
+                await ShowDialogBasicInfo(gameActionEvent);
                 break;
             case DialogUiScreenType.OnePerson:
-                ShowDialogPersons(gameActionEvent);
+                await ShowDialogPersons(gameActionEvent);
                 break;
             case DialogUiScreenType.TwoPerson:
-                ShowDialogPersons(gameActionEvent);
+                await ShowDialogPersons(gameActionEvent);
                 break;
         }
     }
 
-    private void ShowDialogPersons(GameActionEventDto gameActionEvent)
+    private async Task ShowDialogPersons(GameActionEventDto gameActionEvent)
     {
         try
         {
@@ -94,7 +94,7 @@ public class ScreensService : IScreensService
             if (screen != null)
             {
                 _activeDialogScreen = screen;
-                _screenBackground.OpenWindow(screen);
+                await _screenBackground.OpenWindow(screen);
                 Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
             }
             else
@@ -108,7 +108,7 @@ public class ScreensService : IScreensService
         }
     }
 
-    private void ShowDialogBasicInfo(GameActionEventDto gameActionEvent)
+    private async Task ShowDialogBasicInfo(GameActionEventDto gameActionEvent)
     {
         try
         {
@@ -126,7 +126,7 @@ public class ScreensService : IScreensService
             if (screen != null)
             {
                 _activeDialogScreen = screen;
-                _screenBackground.OpenWindow(screen);
+                await _screenBackground.OpenWindow(screen);
                 Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
             }
             else
@@ -169,7 +169,7 @@ public class ScreensService : IScreensService
         }
     }
 
-    public void ShowGameMenuModal()
+    public async Task ShowGameMenuModal()
     {
         try
         {
@@ -177,7 +177,7 @@ public class ScreensService : IScreensService
             var screen = Program.ServiceProvider.GetService<ScreenGameMenu>();
             if (screen != null)
             {
-                _screenBackground.OpenWindow(screen);
+                await _screenBackground.OpenWindow(screen);
                 Console.WriteLine("[ScreensService] Game menu modal displayed successfully");
             }
             else

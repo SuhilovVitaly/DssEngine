@@ -22,7 +22,7 @@ public class ConsoleScreensService :IScreensService
         
     }
 
-    public void ShowGameMenuModal()
+    public async Task ShowGameMenuModal()
     {
         
     }
@@ -32,7 +32,7 @@ public class ConsoleScreensService :IScreensService
         
     }
 
-    public void ShowDialogScreen(GameActionEventDto gameActionEvent)
+    public async Task ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
         throw new NotImplementedException();
     }

@@ -10,5 +10,5 @@ public interface IDialogExit
 
     string TextKey { get; set; }
 
-    DialogCommand? DialogCommand { get; set; }
+    List<DialogCommand> DialogCommands { get; set; }
 }

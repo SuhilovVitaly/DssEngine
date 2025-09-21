@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Linq;
 using DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler.CustomCommands;
 
 namespace DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler;
@@ -11,8 +12,8 @@ public static class AssignmentDialogExitCommand
 
         if (dialogCommand == null) return;
 
-        // Get the class name from DialogCommand field, fallback to default
-        var dialogCommandClassName = dialogCommand.DialogCommand?.Name ?? "AddingExperienceDialogCommand";
+        // Get the class name from DialogCommands field, fallback to default
+        var dialogCommandClassName = dialogCommand.DialogCommands?.FirstOrDefault()?.Name;
 
         try
         {

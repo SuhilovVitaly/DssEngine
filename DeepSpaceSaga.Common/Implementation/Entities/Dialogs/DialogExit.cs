@@ -9,5 +9,5 @@ public class DialogExit : IDialogExit
 
     public required string TextKey { get; set; }
 
-    public DialogCommand? DialogCommand { get; set; }
+    public List<DialogCommand> DialogCommands { get; set; } = new List<DialogCommand>();
 }

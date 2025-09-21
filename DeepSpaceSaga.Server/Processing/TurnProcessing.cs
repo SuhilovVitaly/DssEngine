@@ -67,7 +67,6 @@ public class TurnProcessing : IProcessingService
 
         try
         {
-            new ProcessingEventAcknowledgeHandler().Execute(sessionContext);
             new ProcessingDialogHandler().Execute(sessionContext);
         }
         catch (Exception e)

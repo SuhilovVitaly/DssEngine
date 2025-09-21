@@ -319,30 +319,32 @@ public partial class DialogBasicInfoScreen : Form
 
         OnNextDialog?.Invoke(exit);
 
-        if (_gameManager != null && _currentDialog != null)
-        {
-            _gameManager.DialogCommandExecute(new DialogExitCommand
-            {
-                Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
-                Exit = exit,
-                IsPauseProcessed = true,
-                IsOneTimeCommand = true,
-                DialogExitKey = exit.Key,
-                DialogKey = _currentDialog.Key,
-                DialogCommands = exit.DialogCommands,
-            });
+        //if (_gameManager != null && _currentDialog != null)
+        //{
+        //    _gameManager.DialogCommandExecute(new DialogExitCommand
+        //    {
+        //        Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+        //        Exit = exit,
+        //        IsPauseProcessed = true,
+        //        IsOneTimeCommand = true,
+        //        DialogExitKey = exit.Key,
+        //        DialogKey = _currentDialog.Key,
+        //        DialogCommands = exit.DialogCommands,
+        //    });
 
-        }
+        //}
 
-        var nextDialog = FindNextDialog(exit.NextKey);
-        if (nextDialog != null)
-        {
-            NavigateToNextDialog(nextDialog);
-        }
-        else
-        {
-            Close();
-        }
+        //var nextDialog = FindNextDialog(exit.NextKey);
+        //if (nextDialog != null)
+        //{
+        //    NavigateToNextDialog(nextDialog);
+        //}
+        //else
+        //{
+        //    Hide();
+        //}
+        Hide();
+        Close();
     }
 
     /// <summary>
@@ -365,13 +367,13 @@ public partial class DialogBasicInfoScreen : Form
         var gameEvent = _gameManager?.GetGameActionEvent(nextDialog.Key);
         if (gameEvent == null)
         {
-            Close();
+            Hide();
             return;
         }
 
         // Close current dialog and open new one
         DialogResult = DialogResult.OK;
-        Close();
+        Hide();
 
         // Ensure the form is fully closed before opening new dialog
         Application.DoEvents();

@@ -1,4 +1,5 @@
 ﻿using DeepSpaceSaga.UI.Screens.Dialogs;
+using System.Windows.Forms;
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
@@ -6,6 +7,7 @@ public class ScreensService : IScreensService
 {
     private readonly ScreenBackground _screenBackground;
     private IScreenTacticalMap? _tacticalMap;
+    private Form? _activeDialogScreen = null;
     public IScreenTacticalMap TacticalMap
     {
         get
@@ -52,8 +54,21 @@ public class ScreensService : IScreensService
         }
     }
 
+    public void ShowDialogNextScreen(GameActionEventDto gameActionEvent)
+    {
+
+    }
+
     public void ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
+        if(_activeDialogScreen != null)
+        {
+            _activeDialogScreen.Hide();
+
+            _activeDialogScreen.Close();
+            _activeDialogScreen = null; 
+        }
+
         switch (gameActionEvent.Dialog?.UiScreenType)
         {
             case DialogUiScreenType.Info:
@@ -78,6 +93,7 @@ public class ScreensService : IScreensService
 
             if (screen != null)
             {
+                _activeDialogScreen = screen;
                 _screenBackground.OpenWindow(screen);
                 Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
             }
@@ -105,9 +121,11 @@ public class ScreensService : IScreensService
             );
             
             screen.ShowDialogEvent(gameActionEvent);
+            screen.OnNextDialog += Screen_OnNextDialog;
 
             if (screen != null)
             {
+                _activeDialogScreen = screen;
                 _screenBackground.OpenWindow(screen);
                 Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
             }
@@ -120,6 +138,13 @@ public class ScreensService : IScreensService
         {
             Console.WriteLine($"[ScreensService] ERROR showing dialog: {ex.Message}");
         }
+    }
+
+    private void Screen_OnNextDialog(DialogExit obj)
+    {
+        _activeDialogScreen.Hide();
+        _activeDialogScreen.Close();
+        _activeDialogScreen = null;
     }
 
     public void ShowTacticalMapScreen()

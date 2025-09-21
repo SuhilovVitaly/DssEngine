@@ -35,21 +35,18 @@ public class GameManager : IGameManager
 
     private void Screens_OnDialogChoice(DialogExit dialogChoice, DialogDto currentDialog)
     {
-        if(dialogChoice is null)
+        var command = new DialogExitCommand
         {
-            return;
-        }
+            Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+            Exit = dialogChoice,
+            IsPauseProcessed = true,
+            IsOneTimeCommand = true,
+            DialogExitKey = dialogChoice.Key,
+            DialogKey = currentDialog.Key,
+            DialogCommands = dialogChoice.DialogCommands,
+        };
 
-        //DialogCommandExecute(new DialogExitCommand
-        //{
-        //    Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
-        //    Exit = dialogChoice,
-        //    IsPauseProcessed = true,
-        //    IsOneTimeCommand = true,
-        //    DialogExitKey = dialogChoice.Key,
-        //    DialogKey = _currentDialog.Key,
-        //    DialogCommands = dialogChoice.DialogCommands,
-        //});
+        _gameServer.ProcessDialogExitCommand(command);        
     }
 
     public GameSessionDto GameSession()

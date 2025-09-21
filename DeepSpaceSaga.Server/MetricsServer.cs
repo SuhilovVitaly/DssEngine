@@ -11,7 +11,8 @@ public static class MetricsServer
     
     public const string ServerTurnRealTimeProcessing  = "Server.Turn.RealTime.Processing";
     public const string ServerTurnPauseProcessing  = "Server.Turn.Pause.Processing";
-    
+    public const string ServerDialogProcessing = "Server.Turn.Dialog.Processing";
+
     public const string ProcessingEventAcknowledgeReceived = "Server.Processing.EventAcknowledge.Received";
     public const string ProcessingEventAcknowledgeProcessed = "Server.Processing.EventAcknowledge.Processed";
     public const string ProcessingEventAcknowledgeRemoved = "Server.Processing.EventAcknowledge.Removed";

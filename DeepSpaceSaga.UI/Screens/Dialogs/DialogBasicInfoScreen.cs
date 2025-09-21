@@ -321,15 +321,17 @@ public partial class DialogBasicInfoScreen : Form
 
         if (_gameManager != null && _currentDialog != null)
         {
-            _gameManager.CommandExecute(new DialogExitCommand
+            _gameManager.DialogCommandExecute(new DialogExitCommand
             {
                 Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+                Exit = exit,
                 IsPauseProcessed = true,
                 IsOneTimeCommand = true,
                 DialogExitKey = exit.Key,
                 DialogKey = _currentDialog.Key,
                 DialogCommands = exit.DialogCommands,
             });
+
         }
 
         var nextDialog = FindNextDialog(exit.NextKey);

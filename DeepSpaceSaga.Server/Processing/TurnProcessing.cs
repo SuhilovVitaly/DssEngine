@@ -60,4 +60,23 @@ public class TurnProcessing : IProcessingService
 
         return turnResult;
     }
+
+    public GameSessionDto DialogProcess(ISessionContextService sessionContext)
+    {
+        sessionContext.Metrics.Add(MetricsServer.ServerDialogProcessing);
+
+        try
+        {
+            new ProcessingEventAcknowledgeHandler().Execute(sessionContext);
+            new ProcessingDialogHandler().Execute(sessionContext);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        var turnResult = GameSessionMapper.ToDto(sessionContext);
+
+        return turnResult;
+    }
 }

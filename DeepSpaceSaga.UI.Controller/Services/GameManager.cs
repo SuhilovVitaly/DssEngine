@@ -56,6 +56,15 @@ public class GameManager : IGameManager
     public async void CommandExecute(ICommand command)
     {
         await _gameServer.AddCommand(command);
+
+        //_gameSessionDto = _gameServer.GetSessionContextDto();
+    }
+
+    public async void DialogCommandExecute(ICommand command)
+    {
+        await _gameServer.AddCommand(command);
+
+        //_gameSessionDto = _gameServer.GetSessionContextDto();
     }
 
     public void SessionStart()

@@ -20,6 +20,8 @@ public class ProcessingDialogHandler
 
                 removeCommands.TryAdd(command.Id.ToString(), command.Id);
                 sessionContext.GameSession.DialogsExits.TryAdd(dialogCommand.DialogKey, dialogCommand.DialogExitKey);
+
+                InvokeNextDialog(sessionContext, dialogCommand);
             }
         }
 
@@ -36,5 +38,38 @@ public class ProcessingDialogHandler
         {
             sessionContext.ExitWriteLock();
         }
+    }
+
+    private void InvokeNextDialog(ISessionContextService sessionContext, DialogExitCommand dialogExitCommand)
+    {
+        var dialog = sessionContext.GameSession.Dialogs.GetDialog(dialogExitCommand.Exit.NextKey);
+
+        var gameActionEvent = new GameActionEvent
+        {
+            Key = dialog.Key,
+            Dialog = dialog,
+            Type = dialog.Type,
+            ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog),
+        };
+
+        if (IsNewEvent(sessionContext.GameSession, gameActionEvent.Key))
+        {
+            sessionContext.GameSession.ActiveEvents.TryAdd(gameActionEvent.Key, gameActionEvent);
+        }
+    }
+
+    private static bool IsNewEvent(GameSession gameSession, string eventKey)
+    {
+        if (gameSession.ActiveEvents.Keys.Contains(eventKey))
+        {
+            return false;
+        }
+
+        if (gameSession.FinishedEvents.Keys.Contains(eventKey))
+        {
+            return false;
+        }
+
+        return true;
     }
 }

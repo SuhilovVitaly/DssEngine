@@ -39,7 +39,20 @@ public class LocalGameServer(
             _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
         }
     }
-    
+
+    public async Task ProcessDialogExitCommand(ICommand command)
+    {
+        _sessionContext.Metrics.Add(MetricsServer.ServerCommandReceived);
+
+        await _sessionContext.GameSession.AddCommand(command);
+
+        if (command.IsPauseProcessed)
+        {
+            _processingService.DialogProcess(_sessionContext);
+            _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
+        }
+    }
+
     public void SetGameSpeed(int speed)
     {
         _sessionContext.SessionInfo.SetSpeed(speed);

@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+
+namespace DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 
 public interface IDialogExit
 {
@@ -8,5 +10,5 @@ public interface IDialogExit
 
     string TextKey { get; set; }
 
-    string? DialogCommand { get; set; }
+    DialogCommand? DialogCommand { get; set; }
 }

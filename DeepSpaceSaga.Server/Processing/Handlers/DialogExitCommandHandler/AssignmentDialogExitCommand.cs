@@ -12,7 +12,7 @@ public static class AssignmentDialogExitCommand
         if (dialogCommand == null) return;
 
         // Get the class name from DialogCommand field, fallback to default
-        var dialogCommandClassName = dialogCommand.DialogCommand ?? "AddingExperienceDialogCommand";
+        var dialogCommandClassName = dialogCommand.DialogCommand?.Name ?? "AddingExperienceDialogCommand";
 
         try
         {

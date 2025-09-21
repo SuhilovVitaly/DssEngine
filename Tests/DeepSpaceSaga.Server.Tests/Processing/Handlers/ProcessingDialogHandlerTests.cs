@@ -1,6 +1,7 @@
 using DeepSpaceSaga.Server.Processing.Handlers;
 using DeepSpaceSaga.Common.Abstractions.Entities.Commands;
 using DeepSpaceSaga.Common.Implementation.Entities.Commands;
+using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 
 namespace DeepSpaceSaga.Server.Tests.Processing.Handlers;
 
@@ -49,7 +50,7 @@ public class ProcessingDialogHandlerTests
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog1",
             DialogExitKey = "exit1",
-            DialogCommand = "command1"
+            DialogCommand = new DialogCommand { Name = "command1" }
         };
         
         var dialogExitCommand2 = new DialogExitCommand
@@ -58,7 +59,7 @@ public class ProcessingDialogHandlerTests
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog2",
             DialogExitKey = "exit2",
-            DialogCommand = "command2"
+            DialogCommand = new DialogCommand { Name = "command2" }
         };
 
         _gameSession.Commands.TryAdd(dialogExitCommand1.Id, dialogExitCommand1);
@@ -139,7 +140,7 @@ public class ProcessingDialogHandlerTests
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog1",
             DialogExitKey = "exit1",
-            DialogCommand = "command1"
+            DialogCommand = new DialogCommand { Name = "command1" }
         };
         
         var otherCommand = new Command
@@ -201,7 +202,7 @@ public class ProcessingDialogHandlerTests
             Category = CommandCategory.DialogExit,
             DialogKey = "dialog1",
             DialogExitKey = "exit1",
-            DialogCommand = "command1"
+            DialogCommand = new DialogCommand { Name = "command1" }
         };
 
         _gameSession.Commands.TryAdd(dialogExitCommand.Id, dialogExitCommand);

@@ -1,10 +1,13 @@
 using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
 using DeepSpaceSaga.Common.Abstractions.UI.Screens;
+using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 
 namespace DeepSpaceSaga.Console.Services.Screens;
 
 public class ConsoleScreensService :IScreensService
 {
+    public event Action<DialogExit>? OnDialogChoice;
+
     public IScreenTacticalMap TacticalMap { get; set; }
 
     public ConsoleScreensService(IScreenTacticalMap tacticalMap)

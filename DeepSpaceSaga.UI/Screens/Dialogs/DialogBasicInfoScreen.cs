@@ -36,7 +36,7 @@ public partial class DialogBasicInfoScreen : Form
     #region Events
 
     public event Action? OnClose;
-    public event Action<DialogExit>? OnNextDialog;
+    public event Action<DialogExit, DialogDto>? OnDialogChoice;
 
     #endregion
 
@@ -317,7 +317,7 @@ public partial class DialogBasicInfoScreen : Form
             return;
         }
 
-        OnNextDialog?.Invoke(exit);
+        OnDialogChoice?.Invoke(exit, _currentDialog);       
 
         //if (_gameManager != null && _currentDialog != null)
         //{

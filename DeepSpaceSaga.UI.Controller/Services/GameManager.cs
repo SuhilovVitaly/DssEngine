@@ -1,4 +1,6 @@
-﻿namespace DeepSpaceSaga.UI.Controller.Services;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Commands;
+
+namespace DeepSpaceSaga.UI.Controller.Services;
 
 public class GameManager : IGameManager
 {
@@ -24,9 +26,30 @@ public class GameManager : IGameManager
         Localization = localizationService;
 
         Screens = screenManager;
+        Screens.OnDialogChoice += Screens_OnDialogChoice;
+
         ScreenInfo = new ScreenParameters(screenResolution);
         GenerationTool = generationTool;
         OuterSpace = outerSpace;        
+    }
+
+    private void Screens_OnDialogChoice(DialogExit dialogChoice, DialogDto currentDialog)
+    {
+        if(dialogChoice is null)
+        {
+            return;
+        }
+
+        //DialogCommandExecute(new DialogExitCommand
+        //{
+        //    Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
+        //    Exit = dialogChoice,
+        //    IsPauseProcessed = true,
+        //    IsOneTimeCommand = true,
+        //    DialogExitKey = dialogChoice.Key,
+        //    DialogKey = _currentDialog.Key,
+        //    DialogCommands = dialogChoice.DialogCommands,
+        //});
     }
 
     public GameSessionDto GameSession()

@@ -1,10 +1,13 @@
-﻿using DeepSpaceSaga.UI.Screens.Dialogs;
+﻿using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
+using DeepSpaceSaga.UI.Screens.Dialogs;
 using System.Windows.Forms;
 
 namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreensService : IScreensService
 {
+    public event Action<DialogExit, DialogDto>? OnDialogChoice;
+
     private readonly ScreenBackground _screenBackground;
     private IScreenTacticalMap? _tacticalMap;
     private Form? _activeDialogScreen = null;
@@ -121,7 +124,7 @@ public class ScreensService : IScreensService
             );
             
             screen.ShowDialogEvent(gameActionEvent);
-            screen.OnNextDialog += Screen_OnNextDialog;
+            screen.OnDialogChoice += Screen_OnDialogChoice;
 
             if (screen != null)
             {
@@ -140,11 +143,16 @@ public class ScreensService : IScreensService
         }
     }
 
-    private void Screen_OnNextDialog(DialogExit obj)
+    private void Screen_OnDialogChoice(DialogExit dialogExit, DialogDto currentDialog)
     {
-        _activeDialogScreen.Hide();
-        _activeDialogScreen.Close();
-        _activeDialogScreen = null;
+        if (_activeDialogScreen != null)
+        {
+            _activeDialogScreen.Hide();
+            _activeDialogScreen.Close();
+            _activeDialogScreen = null;
+        }
+
+        OnDialogChoice?.Invoke(dialogExit, currentDialog);
     }
 
     public void ShowTacticalMapScreen()

@@ -1,9 +1,9 @@
-﻿using DeepSpaceSaga.Common.Abstractions.UI.Screens;
-
-namespace DeepSpaceSaga.Common.Abstractions.Services;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Services;
 
 public interface IScreensService
 {
+    event Action<DialogExit, DialogDto>? OnDialogChoice;
+
     IScreenTacticalMap TacticalMap { get; set; }
 
     void ShowGameMenuScreen();

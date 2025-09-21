@@ -27,3 +27,4 @@ global using System.Text.Json;
 global using DeepSpaceSaga.Common.Abstractions.Entities;
 global using System.Collections.Concurrent;
 global using System.Collections.Generic;
+global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;

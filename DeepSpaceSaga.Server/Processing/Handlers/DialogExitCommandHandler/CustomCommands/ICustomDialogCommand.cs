@@ -2,5 +2,5 @@
 
 public interface ICustomDialogCommand
 {
-    void Execute(ISessionContextService sessionContext, ICommand command);
+    void Execute(ISessionContextService sessionContext, ICommand command, DialogCommand dialogCommand);
 }

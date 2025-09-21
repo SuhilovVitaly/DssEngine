@@ -8,12 +8,20 @@ public static class AssignmentDialogExitCommand
 {
     public static void Execute(ISessionContextService sessionContext, ICommand command)
     {
-        var dialogCommand = command as DialogExitCommand;
+        var dialogExitCommand = command as DialogExitCommand;
 
+        foreach (var dialogCommand in dialogExitCommand.DialogCommands)
+        {
+            ExecuteDialogCommand(sessionContext, command, dialogCommand);
+        }        
+    }
+
+    private static void ExecuteDialogCommand(ISessionContextService sessionContext, ICommand command, DialogCommand dialogCommand)
+    {
         if (dialogCommand == null) return;
 
         // Get the class name from DialogCommands field, fallback to default
-        var dialogCommandClassName = dialogCommand.DialogCommands?.FirstOrDefault()?.Name;
+        var dialogCommandClassName = dialogCommand.Name;
 
         try
         {
@@ -58,7 +66,7 @@ public static class AssignmentDialogExitCommand
             }
 
             // Execute the command if instance was created
-            instance?.Execute(sessionContext, command);
+            instance?.Execute(sessionContext, command, dialogCommand);
         }
         catch (Exception)
         {

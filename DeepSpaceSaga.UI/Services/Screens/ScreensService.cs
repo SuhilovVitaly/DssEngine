@@ -67,7 +67,7 @@ public class ScreensService : IScreensService
 
     public async Task ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
-        CloseActiveDialogScreen();
+        //CloseActiveDialogScreen();
 
         switch (gameActionEvent.Dialog?.UiScreenType)
         {
@@ -93,7 +93,7 @@ public class ScreensService : IScreensService
 
             if (screen != null)
             {
-                _activeDialogScreen = screen;
+                //_activeDialogScreen = screen;
                 await _screenBackground.OpenWindow(screen);
                 Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
             }
@@ -154,10 +154,22 @@ public class ScreensService : IScreensService
         }
     }
 
+    private void ClosePreviousDialogScreen()
+    {
+        if (_previousDialogScreen != null)
+        {
+            _previousDialogScreen.Close();
+            _previousDialogScreen = null;
+        }
+    }
+
     private async Task OpenDialogScreen(Form? screen)
     {
+        _previousDialogScreen = _activeDialogScreen;
         _activeDialogScreen = screen;
         await _screenBackground.OpenWindow(screen);
+        ClosePreviousDialogScreen();
+        screen.Focus();
     }
 
     public async Task ShowGameMenuModal()

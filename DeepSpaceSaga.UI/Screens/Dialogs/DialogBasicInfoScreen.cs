@@ -43,22 +43,13 @@ public partial class DialogBasicInfoScreen : Form
         if (Program.ServiceProvider is null) return;
 
         _gameManager = Program.ServiceProvider.GetService<IGameManager>();
-        _screensService = Program.ServiceProvider.GetService<IScreensService>();        
+        _screensService = Program.ServiceProvider.GetService<IScreensService>();
+
+        Tag = _gameManager.GenerationTool.GetId();
 
         InitializeForm();
         SetupCursors();
     }
-
-    //public DialogBasicInfoScreen(IGameManager gameManager, IScreensService screensService)
-    //{
-    //    InitializeComponent();
-
-    //    _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
-    //    _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
-
-    //    InitializeForm();
-    //    SetupCursors();
-    //}
 
     #endregion
 
@@ -315,12 +306,10 @@ public partial class DialogBasicInfoScreen : Form
 
         if (exit == null || _gameActionEvent == null || _gameManager == null)
         {
-            //Close();
             return;
         }
 
         OnDialogChoice?.Invoke(exit, _currentDialog);       
-        //Close();
     }
 
     /// <summary>

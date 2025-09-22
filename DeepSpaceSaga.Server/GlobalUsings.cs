@@ -44,3 +44,5 @@ global using System.Text;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 global using DeepSpaceSaga.Common.Implementation.Entities.Commands;
+global using DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler;
+global using DeepSpaceSaga.Common.Abstractions.Events;

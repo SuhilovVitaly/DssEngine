@@ -14,7 +14,20 @@ public class ConsoleScreensService :IScreensService
     {
         TacticalMap = tacticalMap;
     }
-    
+
+    event Action<DialogExit, DialogDto>? IScreensService.OnDialogChoice
+    {
+        add
+        {
+            throw new NotImplementedException();
+        }
+
+        remove
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public void ShowGameMenuScreen()
     {
         

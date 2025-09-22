@@ -40,17 +40,16 @@ public class LocalGameServer(
         }
     }
 
-    public async Task ProcessDialogExitCommand(ICommand command)
+    public async Task<GameActionEventDto> ProcessDialogChoice(ICommand command)
     {
         _sessionContext.Metrics.Add(MetricsServer.ServerCommandReceived);
 
-        await _sessionContext.GameSession.AddCommand(command);
-
         if (command.IsPauseProcessed)
         {
-            _processingService.DialogProcess(_sessionContext);
-            _gameSessionDto = SessionTurnFinalization(_sessionContext.SessionInfo);
+            return new ProcessingDialogHandler().Execute(sessionContext, command);
         }
+
+        return null;
     }
 
     public void SetGameSpeed(int speed)

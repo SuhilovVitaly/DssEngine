@@ -33,7 +33,7 @@ public class GameManager : IGameManager
         OuterSpace = outerSpace;        
     }
 
-    private void Screens_OnDialogChoice(DialogExit dialogChoice, DialogDto currentDialog)
+    private async void Screens_OnDialogChoice(DialogExit dialogChoice, DialogDto currentDialog)
     {
         var command = new DialogExitCommand
         {
@@ -46,7 +46,12 @@ public class GameManager : IGameManager
             DialogCommands = dialogChoice.DialogCommands,
         };
 
-        _gameServer.ProcessDialogExitCommand(command);        
+        var resumeDialog = await _gameServer.ProcessDialogChoice(command);   
+        
+        if(resumeDialog != null)
+        {
+            await Screens.ShowDialogScreen(resumeDialog);
+        }
     }
 
     public GameSessionDto GameSession()

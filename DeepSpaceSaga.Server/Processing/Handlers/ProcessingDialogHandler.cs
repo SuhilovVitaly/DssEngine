@@ -1,9 +1,30 @@
-﻿using DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler;
-
-namespace DeepSpaceSaga.Server.Processing.Handlers;
+﻿namespace DeepSpaceSaga.Server.Processing.Handlers;
 
 public class ProcessingDialogHandler
 {
+    public GameActionEventDto? Execute(ISessionContextService sessionContext, ICommand command)
+    {
+        var dialogCommand = command as DialogExitCommand;
+
+        if (dialogCommand == null) return null;
+
+        AssignmentDialogExitCommand.Execute(sessionContext, command);
+
+        var dialog = sessionContext.GameSession.Dialogs.GetDialog(dialogCommand.Exit.NextKey);
+
+        IGameActionEvent gameActionEvent = new GameActionEvent
+        {
+            Key = dialog.Key,
+            Dialog = dialog,
+            Type = dialog.Type,
+            ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog),
+        };
+
+        if (gameActionEvent is null) return null;
+
+        return GameActionEventMapper.ToDto(gameActionEvent);
+    }
+
     public void Execute(ISessionContextService sessionContext)
     {
         var removeCommands = new ConcurrentDictionary<string, Guid>();

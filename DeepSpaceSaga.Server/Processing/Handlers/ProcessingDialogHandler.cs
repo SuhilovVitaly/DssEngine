@@ -4,11 +4,18 @@ public class ProcessingDialogHandler
 {
     public GameActionEventDto? Execute(ISessionContextService sessionContext, ICommand command)
     {
-        var dialogCommand = command as DialogExitCommand;
-
-        if (dialogCommand == null) return null;
-
         AssignmentDialogExitCommand.Execute(sessionContext, command);
+
+        IGameActionEvent gameActionEvent = GetNextEvent(sessionContext, command as DialogExitCommand);
+
+        if (gameActionEvent is null) return null;
+
+        return GameActionEventMapper.ToDto(gameActionEvent);
+    }
+
+    private IGameActionEvent? GetNextEvent(ISessionContextService sessionContext, DialogExitCommand dialogCommand)
+    {
+        if (dialogCommand == null) return null;
 
         var dialog = sessionContext.GameSession.Dialogs.GetDialog(dialogCommand.Exit.NextKey);
 
@@ -20,9 +27,7 @@ public class ProcessingDialogHandler
             ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog),
         };
 
-        if (gameActionEvent is null) return null;
-
-        return GameActionEventMapper.ToDto(gameActionEvent);
+        return gameActionEvent;
     }
 
     public void Execute(ISessionContextService sessionContext)
@@ -63,15 +68,7 @@ public class ProcessingDialogHandler
 
     private void InvokeNextDialog(ISessionContextService sessionContext, DialogExitCommand dialogExitCommand)
     {
-        var dialog = sessionContext.GameSession.Dialogs.GetDialog(dialogExitCommand.Exit.NextKey);
-
-        var gameActionEvent = new GameActionEvent
-        {
-            Key = dialog.Key,
-            Dialog = dialog,
-            Type = dialog.Type,
-            ConnectedDialogs = sessionContext.GameSession.Dialogs.GetConnectedDialogs(dialog),
-        };
+        IGameActionEvent gameActionEvent = GetNextEvent(sessionContext, dialogExitCommand);
 
         if (IsNewEvent(sessionContext.GameSession, gameActionEvent.Key))
         {

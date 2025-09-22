@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using DeepSpaceSaga.Common.Abstractions.Dto.Ui;
-
-namespace DeepSpaceSaga.Common.Abstractions.Mappers;
+﻿namespace DeepSpaceSaga.Common.Abstractions.Mappers;
 
 public class GameActionEventMapper
 {

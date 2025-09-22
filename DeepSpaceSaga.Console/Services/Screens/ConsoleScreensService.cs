@@ -52,4 +52,9 @@ public class ConsoleScreensService :IScreensService
     {
         throw new NotImplementedException();
     }
+
+    public void CloseActiveDialogScreen()
+    {
+        throw new NotImplementedException();
+    }
 }

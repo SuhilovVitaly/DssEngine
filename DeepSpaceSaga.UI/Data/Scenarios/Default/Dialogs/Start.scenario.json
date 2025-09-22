@@ -20,6 +20,11 @@
             "Modification": ""
           }
         ]
+      },
+      {
+        "Key": "exit2",
+        "NextKey": "start.scenario.scene.01.ep.02",
+        "TextKey": "start.scenario.scene.01.episode.02"
       }
     ]
   },
@@ -27,6 +32,16 @@
     "Key": "start.scenario.scene.01.ep.01",
     "Title": "start.scenario.scene.01.title",
     "Message": "start.scenario.scene.01.message",
+    "Type": 3,
+    "Trigger": 0,
+    "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
+    "UiScreenType": 3,
+    "Exits": []
+  },
+  {
+    "Key": "start.scenario.scene.01.ep.02",
+    "Title": "start.scenario.scene.02.title",
+    "Message": "start.scenario.scene.02.message",
     "Type": 3,
     "Trigger": 0,
     "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",

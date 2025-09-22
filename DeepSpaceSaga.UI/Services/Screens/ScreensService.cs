@@ -1,5 +1,6 @@
 ﻿using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 using DeepSpaceSaga.UI.Screens.Dialogs;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 
 namespace DeepSpaceSaga.UI.Services.Screens;
@@ -11,6 +12,8 @@ public class ScreensService : IScreensService
     private readonly ScreenBackground _screenBackground;
     private IScreenTacticalMap? _tacticalMap;
     private Form? _activeDialogScreen = null;
+    private Form? _previousDialogScreen = null;
+
     public IScreenTacticalMap TacticalMap
     {
         get
@@ -64,13 +67,7 @@ public class ScreensService : IScreensService
 
     public async Task ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
-        if(_activeDialogScreen != null)
-        {
-            _activeDialogScreen.Hide();
-
-            _activeDialogScreen.Close();
-            _activeDialogScreen = null; 
-        }
+        CloseActiveDialogScreen();
 
         switch (gameActionEvent.Dialog?.UiScreenType)
         {
@@ -113,45 +110,16 @@ public class ScreensService : IScreensService
 
     private async Task ShowDialogBasicInfo(GameActionEventDto gameActionEvent)
     {
-        try
-        {
-            Console.WriteLine("[ScreensService] Showing dialog screen");
-            
-            // Create a new instance each time to avoid modal dialog conflicts
-            var screen = new DialogBasicInfoScreen(
-                Program.ServiceProvider.GetService<IGameManager>(),
-                Program.ServiceProvider.GetService<IScreensService>()
-            );
-            
-            screen.ShowDialogEvent(gameActionEvent);
-            screen.OnDialogChoice += Screen_OnDialogChoice;
+        var screen = new DialogBasicInfoScreen();
 
-            if (screen != null)
-            {
-                _activeDialogScreen = screen;
-                await _screenBackground.OpenWindow(screen);
-                Console.WriteLine("[ScreensService] Dialog screen displayed successfully");
-            }
-            else
-            {
-                Console.WriteLine("[ScreensService] ERROR: Failed to create DialogBasicInfoScreen");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"[ScreensService] ERROR showing dialog: {ex.Message}");
-        }
+        screen.ShowDialogEvent(gameActionEvent);
+        screen.OnDialogChoice += Screen_OnDialogChoice;
+
+        await OpenDialogScreen(screen);
     }
 
     private void Screen_OnDialogChoice(DialogExit dialogExit, DialogDto currentDialog)
     {
-        if (_activeDialogScreen != null)
-        {
-            _activeDialogScreen.Hide();
-            _activeDialogScreen.Close();
-            _activeDialogScreen = null;
-        }
-
         OnDialogChoice?.Invoke(dialogExit, currentDialog);
     }
 
@@ -175,6 +143,21 @@ public class ScreensService : IScreensService
         {
             Console.WriteLine($"[ScreensService] ERROR showing tactical map: {ex.Message}");
         }
+    }
+
+    public void CloseActiveDialogScreen()
+    {
+        if (_activeDialogScreen != null)
+        {
+            _activeDialogScreen.Close();
+            _activeDialogScreen = null;
+        }
+    }
+
+    private async Task OpenDialogScreen(Form? screen)
+    {
+        _activeDialogScreen = screen;
+        await _screenBackground.OpenWindow(screen);
     }
 
     public async Task ShowGameMenuModal()
@@ -209,7 +192,7 @@ public class ScreensService : IScreensService
             {
                 if (_screenBackground.InvokeRequired)
                 {
-                    _screenBackground.Invoke(() => 
+                    _screenBackground.Invoke(() =>
                     {
                         existingScreen.Close();
                         _screenBackground.Controls.Remove(existingScreen);

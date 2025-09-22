@@ -1,10 +1,4 @@
-﻿using DeepSpaceSaga.UI.Controller.Services;
-using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
-using DeepSpaceSaga.UI.Services.Screens;
-using DeepSpaceSaga.UI.Tools;
-using DeepSpaceSaga.Common.Implementation.Entities.Commands;
-
-namespace DeepSpaceSaga.UI.Screens.Dialogs;
+﻿namespace DeepSpaceSaga.UI.Screens.Dialogs;
 
 /// <summary>
 /// Represents a modal dialog screen for displaying game action events with interactive buttons
@@ -45,18 +39,26 @@ public partial class DialogBasicInfoScreen : Form
     public DialogBasicInfoScreen()
     {
         InitializeComponent();
-    }
 
-    public DialogBasicInfoScreen(IGameManager gameManager, IScreensService screensService)
-    {
-        InitializeComponent();
+        if (Program.ServiceProvider is null) return;
 
-        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
-        _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+        _gameManager = Program.ServiceProvider.GetService<IGameManager>();
+        _screensService = Program.ServiceProvider.GetService<IScreensService>();        
 
         InitializeForm();
         SetupCursors();
     }
+
+    //public DialogBasicInfoScreen(IGameManager gameManager, IScreensService screensService)
+    //{
+    //    InitializeComponent();
+
+    //    _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
+    //    _screensService = screensService ?? throw new ArgumentNullException(nameof(screensService));
+
+    //    InitializeForm();
+    //    SetupCursors();
+    //}
 
     #endregion
 
@@ -298,8 +300,8 @@ public partial class DialogBasicInfoScreen : Form
     /// <param name="e">Event arguments</param>
     private void Event_ExitScreen(object? sender, EventArgs e)
     {
-        OnClose?.Invoke();
-        Close();
+        //Close();
+        _screensService.CloseActiveDialogScreen();
     }
 
     /// <summary>
@@ -313,38 +315,12 @@ public partial class DialogBasicInfoScreen : Form
 
         if (exit == null || _gameActionEvent == null || _gameManager == null)
         {
-            Close();
+            //Close();
             return;
         }
 
         OnDialogChoice?.Invoke(exit, _currentDialog);       
-
-        //if (_gameManager != null && _currentDialog != null)
-        //{
-        //    _gameManager.DialogCommandExecute(new DialogExitCommand
-        //    {
-        //        Category = Common.Abstractions.Entities.Commands.CommandCategory.DialogExit,
-        //        Exit = exit,
-        //        IsPauseProcessed = true,
-        //        IsOneTimeCommand = true,
-        //        DialogExitKey = exit.Key,
-        //        DialogKey = _currentDialog.Key,
-        //        DialogCommands = exit.DialogCommands,
-        //    });
-
-        //}
-
-        //var nextDialog = FindNextDialog(exit.NextKey);
-        //if (nextDialog != null)
-        //{
-        //    NavigateToNextDialog(nextDialog);
-        //}
-        //else
-        //{
-        //    Hide();
-        //}
-        Hide();
-        Close();
+        //Close();
     }
 
     /// <summary>
@@ -358,28 +334,6 @@ public partial class DialogBasicInfoScreen : Form
             .FirstOrDefault(dialog => dialog.Key == nextKey);
     }
 
-    /// <summary>
-    /// Navigates to the next dialog
-    /// </summary>
-    /// <param name="nextDialog">The next dialog to navigate to</param>
-    private void NavigateToNextDialog(DialogDto nextDialog)
-    {
-        var gameEvent = _gameManager?.GetGameActionEvent(nextDialog.Key);
-        if (gameEvent == null)
-        {
-            Hide();
-            return;
-        }
-
-        // Close current dialog and open new one
-        DialogResult = DialogResult.OK;
-        Hide();
-
-        // Ensure the form is fully closed before opening new dialog
-        Application.DoEvents();
-        
-        _ = _screensService?.ShowDialogScreen(gameEvent);
-    }
 
     #endregion
 

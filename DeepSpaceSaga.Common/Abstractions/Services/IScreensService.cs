@@ -15,4 +15,6 @@ public interface IScreensService
     void CloseTacticalMapScreen();
 
     Task ShowDialogScreen(GameActionEventDto gameActionEvent);
+
+    void CloseActiveDialogScreen();
 }

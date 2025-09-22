@@ -16,6 +16,7 @@ public class ProcessingDialogHandler
     private IGameActionEvent? GetNextEvent(ISessionContextService sessionContext, DialogExitCommand dialogCommand)
     {
         if (dialogCommand == null) return null;
+        if (dialogCommand.Exit == null) return null;
 
         var dialog = sessionContext.GameSession.Dialogs.GetDialog(dialogCommand.Exit.NextKey);
 
@@ -69,6 +70,8 @@ public class ProcessingDialogHandler
     private void InvokeNextDialog(ISessionContextService sessionContext, DialogExitCommand dialogExitCommand)
     {
         IGameActionEvent gameActionEvent = GetNextEvent(sessionContext, dialogExitCommand);
+
+        if (gameActionEvent is null) return;
 
         if (IsNewEvent(sessionContext.GameSession, gameActionEvent.Key))
         {

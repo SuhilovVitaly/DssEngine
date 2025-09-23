@@ -18,7 +18,8 @@ namespace DeepSpaceSaga.Common.Abstractions.Mappers
             TriggerValue = dialog.TriggerValue,
             Type = dialog.Type,
             UiScreenType = dialog.UiScreenType,
-            Image = dialog.Image
+            Image = dialog.Image,
+            Tag = dialog.Tag
         };
         }
     }

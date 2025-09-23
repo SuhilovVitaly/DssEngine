@@ -46,3 +46,8 @@ global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 global using DeepSpaceSaga.Common.Implementation.Entities.Commands;
 global using DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler;
 global using DeepSpaceSaga.Common.Abstractions.Events;
+global using DeepSpaceSaga.Common.Abstractions.Entities.Characters;
+global using DeepSpaceSaga.Common.Implementation.Entities.Characters;
+global using System.Net.Http.Json;
+
+

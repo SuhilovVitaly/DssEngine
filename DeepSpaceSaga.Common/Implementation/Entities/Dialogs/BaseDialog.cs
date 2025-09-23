@@ -27,4 +27,6 @@ public class BaseDialog : IDialog
     public CrewMember? Reporter { get; set; }
 
     public List<DialogExit> Exits { get; set; } = new List<DialogExit>();
+
+    public string Tag { get; set; } = "";
 }

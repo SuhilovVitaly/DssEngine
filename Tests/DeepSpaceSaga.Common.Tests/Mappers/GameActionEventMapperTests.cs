@@ -297,7 +297,8 @@ public class GameActionEventMapperTests
                 Salary = 1000,
                 Skills = new Dictionary<CharacterSkillType, ICharacterSkill>()
             },
-            Exits = new List<DialogExit>()
+            Exits = new List<DialogExit>(),
+            Tag = $"test_tag_{key}"
         };
     }
 } 

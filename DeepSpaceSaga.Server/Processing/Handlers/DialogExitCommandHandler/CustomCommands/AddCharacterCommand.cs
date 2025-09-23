@@ -1,47 +1,35 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Characters;
-using DeepSpaceSaga.Common.Implementation.Entities.Characters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿namespace DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler.CustomCommands;
 
-namespace DeepSpaceSaga.Server.Processing.Handlers.DialogExitCommandHandler.CustomCommands
+public class AddCharacterCommand : ICustomDialogCommand
 {
-    public class AddCharacterCommand : ICustomDialogCommand
+    public void Execute(ISessionContextService sessionContext, ICommand command, DialogCommand dialogCommand)
     {
-        public void Execute(ISessionContextService sessionContext, ICommand command, DialogCommand dialogCommand)
+        ICharacter character;
+
+        try
         {
-            ICharacter character;
-
-            try
+            // Load CrewMember from file in Data\Scenarios\Default\Characters\ folder
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string characterFilePath = Path.Combine(baseDirectory, "Data", "Scenarios", "Default", "Characters", dialogCommand.Value);
+            
+            if (!File.Exists(characterFilePath))
             {
-                // Load CrewMember from file in Data\Scenarios\Default\Characters\ folder
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string characterFilePath = Path.Combine(baseDirectory, "Data", "Scenarios", "Default", "Characters", dialogCommand.Value);
-                
-                if (!File.Exists(characterFilePath))
-                {
-                    throw new FileNotFoundException($"Character file not found: {characterFilePath}");
-                }
-
-                var jsonContent = File.ReadAllText(characterFilePath);
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    Converters = { new JsonStringEnumConverter() }
-                };
-                character = JsonSerializer.Deserialize<CrewMember>(jsonContent, options);
-            }
-            catch (Exception ex)
-            {
-                throw;
+                throw new FileNotFoundException($"Character file not found: {characterFilePath}");
             }
 
-            command.Status = CommandStatus.Finalizing;
+            var jsonContent = File.ReadAllText(characterFilePath);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new JsonStringEnumConverter() }
+            };
+            character = JsonSerializer.Deserialize<CrewMember>(jsonContent, options);
         }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+        command.Status = CommandStatus.Finalizing;
     }
 }

@@ -13,4 +13,5 @@ public class DialogDto
     public string Image { get; set; } = "";
     public ICharacter? Reporter { get; set; }
     public List<DialogExit> Exits { get; set; } = new List<DialogExit>();
+    public string Tag { get; set; } = "";
 }

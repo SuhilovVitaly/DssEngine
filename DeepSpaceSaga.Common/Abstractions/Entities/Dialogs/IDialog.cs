@@ -15,4 +15,5 @@ public interface IDialog
     string Image { get; set; }
     CrewMember? Reporter { get; }
     List<DialogExit> Exits { get; set; }
+    string Tag { get; set; }
 }

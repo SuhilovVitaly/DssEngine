@@ -92,4 +92,10 @@
     <Folder Include="Controls\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\Scenarios\Default\Characters\Lada.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

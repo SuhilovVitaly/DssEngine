@@ -157,6 +157,8 @@ public class DialogsService : IDialogsService
             try
             {
                 var jsonContent = File.ReadAllText(file);
+                // Remove line breaks and extra whitespace from JSON strings for proper parsing
+                jsonContent = System.Text.RegularExpressions.Regex.Replace(jsonContent, @"\s+", " ");
                 var dialogs = JsonSerializer.Deserialize<List<BaseDialog>>(jsonContent);
 
                 if (dialogs != null)

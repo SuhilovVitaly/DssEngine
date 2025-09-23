@@ -77,7 +77,7 @@
         "DialogCommands": [
           {
             "Name": "AddCharacterCommand",
-            "Value": "",
+            "Value": "Lada.json",
             "Modification": ""
           }
         ]

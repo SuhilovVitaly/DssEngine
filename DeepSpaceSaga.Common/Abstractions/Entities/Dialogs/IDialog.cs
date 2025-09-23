@@ -10,7 +10,7 @@ public interface IDialog
     bool ChainPart { get; set; }
     DialogTypes Type { get; }
     DialogTrigger Trigger { get; }
-    DialogUiScreenType UiScreenType { get; set; }
+    GameEventUiScreenType UiScreenType { get; set; }
     string TriggerValue { get; }
     string Image { get; set; }
     CrewMember? Reporter { get; }

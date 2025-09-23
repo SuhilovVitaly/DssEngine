@@ -64,10 +64,10 @@ public partial class DialogBasicScreen : Form
                 {
                     switch (dialog.UiScreenType)
                     {
-                        case DialogUiScreenType.OnePerson:
+                        case GameEventUiScreenType.DialogOnePerson:
                             AddHelpSystemControl(dialog);
                             break;
-                        case DialogUiScreenType.TwoPerson:
+                        case GameEventUiScreenType.DialogTwoPerson:
                             if (_currentDialog != null)
                             {
                                 AddTwoPersonControl(dialog, _currentDialog);

@@ -8,7 +8,7 @@ public class DialogDto
     public bool ChainPart { get; set; }
     public DialogTypes Type { get; set; }
     public DialogTrigger Trigger { get; set; }
-    public DialogUiScreenType UiScreenType { get; set; }
+    public GameEventUiScreenType UiScreenType { get; set; }
     public string TriggerValue { get; set; } = "";
     public string Image { get; set; } = "";
     public ICharacter? Reporter { get; set; }

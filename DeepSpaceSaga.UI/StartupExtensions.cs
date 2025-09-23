@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.UI.Screens.Dialogs;
+﻿using DeepSpaceSaga.UI.Screens.CombatStage;
+using DeepSpaceSaga.UI.Screens.Dialogs;
 
 namespace DeepSpaceSaga.UI;
 
@@ -26,8 +27,9 @@ public static class StartupExtensions
 
         services.AddScoped<DialogBasicInfoScreen>(); 
         services.AddScoped<DialogBasicScreen>();
+        services.AddScoped<ScreenCombatStage>();
 
-        // Register main background screen last to avoid circular dependency
+        // Register main background screen last to avoid circular dependency 
         services.AddScoped<ScreenBackground>();
     }
 }

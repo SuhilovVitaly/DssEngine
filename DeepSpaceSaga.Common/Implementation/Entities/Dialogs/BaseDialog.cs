@@ -18,7 +18,7 @@ public class BaseDialog : IDialog
 
     public DialogTrigger Trigger { get; set; }
 
-    public DialogUiScreenType UiScreenType { get; set; }
+    public GameEventUiScreenType UiScreenType { get; set; }
 
     public string TriggerValue { get; set; } = "";
 

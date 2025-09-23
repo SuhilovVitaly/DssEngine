@@ -270,7 +270,7 @@ public class GameActionEventMapperTests
         result.Dialog.Message.Should().Be("Message for test_key");
         result.Dialog.Type.Should().Be(DialogTypes.SelectCelestialObject);
         result.Dialog.Trigger.Should().Be(DialogTrigger.None);
-        result.Dialog.UiScreenType.Should().Be(DialogUiScreenType.OnePerson);
+        result.Dialog.UiScreenType.Should().Be(GameEventUiScreenType.DialogOnePerson);
     }
 
     private static IDialog CreateTestDialog(string key)
@@ -283,7 +283,7 @@ public class GameActionEventMapperTests
             ChainPart = false,
             Type = DialogTypes.SelectCelestialObject,
             Trigger = DialogTrigger.None,
-            UiScreenType = DialogUiScreenType.OnePerson,
+            UiScreenType = GameEventUiScreenType.DialogOnePerson,
             TriggerValue = "test_value",
             Reporter = new CrewMember
             {

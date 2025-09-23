@@ -1,4 +1,6 @@
 ﻿
+using DeepSpaceSaga.UI.Screens.CombatStage;
+
 namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreensService : IScreensService
@@ -56,25 +58,21 @@ public class ScreensService : IScreensService
         }
     }
 
-    public void ShowDialogNextScreen(GameActionEventDto gameActionEvent)
-    {
-
-    }
-
     public async Task ShowDialogScreen(GameActionEventDto gameActionEvent)
     {
-        //CloseActiveDialogScreen();
-
         switch (gameActionEvent.Dialog?.UiScreenType)
         {
-            case DialogUiScreenType.Info:
+            case GameEventUiScreenType.InfoWithChoices:
                 await ShowDialogBasicInfo(gameActionEvent);
                 break;
-            case DialogUiScreenType.OnePerson:
+            case GameEventUiScreenType.DialogOnePerson:
                 await ShowDialogPersons(gameActionEvent);
                 break;
-            case DialogUiScreenType.TwoPerson:
+            case GameEventUiScreenType.DialogTwoPerson:
                 await ShowDialogPersons(gameActionEvent);
+                break;
+            case GameEventUiScreenType.SceneCombatStage:
+                await ShowScreenCombatStage(gameActionEvent);
                 break;
         }
     }
@@ -110,6 +108,15 @@ public class ScreensService : IScreensService
 
         screen.ShowDialogEvent(gameActionEvent);
         screen.OnDialogChoice += Screen_OnDialogChoice;
+
+        await OpenDialogScreen(screen);
+    }
+
+    private async Task ShowScreenCombatStage(GameActionEventDto gameActionEvent)
+    {
+        var screen = Program.ServiceProvider.GetService<ScreenCombatStage>();
+
+        screen.ShowDialogEvent(gameActionEvent);
 
         await OpenDialogScreen(screen);
     }
@@ -163,7 +170,7 @@ public class ScreensService : IScreensService
     {
         _previousDialogScreen = _activeDialogScreen;
         _activeDialogScreen = screen;
-        
+
         // Close previous window with small delay
         if (_previousDialogScreen != null)
         {
@@ -173,7 +180,7 @@ public class ScreensService : IScreensService
                 _screenBackground.Invoke(new Action(() => ClosePreviousDialogScreen()));
             });
         }
-        
+
         // Show new window
         await _screenBackground.OpenWindow(screen);
         screen.Focus();

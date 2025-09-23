@@ -22,7 +22,7 @@ public class LocalizationService : ILocalizationService
     {
         var message = _texts.TryGetValue(textkey, out var textLanguages)
             && textLanguages.TryGetValue(GameSettings.LanguageId, out var text)
-            ? text.TextMessage : $"Text not found for language {GameSettings.LanguageId} and text ID {textkey}";
+            ? text.TextMessage : textkey;
 
         return message.Replace("{Environment.NewLine}", Environment.NewLine);
     }

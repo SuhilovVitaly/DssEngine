@@ -10,6 +10,7 @@ public class TurnProcessing : IProcessingService
 
         try
         {
+            new ProcessingGenerateMainCharacterHandler().Execute(sessionContext);
             new ProcessingEventInvokerHandler().Execute(sessionContext);
         }
         catch (Exception e)

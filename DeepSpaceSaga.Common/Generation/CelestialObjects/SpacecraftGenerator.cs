@@ -1,5 +1,6 @@
 ﻿using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
 using DeepSpaceSaga.Common.Generation.CelestialObjects.Modules;
+using DeepSpaceSaga.Common.Implementation.Entities.Characters;
 
 namespace DeepSpaceSaga.Common.Generation.CelestialObjects
 {
@@ -24,6 +25,21 @@ namespace DeepSpaceSaga.Common.Generation.CelestialObjects
                 Y = y,
                 IsPreScanned = true,
             };
+
+            ICharacter mainCharacter = new CrewMember
+            {
+                Id = 1,
+                FirstName = "Vitold",
+                LastName = "Suni",
+                Age = 31,
+                Gender = Gender.Male,
+                Rank = "Prisoner",
+                Portrait = "Vitold_Suni.png",
+                Salary = 0,
+                Skills = new Dictionary<CharacterSkillType, ICharacterSkill>()
+            };
+
+            spacecraft.AddCrewMember(mainCharacter);
 
             spacecraft.ModulesS.Add(MiningModulesGenerator.CreateMiningLaser(randomizer, spacecraft.Id, "MLC8002"));
 

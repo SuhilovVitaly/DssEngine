@@ -1,4 +1,5 @@
-﻿using DeepSpaceSaga.Common.Implementation.Entities.Commands;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Characters;
+using DeepSpaceSaga.Common.Implementation.Entities.Commands;
 
 namespace DeepSpaceSaga.UI.Controller.Services;
 
@@ -158,5 +159,15 @@ public class GameManager : IGameManager
     public GameActionEventDto GetGameActionEvent(string key)
     {
         return _gameServer.GetGameActionEvent(key);
+    }
+
+    public ICharacter GetMainCharacter()
+    {
+        return _gameServer.GetMainCharacter();
+    }
+
+    public ICharacter GetCharacter(string id)
+    {
+        return _gameServer.GetCharacter(id);
     }
 }

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using DeepSpaceSaga.UI.Controller.Services;
 
 namespace DeepSpaceSaga.UI.Screens.CombatStage
 {
@@ -39,7 +31,7 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
 
             if (_currentDialog != null)
             {
-                var x = "";
+                ShowGameScreen(gameActionEvent);
             }
         }
 
@@ -56,6 +48,22 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
                 Height - UiConstants.FormBorderSize
             );
             e.Graphics.DrawRectangle(borderPen, borderRect);
+        }
+
+        private void crlMainMenu_Click(object sender, EventArgs e)
+        {
+            _gameManager?.Screens.CloseActiveDialogScreen();
+        }
+
+        private void ShowGameScreen(GameActionEventDto gameActionEvent)
+        {
+            var mainCharacter = _gameManager.GetMainCharacter();
+
+            
+            crlName.Text = mainCharacter.FirstName + " " + mainCharacter.LastName;
+            crlRank.Text = _gameManager.Localization.GetText(mainCharacter.Rank);
+            crlPortrait.Image = ImageLoader.LoadCharacterImage(mainCharacter.Portrait);
+            
         }
     }
 }

@@ -73,7 +73,14 @@
       {
         "Key": "exit",
         "NextKey": "start.scenario.scene.01.ep.05",
-        "TextKey": "Напасть"
+        "TextKey": "Напасть",
+        "DialogCommands": [
+          {
+            "Name": "AddCharacterCommand",
+            "Value": "",
+            "Modification": ""
+          }
+        ]
       },
       {
         "Key": "exit2",

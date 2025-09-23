@@ -82,4 +82,8 @@ public interface IGameManager
     void Navigation(CommandTypes command);
 
     GameActionEventDto GetGameActionEvent(string key);
+
+    ICharacter GetMainCharacter();
+
+    ICharacter GetCharacter(string id);
 } 

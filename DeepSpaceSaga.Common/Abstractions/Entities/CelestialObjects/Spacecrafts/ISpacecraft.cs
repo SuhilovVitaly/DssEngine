@@ -8,5 +8,6 @@ public interface ISpacecraft : ICelestialObject
     void SetDirection(double direction);
     void ChangeVelocity(double delta);
     void AddCrewMember(ICharacter person);
+    ICharacter GetCrewMember(int id);
     int GetCrewCapacity();
 }

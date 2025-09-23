@@ -39,6 +39,11 @@ public class BaseSpaceship : BaseCelestialObject, ISpacecraft
         Crew.Add(person);
     }
 
+    public ICharacter GetCrewMember(int id)
+    {
+        return Crew.Where(x => x.Id == id).FirstOrDefault();
+    }
+
     public int GetCrewCapacity()
     {
         var crewCapacity = 0;

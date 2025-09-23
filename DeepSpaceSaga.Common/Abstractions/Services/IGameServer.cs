@@ -14,4 +14,6 @@ public interface IGameServer
     Task<GameActionEventDto> ProcessDialogChoice(ICommand command);
     Task SaveGame(string saveName);
     Task LoadGame(string saveName);
+    ICharacter GetMainCharacter();
+    ICharacter GetCharacter(string id);
 }

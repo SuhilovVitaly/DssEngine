@@ -1,4 +1,7 @@
-﻿namespace DeepSpaceSaga.Server.Services;
+﻿using DeepSpaceSaga.Common.Abstractions.Entities.Characters;
+using DeepSpaceSaga.Common.Extensions;
+
+namespace DeepSpaceSaga.Server.Services;
 
 public class LocalGameServer(
     ISchedulerService schedulerService, 
@@ -164,6 +167,18 @@ public class LocalGameServer(
                 return GameActionEventMapper.ToDto(gameActionEvent);
             }
 
+        return null;
+    }
+
+    public ICharacter GetMainCharacter()
+    {
+        var mainCharacter = _sessionContext.GameSession.GetPlayerSpaceShip().GetCrewMember(1);
+
+        return mainCharacter;
+    }
+
+    public ICharacter GetCharacter(string id)
+    {
         return null;
     }
 }

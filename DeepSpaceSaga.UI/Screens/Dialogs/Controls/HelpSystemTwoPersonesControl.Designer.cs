@@ -44,7 +44,7 @@
             // crlPortrait
             // 
             crlPortrait.Location = new Point(58, 64);
-            crlPortrait.Margin = new Padding(4, 4, 4, 4);
+            crlPortrait.Margin = new Padding(4);
             crlPortrait.Name = "crlPortrait";
             crlPortrait.Size = new Size(205, 205);
             crlPortrait.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -82,8 +82,8 @@
             crlMessage.BackColor = Color.Black;
             crlMessage.Font = new Font("Tahoma", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             crlMessage.ForeColor = Color.WhiteSmoke;
-            crlMessage.Location = new Point(286, 64);
-            crlMessage.Margin = new Padding(5, 5, 5, 5);
+            crlMessage.Location = new Point(287, 64);
+            crlMessage.Margin = new Padding(5);
             crlMessage.Name = "crlMessage";
             crlMessage.Size = new Size(1035, 315);
             crlMessage.TabIndex = 4;
@@ -129,7 +129,7 @@
             // crlPortraitPrevious
             // 
             crlPortraitPrevious.Location = new Point(1116, 410);
-            crlPortraitPrevious.Margin = new Padding(4, 4, 4, 4);
+            crlPortraitPrevious.Margin = new Padding(4);
             crlPortraitPrevious.Name = "crlPortraitPrevious";
             crlPortraitPrevious.Size = new Size(205, 205);
             crlPortraitPrevious.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -163,7 +163,7 @@
             Controls.Add(crlRank);
             Controls.Add(crlPortrait);
             DoubleBuffered = true;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "HelpSystemTwoPersonesControl";
             Size = new Size(1375, 875);
             ((ISupportInitialize)crlPortrait).EndInit();

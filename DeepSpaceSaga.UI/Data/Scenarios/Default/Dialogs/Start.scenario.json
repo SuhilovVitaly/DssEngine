@@ -7,7 +7,7 @@
     "Trigger": 0,
     "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
     "UiScreenType": 3,
-    "TriggerValue": "50",
+    "TriggerValue": "0",
     "Exits": [
       {
         "Key": "exit",
@@ -39,13 +39,25 @@
     "Exits": []
   },
   {
+    "_comment": "---------------------------------------------------------------------------------- scene.01.ep.02",
     "Key": "start.scenario.scene.01.ep.02",
-    "Title": "start.scenario.scene.02.title",
-    "Message": "start.scenario.scene.02.message",
+    "Title": "start.scenario.scene.01.title",
+    "Message": "start.scenario.scene.01.ep.02.message",
     "Type": 3,
     "Trigger": 0,
     "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
     "UiScreenType": 3,
-    "Exits": []
+    "Exits": [
+      {
+        "Key": "exit",
+        "NextKey": "start.scenario.scene.01.ep.03",
+        "TextKey": "start.scenario.scene.01.ep.02.ch.01"
+      },
+      {
+        "Key": "exit2",
+        "NextKey": "start.scenario.scene.01.ep.04",
+        "TextKey": "start.scenario.scene.01.ep.02.ch.02"
+      }
+    ]
   }
 ] 

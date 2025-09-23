@@ -52,6 +52,10 @@ public class GameManager : IGameManager
         {
             await Screens.ShowDialogScreen(resumeDialog);
         }
+        else
+        {
+            Screens.CloseActiveDialogScreen();
+        }
     }
 
     public GameSessionDto GameSession()

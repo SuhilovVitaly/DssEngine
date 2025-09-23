@@ -20,6 +20,8 @@ public class ProcessingDialogHandler
 
         var dialog = sessionContext.GameSession.Dialogs.GetDialog(dialogCommand.Exit.NextKey);
 
+        if(dialog == null) return null; 
+
         IGameActionEvent gameActionEvent = new GameActionEvent
         {
             Key = dialog.Key,

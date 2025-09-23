@@ -30,6 +30,6 @@ public class AddCharacterCommand : ICustomDialogCommand
             throw;
         }
 
-        command.Status = CommandStatus.Finalizing;
+        sessionContext.GameSession.Characters.TryAdd(character.Id, character);
     }
 }

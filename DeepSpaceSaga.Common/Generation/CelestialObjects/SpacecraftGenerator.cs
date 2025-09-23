@@ -30,7 +30,7 @@ namespace DeepSpaceSaga.Common.Generation.CelestialObjects
             {
                 Id = 1,
                 FirstName = "Vitold",
-                LastName = "Suni",
+                LastName = "Deen",
                 Age = 31,
                 Gender = Gender.Male,
                 Rank = "Prisoner",

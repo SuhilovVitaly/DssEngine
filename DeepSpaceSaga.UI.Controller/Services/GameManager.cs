@@ -166,7 +166,7 @@ public class GameManager : IGameManager
         return _gameServer.GetMainCharacter();
     }
 
-    public ICharacter GetCharacter(string id)
+    public ICharacter GetCharacter(int id)
     {
         return _gameServer.GetCharacter(id);
     }

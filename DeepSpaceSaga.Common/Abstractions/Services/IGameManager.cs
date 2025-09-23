@@ -85,5 +85,5 @@ public interface IGameManager
 
     ICharacter GetMainCharacter();
 
-    ICharacter GetCharacter(string id);
+    ICharacter GetCharacter(int id);
 } 

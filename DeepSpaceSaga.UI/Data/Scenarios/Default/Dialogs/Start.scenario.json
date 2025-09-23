@@ -95,6 +95,7 @@
     "Title": "start.scenario.scene.01.title",
     "Message": "",
     "Type": 3,
+    "Tag": "200100101",
     "Trigger": 0,
     "Image": "c18cb132-068a-4299-94d7-47c9afe0fe72",
     "UiScreenType": 4,

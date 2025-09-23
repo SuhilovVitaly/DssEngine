@@ -177,8 +177,10 @@ public class LocalGameServer(
         return mainCharacter;
     }
 
-    public ICharacter GetCharacter(string id)
+    public ICharacter GetCharacter(int id)
     {
-        return null;
+        var character = _sessionContext.GameSession.Characters[id];
+
+        return character;
     }
 }

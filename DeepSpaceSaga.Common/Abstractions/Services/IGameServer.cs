@@ -15,5 +15,5 @@ public interface IGameServer
     Task SaveGame(string saveName);
     Task LoadGame(string saveName);
     ICharacter GetMainCharacter();
-    ICharacter GetCharacter(string id);
+    ICharacter GetCharacter(int id);
 }

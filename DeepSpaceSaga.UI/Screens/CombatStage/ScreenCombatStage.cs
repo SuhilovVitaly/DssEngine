@@ -63,7 +63,14 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
             crlName.Text = mainCharacter.FirstName + " " + mainCharacter.LastName;
             crlRank.Text = _gameManager.Localization.GetText(mainCharacter.Rank);
             crlPortrait.Image = ImageLoader.LoadCharacterImage(mainCharacter.Portrait);
-            
+
+
+            var enemyCharacter = _gameManager.GetCharacter(Int32.Parse(gameActionEvent.Dialog.Tag));
+
+            label1.Text = enemyCharacter.FirstName + " " + enemyCharacter.LastName;
+            label2.Text = _gameManager.Localization.GetText(enemyCharacter.Rank);
+            pictureBox1.Image = ImageLoader.LoadCharacterImage(enemyCharacter.Portrait);
+
         }
     }
 }

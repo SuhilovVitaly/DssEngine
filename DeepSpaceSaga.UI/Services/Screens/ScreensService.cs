@@ -1,5 +1,4 @@
 ﻿
-
 namespace DeepSpaceSaga.UI.Services.Screens;
 
 public class ScreensService : IScreensService
@@ -164,10 +163,22 @@ public class ScreensService : IScreensService
     {
         _previousDialogScreen = _activeDialogScreen;
         _activeDialogScreen = screen;
+        
+        // Close previous window with small delay
+        if (_previousDialogScreen != null)
+        {
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(100); // Small delay for smoothness
+                _screenBackground.Invoke(new Action(() => ClosePreviousDialogScreen()));
+            });
+        }
+        
+        // Show new window
         await _screenBackground.OpenWindow(screen);
-        ClosePreviousDialogScreen();
         screen.Focus();
     }
+
 
     public async Task ShowGameMenuModal()
     {

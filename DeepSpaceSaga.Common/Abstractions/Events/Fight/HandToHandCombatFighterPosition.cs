@@ -4,7 +4,7 @@ public enum HandToHandCombatFighterPosition
 {
     Standing,
     Clinch,
-    TopGround,   // лежит сверху
-    BottomGround, // лежит снизу
+    TopGround,   
+    BottomGround, 
     Kneeling
 }

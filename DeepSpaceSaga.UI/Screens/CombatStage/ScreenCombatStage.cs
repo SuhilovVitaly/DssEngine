@@ -32,6 +32,7 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
             if (_currentDialog != null)
             {
                 ShowGameScreen(gameActionEvent);
+                ShowFightStage(gameActionEvent);
             }
         }
 
@@ -53,6 +54,67 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
         private void crlMainMenu_Click(object sender, EventArgs e)
         {
             _gameManager?.Screens.CloseActiveDialogScreen();
+        }
+
+        private void ShowFightStage(GameActionEventDto gameActionEvent)
+        {
+            // Display combined fight status image
+            SetFightStatusImage("0-0-0-0-0");
+        }
+
+        /// <summary>
+        /// Sets the fight status image by combining background and overlay images
+        /// </summary>
+        /// <param name="overlayImageName">Name of the overlay image file (without extension)</param>
+        private void SetFightStatusImage(string overlayImageName)
+        {
+            try
+            {
+                // Load background image
+                var backgroundImage = ImageLoader.LoadImageByName("command-center");
+                
+                // Load overlay image
+                var overlayImage = ImageLoader.LoadImageByName(overlayImageName);
+                
+                // Create combined image
+                var combinedImage = CombineImages(backgroundImage, overlayImage);
+                
+                // Set the image to pictureBox2 (center fight status area)
+                picCurrentFightStartus.Image = combinedImage;
+            }
+            catch (Exception ex)
+            {
+                // Handle image loading errors gracefully
+                System.Diagnostics.Debug.WriteLine($"Error loading fight status images: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Combines background and overlay images with transparency support
+        /// </summary>
+        /// <param name="background">Background image</param>
+        /// <param name="overlay">Overlay image with transparency</param>
+        /// <returns>Combined image</returns>
+        private Image CombineImages(Image background, Image overlay)
+        {
+            // Create a new bitmap with the same size as background
+            var combinedBitmap = new Bitmap(background.Width, background.Height);
+            
+            using (var graphics = Graphics.FromImage(combinedBitmap))
+            {
+                // Set high quality rendering
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                
+                // Draw background image
+                graphics.DrawImage(background, 0, 0, background.Width, background.Height);
+                
+                // Draw overlay image with transparency support
+                graphics.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
+            }
+            
+            return combinedBitmap;
         }
 
         private void ShowGameScreen(GameActionEventDto gameActionEvent)

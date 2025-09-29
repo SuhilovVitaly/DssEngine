@@ -35,7 +35,7 @@
             label2 = new Label();
             pictureBox1 = new PictureBox();
             crlMainMenu = new Button();
-            pictureBox2 = new PictureBox();
+            picCurrentFightStartus = new PictureBox();
             button1 = new Button();
             button3 = new Button();
             button5 = new Button();
@@ -65,7 +65,7 @@
             button14 = new Button();
             ((ISupportInitialize)crlPortrait).BeginInit();
             ((ISupportInitialize)pictureBox1).BeginInit();
-            ((ISupportInitialize)pictureBox2).BeginInit();
+            ((ISupportInitialize)picCurrentFightStartus).BeginInit();
             ((ISupportInitialize)pictureBox3).BeginInit();
             ((ISupportInitialize)pictureBox4).BeginInit();
             ((ISupportInitialize)pictureBox5).BeginInit();
@@ -167,11 +167,11 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(487, 13);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(400, 400);
-            pictureBox2.TabIndex = 11;
-            pictureBox2.TabStop = false;
+            picCurrentFightStartus.Location = new Point(487, 13);
+            picCurrentFightStartus.Name = "pictureBox2";
+            picCurrentFightStartus.Size = new Size(400, 400);
+            picCurrentFightStartus.TabIndex = 11;
+            picCurrentFightStartus.TabStop = false;
             // 
             // button1
             // 
@@ -610,7 +610,7 @@
             Controls.Add(button2);
             Controls.Add(button3);
             Controls.Add(button1);
-            Controls.Add(pictureBox2);
+            Controls.Add(picCurrentFightStartus);
             Controls.Add(crlMainMenu);
             Controls.Add(label1);
             Controls.Add(label2);
@@ -624,7 +624,7 @@
             Text = "ScreenCombatStage";
             ((ISupportInitialize)crlPortrait).EndInit();
             ((ISupportInitialize)pictureBox1).EndInit();
-            ((ISupportInitialize)pictureBox2).EndInit();
+            ((ISupportInitialize)picCurrentFightStartus).EndInit();
             ((ISupportInitialize)pictureBox3).EndInit();
             ((ISupportInitialize)pictureBox4).EndInit();
             ((ISupportInitialize)pictureBox5).EndInit();
@@ -643,7 +643,7 @@
         private Label label2;
         private PictureBox pictureBox1;
         private Button crlMainMenu;
-        private PictureBox pictureBox2;
+        private PictureBox picCurrentFightStartus;
         private Button button1;
         private Button button3;
         private Button button5;

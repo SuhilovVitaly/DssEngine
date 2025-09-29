@@ -80,7 +80,7 @@
             label1.BackColor = Color.FromArgb(12, 12, 12, 50);
             label1.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
             label1.ForeColor = Color.WhiteSmoke;
-            label1.Location = new Point(935, 253);
+            label1.Location = new Point(1157, 253);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(205, 31);
@@ -93,7 +93,7 @@
             label2.BackColor = Color.FromArgb(12, 12, 12, 50);
             label2.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
             label2.ForeColor = Color.OrangeRed;
-            label2.Location = new Point(935, 221);
+            label2.Location = new Point(1157, 221);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(205, 31);
@@ -103,7 +103,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(935, 13);
+            pictureBox1.Location = new Point(1157, 13);
             pictureBox1.Margin = new Padding(4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(205, 205);
@@ -121,7 +121,7 @@
             crlMainMenu.FlatStyle = FlatStyle.Flat;
             crlMainMenu.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             crlMainMenu.ForeColor = Color.Gainsboro;
-            crlMainMenu.Location = new Point(449, 747);
+            crlMainMenu.Location = new Point(593, 786);
             crlMainMenu.Margin = new Padding(4);
             crlMainMenu.Name = "crlMainMenu";
             crlMainMenu.Size = new Size(188, 58);
@@ -135,7 +135,7 @@
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1153, 827);
+            ClientSize = new Size(1375, 875);
             Controls.Add(crlMainMenu);
             Controls.Add(label1);
             Controls.Add(label2);

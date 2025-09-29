@@ -90,15 +90,18 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
         }
 
         /// <summary>
-        /// Combines background and overlay images with transparency support
+        /// Combines background and overlay images with transparency support and scaling to PictureBox size
         /// </summary>
         /// <param name="background">Background image</param>
         /// <param name="overlay">Overlay image with transparency</param>
-        /// <returns>Combined image</returns>
+        /// <returns>Combined image scaled to PictureBox size</returns>
         private Image CombineImages(Image background, Image overlay)
         {
-            // Create a new bitmap with the same size as background
-            var combinedBitmap = new Bitmap(background.Width, background.Height);
+            // Get the target size from picCurrentFightStartus PictureBox
+            var targetSize = picCurrentFightStartus.Size;
+            
+            // Create a new bitmap with the target size
+            var combinedBitmap = new Bitmap(targetSize.Width, targetSize.Height);
             
             using (var graphics = Graphics.FromImage(combinedBitmap))
             {
@@ -107,11 +110,11 @@ namespace DeepSpaceSaga.UI.Screens.CombatStage
                 graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
                 graphics.SmoothingMode = SmoothingMode.HighQuality;
                 
-                // Draw background image
-                graphics.DrawImage(background, 0, 0, background.Width, background.Height);
+                // Draw background image scaled to target size
+                graphics.DrawImage(background, 0, 0, targetSize.Width, targetSize.Height);
                 
-                // Draw overlay image with transparency support
-                graphics.DrawImage(overlay, 0, 0, overlay.Width, overlay.Height);
+                // Draw overlay image scaled to target size with transparency support
+                graphics.DrawImage(overlay, 0, 0, targetSize.Width, targetSize.Height);
             }
             
             return combinedBitmap;

@@ -93,6 +93,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Data\Scenarios\Default\Characters\Tara.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Scenarios\Default\Characters\Lada.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

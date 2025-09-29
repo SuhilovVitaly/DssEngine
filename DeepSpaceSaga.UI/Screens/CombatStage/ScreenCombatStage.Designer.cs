@@ -165,10 +165,10 @@
             crlMainMenu.UseVisualStyleBackColor = false;
             crlMainMenu.Click += crlMainMenu_Click;
             // 
-            // pictureBox2
+            // picCurrentFightStartus
             // 
             picCurrentFightStartus.Location = new Point(487, 13);
-            picCurrentFightStartus.Name = "pictureBox2";
+            picCurrentFightStartus.Name = "picCurrentFightStartus";
             picCurrentFightStartus.Size = new Size(400, 400);
             picCurrentFightStartus.TabIndex = 11;
             picCurrentFightStartus.TabStop = false;
@@ -201,7 +201,7 @@
             button3.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.FromArgb(64, 64, 64);
+            button3.ForeColor = Color.DimGray;
             button3.Location = new Point(226, 406);
             button3.Margin = new Padding(4);
             button3.Name = "button3";
@@ -214,7 +214,6 @@
             // 
             button5.BackColor = Color.FromArgb(18, 18, 18);
             button5.Cursor = Cursors.Hand;
-            button5.Enabled = false;
             button5.FlatAppearance.BorderColor = Color.FromArgb(42, 42, 42);
             button5.FlatAppearance.MouseDownBackColor = Color.FromArgb(78, 78, 78);
             button5.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
@@ -239,7 +238,7 @@
             button7.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button7.FlatStyle = FlatStyle.Flat;
             button7.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button7.ForeColor = Color.FromArgb(64, 64, 64);
+            button7.ForeColor = Color.DimGray;
             button7.Location = new Point(226, 355);
             button7.Margin = new Padding(4);
             button7.Name = "button7";
@@ -397,7 +396,7 @@
             button2.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button2.ForeColor = Color.FromArgb(64, 64, 64);
+            button2.ForeColor = Color.DimGray;
             button2.Location = new Point(226, 457);
             button2.Margin = new Padding(4);
             button2.Name = "button2";
@@ -416,7 +415,7 @@
             button4.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button4.FlatStyle = FlatStyle.Flat;
             button4.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = Color.FromArgb(64, 64, 64);
+            button4.ForeColor = Color.DimGray;
             button4.Location = new Point(226, 508);
             button4.Margin = new Padding(4);
             button4.Name = "button4";
@@ -435,7 +434,7 @@
             button6.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button6.FlatStyle = FlatStyle.Flat;
             button6.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button6.ForeColor = Color.FromArgb(64, 64, 64);
+            button6.ForeColor = Color.DimGray;
             button6.Location = new Point(226, 559);
             button6.Margin = new Padding(4);
             button6.Name = "button6";
@@ -454,7 +453,7 @@
             button8.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button8.FlatStyle = FlatStyle.Flat;
             button8.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button8.ForeColor = Color.FromArgb(64, 64, 64);
+            button8.ForeColor = Color.DimGray;
             button8.Location = new Point(895, 304);
             button8.Margin = new Padding(4);
             button8.Name = "button8";
@@ -473,7 +472,7 @@
             button9.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button9.FlatStyle = FlatStyle.Flat;
             button9.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button9.ForeColor = Color.FromArgb(64, 64, 64);
+            button9.ForeColor = Color.DimGray;
             button9.Location = new Point(895, 355);
             button9.Margin = new Padding(4);
             button9.Name = "button9";
@@ -492,7 +491,7 @@
             button10.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button10.FlatStyle = FlatStyle.Flat;
             button10.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button10.ForeColor = Color.FromArgb(64, 64, 64);
+            button10.ForeColor = Color.DimGray;
             button10.Location = new Point(895, 559);
             button10.Margin = new Padding(4);
             button10.Name = "button10";
@@ -511,7 +510,7 @@
             button11.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button11.FlatStyle = FlatStyle.Flat;
             button11.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button11.ForeColor = Color.FromArgb(64, 64, 64);
+            button11.ForeColor = Color.DimGray;
             button11.Location = new Point(895, 508);
             button11.Margin = new Padding(4);
             button11.Name = "button11";
@@ -530,7 +529,7 @@
             button12.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button12.FlatStyle = FlatStyle.Flat;
             button12.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button12.ForeColor = Color.FromArgb(64, 64, 64);
+            button12.ForeColor = Color.DimGray;
             button12.Location = new Point(895, 457);
             button12.Margin = new Padding(4);
             button12.Name = "button12";
@@ -549,7 +548,7 @@
             button13.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button13.FlatStyle = FlatStyle.Flat;
             button13.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button13.ForeColor = Color.FromArgb(64, 64, 64);
+            button13.ForeColor = Color.DimGray;
             button13.Location = new Point(895, 406);
             button13.Margin = new Padding(4);
             button13.Name = "button13";
@@ -568,7 +567,7 @@
             button14.FlatAppearance.MouseOverBackColor = Color.FromArgb(58, 58, 58);
             button14.FlatStyle = FlatStyle.Flat;
             button14.Font = new Font("Verdana", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button14.ForeColor = Color.FromArgb(64, 64, 64);
+            button14.ForeColor = Color.DimGray;
             button14.Location = new Point(895, 253);
             button14.Margin = new Padding(4);
             button14.Name = "button14";

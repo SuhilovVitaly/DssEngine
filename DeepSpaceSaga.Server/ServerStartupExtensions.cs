@@ -13,6 +13,8 @@ public static class ServerStartupExtensions
         services.AddSingleton<ISessionInfoService, SessionInfoService>();
         services.AddSingleton<ISaveLoadService, SaveLoadService>();
         services.AddSingleton<IScenarioService, ScenarioService>();
+        services.AddSingleton<ICloseCombatService, CloseCombatService>();
+        //
 
         return services;
     }

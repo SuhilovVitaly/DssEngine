@@ -49,5 +49,5 @@ global using DeepSpaceSaga.Common.Abstractions.Events;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Characters;
 global using DeepSpaceSaga.Common.Implementation.Entities.Characters;
 global using System.Net.Http.Json;
-
-
+global using DeepSpaceSaga.Common.Abstractions.Events.Fight;
+global using DeepSpaceSaga.Server.Services.CloseCombat;

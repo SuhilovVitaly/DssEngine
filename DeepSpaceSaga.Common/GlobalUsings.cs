@@ -44,3 +44,4 @@ global using DeepSpaceSaga.Common.Implementation.Entities.Systems;
 global using DeepSpaceSaga.Common.Generation.CelestialObjects.Modules;
 global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecrafts;
 global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
+global using DeepSpaceSaga.Common.Abstractions.Events.Fight;

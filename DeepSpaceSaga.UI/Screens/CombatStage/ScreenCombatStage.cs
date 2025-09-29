@@ -3,16 +3,17 @@
 public partial class ScreenCombatStage : Form
 {
     private GameActionEventDto? _gameActionEvent;
-    private IGameManager? _gameManager;
+    private IGameManager _gameManager;
     private DialogDto? _currentDialog;
     private ICloseCombatService _closeCombatService;
+    private string _lastAttackResult = "";
 
     public ScreenCombatStage(IGameManager gameManager, ICloseCombatService closeCombatService)
     {
         InitializeComponent();
 
         _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
-        _closeCombatService = closeCombatService;
+        _closeCombatService = closeCombatService ?? throw new ArgumentNullException(nameof(closeCombatService));
 
         FormBorderStyle = FormBorderStyle.None;
         Size = new Size(1375, 875);
@@ -29,7 +30,7 @@ public partial class ScreenCombatStage : Form
         if (_currentDialog != null)
         {
             ShowGameScreen(gameActionEvent);
-            ShowFightStage(gameActionEvent);
+            ShowFightStage();
         }
     }
 
@@ -50,13 +51,13 @@ public partial class ScreenCombatStage : Form
 
     private void crlMainMenu_Click(object sender, EventArgs e)
     {
-        _gameManager?.Screens.CloseActiveDialogScreen();
+        _gameManager.Screens.CloseActiveDialogScreen();
     }
 
-    private void ShowFightStage(GameActionEventDto gameActionEvent)
+    private void ShowFightStage()
     {
         // Display combined fight status image
-        SetFightStatusImage("0-0-0-0-0");
+        SetFightStatusImage(_closeCombatService.LastStagePosition);
     }
 
     private void SetFightStatusImage(string overlayImageName)
@@ -65,13 +66,13 @@ public partial class ScreenCombatStage : Form
         {
             // Load background image
             var backgroundImage = ImageLoader.LoadImageByName("command-center");
-            
+
             // Load overlay image
             var overlayImage = ImageLoader.LoadImageByName(overlayImageName);
-            
+
             // Create combined image
             var combinedImage = CombineImages(backgroundImage, overlayImage);
-            
+
             // Set the image to pictureBox2 (center fight status area)
             picCurrentFightStartus.Image = combinedImage;
         }
@@ -86,24 +87,24 @@ public partial class ScreenCombatStage : Form
     {
         // Get the target size from picCurrentFightStartus PictureBox
         var targetSize = picCurrentFightStartus.Size;
-        
+
         // Create a new bitmap with the target size
         var combinedBitmap = new Bitmap(targetSize.Width, targetSize.Height);
-        
+
         using (var graphics = Graphics.FromImage(combinedBitmap))
         {
             // Set high quality rendering
             graphics.CompositingQuality = CompositingQuality.HighQuality;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             graphics.SmoothingMode = SmoothingMode.HighQuality;
-            
+
             // Draw background image scaled to target size
             graphics.DrawImage(background, 0, 0, targetSize.Width, targetSize.Height);
-            
+
             // Draw overlay image scaled to target size with transparency support
             graphics.DrawImage(overlay, 0, 0, targetSize.Width, targetSize.Height);
         }
-        
+
         return combinedBitmap;
     }
 
@@ -116,5 +117,32 @@ public partial class ScreenCombatStage : Form
         label1.Text = _closeCombatService.Enemy.FirstName + " " + _closeCombatService.Enemy.LastName;
         label2.Text = _gameManager.Localization.GetText(_closeCombatService.Enemy.Rank);
         pictureBox1.Image = ImageLoader.LoadCharacterImage(_closeCombatService.Enemy.Portrait);
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        var result = _closeCombatService.PleerAttack(Common.Abstractions.Events.Fight.HandToHandCombatAttacks.JabHead);
+
+        ShowFightStage();
+
+        if(result.IsAttackSuccessful)
+        {
+            _lastAttackResult = $"{_closeCombatService.Pleer.FirstName} {_closeCombatService.Pleer.LastName} наносит удар " +
+            $" {Common.Abstractions.Events.Fight.HandToHandCombatAttacks.JabHead} " +
+            $" в результате которого {_closeCombatService.Enemy.FirstName} {_closeCombatService.Enemy.LastName}" +
+            $" получает {result.PainPoints} болевого шока и теряет {result.EnergyPoints} едениц энергии";
+        }
+        else
+        {
+            _lastAttackResult = $"{_closeCombatService.Pleer.FirstName} {_closeCombatService.Pleer.LastName} наносит удар " +
+           $" {Common.Abstractions.Events.Fight.HandToHandCombatAttacks.JabHead} " +
+           $" но промахивается.";
+        }
+
+        _lastAttackResult = _lastAttackResult + Environment.NewLine;
+        _lastAttackResult = _lastAttackResult + Environment.NewLine + $"Положение {_closeCombatService.Enemy.FirstName} {_closeCombatService.Enemy.LastName}" +
+            $" - {(result.Stability ? "стабильное" : "на полу")}";
+
+        txtAttackResult.Text = _lastAttackResult;
     }
 }

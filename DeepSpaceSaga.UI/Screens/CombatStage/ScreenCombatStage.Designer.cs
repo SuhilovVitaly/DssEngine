@@ -190,6 +190,7 @@
             button1.TabIndex = 12;
             button1.Text = "Джеб";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // button3
             // 

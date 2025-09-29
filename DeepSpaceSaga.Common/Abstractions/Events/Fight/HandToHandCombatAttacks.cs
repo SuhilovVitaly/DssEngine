@@ -6,47 +6,47 @@
 public enum HandToHandCombatAttacks
 {
     /// <summary>Джеб в голову: быстрый прямой удар рукой из стойки.</summary>
-    JabHead = 0,
+    JabHead = 1,
 
     /// <summary>Апперкот в корпус: короткий удар снизу вверх по корпусу.</summary>
-    UppercutBody = 1,
+    UppercutBody = 2,
 
     /// <summary>Лоу-кик по ноге: удар по бедру/голени, снижает подвижность.</summary>
-    LowKickLeg = 2,
+    LowKickLeg = 3,
 
     /// <summary>Хай-кик в голову: мощный удар ногой через верх, высокий риск/награда.</summary>
-    HighKickHead = 3,
+    HighKickHead = 4,
 
     /// <summary>Клинч + колено в корпус: удержание и атака коленом на ближней дистанции.</summary>
-    ClinchKneeBody = 4,
+    ClinchKneeBody = 5,
 
     /// <summary>Тейкдаун: перевод соперника в партер (захват ног/корпуса).</summary>
-    Takedown = 5,
+    Takedown = 6,
 
     /// <summary>Удар локтем: короткий резкий удар (клинч или сверху в партере).</summary>
-    ElbowStrike = 6,
+    ElbowStrike = 7,
 
     /// <summary>Глухая защита: плотный блок, восстановление энергии, снижение урона.</summary>
-    ShellDefense = 7,
+    ShellDefense = 8,
 
     /// <summary>Удержание на дистанции: контроль ногами/джебом и движением, лёгкое восстановление энергии.</summary>
-    KeepDistance = 8,
+    KeepDistance = 9,
 
     /// <summary>Удушающий приём: перекрытие шеи (клинч/сверху/снизу), накопление боли, риск сдачи.</summary>
-    Choke = 9,
+    Choke = 10,
 
     /// <summary>Болевой на руку/ногу: фиксация сустава/сухожилия, обездвижение и высокая боль.</summary>
-    JointLock = 10,
+    JointLock = 11,
 
     /// <summary>Ground &amp; Pound: серия ударов сверху по лежащему сопернику.</summary>
-    GroundAndPound = 11,
+    GroundAndPound = 12,
 
     /// <summary>Соккер-кик по лежачему: сильный удар ногой по голове/корпусу лежащего (в спорте обычно запрещён).</summary>
-    SoccerKick = 12,
+    SoccerKick = 13,
 
     /// <summary>Стамп: топтание ногами по ногам/корпусу лежащего соперника.</summary>
-    Stomp = 13,
+    Stomp = 14,
 
     /// <summary>Пасс гарда: переступание ног для выхода в контроль сверху.</summary>
-    GuardPass = 14
+    GuardPass = 15
 }

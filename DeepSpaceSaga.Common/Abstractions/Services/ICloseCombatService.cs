@@ -2,6 +2,7 @@
 
 public interface ICloseCombatService
 {
+    string LastStagePosition { get; }
     string LastStageResult { get; }
 
     ICharacter Pleer { get; }
@@ -10,7 +11,7 @@ public interface ICloseCombatService
 
     void Initialization(ICharacter pleer, ICharacter enemy);
 
-    void PleerAttack(HandToHandCombatAttacks attack);
+    AttackResult PleerAttack(HandToHandCombatAttacks attack);
 
-    void EnemyAttack(HandToHandCombatAttacks attack);
+    AttackResult EnemyAttack(HandToHandCombatAttacks attack);
 }

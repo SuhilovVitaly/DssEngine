@@ -7,16 +7,12 @@ public partial class ScreenCombatStage : Form
     private DialogDto? _currentDialog;
     private ICloseCombatService _closeCombatService;
 
-    public ScreenCombatStage()
-    {
-        InitializeComponent();
-    }
-
-    public ScreenCombatStage(IGameManager gameManager)
+    public ScreenCombatStage(IGameManager gameManager, ICloseCombatService closeCombatService)
     {
         InitializeComponent();
 
-        _gameManager = gameManager;
+        _gameManager = gameManager ?? throw new ArgumentNullException(nameof(gameManager));
+        _closeCombatService = closeCombatService;
 
         FormBorderStyle = FormBorderStyle.None;
         Size = new Size(1375, 875);
@@ -28,7 +24,6 @@ public partial class ScreenCombatStage : Form
         _gameActionEvent = gameActionEvent;
         _currentDialog = gameActionEvent.Dialog;
 
-        _closeCombatService = Program.ServiceProvider.GetService<ICloseCombatService>();
         _closeCombatService.Initialization(_gameManager.GetMainCharacter(), _gameManager.GetCharacter(Int32.Parse(gameActionEvent.Dialog.Tag)));
 
         if (_currentDialog != null)

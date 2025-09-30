@@ -46,3 +46,4 @@ global using DeepSpaceSaga.Common.Abstractions.Entities.CelestialObjects.Spacecr
 global using DeepSpaceSaga.Common.Abstractions.UI.Screens;
 global using DeepSpaceSaga.Common.Abstractions.Events.Fight;
 global using DeepSpaceSaga.Server.Services.CloseCombat;
+global using DeepSpaceSaga.Common.Implementation.Entities.Characters;

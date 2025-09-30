@@ -22,5 +22,7 @@
         public IPersonPortrait UiInfo { get; set; }
 
         public Dictionary<CharacterSkillType, ICharacterSkill> Skills { get; set; }
+
+        public PersonStats Stats { get; set; } = new PersonStats();
     }
 }

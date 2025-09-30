@@ -63,6 +63,10 @@
             button12 = new Button();
             button13 = new Button();
             button14 = new Button();
+            pictureBox2 = new PictureBox();
+            label9 = new Label();
+            pictureBox9 = new PictureBox();
+            label10 = new Label();
             ((ISupportInitialize)crlPortrait).BeginInit();
             ((ISupportInitialize)pictureBox1).BeginInit();
             ((ISupportInitialize)picCurrentFightStartus).BeginInit();
@@ -72,6 +76,8 @@
             ((ISupportInitialize)pictureBox6).BeginInit();
             ((ISupportInitialize)pictureBox7).BeginInit();
             ((ISupportInitialize)pictureBox8).BeginInit();
+            ((ISupportInitialize)pictureBox2).BeginInit();
+            ((ISupportInitialize)pictureBox9).BeginInit();
             SuspendLayout();
             // 
             // crlName
@@ -577,12 +583,59 @@
             button14.Text = "Джеб";
             button14.UseVisualStyleBackColor = false;
             // 
+            // pictureBox2
+            // 
+            pictureBox2.BackColor = Color.DarkOliveGreen;
+            pictureBox2.Location = new Point(247, 212);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(233, 20);
+            pictureBox2.TabIndex = 34;
+            pictureBox2.TabStop = false;
+            // 
+            // label9
+            // 
+            label9.BackColor = Color.FromArgb(12, 12, 12, 50);
+            label9.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
+            label9.ForeColor = Color.OrangeRed;
+            label9.Location = new Point(247, 187);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(233, 31);
+            label9.TabIndex = 33;
+            label9.Text = "Енергия";
+            label9.TextAlign = ContentAlignment.TopRight;
+            // 
+            // pictureBox9
+            // 
+            pictureBox9.BackColor = Color.DarkOliveGreen;
+            pictureBox9.Location = new Point(895, 212);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(233, 20);
+            pictureBox9.TabIndex = 36;
+            pictureBox9.TabStop = false;
+            // 
+            // label10
+            // 
+            label10.BackColor = Color.FromArgb(12, 12, 12, 50);
+            label10.Font = new Font("Tahoma", 10.2F, FontStyle.Bold);
+            label10.ForeColor = Color.OrangeRed;
+            label10.Location = new Point(895, 187);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(233, 31);
+            label10.TabIndex = 35;
+            label10.Text = "Енергия";
+            // 
             // ScreenCombatStage
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1375, 875);
+            Controls.Add(pictureBox9);
+            Controls.Add(label10);
+            Controls.Add(pictureBox2);
+            Controls.Add(label9);
             Controls.Add(button8);
             Controls.Add(button9);
             Controls.Add(button10);
@@ -631,6 +684,8 @@
             ((ISupportInitialize)pictureBox6).EndInit();
             ((ISupportInitialize)pictureBox7).EndInit();
             ((ISupportInitialize)pictureBox8).EndInit();
+            ((ISupportInitialize)pictureBox2).EndInit();
+            ((ISupportInitialize)pictureBox9).EndInit();
             ResumeLayout(false);
         }
 
@@ -671,5 +726,9 @@
         private Button button12;
         private Button button13;
         private Button button14;
+        private PictureBox pictureBox2;
+        private Label label9;
+        private PictureBox pictureBox9;
+        private Label label10;
     }
 }

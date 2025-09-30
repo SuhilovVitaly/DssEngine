@@ -15,4 +15,5 @@ public interface ICharacter
 
     Dictionary<CharacterSkillType, ICharacterSkill> Skills { get; }
 
+    PersonStats Stats { get; set;}
 }

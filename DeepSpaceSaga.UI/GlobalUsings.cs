@@ -46,5 +46,6 @@ global using DeepSpaceSaga.UI.Rendering.Tools;
 global using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
 global using DeepSpaceSaga.Common.Implementation.Entities.Dialogs;
 global using DeepSpaceSaga.UI.Screens.Dialogs;
+global using DeepSpaceSaga.UI.Screens.Controls;
 global using System.Runtime.CompilerServices;
 

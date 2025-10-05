@@ -42,10 +42,7 @@
             button7 = new Button();
             txtAttackResult = new Label();
             label3 = new Label();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
             label4 = new Label();
-            pictureBox5 = new PictureBox();
             label5 = new Label();
             pictureBox6 = new PictureBox();
             label6 = new Label();
@@ -63,20 +60,19 @@
             button12 = new Button();
             button13 = new Button();
             button14 = new Button();
-            pictureBox2 = new PictureBox();
             label9 = new Label();
             pictureBox9 = new PictureBox();
             label10 = new Label();
+            crlPlayerHealth = new ProgressBarVerticalHorizontal();
+            crlPlayerPain = new ProgressBarVerticalHorizontal();
+            crlPlayerMorale = new ProgressBarVerticalHorizontal();
+            crlPlayerEnergy = new ProgressBarVerticalHorizontal();
             ((ISupportInitialize)crlPortrait).BeginInit();
             ((ISupportInitialize)pictureBox1).BeginInit();
             ((ISupportInitialize)picCurrentFightStartus).BeginInit();
-            ((ISupportInitialize)pictureBox3).BeginInit();
-            ((ISupportInitialize)pictureBox4).BeginInit();
-            ((ISupportInitialize)pictureBox5).BeginInit();
             ((ISupportInitialize)pictureBox6).BeginInit();
             ((ISupportInitialize)pictureBox7).BeginInit();
             ((ISupportInitialize)pictureBox8).BeginInit();
-            ((ISupportInitialize)pictureBox2).BeginInit();
             ((ISupportInitialize)pictureBox9).BeginInit();
             SuspendLayout();
             // 
@@ -277,24 +273,6 @@
             label3.Text = "Здоровье";
             label3.TextAlign = ContentAlignment.TopRight;
             // 
-            // pictureBox3
-            // 
-            pictureBox3.BackColor = Color.DarkOliveGreen;
-            pictureBox3.Location = new Point(247, 47);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(233, 20);
-            pictureBox3.TabIndex = 15;
-            pictureBox3.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            pictureBox4.BackColor = Color.DarkOliveGreen;
-            pictureBox4.Location = new Point(247, 102);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(233, 20);
-            pictureBox4.TabIndex = 17;
-            pictureBox4.TabStop = false;
-            // 
             // label4
             // 
             label4.BackColor = Color.FromArgb(12, 12, 12, 50);
@@ -307,15 +285,6 @@
             label4.TabIndex = 16;
             label4.Text = "Боль";
             label4.TextAlign = ContentAlignment.TopRight;
-            // 
-            // pictureBox5
-            // 
-            pictureBox5.BackColor = Color.DarkOliveGreen;
-            pictureBox5.Location = new Point(247, 157);
-            pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(233, 20);
-            pictureBox5.TabIndex = 19;
-            pictureBox5.TabStop = false;
             // 
             // label5
             // 
@@ -583,15 +552,6 @@
             button14.Text = "Джеб";
             button14.UseVisualStyleBackColor = false;
             // 
-            // pictureBox2
-            // 
-            pictureBox2.BackColor = Color.DarkOliveGreen;
-            pictureBox2.Location = new Point(247, 212);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(233, 20);
-            pictureBox2.TabIndex = 34;
-            pictureBox2.TabStop = false;
-            // 
             // label9
             // 
             label9.BackColor = Color.FromArgb(12, 12, 12, 50);
@@ -626,15 +586,66 @@
             label10.TabIndex = 35;
             label10.Text = "Енергия";
             // 
+            // crlPlayerHealth
+            // 
+            crlPlayerHealth.BackColor = Color.DimGray;
+            crlPlayerHealth.BarLineColor = Color.DarkOliveGreen;
+            crlPlayerHealth.CurrentValue = 100;
+            crlPlayerHealth.Location = new Point(247, 46);
+            crlPlayerHealth.Margin = new Padding(4, 5, 4, 5);
+            crlPlayerHealth.Maximum = 100;
+            crlPlayerHealth.Name = "crlPlayerHealth";
+            crlPlayerHealth.Size = new Size(233, 21);
+            crlPlayerHealth.TabIndex = 37;
+            // 
+            // crlPlayerPain
+            // 
+            crlPlayerPain.BackColor = Color.DimGray;
+            crlPlayerPain.BarLineColor = Color.DarkOliveGreen;
+            crlPlayerPain.CurrentValue = 100;
+            crlPlayerPain.Location = new Point(247, 101);
+            crlPlayerPain.Margin = new Padding(4, 5, 4, 5);
+            crlPlayerPain.Maximum = 100;
+            crlPlayerPain.Name = "crlPlayerPain";
+            crlPlayerPain.Size = new Size(233, 21);
+            crlPlayerPain.TabIndex = 38;
+            // 
+            // crlPlayerMorale
+            // 
+            crlPlayerMorale.BackColor = Color.DimGray;
+            crlPlayerMorale.BarLineColor = Color.DarkOliveGreen;
+            crlPlayerMorale.CurrentValue = 100;
+            crlPlayerMorale.Location = new Point(247, 157);
+            crlPlayerMorale.Margin = new Padding(4, 5, 4, 5);
+            crlPlayerMorale.Maximum = 100;
+            crlPlayerMorale.Name = "crlPlayerMorale";
+            crlPlayerMorale.Size = new Size(233, 21);
+            crlPlayerMorale.TabIndex = 39;
+            // 
+            // crlPlayerEnergy
+            // 
+            crlPlayerEnergy.BackColor = Color.DimGray;
+            crlPlayerEnergy.BarLineColor = Color.DarkOliveGreen;
+            crlPlayerEnergy.CurrentValue = 100;
+            crlPlayerEnergy.Location = new Point(247, 211);
+            crlPlayerEnergy.Margin = new Padding(4, 5, 4, 5);
+            crlPlayerEnergy.Maximum = 100;
+            crlPlayerEnergy.Name = "crlPlayerEnergy";
+            crlPlayerEnergy.Size = new Size(233, 21);
+            crlPlayerEnergy.TabIndex = 40;
+            // 
             // ScreenCombatStage
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1375, 875);
+            Controls.Add(crlPlayerEnergy);
+            Controls.Add(crlPlayerMorale);
+            Controls.Add(crlPlayerPain);
+            Controls.Add(crlPlayerHealth);
             Controls.Add(pictureBox9);
             Controls.Add(label10);
-            Controls.Add(pictureBox2);
             Controls.Add(label9);
             Controls.Add(button8);
             Controls.Add(button9);
@@ -649,11 +660,8 @@
             Controls.Add(label7);
             Controls.Add(pictureBox8);
             Controls.Add(label8);
-            Controls.Add(pictureBox5);
             Controls.Add(label5);
-            Controls.Add(pictureBox4);
             Controls.Add(label4);
-            Controls.Add(pictureBox3);
             Controls.Add(label3);
             Controls.Add(txtAttackResult);
             Controls.Add(button5);
@@ -678,13 +686,9 @@
             ((ISupportInitialize)crlPortrait).EndInit();
             ((ISupportInitialize)pictureBox1).EndInit();
             ((ISupportInitialize)picCurrentFightStartus).EndInit();
-            ((ISupportInitialize)pictureBox3).EndInit();
-            ((ISupportInitialize)pictureBox4).EndInit();
-            ((ISupportInitialize)pictureBox5).EndInit();
             ((ISupportInitialize)pictureBox6).EndInit();
             ((ISupportInitialize)pictureBox7).EndInit();
             ((ISupportInitialize)pictureBox8).EndInit();
-            ((ISupportInitialize)pictureBox2).EndInit();
             ((ISupportInitialize)pictureBox9).EndInit();
             ResumeLayout(false);
         }
@@ -705,10 +709,7 @@
         private Button button7;
         private Label txtAttackResult;
         private Label label3;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
         private Label label4;
-        private PictureBox pictureBox5;
         private Label label5;
         private PictureBox pictureBox6;
         private Label label6;
@@ -726,9 +727,12 @@
         private Button button12;
         private Button button13;
         private Button button14;
-        private PictureBox pictureBox2;
         private Label label9;
         private PictureBox pictureBox9;
         private Label label10;
+        private ProgressBarVerticalHorizontal crlPlayerHealth;
+        private ProgressBarVerticalHorizontal crlPlayerPain;
+        private ProgressBarVerticalHorizontal crlPlayerMorale;
+        private ProgressBarVerticalHorizontal crlPlayerEnergy;
     }
 }

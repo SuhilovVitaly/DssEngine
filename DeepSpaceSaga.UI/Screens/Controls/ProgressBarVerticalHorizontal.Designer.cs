@@ -1,5 +1,5 @@
 ﻿
-namespace Engine.UI.Controls
+namespace DeepSpaceSaga.UI.Screens.Controls
 {
     sealed partial class ProgressBarVerticalHorizontal
     {

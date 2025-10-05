@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Engine.UI.Controls
+namespace DeepSpaceSaga.UI.Screens.Controls
 {
     public sealed partial class ProgressBarVerticalHorizontal : UserControl
     {

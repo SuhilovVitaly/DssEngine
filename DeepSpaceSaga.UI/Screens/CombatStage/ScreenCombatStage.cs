@@ -114,9 +114,19 @@ public partial class ScreenCombatStage : Form
         crlRank.Text = _gameManager.Localization.GetText(_closeCombatService.Pleer.Rank);
         crlPortrait.Image = ImageLoader.LoadCharacterImage(_closeCombatService.Pleer.Portrait);
 
+        crlPlayerHealth.CurrentValue = _closeCombatService.Pleer.Stats.Current.Health;
+        crlPlayerPain.CurrentValue = _closeCombatService.Pleer.Stats.Current.Pain;
+        crlPlayerMorale.CurrentValue = _closeCombatService.Pleer.Stats.Current.Morale;
+        crlPlayerEnergy.CurrentValue = _closeCombatService.Pleer.Stats.Current.Energy;
+
         label1.Text = _closeCombatService.Enemy.FirstName + " " + _closeCombatService.Enemy.LastName;
         label2.Text = _gameManager.Localization.GetText(_closeCombatService.Enemy.Rank);
         pictureBox1.Image = ImageLoader.LoadCharacterImage(_closeCombatService.Enemy.Portrait);
+
+        crlEnemyHealth.CurrentValue = _closeCombatService.Enemy.Stats.Current.Health;
+        crlEnemyPain.CurrentValue = _closeCombatService.Enemy.Stats.Current.Pain;
+        crlEnemyMorale.CurrentValue = _closeCombatService.Enemy.Stats.Current.Morale;
+        crlEnemyEnergy.CurrentValue = _closeCombatService.Enemy.Stats.Current.Energy;
     }
 
     private void button1_Click(object sender, EventArgs e)

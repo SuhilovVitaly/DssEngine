@@ -44,11 +44,8 @@
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
-            pictureBox6 = new PictureBox();
             label6 = new Label();
-            pictureBox7 = new PictureBox();
             label7 = new Label();
-            pictureBox8 = new PictureBox();
             label8 = new Label();
             button2 = new Button();
             button4 = new Button();
@@ -61,19 +58,18 @@
             button13 = new Button();
             button14 = new Button();
             label9 = new Label();
-            pictureBox9 = new PictureBox();
             label10 = new Label();
             crlPlayerHealth = new ProgressBarVerticalHorizontal();
             crlPlayerPain = new ProgressBarVerticalHorizontal();
             crlPlayerMorale = new ProgressBarVerticalHorizontal();
             crlPlayerEnergy = new ProgressBarVerticalHorizontal();
+            crlEnemyHealth = new ProgressBarVerticalHorizontal();
+            crlEnemyPain = new ProgressBarVerticalHorizontal();
+            crlEnemyMorale = new ProgressBarVerticalHorizontal();
+            crlEnemyEnergy = new ProgressBarVerticalHorizontal();
             ((ISupportInitialize)crlPortrait).BeginInit();
             ((ISupportInitialize)pictureBox1).BeginInit();
             ((ISupportInitialize)picCurrentFightStartus).BeginInit();
-            ((ISupportInitialize)pictureBox6).BeginInit();
-            ((ISupportInitialize)pictureBox7).BeginInit();
-            ((ISupportInitialize)pictureBox8).BeginInit();
-            ((ISupportInitialize)pictureBox9).BeginInit();
             SuspendLayout();
             // 
             // crlName
@@ -299,15 +295,6 @@
             label5.Text = "Решимость";
             label5.TextAlign = ContentAlignment.TopRight;
             // 
-            // pictureBox6
-            // 
-            pictureBox6.BackColor = Color.DarkOliveGreen;
-            pictureBox6.Location = new Point(894, 157);
-            pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(233, 20);
-            pictureBox6.TabIndex = 25;
-            pictureBox6.TabStop = false;
-            // 
             // label6
             // 
             label6.BackColor = Color.FromArgb(12, 12, 12, 50);
@@ -320,15 +307,6 @@
             label6.TabIndex = 24;
             label6.Text = "Решимость";
             // 
-            // pictureBox7
-            // 
-            pictureBox7.BackColor = Color.DarkOliveGreen;
-            pictureBox7.Location = new Point(894, 102);
-            pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(233, 20);
-            pictureBox7.TabIndex = 23;
-            pictureBox7.TabStop = false;
-            // 
             // label7
             // 
             label7.BackColor = Color.FromArgb(12, 12, 12, 50);
@@ -340,15 +318,6 @@
             label7.Size = new Size(233, 31);
             label7.TabIndex = 22;
             label7.Text = "Боль";
-            // 
-            // pictureBox8
-            // 
-            pictureBox8.BackColor = Color.DarkOliveGreen;
-            pictureBox8.Location = new Point(894, 47);
-            pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(233, 20);
-            pictureBox8.TabIndex = 21;
-            pictureBox8.TabStop = false;
             // 
             // label8
             // 
@@ -565,15 +534,6 @@
             label9.Text = "Енергия";
             label9.TextAlign = ContentAlignment.TopRight;
             // 
-            // pictureBox9
-            // 
-            pictureBox9.BackColor = Color.DarkOliveGreen;
-            pictureBox9.Location = new Point(895, 212);
-            pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(233, 20);
-            pictureBox9.TabIndex = 36;
-            pictureBox9.TabStop = false;
-            // 
             // label10
             // 
             label10.BackColor = Color.FromArgb(12, 12, 12, 50);
@@ -600,8 +560,8 @@
             // 
             // crlPlayerPain
             // 
-            crlPlayerPain.BackColor = Color.DimGray;
-            crlPlayerPain.BarLineColor = Color.DarkOliveGreen;
+            crlPlayerPain.BackColor = Color.DarkOliveGreen;
+            crlPlayerPain.BarLineColor = Color.Maroon;
             crlPlayerPain.CurrentValue = 100;
             crlPlayerPain.Location = new Point(247, 101);
             crlPlayerPain.Margin = new Padding(4, 5, 4, 5);
@@ -634,17 +594,68 @@
             crlPlayerEnergy.Size = new Size(233, 21);
             crlPlayerEnergy.TabIndex = 40;
             // 
+            // crlEnemyHealth
+            // 
+            crlEnemyHealth.BackColor = Color.DimGray;
+            crlEnemyHealth.BarLineColor = Color.DarkOliveGreen;
+            crlEnemyHealth.CurrentValue = 100;
+            crlEnemyHealth.Location = new Point(895, 51);
+            crlEnemyHealth.Margin = new Padding(4, 5, 4, 5);
+            crlEnemyHealth.Maximum = 100;
+            crlEnemyHealth.Name = "crlEnemyHealth";
+            crlEnemyHealth.Size = new Size(233, 21);
+            crlEnemyHealth.TabIndex = 41;
+            // 
+            // crlEnemyPain
+            // 
+            crlEnemyPain.BackColor = Color.DarkOliveGreen;
+            crlEnemyPain.BarLineColor = Color.Maroon;
+            crlEnemyPain.CurrentValue = 100;
+            crlEnemyPain.Location = new Point(895, 101);
+            crlEnemyPain.Margin = new Padding(4, 5, 4, 5);
+            crlEnemyPain.Maximum = 100;
+            crlEnemyPain.Name = "crlEnemyPain";
+            crlEnemyPain.Size = new Size(233, 21);
+            crlEnemyPain.TabIndex = 42;
+            // 
+            // crlEnemyMorale
+            // 
+            crlEnemyMorale.BackColor = Color.DimGray;
+            crlEnemyMorale.BarLineColor = Color.DarkOliveGreen;
+            crlEnemyMorale.CurrentValue = 100;
+            crlEnemyMorale.Location = new Point(894, 157);
+            crlEnemyMorale.Margin = new Padding(4, 5, 4, 5);
+            crlEnemyMorale.Maximum = 100;
+            crlEnemyMorale.Name = "crlEnemyMorale";
+            crlEnemyMorale.Size = new Size(233, 21);
+            crlEnemyMorale.TabIndex = 43;
+            // 
+            // crlEnemyEnergy
+            // 
+            crlEnemyEnergy.BackColor = Color.DimGray;
+            crlEnemyEnergy.BarLineColor = Color.DarkOliveGreen;
+            crlEnemyEnergy.CurrentValue = 100;
+            crlEnemyEnergy.Location = new Point(895, 211);
+            crlEnemyEnergy.Margin = new Padding(4, 5, 4, 5);
+            crlEnemyEnergy.Maximum = 100;
+            crlEnemyEnergy.Name = "crlEnemyEnergy";
+            crlEnemyEnergy.Size = new Size(233, 21);
+            crlEnemyEnergy.TabIndex = 44;
+            // 
             // ScreenCombatStage
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1375, 875);
+            Controls.Add(crlEnemyEnergy);
+            Controls.Add(crlEnemyMorale);
+            Controls.Add(crlEnemyPain);
+            Controls.Add(crlEnemyHealth);
             Controls.Add(crlPlayerEnergy);
             Controls.Add(crlPlayerMorale);
             Controls.Add(crlPlayerPain);
             Controls.Add(crlPlayerHealth);
-            Controls.Add(pictureBox9);
             Controls.Add(label10);
             Controls.Add(label9);
             Controls.Add(button8);
@@ -654,11 +665,8 @@
             Controls.Add(button12);
             Controls.Add(button13);
             Controls.Add(button14);
-            Controls.Add(pictureBox6);
             Controls.Add(label6);
-            Controls.Add(pictureBox7);
             Controls.Add(label7);
-            Controls.Add(pictureBox8);
             Controls.Add(label8);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -686,10 +694,6 @@
             ((ISupportInitialize)crlPortrait).EndInit();
             ((ISupportInitialize)pictureBox1).EndInit();
             ((ISupportInitialize)picCurrentFightStartus).EndInit();
-            ((ISupportInitialize)pictureBox6).EndInit();
-            ((ISupportInitialize)pictureBox7).EndInit();
-            ((ISupportInitialize)pictureBox8).EndInit();
-            ((ISupportInitialize)pictureBox9).EndInit();
             ResumeLayout(false);
         }
 
@@ -711,11 +715,8 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private PictureBox pictureBox6;
         private Label label6;
-        private PictureBox pictureBox7;
         private Label label7;
-        private PictureBox pictureBox8;
         private Label label8;
         private Button button2;
         private Button button4;
@@ -728,11 +729,14 @@
         private Button button13;
         private Button button14;
         private Label label9;
-        private PictureBox pictureBox9;
         private Label label10;
         private ProgressBarVerticalHorizontal crlPlayerHealth;
         private ProgressBarVerticalHorizontal crlPlayerPain;
         private ProgressBarVerticalHorizontal crlPlayerMorale;
         private ProgressBarVerticalHorizontal crlPlayerEnergy;
+        private ProgressBarVerticalHorizontal crlEnemyHealth;
+        private ProgressBarVerticalHorizontal crlEnemyPain;
+        private ProgressBarVerticalHorizontal crlEnemyMorale;
+        private ProgressBarVerticalHorizontal crlEnemyEnergy;
     }
 }

@@ -8,4 +8,5 @@ public class AttackResult
     public int EnergyPoints { get; set; }
     public bool Stability { get; set; }
     public bool IsAttackSuccessful { get; set; }
+    public int EnergyCost { get; set; }
 }

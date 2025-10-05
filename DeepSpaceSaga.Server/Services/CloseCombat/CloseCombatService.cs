@@ -39,5 +39,5 @@ public class CloseCombatService : ICloseCombatService
         LastStagePosition = $"0-{(int)_attack}-1-{(_lastAttackResult.IsAttackSuccessful ? "1" : "0")}-0";
 
         return _lastAttackResult;
-    }
+    }    
 }

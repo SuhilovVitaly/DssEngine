@@ -1,6 +1,4 @@
-﻿using DeepSpaceSaga.Common.Abstractions.Entities.Dialogs;
-
-namespace DeepSpaceSaga.Server.Services;
+﻿namespace DeepSpaceSaga.Server.Services;
 
 public class DialogsService : IDialogsService
 {

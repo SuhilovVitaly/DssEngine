@@ -150,7 +150,7 @@ public class DialogsService : IDialogsService
             return;
         }
 
-        var dialogFiles = Directory.GetFiles(dialogsPath, "*.json");
+        var dialogFiles = Directory.GetFiles(dialogsPath, "*.json", SearchOption.AllDirectories);
 
         foreach (var file in dialogFiles)
         {

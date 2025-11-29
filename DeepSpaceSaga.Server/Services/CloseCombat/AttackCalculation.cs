@@ -10,7 +10,6 @@ public class AttackCalculation
 
         if(IsAttackSuccessful == false)
         {
-            attacker.
 
             return new AttackResult
             {
